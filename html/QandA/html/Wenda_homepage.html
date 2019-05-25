@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+        header{ background-color: #f2f2f2; }
+        header ul li { height: 43px; line-height: 43px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+        header ul li.active{ display: block; }
+        #footer{  background-color: #f2f2f2; }
+        #footer ul li{  padding-top: 33.5px; padding-bottom: 8px; background: url() no-repeat center 2px; background-size: auto 30px; text-align: center; }
+        #footer ul li.active{ color: #6ab494; }
+        #footer ul li:nth-child(1){ background-image: url(../icon/message.png); }
+        #footer ul li:nth-child(2){ background-image: url(../icon/approve.png); }
+        #footer ul li:nth-child(3){ background-image: url(../icon/oppose.png); }
+        #footer ul li:nth-child(4){ background-image: url(../icon/collect.png); }
+        #footer ul li:nth-child(1).active{ background-image: url(../icon/message.png); }
+        #footer ul li:nth-child(2).active{ background-image: url(../icon/agreechousen.png); }
+        #footer ul li:nth-child(3).active{ background-image: url(../icon/oppose.png); }
+        #footer ul li:nth-child(4).active{ background-image: url(../icon/collect.png); }
+        .flex-con{
+          overflow: scroll;
+        }
+        .fixed_bottom {
+           position:fixed;
+           left:0px;
+           bottom:0px;
+           width:100%;
+           height:50px;
+           z-index:10;
+        }
+
+        .header-box {
+          /*border: 1px solid blue;*/
+
+          position: relative;
+          width: 100%;
+          height: 43px;
+          background-color: #ffffff
+        }
+        header {
+          position: fixed;
+          width: 100%;
+          height: 43px;
+          background-color: #ffffff;
+          z-index: 10;
+          /*box-shadow: 0 6px 20px #D7D7D7;*/
+        }
+        header .left {
+        	position: relative;
+          top: 0px;
+          width: 21.5px;
+          height: 43px;
+          left: 15px;
+          background-image: url(../icon/back.png);
+          background-size: 21.5px 15.5px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          float: left;
+        }
+        header .right {
+        	position: relative;
+          padding-left: 12%;
+          width: 25%;
+          height: 43px;
+          float: center;
+          line-height: 43px;
+					font-size: 20px; color: #000000; text-align: left;
+        }
+        .title {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          bottom: auto;
+          padding-top: 20px;
+          padding-right: 24px;
+          box-sizing: border-box;
+          font-size: 18px; color: #000000; text-align: left;
+        }
+        .tag {
+          /*border-bottom: 1px solid #d3d2d2;*/
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 100%;
+          height: 12px;
+          bottom: auto;
+          padding-top: 10px;
+          box-sizing: border-box;
+          font-size: 12px; color: #917dcf; text-align: left;
+        }
+        .description {
+          /*border: 1px solid blue;*/
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+          padding-top: 20px;
+        }
+        .interactive-box {
+          width: 100%;
+          height: 40px;
+          padding-top: 20px;
+        }
+        .approve-logo {
+          width: 64px;
+          height: 21.5px;
+          float: left;
+          background-image: url(../icon/approve.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          float: left;
+        }
+        .comment-logo {
+          width: 64px;
+          height: 21.5px;
+          float: left;
+          background-image: url(../icon/message.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          float: left;
+        }
+
+        .guide {
+          position: fixed;
+          width: 100%;
+          height: 32px;
+          border-bottom: 1px solid #d3d2d2;
+          background-color: #fff;
+          z-index:10;
+
+        }
+        .guide-box {
+          position: relative;
+          width: 100%;
+          height: 32px;
+          background-color: #ffffff;
+        }
+        .content-box {
+          position: relative;
+          width: 90%;
+          height: auto;
+          margin:0 auto;
+          border-bottom: 1px solid #d3d2d2;
+        }
+        .guide-left {
+          float: left;
+          width: 85%;
+          height: 32px;
+        }
+        .guide-right {
+          border-left: 2px solid #d3d2d2;
+          float: left;
+          width: 14%;
+          height: 32px;
+        }
+        nav {
+          /*border: 1px solid red;*/
+					position: relative;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-orient: horizontal;
+          width: 100%;
+          height: 64px;
+          overflow-x:scroll;
+        }
+        nav .menu-cata{
+        	position: relative;
+					width: 25%;
+					/*margin-right: 25%;*/
+					/*padding-right: 25%;*/
+          height: 37.5px;
+          line-height: 37.5px;
+          font-size: 14px; color: #000; text-align: center;
+         }
+        .menu-cata.selected {
+          font-size: 14px; color: #6d7cd9; font-weight: bolder;
+        }
+        .menu {
+          position: relative;
+          top: 25%;
+          width: 100%;
+          height: 16px;
+          background-image: url(../icon/menu.png);
+          background-size: 18px 16px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+
+    <div id="main">
+      <div class="header-box">
+      <header id="header" class="">
+        <div class="left" onclick="back()"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+
+      </header>
+      </div>
+      <div id="guide" class="guide-box">
+        <div class="guide">
+          <div class="guide-left">
+            <nav id="nav">
+              <div id="guide-tag-0" class="menu-cata selected" onclick="fnSetNavMenuIndex(this)" tapmode>推荐</div>
+              <div id="guide-tag-1" class="menu-cata" onclick="fnSetNavMenuIndex(this)" tapmode>关注</div>
+              <div id="guide-tag-2" class="menu-cata" onclick="fnSetNavMenuIndex(this)" tapmode>热门</div>
+            </nav>
+          </div>
+          <div class="guide-right">
+            <div class="menu">
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+var user_id = 1;//根据user_id得到用户的标签数据。
+var tags = new Array('语文','数学');  //假设这是取到的用户1的标签数据
+var tag_num = tags.length + 3;
+    apiready = function () {
+			var header = $api.byId('header');
+			var guide = $api.byId('guide');
+
+			var guide_H = $api.offset(guide).h;
+			var guide_T = $api.offset(guide).t;
+
+			Inittags(); // 初始化标签导航栏
+			menu_catas = $api.domAll(nav, '.menu-cata');
+			TagsView();
+
+
+			api.openFrameGroup ({
+			    name: 'view_by_hobby_frm',
+			    scrollEnabled: true,
+			    rect: {
+			         x: 0,
+			         y: guide_H+guide_T,
+			         w: api.winWidth,
+			         h: 'auto'
+			    },
+			    index: 0,
+			    frames: [{
+              name: 'view_by_study_frm',
+              url: 'view_by_study_frm.html',
+          },{
+              name: 'view_by_study_frm',
+              url: 'view_by_study_frm.html',
+          }]
+			}, function(ret, err){
+				fnSetNavMenuSelected(ret.index);
+
+			});
+    }
+
+		function Inittags() {
+			var sourceNode = document.getElementById("guide-tag-2"); // 获得被克隆的节点对象
+			for (var i = 3; i < tag_num; i++) {
+				var clonedNode = sourceNode.cloneNode(true); // 克隆节点
+				clonedNode.setAttribute("id", "guide-tag-" + i); // 修改一下id 值，避免id 重复
+				sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+		}
+	}
+		function TagsView() {
+			for (var i = 3; i < tag_num; i++) {
+				div = document.getElementById("guide-tag-" + i);
+				div.innerHTML = tags[i-3];
+			}
+
+		}
+
+
+		// 点击事件 切换framegroup的index
+    function fnSetNavMenuIndex(tag) {
+			var index_;
+			for (var i=0; i<menu_catas.length; i++) {
+				if (tag.id == 'guide-tag-'+i) {
+					index_ = parseInt(i);
+				}
+			}
+			fnSetNavMenuSelected(index_);
+			api.setFrameGroupIndex({
+          name: 'view_by_hobby_frm',
+          index: index_,
+          scroll: true
+      });
+    }
+
+
+
+		// 页面切换事件 高亮
+    function fnSetNavMenuSelected(index_) {
+      for (var i = 0; i < 3+tag_num; i++) {
+        if (index_ == i) {
+          $api.addCls(menu_catas[i], 'selected');
+        } else {
+          $api.removeCls(menu_catas[i], 'selected');
+        }
+      }
+    }
+
+
+</script>

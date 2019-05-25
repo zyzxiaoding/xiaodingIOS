@@ -1,0 +1,862 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../QandA/css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../QandA/css/style1.css"/>
+    <style>
+
+        .resouce {
+            position: relative;
+            width: 100%;
+            height: 10%;
+            background-color: #FFF;
+        }
+        .resource-left {
+            width: 36px;
+            margin-top:5px;
+            height: auto;
+            float: left;
+            padding-left: 24px;
+        }
+        .resource-imag {
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: #6d7cd9;
+            font-size: 16px; color: #fff; text-align: center;
+            line-height: 36px;
+        }
+        .resource-right {
+            /*border: 1px solid blue;*/
+            width: 50%;
+            height: auto;
+            float: left;
+        }
+        .resource-name {
+            width: auto;
+            height: 18px;
+            font-size: 18px; color: #000000; text-align: left; font-weight: 500;
+            padding-left: 14px;
+        }
+        .resource-note {
+            width: auto;
+            height: 14px;
+            font-size: 13px; color: #8e8e8e; text-align: left;
+            padding-top: 10px;
+            padding-left: 16px;
+            float: left;
+        }
+    </style>
+    <style>
+        #footer{
+            background-color: #fff;
+            width: 100%;
+            padding-left: 5%;
+            height: 7%;
+        }
+        #footer .approve {
+            width: 30%;
+            height: 43px;
+            margin-top: 1%;
+            background-color: #f2f2f2;
+            border-radius: 8px;
+            float: left;
+            background-image: url(../QandA/icon/approve.png);
+            background-repeat: no-repeat;
+            background-position: 20px center;
+            background-size: 24px 24px;
+            font-size: 14px; color: #000; text-align: center;
+            text-indent: 25px;
+            line-height: 43px;
+        }
+        #footer .approve_active {
+            background-image: url(../QandA/icon/agreechousen.png);
+        }
+        #footer .disapprove {
+            width: 15%;
+            height: 43px;
+            margin-top: 1%;
+            background-color: #f2f2f2;
+            border-radius: 8px;
+            margin-left: 8%;
+            float: left;
+            font-size: 28px; color: #000; text-align: center;
+            line-height: 43px;
+        }
+        #footer .disapprove_active {
+            background-image: url(../QandA/icon/cai2.png);
+        }
+        #footer .comment {
+            width: 15%;
+            height: 90%;
+            margin-top: 1%;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-left: 5%;
+            float: left;
+            background-image: url(../QandA/icon/comment.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 25px 25px;
+            font-size: 14px; text-align: right;
+        }
+        #footer .collect {
+            width: 10%;
+            height: 90%;
+            margin-top: 1%;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-left: 8%;
+            float: left;
+            background-image: url(../QandA/icon/collect.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 30px 25px;
+            font-size: 14px; text-align: right;
+        }
+
+        .flex-con{
+            overflow: scroll;
+        }
+        .fixed_bottom {
+            position:fixed;
+            width:100%;
+            height:7%;
+            bottom: 0px;
+            z-index:10;
+            box-shadow: 0 -1px 3px #D7D7D7;
+        }
+        .fixed_top {
+            position:fixed;
+
+            top:0px;
+            width:100%;
+            height:7%;
+            z-index:10;
+        }
+        .header-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff
+        }
+        header {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            background-color: #ffffff;
+            z-index: 10;
+
+        }
+        header .left {
+            position: absolute;
+            top: 15px;
+            width: 21.5px;
+            height: 15.5px;
+            left: 4%;
+            background-image: url(../QandA/icon/backs.png);
+            background-size: 21.5px 15.5px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        header .right {
+            /*border: 1px solid red;*/
+            position: absolute;
+            top: 10px;
+            width: 40px;
+            height: 25px;
+            right: 0px;
+            background-image: url(../QandA/icon/more.png);
+            background-size: 5px 19px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        header .center {
+            position: relative;
+            left: 0%;
+            width: 68%;
+            margin-left: 17%;
+            height: 43px;
+            float: left;
+            font-size: 18px;
+            line-height: 50px;
+            font-weight: bolder;
+            text-align: left;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        .title {
+            /*border: 1px solid red;*/
+            position: relative;
+            width: 100%;
+            height: auto;
+            padding-left: 24px;
+            padding-top: 15%;
+            padding-right: 24px;
+            box-sizing: border-box;
+            font-size: 20px; color: #000000; text-align: left;
+            font-weight: bold;
+        }
+        .tag {
+            /*border-bottom: 1px solid #d3d2d2;*/
+            /*border: 1px solid blue;*/
+            position: relative;
+            width: 100%;
+            height: auto;
+            padding-left: 24px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            font-size: 12px; color: #917dcf; text-align: left;
+        }
+        .answer {
+            position: relative;
+            margin-top: 15%;
+            width: 90%;
+            height: auto;
+            font-size: 15px; color: #000000; text-align:justify;
+        }
+        .answer .replyer {
+            /*border: 1px solid red;*/
+            width: 100%;
+            height: 42px;
+            background-color: #fff;
+            margin-left: 5%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .replyer .replyer-left {
+            width: 42px;
+            height: auto;
+            float: left;
+            padding-left: 1;
+        }
+        .replyer-left .replyer-imag {
+            width: 42px;
+            height: 42px;
+        }
+        .replyer-imag img {
+            margin-top: 2px;
+            width: 38px;
+            height: 38px;
+            border-radius: 19px;
+        }
+        .replyer .replyer-right {
+            /*border: 1px solid blue;*/
+            width: 180px;
+            height: auto;
+            float: left;
+            margin-left: 5px;
+        }
+        .replyer-right .replyer-name {
+            width: auto;
+            height: 16px;
+            font-size: 16px; color: #363636; text-align: left;
+            padding-left: 8px
+        }
+        .replyer-right .replyer-note {
+            width: auto;
+            height: 14px;
+            font-size: 13px; color: #8e8e8e; text-align: left;
+            padding-top: 8px;
+            padding-left: 8px
+        }
+        .follow {
+            /*border: 1px solid red;*/
+            margin-top: 10px;
+            width: 62px;
+            height: 22px;
+            float: right;
+            margin-right: 24px;
+            background-color: #6d7cd9;
+            border-radius: 3.5px;
+            font-size: 12px; color: #fff; text-align: center;
+            line-height: 22px;
+        }
+
+
+
+        .answer .content-body {
+            position: relative;
+            width: 90%;
+            left: 6.5%;
+            padding-top: 5%;
+            font-size: 16px; color: #fff; text-align: left;
+            line-height: 150%;
+            padding-bottom: 10%;
+        }
+        .content-imag div {
+            width: 100%;
+            margin-top: 5%;
+            border-radius: 0px;
+            margin-left: 0px;
+            position: relative;
+        }
+
+        .content-imag figure {
+            position: relative;
+            width: 100%;
+            height: 0;
+            line-height: 160%;
+            overflow: hidden;
+            margin: 0;
+            padding-bottom: 70%;
+            /* 关键就在这里 */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 1;
+        }
+        #little-window ul li {
+            width: 100%;
+            height:50px;
+            font-size: 16px; color: #000; text-align: center;
+            line-height: 50px;
+        }
+        .little-window {
+            /*border: 1px solid red;*/
+            position: fixed;
+            right: 24px;
+            top: 50px;
+            height: 100px;
+            width: 113.5px;
+            background-color: #fff;
+            font-size: 16px;color: #000; text-align: center;
+            z-index: 10;
+            box-shadow:  #efefef  2px 2px 2px 2px;
+        }
+
+        .button {
+            margin-top: 0px;
+            width: 100%;
+            height: 40px;
+            color: white;
+            background: #fff;  //默认的颜色
+        border-radius: 0px;
+        }
+
+
+        .button:active {
+            width: 100%;
+            height: 40px;
+            color: white;
+            border-radius: 0px;
+            background: #cbcbcb;
+            opacity: 0.5;
+        }
+        .disabled {
+            pointer-events: none;
+        }
+        /*ol{padding-left: 20px;}*/
+
+        ol li{
+
+            list-style-type:decimal;
+
+            list-style-position:inside;
+        }
+        ul li{
+
+            list-style-type:disc;
+
+            list-style-position:inside;
+        }
+
+        font {
+            line-height: 150%;
+        }
+
+        .content-body img {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+
+    <div id="main">
+        <div class="fixed_top">
+            <header id="header" class="header-box">
+                <div class="left" onclick="api.closeWin();"></div>
+                <div class="center"></div>
+                <div class="right"tapmode onclick="little_window()"></div>
+            </header>
+        </div>
+        <div id='little-window' class="little-window" style="display:none">
+            <ul>
+                <li class="button" style=" list-style:none;" tapmode onclick="">分享</li>
+                <li class="button" id="changeLI" style=" list-style:none;" tapmode onclick="report(this.innerText)" >举报</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="answer" onclick="document.getElementById('little-window').style.display='none'" >
+        <div class="replyer">
+            <div class="replyer-left">
+                <div id="ruser_pic" class="replyer-imag">
+                    <img id="ruser_img" src="../QandA/image/09-014416_603.jpg" alt="">
+                </div>
+            </div>
+            <div class="replyer-right">
+                <div id="ruser_name" class="replyer-name">我是一只大橙子</div>
+                <div id="ruser_description" class="replyer-note">UI问题优秀回答者</div>
+            </div>
+            <div id="follow_logo" class="follow" style:"margin-right:148px;" onclick="change_follow()">+关注</div>
+        </div>
+
+        <div id='answer_content' class="content-body">
+            <p></p>
+        </div>
+
+        <div class="resource">
+            <div class="resource-left">
+                <div id="resource-type" class="resource-imag">
+                    PDF
+                </div>
+            </div>
+            <div class="resource-right">
+                <div id="resource-name" class="resource-name">高数习题集详解</div>
+                <div class="resource-note">继续预览</div>
+                <div class="resource-note" onclick="download_resource()">点击下载</div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" class="fixed_bottom" onclick="document.getElementById('little-window').style.display='none'">
+        <div id="approver" class="approve" onclick="approve(this)"></div>
+        <div id="disapprover" class="iconfont icon-diss disapprove" onclick="disapprove(this)"></div>
+        <div id="commentr" class="comment" onclick="open_comment()"></div>
+        <div id="collectr" class="collect" onclick="collect(this)"></div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../QandA/script/api.js"></script>
+<script type="text/javascript" src="../QandA/script/jquery.js"></script>
+<script type="text/javascript" src="../QandA/script/dropload.min.js"></script>
+<script type="text/javascript">
+    var json_data= {};
+    var json_dict;
+    var author_id,sourceId;
+    apiready = function () {
+        json_dict = {
+            "user_id":$api.getStorage('user_id'),
+            "source_id":api.pageParam.sourceID
+        };
+        sourceId = api.pageParam.sourceID;
+        //alert(JSON.stringify(sourceId));
+        var main = $api.byId('header');
+        var title = $api.byId('title');
+        var footer = $api.byId('footer');
+
+        var header_H = $api.offset(header).h;
+        var footer_H = $api.offset(footer).h;
+        var footer_T = $api.offset(footer).t;
+        Getdata(json_dict);
+
+    };
+    var litwindow = $api.dom('#little-window');
+    function little_window() {
+        window.event.cancelBubble=true;
+        if (litwindow.style.display == "none") {
+            litwindow.style.display = '';
+        }
+        else {
+            litwindow.style.display = 'none';
+        }
+    }
+    function closelitwindow() {
+        litwindow.style.display = 'none';
+    }
+
+    function Getdata() {
+
+        $.ajax({
+            type: "post",
+            url: "http://47.105.160.217/api/group/getSource/",
+            dataType : "json",
+            data: JSON.stringify(json_dict),
+            success: function (d) {
+                json_data = d.data;
+                question_view(json_data);
+            }
+        });
+    }
+    function report(text) {
+
+
+        if (text=="举报"){
+          $api.setStorage('reportRid',api.pageParam.sourceID );
+          api.openWin({
+            url:'report_win.html',
+            name:'report_win',
+            pageParam:{
+              r_id: sourceId ,
+              user_cookie:'',
+              report_type: 'resource'
+            }
+          });
+            closelitwindow();
+        }
+        else {
+            var j = {
+                "user_id":$api.getStorage('user_id'),
+                "source_id":sourceId,
+            }
+            $.ajax({
+                url:'http://47.105.160.217:80/api/group/deleteSource/',
+                data:JSON.stringify(j),
+                method:'post',
+                success:function (ret) {
+                    api.toast({
+                        msg: '删除成功',
+                        duration: 2000,
+                        location: 'middle'
+                    })
+                    api.closeWin();
+
+                }
+            })
+        }
+    }
+    function enterMainpge(id) {
+        api.openWin({
+            name:'mainPage'+id,
+            url:'../account/otherpage/otherFragment_frm.html',
+            pageParam:{
+                uid:id
+            }
+        })
+    }
+    function openweb(url){
+        api.openApp({
+                androidPkg : 'android.intent.action.VIEW',
+                mimeType : 'text/html',
+                uri : url
+            },
+            function(ret, err) {
+                var msg = JSON.stringify(ret);
+                api.alert({
+                    title : 'openApp',
+                    msg : msg,
+                    buttons : ['确定']
+                });
+            });
+    }
+    function question_view(json_data) {
+        //alert(JSON.stringify(json_data));
+        if (json_data.is_followed_by_user==true){
+            document.getElementById('follow-logo').innerText = '取消关注'
+        }
+        document.getElementById('resource-type').setAttribute('background-color','#6d7cd9');
+        document.getElementById('resource-type').innerText = json_data.url.split('.')[1];
+        var  t = json_data.name;
+        if(t.length>8) t=t.substring(0,8);
+        document.getElementById('resource-name').innerText= t;
+        author_id = json_data.author_info.author_id;
+        if (author_id == $api.getStorage('user_id')){
+          document.getElementById('changeLI').innerText='删除'
+        }
+        if(json_data.author_info.self_description!='')
+        {
+            document.getElementById('ruser_description').innerText = json_data.author_info.self_description;
+        }
+        document.getElementById('ruser_name').innerText = json_data.author_info.author_name;
+        document.getElementById('ruser_img').src = 'http://47.105.160.217/files/'+json_data.author_info.user_profile_url;
+        document.getElementById('ruser_img').onclick = function () {
+            enterMainpge(json_data.author_info.author_id);
+        }
+        document.getElementById('answer_content').childNodes[1].innerHTML = json_data.description;
+        document.getElementById('commentr').innerHTML = json_data.comment_num;
+        document.getElementById('approver').innerHTML = json_data.like_num;
+       // document.getElementById('disapprover').innerHTML = json_data.dislike_num;
+        document.getElementById('collectr').innerHTML = json_data.download_num;
+    }
+
+    function approve(tag) {
+       var  as_dict={
+            "user_id": "8a49e18c806b6b881f4eb1718ed23599",
+            "source_id": 1, // int, 必需
+            "type":0
+        };
+        var current_like_num = parseInt($api.dom('.approve').innerHTML.replace('感谢','')); //获取页面当前的点赞数
+        if($api.hasCls($api.dom('.disapprove'),'disapprove_active')) { //如果点踩高亮
+            $.ajax({
+                type: 'POST',
+                url: "http://47.105.160.217:80/api/group/likeSource/",
+                data:JSON.stringify(as_dict),
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点赞成功')
+                    console.log(JSON.stringify(result))
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点赞！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.removeCls($api.dom('.disapprove'), 'disapprove_active');
+                        $api.addCls($api.dom('.approve'), 'approve_active');
+
+                        $api.dom('.approve').innerHTML = '感谢' + String(current_like_num + 1) ;
+                        $api.addCls($api.dom('.approve'),'disabled')
+                        $api.removeCls($api.dom('.disapprove'),'disabled')
+                    }
+                    // view_tips(result)
+                },
+                error:function(){
+                    console.log('点赞失败');
+                }
+            });
+        }
+
+        else {
+            $.ajax({
+                type: 'POST',
+                // url: "http://47.105.160.217:80/api/questionAnswer/likeAnswer/",
+                url: "http://47.105.160.217:80/api/group/likeSource/",
+
+                data:JSON.stringify(as_dict),
+                // crossDomain: true,
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点赞成功')
+                    console.log(JSON.stringify(result))
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点赞！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.dom('.approve').innerHTML = '感谢' + String(parseInt(json_data.like_num) + 1) ;
+                        $api.addCls($api.dom('.approve'),'disabled')
+                        $api.removeCls($api.dom('.disapprove'),'disabled')
+                        $api.addCls(tag, 'approve_active');
+                    }
+                    // view_tips(result)
+                },
+                error:function(){
+                    console.log('点赞失败');
+                }
+            });
+        };
+    }
+
+    function disapprove(tag) {
+        var as_dict={
+            "user_id": $api.getStorage('user_id'),
+            "source_id": sourceId, // int, 必需
+            "type": 1
+        }
+        if( $api.hasCls($api.dom('.approve'),'approve_active') ) { //如果点赞高亮
+            $.ajax({
+                type: 'POST',
+                // url: "http://47.105.160.217:80/api/questionAnswer/dislikeAnswer/",
+                url: "http://47.105.160.217:80/api/group/likeSource/",
+
+                data:JSON.stringify(as_dict),
+                // crossDomain: true,
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点踩成功')
+                    // view_tips(result)
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点踩！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else if (result.message == "You have accessed this answer") {
+                        api.toast({
+                            msg: '你已经采纳了这个回答！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.removeCls($api.dom('.approve'), 'approve_active');
+                        $api.addCls($api.dom('.disapprove'), 'disapprove_active');
+                        $api.dom('.approve').innerHTML = '感谢' + String(parseInt(json_data.like_num) - 1) ;
+                        $api.addCls($api.dom('.disapprove'),'disabled')
+                        $api.removeCls($api.dom('.approve'),'disabled')
+                    }
+                },
+                error:function(){
+                    console.log('点踩失败');
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                // url: "http://47.105.160.217:80/api/questionAnswer/dislikeAnswer/",
+                url: "http://47.105.160.217:80/api/questionAnswer/likeSource/",
+
+                data:JSON.stringify(as_dict),
+                // crossDomain: true,
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点踩成功')
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点踩！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.addCls(tag, 'disapprove_active');
+                        $api.removeCls($api.dom('.approve'),'disabled')
+                        $api.addCls($api.dom('.disapprove'),'disabled')
+                    }
+                },
+                error:function(){
+                    console.log('点踩失败');
+                }
+            });
+        };
+    }
+
+    function collect(tag) {
+        var as_dict = {
+            "user_id":$api.getStorage('user_id'),
+            "source_id":sourceId
+        };
+        if (json_data.is_collected==true){
+            $api.addCls(tag, 'collect_active');
+        }
+        $.ajax({
+            type: 'POST',
+            // url: "http://47.105.160.217:80/api/questionAnswer/dislikeAnswer/",
+            url: "http://47.105.160.217:80/api/group/collectSource/",
+            data:JSON.stringify(as_dict),
+            // crossDomain: true,
+            dataType: 'json',
+            async: false,
+            success:function(result){
+                console.log('取消收藏成功')
+            },
+            error:function(){
+                console.log('取消收藏失败');
+            }
+        });
+        if( $api.hasCls(tag,'collect_active') ) {  //已收藏
+            $api.removeCls(tag, 'collect_active');
+            $api.dom('.collect').innerHTML = parseInt($api.dom('.collect').innerHTML) - 1 ;
+        }
+        else {
+            $api.addCls(tag, 'collect_active');
+            $api.dom('.collect').innerHTML = parseInt($api.dom('.collect').innerHTML) + 1 ;
+        }
+
+    }
+
+
+    function open_comment() {
+        api.openFrame({
+            name: 'comment_win',
+            url: './comment_win.html',
+            rect: {
+                x:0,
+                y:0,
+                w:api.winWidth,
+                h:api.winHeight
+            },
+            pageParam: {
+                article_id: sourceId,
+                user_id: $api.getStorage('user_id'),
+                type:"resource"
+            },
+            bgColor: 'rgba(0,0,0,0.6)'
+        });
+    }
+
+    function change_follow() {
+        var flag;
+
+        if (document.getElementById('follow_logo').innerHTML == '+关注') {
+            flag = 1; //表示关注动作
+
+            document.getElementById('follow_logo').style.backgroundColor = '#8e8e8e';
+            document.getElementById('follow_logo').innerHTML = '取消关注';
+        }
+        else {
+            flag = 0; //表示取消关注动作
+            document.getElementById('follow_logo').style.backgroundColor = '#6d7cd9';
+            document.getElementById('follow_logo').innerHTML = '+关注';
+        }
+        var postData =
+            {
+                "user_id":$api.getStorage('user_id'),
+                "aim_id":author_id
+            };
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/concernUser/',
+            data:JSON.stringify(postData),
+            dataType: 'json',
+            async: false,
+            method:'post',
+            success:function (ret) {
+                //alert(JSON.stringify(ret))
+            },
+            error:function (e) {
+                alert(JSON.stringify(e))
+            }
+        })
+
+    }
+    function download_resource() {
+        var downloadManager = api.require('downloadManager');
+        downloadManager.openManagerView({
+            title: '下载管理'
+        }, function(ret, err) {
+            if (ret) {
+            downloadManager.openDownloadedFile({
+                id:ret.id
+                }, function(ret, err) {
+                if (ret.status) {
+                    alert(JSON.stringify(ret));
+                } else {
+                    alert(JSON.stringify(err));
+                }
+            })
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+        downloadManager.enqueue({
+            url: 'http://47.105.160.217/files/'+json_data.url,
+            savePath: 'fs://download/'+json_data.url,
+            cache: true,
+            allowResume: true,
+            title: json_data.name,
+            networkTypes: 'all'
+        }, function(ret, err) {
+            if (ret) {
+                //alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+
+    }
+
+
+</script>

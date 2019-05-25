@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+		<style>
+    html,
+    body {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        height: 100%;
+        background-color: transparent;
+    }
+
+    section {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        overflow: auto;
+    }
+
+    footer {
+        width: 100%;
+        height: 48%;
+        background-color: #fff;
+        border-radius: 15px 15px 0 0;
+    }
+
+
+    </style>
+</head>
+<body>
+	<!-- <div id="dialog">
+		<img id="erweima" src="../image/myerweima.png" tapmode onclick="api.closeFrame()"/>
+	</div> -->
+  <section tapmode  onclick="closeUIchat()"></section>
+  <footer id="footer">
+      <div style="position:absolute;top:6%;left:10%;font-size:20px;font-weight:bold;">悬赏金额</div>
+      <div style="position:absolute;top:3%;right:10%;font-size:40px;" onclick="closeUIchat()">×</div>
+      <div style="position:absolute;left:9%;top:27%;border-bottom:1px solid #D3D3D3;padding-bottom:2.5%;width:80%;">
+        <label style="font-size:25px;">￥</label>
+        <input id="money" style="font-size:25px;width:90%;outline:none;" type="text" name="" value="" oninput="">
+      </div>
+			<div id="note" style="position:absolute;left:9%;top:40%;color:red">剩余金币数:</div>
+      <div style="position:absolute;left:9%;top:50%;width:80%;border-bottom:0.5px solid #D3D3D3;padding-top:2.5%;">
+          <textarea id="beizhu" style="font-size:13px;color:grey;width:90%;outline:none;border:" rows="1" placeholder="备注"></textarea>
+      </div>
+      <div style="position:absolute;left:7%;top:75%;width:85%;border:1px solid blue;color:blue;text-align:center;
+      padding-top:8px;padding-bottom:8px;border-radius:15px;" onclick="xuanshang()">确认悬赏</div>
+  </footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- <script type="text/javascript" src="../script/zepto.min.js"></script> -->
+<script type="text/javascript">
+	var xuanshangh;
+	apiready = function(){
+		  document.getElementById('note').innerHTML = document.getElementById('note').innerHTML + api.pageParam.gold;
+		  var moneyimput = document.getElementById("money");
+			moneyimput.oninput=function(){
+				moneyimput.value=moneyimput.value.replace(/[^\d]/g,'');
+				if(moneyimput.value>api.pageParam.gold)
+				   moneyimput.value=api.pageParam.gold;
+				var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/
+	 　　 if (re.test(moneyimput.value)) {
+	 　　　　document.getElementById('note').innerHTML = "剩余金币数:" + (parseInt(api.pageParam.gold) - parseInt(moneyimput.value));
+	 　　 }
+	 			else{
+					document.getElementById('note').innerHTML = "剩余金币数:" + api.pageParam.gold;
+				}
+			}
+			document.getElementById("money").value=$api.getStorage("money");
+			document.getElementById("beizhu").value=$api.getStorage("beizhu");
+		  xuanshangh=document.getElementById("footer").offsetHeight;
+			console.log(xuanshangh);
+			window.onresize=function(){
+				console.log("zyz");
+					document.getElementById("footer").style.height= xuanshangh +"px";
+			}
+	};
+  function closeUIchat() {
+		api.closeFrame();
+  }
+
+	function xuanshang(){
+		var money = document.getElementById("money").value;
+		var beizhu = document.getElementById("beizhu").value;
+		if(money==""){
+				money=0;
+		}
+		if(beizhu==""){
+				beizhu="备注";
+		}
+		$api.setStorage('money',money);
+		$api.setStorage('beizhu',beizhu);
+		var jsfun = 'document.getElementById("xuanshang").style.visibility="visible";document.getElementById("money").value=$api.getStorage("money");'
+		+'document.getElementById("beizhu").value=$api.getStorage("beizhu");document.body.scrollTop=document.body.scrollHeight;';
+		api.execScript({     name: 'question_main',     script: jsfun });
+		closeUIchat();
+	}
+</script>
+</html>

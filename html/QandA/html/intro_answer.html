@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+    nav {
+      /*border: 1px solid red;*/
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-flex-flow: row;
+      flex-flow: row;
+      position: relative;
+      width: 60%;
+      height: 76px;
+      margin: 0 auto;
+    }
+    nav .menu_answer{
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      flex: 1;
+      width: 50%;
+      height: 20px;
+      line-height: 20px;
+      font-size: 18px; color: #8e8e8e; text-align: center;
+      /*border: 1px solid #8e8e8e;
+      border-radius: 50%;*/
+
+    }
+    nav .menu_answer.selected {
+      font-size: 18px; color: #6d7cd9; font-weight: bolder;
+      /*border: 1px solid #6d7cd9;
+      border-radius: 50%;*/
+    }
+    </style>
+</head>
+<body>
+  <nav id="nav">
+    <div id="menu-answer-0" class="menu_answer selected" onclick="changeIframe(0)">1</div>
+    <div id="menu-answer-1" class="menu_answer" onclick="changeIframe(1)">2</div>
+    <div id="menu-answer-2" class="menu_answer" onclick="changeIframe(2)">3</div>
+    <div id="menu-answer-3" class="menu_answer" onclick="changeIframe(3)">4</div>
+    <div id="menu-answer-4" class="menu_answer" onclick="changeIframe(4)">5</div>
+  </nav>
+  <iframe id="frame2" src="../html/intro_answer_detail.html" width="100%" height="100%"  frameborder="no" scrolling="no" ></iframe>
+
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+var pos;
+var height;
+var ques_index;
+var page_now1 = 0;
+var src_list = new Array('../html/intro_answer_detail.html','../html/all_answer_detail.html','../html/intro_answer_detail.html','../html/all_answer_detail.html','../html/intro_answer_detail.html')
+
+  function changeIframe(page) {
+    if (parseInt(page) != page_now1) {
+      tmp0 = document.getElementById('menu-answer-' + parseInt(page))
+      $api.addCls(tmp0, 'selected');
+      tmp1 = document.getElementById('menu-answer-' + parseInt(page_now1))
+      $api.removeCls(tmp1, 'selected');
+      page_now1 = page;
+    }
+    document.getElementById('frame2').src = src_list[parseInt(page)];
+
+  }
+
+</script>

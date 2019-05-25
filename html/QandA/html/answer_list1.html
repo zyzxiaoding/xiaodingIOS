@@ -1,0 +1,778 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航1</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+        header{ background-color: #f2f2f2; }
+        header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+        header ul li.active{ display: block; }
+
+        .flex-con{
+          overflow: scroll;
+        }
+        .fixed_bottom {
+           position:fixed;
+           left:0px;
+           bottom:0px;
+           width:100%;
+           height:50px;
+           z-index:10;
+        }
+        .fixed_top {
+           position:fixed;
+           left:0px;
+           top:0px;
+           width:100%;
+           height:7%;
+           z-index:10;
+        }
+        .header-box {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          background-color: #ffffff
+        }
+        header {
+          width: 100%;
+          height: 100%;
+          background-color: #ffffff;
+          z-index: 10;
+
+        }
+        header .left {
+          position: absolute;
+          top: 15px;
+          width: 21.5px;
+          height: 15.5px;
+          left: 15px;
+          background-image: url(../icon/back.png);
+          background-size: 21.5px 15.5px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+        header .right {
+          position: absolute;
+          top: 15px;
+          width: 5px;
+          height: 19px;
+          right: 15px;
+          background-image: url(../icon/more.png);
+          background-size: 5px 19px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+        .title {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          bottom: auto;
+          padding-left: 24px;
+          padding-top: 15%;
+          padding-right: 24px;
+          box-sizing: border-box;
+          font-size: 20px; color: #000000; text-align: left;
+          font-weight: bold;
+        }
+        .tag {
+          /*border-bottom: 1px solid #d3d2d2;*/
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 100%;
+          height: 12px;
+          bottom: auto;
+          padding-left: 24px;
+          padding-top: 10px;
+          box-sizing: border-box;
+          font-size: 12px; color: #917dcf; text-align: left;
+        }
+        .description {
+          width: 85%;
+          height: auto;
+          padding-top: 20px;
+          margin-left: 24px;
+        }
+        .description_word {
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+          float: left;
+          /*text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;*/
+        }
+        .description_img {
+          /*border: 1px solid blue;*/
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+          /*text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;*/
+        }
+
+        .show_all {
+          /*float: left;*/
+          position: relative;
+          width: auto;
+          height: auto;
+          font-size: 16px; color: #9d9ebc;text-align: right;
+          margin-top: -20px;
+          /*padding-bottom: 16px;*/
+        }
+        .show_less {
+          position: relative;
+          width: auto;
+          height: auto;
+          font-size: 16px; color: #9d9ebc;text-align: right;
+        }
+        .follow-box {
+          /*border: 1px solid red;*/
+          width: 100%;
+          height: 36px;
+          background-color: #fff;
+          padding-top: 24px;
+          /*margin-left: 24px;*/
+        }
+        .follow-box .note {
+          /*border: 1px solid blue;*/
+          width: 130px;
+          height: 36px;
+          background-color: #fff;
+          font-size: 14px; color: #8e8e8e; text-align: left;
+          line-height: 36px;
+          padding-left: 20px
+        }
+        .follow {
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 20%;
+          height: 70%;
+          top: 15%;
+          float: right;
+          margin-right: 24px;
+          background-color: #6d7cd9;
+          border-radius: 4px;
+          font-size: 16px; color: #fff; text-align: center;
+          line-height: 25.2px;
+        }
+
+        .content-imag img {
+          position: relative;
+          width: 100%;
+          height: 250px;
+          margin-top: 5%;
+          border-radius: 0px;
+          margin-left: 0px;
+        }
+
+        /*.follow :hover {
+          background-color:#5cbf2a;
+        }*/
+
+        nav {
+          /*border: 1px solid red;*/
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-orient: horizontal;
+          -webkit-flex-flow: row;
+          flex-flow: row;
+          position: relative;
+          width: 80%;
+          height: 64px;
+          margin: 0 auto;
+        }
+        nav .reward {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+          position: relative;
+          flex: 1;
+          width: 100%;
+          height: 64px;
+          line-height: 64px;
+          font-size: 16px; color: #000; text-align: center;
+        }
+
+				.reward img {
+					height: 16px;
+					width: 16px;
+					vertical-align: middle;
+				}
+
+        .reward-logo {
+        	position: relative;
+        	width: 70%;
+					height: 30%;
+					top: 35%;
+					left: 15%;
+					background-image: url(../icon/award.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+					font-size: 16px; color: #000; text-align: center;
+        }
+
+        .answer {
+          border-top: 1px solid #d3d2d2;
+          position: relative;
+          width: 100%;
+          height: auto;
+          background-color: #fff;
+					margin-top: 10px;
+          padding-top: 14px;
+          padding-bottom: 50px;
+        }
+
+        .answer_num {
+          width: 100%;
+          height: auto;
+          text-indent: 24px;
+          font-size: 20px; color: #000; text-align: left;
+        }
+        .answer-box {
+          width: 100%;
+          height: auto;
+          padding-top: 7%;
+        }
+        .answer-box-left {
+          width: 36px;
+          height: auto;
+          float: left;
+          padding-left: 24px;
+        }
+        .answer-box-left .answer-user-imag {
+          width: 36px;
+          height: 36px;
+        }
+        .answer-user-imag img {
+          width: 36px;
+          height: 36px;
+          border-radius: 18px;
+        }
+        .answer-box-right {
+          /*border: 1px solid blue;*/
+          width: 259px;
+          height: auto;
+          float: left;
+        }
+        .answer-user-name {
+          width: auto;
+          height: 16px;
+          font-size: 16px; color: #000000; text-align: left;
+          padding-left: 8px
+        }
+        .answer-user-data {
+          width: auto;
+          height: 14px;
+          font-size: 14px; color: #8e8e8e; text-align: left;
+          padding-top: 10px;
+          padding-left: 8px
+        }
+        .answer-user-comment {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+          padding-top: 15px;
+          padding-left: 8px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+
+        .interactive-box {
+          width: 100%;
+          height: 40px;
+          padding-top: 20px;
+        }
+        .approve-logo {
+          width: 64px;
+          height: 21.5px;
+          float: left;
+          background-image: url(../icon/approve.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          float: left;
+        }
+        .comment-logo {
+          width: 64px;
+          height: 21.5px;
+          float: left;
+          background-image: url(../icon/message.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          float: left;
+        }
+
+        #little-window ul li {
+          width: 100%;
+          height:50px;
+          font-size: 16px; color: #000; text-align: center;
+          line-height: 50px;
+        }
+        .button {
+          margin-top: 0px;
+          width: 100%;
+          height: 40px;
+          color: white;
+          background: #fff;  //默认的颜色
+          border-radius: 0px;
+        }
+
+
+  .button:active {
+          width: 100%;
+          height: 40px;
+          color: white;
+          border-radius: 0px;
+          background: #cbcbcb;
+          opacity: 0.5;
+  }
+        .little-window {
+          /*border: 1px solid red;*/
+          position: fixed;
+          right: 24px;
+          top: 50px;
+          height: 150px;
+          width: 113.5px;
+          background-color: #fff;
+          font-size: 16px;color: #000; text-align: center;
+          z-index: 10;
+          box-shadow:  darkgrey  1px 1px 1px 1px;
+        }
+
+        .question_info {
+          position: relative;
+          width: 100%;
+          height: auto;
+        }
+
+    </style>
+</head>
+<body>
+<div id="wrap" class="">
+
+    <div id="main" class="question_info">
+      <div class="fixed_top">
+      <header id="header" class="header-box">
+        <div class="left"tapmode onclick="back()"></div>
+        <div class="center"></div>
+        <div class="right"tapmode onmouseover="little_window()"></div>
+      </header>
+      </div>
+      <div id='little-window' class="little-window" style="display:none">
+        <ul>
+          <li class="button" tapmode onclick="yaoqing()">邀请回答</li>
+          <li class="button" >分享</li>
+          <li class="button" tapmode onclick="jubao()">举报</li>
+        </ul>
+      </div>
+      <div  tapmode onclick="closelitwindow()">
+        <div id = "title" class="title"tapmode>
+        </div>
+        <div id="tag"  class="tag" tapmode  >
+           ·  ·
+        </div>
+        <div class="follow-box">
+          <button id="follow_logo" class="follow"tapmode onclick="change_follow()">+关注</button>
+          <div id="follow_num" class="note">已有0人关注</div>
+        </div>
+        <div class="description">
+          <div id="description_word" class="description_word"tapmode>
+          </div>
+          <div id="content-imag" class="content-imag">
+          </div>
+        </div>
+
+      </div>
+      <!-- <div class="show_all">展开问题描述∨</div> -->
+
+      <nav>
+        <div id="reward" class="reward" onclick="" >
+          <div id="reward-num" class="reward-logo">
+						悬赏0元
+					</div>
+				</div>
+        <div class="reward"tapmode onclick="edit_answer()" tapmode>
+          <img src="../icon/edit.png" alt="">
+          写回答
+				</div>
+      </nav>
+
+
+    </div>
+
+
+    <div id="answer" class="answer"  >
+      <div id="answer_num" class="answer_num">回答(0)</div>
+    </div>
+
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+var qs_data = {};
+var as_data = {};
+var qs_dict;
+var as_dict;
+var url;
+
+
+    apiready = function () {
+
+
+      var main = $api.byId('header');
+      var title = $api.byId('title');
+      var tag = $api.byId('tag');
+      var footer = $api.byId('footer');
+
+      var header_H = $api.offset(header).h;
+      var tag_H = $api.offset(tag).h;
+      var title_H = $api.offset(title).h;
+      var qs_id = api.pageParam.question_id;
+      console.log(qs_id)
+      qs_dict = {
+          "app_version":"",
+          "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+          "user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+          "type":"homework",
+          "question_id": qs_id
+      }
+      as_dict = {
+          "app_version":"",
+          "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+          "user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+          "type":"homework",
+          "question_id":qs_id,
+          "since_id": 0,
+          "page_size": 10
+      }
+      GetQuestion(qs_dict);
+      question_view();
+      GetAnswer(as_dict)
+      show_less();
+    }
+//︿
+    function show_all() {
+      document.getElementById('show_all').style.display='none'
+      $(".description_word").each(function(){
+        str=qs_data.detail+'<div id="show_less" class="show_less" onclick="show_less()">︿收起</div>';  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替
+        $(this).html(str);                   //将替换的值赋值给当前对象
+        });
+    }
+
+    function show_less() {
+      if (document.getElementById('show_less') != null) {
+        document.getElementById('show_less').style.display='none';
+      }
+      $(".description_word").each(function(){
+        var len=$(this).text().length;   //当前HTML对象text的长度
+        if(len>50){
+            var str="";
+            str=$(this).text().substring(0,50)+"..."+'<div id="show_all" class="show_all" onclick="show_all()">﹀展开全部</div>';  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替            $(this).html(str);                   //将替换的值赋值给当前对象
+            $(this).html(str);                   //将替换的值赋值给当前对象
+        }
+        });
+    }
+
+    function GetQuestion(json) {
+      $.ajax({
+    type: 'POST',
+    // url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+    url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+    data:JSON.stringify(json),
+    // crossDomain: true,
+    dataType: 'json',
+    async: false,
+    success:function(result){
+      console.log('问题加载成功')
+      qs_data =  result.data
+      console.log(qs_data.title)
+      // view_tips(result)
+    },
+    error:function(){
+      console.log('问题加载失败');
+    }
+});
+    }
+
+    function GetAnswer(json) {
+      $.ajax({
+    type: 'POST',
+    // url: "http://47.105.160.217:80/api/questionAnswer/getAnswer/",
+    url: "http://47.105.160.217:80/api/questionAnswer/getAnswer/",
+    data:JSON.stringify(json),
+    // crossDomain: true,
+    dataType: 'json',
+    async: false,
+    success:function(result){
+      console.log('回答列表加载成功')
+      as_data =  result.data
+      answer_view();
+      // view_tips(result)
+    },
+    error:function(){
+      console.log('回答列表加载失败');
+    }
+});
+    }
+
+    function question_view() {
+      document.getElementById('title').innerHTML = qs_data.title;
+			var tag_content = '';
+			for (var i = 0; i<qs_data.tag.length; i++) {
+				if (i == 0) {
+					tag_content = tag_content + qs_data.tag[i];
+				}
+				else {
+					tag_content = tag_content + ' · ' + qs_data.tag[i];
+				}
+			}
+      document.getElementById('tag').innerHTML = tag_content;
+      var description_total = qs_data.detail;
+      var img_url_list = new Array();
+      description_total = description_total.split('^&');
+      if (description_total.length != 1) {  //如果有图片
+        for (var j = 1; j < description_total.length; j++) {
+          img_url_list.push(description_total[j])
+        }
+      }
+
+      for (var j = 0; j < img_url_list.length; j++) {
+        url = "http://47.105.160.217:80/files/" + img_url_list[j];
+        $.ajax({
+            type: 'GET',
+            url: url,
+            async: false,
+            success:function(result) {
+                console.log('图片加载成功')
+                // console.log(url)
+                console.log(url)
+                create_pic(url)
+            },
+            error:function() {
+                console.log('图片加载失败');
+                }
+            });
+      }
+      document.getElementById('description_word').innerHTML = description_total[0];
+      document.getElementById('reward').childNodes[1].innerHTML = '悬赏'+qs_data.reward+'元';
+      //document.getElementById('answer_content').childNodes[1].innerHTML = json_data.answer_content;
+      if (qs_data.is_concered == true) {
+        change_follow()
+      }
+    }
+
+    function create_pic(pic_url) {
+      sourceNode = document.getElementById('content-imag');
+      pic_node = document.createElement('img');
+      pic_node.src = pic_url;
+      // pic_node.type = "image/png";
+      sourceNode.appendChild(pic_node);
+    }
+
+    function answer_view() {
+      tmp = document.getElementById('answer_num');
+      tmp.innerHTML = '回答（'+as_data.length +'）'
+      for (var i = 0; i < parseInt(as_data.length); i++) {
+        parentNode = document.getElementById('answer')
+        sourceNode = document.createElement('span');
+        sourceNode.setAttribute('id','answer-'+i);
+        sourceNode.setAttribute('class','answer-box');
+        parentNode.appendChild(sourceNode);
+        childNode1 = document.createElement('div');
+        childNode1.setAttribute('class','answer-box-left');
+        sourceNode.appendChild(childNode1);
+        grandNode = document.createElement('div');
+        grandNode.setAttribute('class','answer-user-imag');
+        childNode1.appendChild(grandNode);
+        imgNode = document.createElement('img');
+        imgNode.src = "../image/09-014416_603.jpg";
+        grandNode.appendChild(imgNode);
+
+        childNode2 = document.createElement('div');
+        childNode2.setAttribute('class','answer-box-right');
+        sourceNode.appendChild(childNode2);
+        grandNode1 = document.createElement('div');
+        grandNode1.setAttribute('class','answer-user-name');
+        grandNode1.innerHTML = '用户名' + i;
+        childNode2.appendChild(grandNode1);
+        grandNode2 = document.createElement('div');
+        grandNode2.setAttribute('class','answer-user-comment');
+        grandNode2.innerHTML = as_data[i].content;
+        childNode2.appendChild(grandNode2);
+        grandNode3 = document.createElement('div');
+        grandNode3.setAttribute('class','interactive-box');
+        childNode2.appendChild(grandNode3);
+        interNode1 = document.createElement('div');
+        interNode1.setAttribute('class','approve-logo');
+        interNode1.innerHTML = as_data[i].like_num;
+        interNode2 = document.createElement('div');
+        interNode2.setAttribute('class','comment-logo');
+        interNode2.innerHTML = as_data[i].comment_num;
+        grandNode3.appendChild(interNode1);
+        grandNode3.appendChild(interNode2);
+      }
+      for (var j=0; j<as_data.length; j++) {
+        tmp = document.getElementById('answer-'+j);
+        tmp1 = as_data[j].answer_id;
+        tmp2 = as_data[j].question_id;
+        $(tmp.childNodes[1].childNodes[1]).attr('onclick','open_answer_detail('+tmp1+','+tmp2+')')
+        $(tmp.childNodes[1].childNodes[1]).attr('tapmode','')
+      }
+
+    }
+
+
+var litwindow = $api.dom('#little-window');
+
+      function little_window() {
+        if (litwindow.style.display == "none") {
+          litwindow.style.display = 'block';
+        }
+        else {
+          litwindow.style.display = 'none';
+        }
+      }
+
+
+      function closelitwindow() {
+        litwindow.style.display = 'none';
+      }
+      function open_comment() {
+        api.openFrame({
+                  name: 'comment',
+                  url: './comment_box.html',
+                  rect: {
+                          x:0,
+                          y:0,
+                          w:api.winWidth,
+                          h:api.winHeight
+                  },
+                  bgColor: 'rgba(0,0,0,0.6)',
+                  // bounces: false,
+      });
+    }
+    function change_follow() {
+      var flag;
+      if (document.getElementById('follow_logo').innerHTML == '+关注') {
+        flag = 1; //表示关注动作
+        document.getElementById('follow_logo').innerHTML = '取消关注';
+        $.ajax({
+            type: 'POST',
+            // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+            url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+            data:JSON.stringify(qs_dict),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+              console.log('关注成功')
+              tmp =  result.message
+              console.log(tmp)
+            },
+            error:function(){
+              console.log('关注失败');
+            }
+        });
+      }
+      else {
+        flag = 0; //表示取消关注动作
+        document.getElementById('follow_logo').innerHTML = '+关注';
+        $.ajax({
+            type: 'POST',
+            url: "http://47.105.160.217:80/api/questionAnswer/deleteQuestion/",
+            data:JSON.stringify(qs_dict),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+              console.log('取关成功')
+              tmp =  result.message
+            },
+            error:function(){
+              console.log('取关失败');
+            }
+        });
+      }
+
+    }
+
+    function open_answer_detail(as_id,qs_id) {
+      api.openWin({
+          name: 'hobby_question_detail',
+          url: './hobby_question_detail.html',
+          pageParam: {
+            question_id: qs_id,
+            answer_id: as_id
+          }
+      });
+    }
+
+    function edit_answer() {
+      api.openWin({
+          name: 'edit_answer',
+          url: './edit_answer_win.html',
+          pageParam: {
+              question_id: api.pageParam.question_id
+          }
+      });
+
+    }
+
+    function yaoqing() {
+      closelitwindow();
+      api.openWin({
+          name: 'invite_win',
+          url: './invite_win.html',
+          pageParam: {
+              name: 'test'
+          }
+      })
+    }
+
+    function jubao() {
+      closelitwindow();
+      alert('举报成功!')
+    }
+
+
+
+
+    function back() {
+      api.openWin({
+          name: 'viewby_cata_hobby',
+          url: './viewby_cata_hobby.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+
+
+</script>

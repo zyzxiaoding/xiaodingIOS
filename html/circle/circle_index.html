@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>XD首页</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+</head>
+<body>
+
+<header id="header" class="aui-bar aui-bar-nav" style="background-color: #6d7cd9;opacity: 0.7">
+    <div  style="width:100%;float: left;">
+        <a class="aui-pull-left aui-btn" tapmode onclick="api.closeWin();">
+            <span class="aui-iconfont aui-icon-left" style="color: white;font-weight:bolder;"></span>
+        </a>
+        <a class="aui-pull-right aui-btn" style="float: right;margin-right:1.5%;" tapmode  onclick="showLittleWin()">
+            <span class="iconfont icon-more-vertical" style="color: white;" ></span>
+        </a>
+        <div id="circle_plus_win" class="aui-hide"></div>
+        </div>
+</header>
+
+
+<footer class="aui-bar aui-bar-tab"   id="circle_footer">
+    <div style="background-color: black ; height: 1px;opacity:0.1;width: 100%;"></div>
+<div style="width: 90%;margin-left: 5%;">
+    <div class="aui-bar-tab-item" tapmode onclick="openStrategyRelease()">
+        <div class="footerLabel"   id='opstr' >分享经验</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode onclick="openAsking()">
+        <div class="footerLabel footerBoarder" id='opqa'>提问</div>
+    </div>
+    <div class="aui-bar-tab-item" tapmode onclick="openResourceUpload()">
+        <div class="footerLabel" id='oprs'>分享资源</div>
+    </div>
+</div>
+</footer>
+
+</body>
+<script type="text/javascript" src="../../script/api.js" ></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js" ></script>
+<script type="text/javascript">
+    var footer_h = $api.offset($api.byId('circle_footer')).h;
+    var circleName;
+    apiready = function(){
+        var header = $api.byId('header');
+        var headerPos = $api.offset(header);
+        api.parseTapmode();
+        if (api.pageParam.from_page=='question_main') {
+            api.addEventListener({
+                name: 'keyback'
+            }, function(ret, err){
+                api.openWin({
+                    name: 'main',
+                    url: '../main/index.html',
+                    pageParam:{
+                        // footer_H:api.pageParam.footer_H,
+                        from_page: 'circle_index'
+                    }
+                });
+            });
+        }
+        circleName = api.pageParam.name;
+        api.openFrame({
+            name: 'circle_index_frm',
+            url: 'circle_index_frm.html',
+            bounces:false,
+            rect:{
+                x:0,
+                y:headerPos.h,
+                height:'auto',
+                width:'auto',
+                marginBottom:footer_h
+            },
+            pageParam:{
+                circleN:circleName,
+                circleID:api.pageParam.cID
+            }
+        });
+    };
+    function openStrategyRelease() {
+      document.getElementById('opstr').style.color='#6d7cd9';
+      setTimeout("document.getElementById('opstr').style.color='black'",200);
+
+        //alert(tagid);
+        api.openWin({
+            name:'circle_strategy_release_frm000',
+            url:'circle_strategy_release_frm000.html',
+            pageParam:{
+                tag_id:$api.getStorage('tagid')
+            },
+            allowEdit: true
+
+        })
+    }
+    function openResourceUpload(){
+        //alert(tagid)
+        document.getElementById('oprs').style.color='#6d7cd9';
+        setTimeout("document.getElementById('oprs').style.color='black'",200);
+        api.openWin({
+            name:'circle_resource_upload',
+            url:'circle_resource_upload0.html',
+            pageParam:{
+                tag_id:$api.getStorage('tagid')
+            },
+            allowEdit: true
+
+        })
+    }
+    function openAsking() {
+      document.getElementById('opqa').style.color='#6d7cd9';
+      setTimeout("document.getElementById('opqa').style.color='black'",200);
+        api.openWin({
+            name:'question_main_circle',
+            url:'../QandA/html/question_main.html',
+            pageParam:{
+               circle_name:$api.getStorage('q_circle_name')
+            }
+        })
+    }
+
+
+
+    function showLittleWin() {
+
+        if ($api.hasCls($api.byId('circle_plus_win'),'aui-hide'))
+        {
+            $api.setStorage('reportCid', api.pageParam.cID);
+
+            api.openFrame({
+                name:'little_win',
+                url:'little_win.html',
+                bgColor: 'rgba(0,0,0,0.6)',
+                rect:{
+                    x: 0,
+                    y: 0,
+                    w: 'auto',
+                    h: 'auto'
+                },
+            })
+        }
+
+    }
+
+    function shareArticle(){
+
+    }
+</script>
+</html>

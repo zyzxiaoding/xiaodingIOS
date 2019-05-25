@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <!-- <link href="../../css/style_login.css" rel="stylesheet" type="text/css"/> -->
+
+
+
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+
+    <title>登录</title>
+
+    <style>
+
+    body{
+        background-color: white;
+    }
+
+    .aui-code-box {
+        padding: 10px 0;
+        text-align: center;
+    }
+
+
+    .login-logo {
+        padding-top: 100px;
+    }
+
+    .login-logo img {
+        width: 65px;
+        height: 65px;
+        margin: 0 auto;
+        /*height: auto;*/
+        border: none;
+        display: block;
+    }
+
+    .login-logo h2 {
+        font-size: 1.5rem;
+        color: #666;
+        padding-top: 0.8rem;
+    }
+
+    .aui-code-box p {
+        color: #cccccc;
+        font-size: 0.85rem;
+        position: relative;
+        width: 100%;
+        background: #fff;
+        padding: 0 20px;
+        margin-top: 20px;
+    }
+    .aui-code-line {
+        position: relative;
+    }
+    .aui-code-line:after {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        left: 20px;
+        width: 90%;
+        height: 1px;
+        border-bottom: 1px solid #D9D9D9;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    }
+    .aui-code-line-input {
+        padding: 10px 0;
+        height: 50px;
+        width: 100%;
+        font-size: 14px;
+        background: none;
+        border: none;
+        color: #333;
+    }
+    .operate-eye-open {
+        background-size: 20px;
+        background-image: url('data:image/png;base64,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');
+    }
+
+    .operate-eye-close {
+        background-size: 20px;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAA8CAYAAADxJz2MAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6REQ5RTE1MDg5RUM4MTFFOEE2MkNDNkNGMUVDQTYyN0EiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6REQ5RTE1MDk5RUM4MTFFOEE2MkNDNkNGMUVDQTYyN0EiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpERDlFMTUwNjlFQzgxMUU4QTYyQ0M2Q0YxRUNBNjI3QSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpERDlFMTUwNzlFQzgxMUU4QTYyQ0M2Q0YxRUNBNjI3QSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pq36mXcAAAbwSURBVHja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');
+    }
+    .aui-show-eye {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        right: 20px;
+        top: 9px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+
+    .login-links {
+        position: relative;
+        line-height: 40px;
+        margin-top: 14px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        padding: 0 20px;
+    }
+
+    .login-links > a {
+        position: relative;
+        text-align: left;
+        display: block;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        padding: 0 2px;
+        font-size: 0.8rem;
+        color: #6d7cd9;
+    }
+
+    .login-links > a:nth-child(2) {
+        text-align: right;
+    }
+
+
+    .aui-login-line{
+        position:relative;
+        text-align:center;
+        padding-top:0px;
+    }
+
+    .aui-login-line h2{
+        font-size:0.6rem;
+        color:#bbbbbb;
+        background:#fff;
+        width:100px;
+        margin:0 auto;
+        z-index: 1002;
+        position: relative;
+    }
+
+    .aui-login-line:after{
+        content: '';
+        position: absolute;
+        z-index: 0;
+        bottom: 10px;
+        left: 10px;
+        width: 95%;
+        height: 1px;
+        border-bottom: 1px solid #D9D9D9;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    }
+
+    .aui-login-armor{
+        width: 70%;
+        position: relative;
+        z-index: 100;
+        /*display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;*/
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        padding: 30px 5px 7px 5px;
+        margin:0 auto;
+    }
+
+    .aui-tabBar-item {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        color: #979797;
+    }
+
+    .aui-tabBar-item img{
+        width:40px;
+        height:40px;
+        display:block;
+        border:none;
+        border-radius:100%;
+    }
+
+
+    </style>
+</head>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+
+apiready = function() {
+    // api.addEventListener({
+    //     name: 'keyback'
+    // }, function(ret, err) {
+    //     // alert('按了返回键');
+    //     api.cancelAjax({
+    //         tag: 'login'
+    //     });
+    //     api.hideProgress();
+    //
+    //
+    // });
+    ExitApp();
+    var cookie=$api.getStorage('cookie');
+    var user_id=$api.getStorage('user_id');
+    if (cookie!=undefined) {
+        api.openWin({
+            name:'index',
+            url:'../main/index.html'
+        })
+
+    setTimeout(function() {
+      api.closeWin();
+    }, 1000);
+    }
+}
+
+    function ExitApp() {
+        var ci = 0;
+        var time1, time2;
+        api.addEventListener({
+            name : 'keyback'
+        },function(ret, err) {
+            if (ci == 0) {
+            time1 = new Date().getTime();
+            ci = 1;
+
+             api.toast({msg:'再按一次返回键退出'});
+
+        } else if (ci == 1) {
+            time2 = new Date().getTime();
+            if (time2 - time1 < 3000) {
+                api.closeWidget({
+                id : api.appId,
+                retData : {
+                    name : 'closeWidget'
+                    },
+                silent : true
+                });
+            } else {
+                ci = 0;
+             api.toast({msg:'再按一次返回键退出'});
+            }
+        }
+        });
+    }
+
+
+
+
+
+function login(){
+
+
+    //setTimeout(function(){alert("Hello")},3000);
+
+    var username = $api.val($api.byId('username'));
+    var password = $api.val($api.byId('password'));
+    if (!$api.trim(username)) {
+        api.toast({
+            msg: '请输入账号',
+            duration: 1000,
+            location: 'middle'
+        });
+        return;
+    }
+
+    if (!$api.trim(password)) {
+        api.toast({
+            msg: '请输入密码',
+            duration: 1000,
+            location: 'middle'
+        });
+        return;
+    }
+
+        /*** 加载动画 ***/
+    api.showProgress({
+        title : ' ',
+        text : '玩命加载中...',
+        modal : true
+    });
+              //
+    var json_login={"phone_number": $api.trim(username),"password": $api.trim(password)};
+    $.ajax({
+        url:'http://47.105.160.217:80/api/login/signIn/',
+        type:'POST',
+        data:JSON.stringify(json_login),
+        dataType:'json',
+        success:function (ret) {
+          api.hideProgress();
+
+          if(ret.status==403){
+              if (ret.data.error=="Invalid password") {
+                  api.toast({
+            　　　　　　msg:'密码不正确',
+            　　　　　　duration: '1300',
+            　　　　　　localtion: 'middle'
+          　　　　 });
+                  return;
+              }
+
+              if (ret.data.error=="User not found") {
+                  api.toast({
+            　　　　　　msg:'找不到用户',
+            　　　　　　duration: '1300',
+            　　　　　　localtion: 'middle'
+          　　　　 });
+                  return;
+              }
+
+
+              if (ret.data.error) {
+                  api.toast({
+            　　　　　　msg:'错误',
+            　　　　　　duration: '1300',
+            　　　　　　localtion: 'middle'
+          　　　　 });
+                  return;
+              }
+          }
+            if(ret.status==200){
+                $api.setStorage('cookie', ret.data.cookie);
+                $api.setStorage('user_id', ret.data.user_id);
+            // if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+            //
+            // if (ret.data.cookie)
+            // if (ret.data.user_id)
+
+
+            // var phoURL=ret.data.phoURL;
+            // if (phoURL){
+            //     api.imageCache({
+            //         url: 'http://a.hiphotos.baidu.com/image/w%3D400/sign=2abe1c77d4ca7bcb7d7bc62f8e086b3f/64380cd7912397ddf9f4bdb05a82b2b7d1a287f0.jpg'
+            //     }, function(ret, err) {
+            //         phoURL = ret.url;
+            //     });
+            //     $api.setStorage('phoURL', phoURL);
+            // }
+            // $api.setStorage('isLogin', true);
+            api.sendEvent({
+                name: 'UserHasLogin'
+            });
+            api.toast({
+    　　　　　　msg:'登录成功',
+    　　　　　　duration: '1200',
+    　　　　　　localtion: 'middle'
+  　　　　　　});
+
+            //
+                api.openWin({
+                    name:'index',
+                    url:'../main/index.html'
+                })
+
+            setTimeout(function() {
+              api.closeWin();
+            }, 1000);
+          }
+            //alert(JSON.stringify(ret))
+        },
+        error:function (ret) {
+          api.hideProgress();
+            alert(JSON.stringify(ret))
+        },
+    })
+  return 0;
+  }
+        //alert("22");
+
+        /*** 登录异常 ***/
+
+</script>
+
+
+
+
+<body>
+
+
+        <!-- <section class="aui-scrollView"> -->
+        <div class="aui-code-box">
+            <div class="login-logo">
+                <img src="../../image/logo.png" alt="">
+                <h2>校町社区</h2>
+            </div>
+
+
+            <p class="aui-code-line">
+                <input type="text" class="aui-code-line-input" name="userName" value="" id="username" placeholder="请输入账户名"/>
+            </p>
+            <p class="aui-code-line ">
+                <i class="aui-show-eye  operate-eye-open"></i>
+                <input type="password"  name="userPassword"  id="password" class="aui-code-line-input" placeholder="请输入密码" value="">
+            </p>
+
+            <div class="aui-btn-sm " onclick="login()" style="margin: 20px; padding: 10px;border-radius: 10px;background-color:#6d7cd9;color:white">   登录  </div>
+
+            <div class="login-links">
+                <a onclick="choose()">忘记密码?</a>
+                <a href="register.html">立即注册</a>
+            </div>
+        </div>
+
+
+        <div class="aui-login-line">
+            <h2>合作账号登录</h2>
+        </div>
+        <div class="aui-login-armor">
+            <a href="javascript:;" class="aui-tabBar-item">
+                <img src="../../image/icon-sin-001.png" alt="">
+            </a>
+            <a href="javascript:;" class="aui-tabBar-item">
+                <img src="../../image/icon-sin-002.png" alt="">
+            </a>
+            <a href="javascript:;" class="aui-tabBar-item">
+                <img src="../../image/icon-sin-003.png" alt="">
+            </a>
+        </div>
+
+</body>
+
+
+</html>
+
+<script type="text/javascript">
+    function choose() {
+       api.actionSheet({
+           title : '找回密码',
+           cancelTitle : '取消',
+           buttons : ['通过手机号码找回', '通过邮箱找回']
+       }, function(ret, err) {
+           if (ret) {
+               if (ret.buttonIndex == 1) {
+                 api.openWin({
+                     name: 'phonePsw',
+                 　　url: 'forgetPswPhone.html',
+                 　　bounces: false,
+                 　　animation:{
+                 　　  type: "push",
+                 　　  duration:300
+                 　　}
+                 });
+               } else if (ret.buttonIndex == 2) {
+
+               }
+           }
+       });
+   };
+
+</script>

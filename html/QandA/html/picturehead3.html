@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <title>title</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <style>
+          #header{
+            height: 15%;
+            width: 100%;
+            margin-top: 5%;
+          }
+          #return{
+            height: 60px;
+            width: 10%;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-image: url(../image/back.png);
+            display: inline-block;
+            margin-left: 12%;
+          }
+          #delete{
+            height: 60px;
+            width:10%;
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-image: url(../image/delete.jpg);
+            display: inline-block;
+            margin-left: 55%;
+          }
+      </style>
+  </head>
+  <body>
+      <div id="header">
+          <div id="return" onclick="back()"></div>
+          <div id="delete" onclick="deletepic()"></div>
+      </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+
+      };
+      function back(){
+        var jsfun = 'photoBrowser.close();createPicture();';
+        api.execScript({     name: 'edit_answer',     script: jsfun });
+        api.closeFrame();
+      }
+
+      function deletepic(){
+          var jsfun = 'deleteImage();';
+          api.execScript({     name: 'edit_answer',     script: jsfun });
+
+      }
+  </script>
+  </html>

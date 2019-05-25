@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css"/>
+
+</head>
+<body>
+<header class="aui-bar aui-bar-nav" style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+    <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+        <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+    </a>
+    <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">问答</div>
+
+</header>
+
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+
+    apiready = function () {
+			var header = $api.byId('aui-header');
+
+      var header_H = $api.offset(header).h;
+      var header_T = $api.offset(header).t;
+
+
+
+      api.openFrame({
+          name: 'question_list_frm',
+          url: './question_list_frm.html',
+          rect: {
+              x: 0,
+              y: header_T + header_H,
+              w: api.winWidth,
+              h: 'auto'
+          },
+          pageParam: {
+             keywords:api.pageParam.keywords
+          },
+          bounces: false,
+          vScrollBarEnabled: true,
+          hScrollBarEnabled: true
+      });
+
+
+
+
+
+
+	}
+
+
+
+		// 点击事件 切换framegroup的index
+
+
+</script>

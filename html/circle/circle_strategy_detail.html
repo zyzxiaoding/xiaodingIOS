@@ -1,0 +1,923 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../QandA/css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../QandA/css/style1.css"/>
+    <style>
+        #footer{
+            background-color: #fff;
+            width: 100%;
+            padding-left: 5%;
+            height: 7%;
+        }
+        #footer .approve {
+            width: 30%;
+            height: 43px;
+            margin-top: 1%;
+            background-color: #f2f2f2;
+            border-radius: 8px;
+            float: left;
+            background-image: url(../QandA/icon/approve.png);
+            background-repeat: no-repeat;
+            background-position: 20px center;
+            background-size: 24px 24px;
+            font-size: 14px; color: #000; text-align: center;
+            text-indent: 25px;
+            line-height: 43px;
+        }
+        #footer .approve_active {
+            background-image: url(../QandA/icon/agreechousen.png);
+        }
+        #footer .disapprove {
+            width: 15%;
+            height: 43px;
+            margin-top: 1%;
+            background-color: #f2f2f2;
+            border-radius: 8px;
+            margin-left: 8%;
+            float: left;
+            font-size: 28px; color: #000; text-align: center;
+            line-height: 43px;
+        }
+        #footer .disapprove_active {
+            background-image: url(../QandA/icon/cai2.png);
+        }
+        #footer .comment {
+            width: 15%;
+            height: 90%;
+            margin-top: 1%;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-left: 5%;
+            float: left;
+            background-image: url(../QandA/icon/comment.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 25px 25px;
+            font-size: 14px; text-align: right;
+        }
+        #footer .collect {
+            width: 10%;
+            height: 90%;
+            margin-top: 1%;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-left: 8%;
+            float: left;
+            background-image: url(../QandA/icon/collect.png);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 30px 25px;
+            font-size: 14px; text-align: right;
+        }
+
+        .flex-con{
+            overflow: scroll;
+        }
+        .fixed_bottom {
+            position:fixed;
+            width:100%;
+            height:7%;
+            bottom: 0px;
+            z-index:10;
+            box-shadow: 0 -1px 3px #D7D7D7;
+        }
+        .fixed_top {
+            position:fixed;
+            left:0px;
+            top:0px;
+            width:100%;
+            height:7%;
+            z-index:10;
+        }
+        .header-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff
+        }
+        header {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            background-color: #ffffff;
+            z-index: 10;
+
+        }
+        header .left {
+            position: absolute;
+            top: 15px;
+            width: 21.5px;
+            height: 15.5px;
+            left: 4%;
+            background-image: url(../QandA/icon/backs.png);
+            background-size: 21.5px 15.5px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        header .right {
+            /*border: 1px solid red;*/
+            position: absolute;
+            top: 10px;
+            width: 40px;
+            height: 25px;
+            right: 0px;
+            background-image: url(../QandA/icon/more.png);
+            background-size: 5px 19px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        header .center {
+            position: relative;
+            left: 0%;
+            width: 68%;
+            margin-left: 17%;
+            height: 43px;
+            float: left;
+            font-size: 18px;
+            line-height: 50px;
+            font-weight: bolder;
+            text-align: left;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        .title {
+            /*border: 1px solid red;*/
+            position: relative;
+            width: 100%;
+            height: auto;
+            padding-left: 24px;
+            padding-top: 15%;
+            padding-right: 24px;
+            box-sizing: border-box;
+            font-size: 20px; color: #000000; text-align: left;
+            font-weight: bold;
+        }
+        .tag {
+            /*border-bottom: 1px solid #d3d2d2;*/
+            /*border: 1px solid blue;*/
+            position: relative;
+            width: 100%;
+            height: auto;
+            padding-left: 24px;
+            padding-top: 10px;
+            box-sizing: border-box;
+            font-size: 12px; color: #917dcf; text-align: left;
+        }
+        .answer {
+            position: relative;
+            margin-top: 15%;
+            width: 100%;
+            height: auto;
+            font-size: 15px; color: #000000; text-align:justify;
+        }
+        .answer .replyer {
+            /*border: 1px solid red;*/
+            width: 100%;
+            height: 42px;
+            background-color: #fff;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .replyer .replyer-left {
+            width: 42px;
+            height: auto;
+            float: left;
+            padding-left: 24px;
+        }
+        .replyer-left .replyer-imag {
+            width: 42px;
+            height: 42px;
+        }
+        .replyer-imag img {
+            margin-top: 2px;
+            width: 38px;
+            height: 38px;
+            border-radius: 19px;
+        }
+        .replyer .replyer-right {
+            /*border: 1px solid blue;*/
+            width: 180px;
+            height: auto;
+            float: left;
+            margin-left: 5px;
+        }
+        .replyer-right .replyer-name {
+            width: auto;
+            height: 16px;
+            font-size: 16px; color: #363636; text-align: left;
+            padding-left: 8px
+        }
+        .replyer-right .replyer-note {
+            width: auto;
+            height: 14px;
+            font-size: 13px; color: #8e8e8e; text-align: left;
+            padding-top: 8px;
+            padding-left: 8px
+        }
+        .follow {
+            /*border: 1px solid red;*/
+            margin-top: 10px;
+            width: 62px;
+            height: 22px;
+            float: right;
+            margin-right: 24px;
+            background-color: #6d7cd9;
+            border-radius: 3.5px;
+            font-size: 12px; color: #fff; text-align: center;
+            line-height: 22px;
+        }
+
+
+
+        .answer .content-body {
+            position: relative;
+            width: 90%;
+            left: 5%;
+            padding-top: 5%;
+            font-size: 16px; color: #fff; text-align: left;
+            line-height: 180%;
+            padding-bottom: 10%;
+        }
+        .content-imag div {
+            width: 100%;
+            margin-top: 5%;
+            border-radius: 0px;
+            margin-left: 0px;
+            position: relative;
+        }
+
+        .content-imag figure {
+            position: relative;
+            width: 100%;
+            height: 0;
+            line-height: 160%;
+            overflow: hidden;
+            margin: 0;
+            padding-bottom: 70%;
+            /* 关键就在这里 */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 1;
+        }
+        #little-window ul li {
+            width: 100%;
+            height:50px;
+            font-size: 16px; color: #000; text-align: center;
+            line-height: 50px;
+        }
+        .little-window {
+            /*border: 1px solid red;*/
+            position: fixed;
+            right: 24px;
+            top: 50px;
+            height: 100px;
+            width: 113.5px;
+            background-color: #fff;
+            font-size: 16px;color: #000; text-align: center;
+            z-index: 10;
+            box-shadow:  #efefef  2px 2px 2px 2px;
+        }
+
+        .button {
+            margin-top: 0px;
+            width: 100%;
+            height: 40px;
+            color: white;
+            background: #fff;  //默认的颜色
+
+        }
+
+
+        .button:active {
+            width: 100%;
+            height: 40px;
+            color: white;
+            border-radius: 0px;
+            background: #cbcbcb;
+            opacity: 0.5;
+        }
+        .disabled {
+            pointer-events: none;
+        }
+        /*ol{padding-left: 20px;}*/
+
+        ol li{
+
+            list-style-type:decimal;
+
+            list-style-position:inside;
+        }
+        ul li{
+
+            list-style-type:disc;
+
+            list-style-position:inside;
+        }
+
+        font {
+            line-height: 180%;
+        }
+
+        .content-body img {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body id="body" style="">
+<div id="wrap" class="flex-wrap flex-vertical" style="">
+    <div id="main">
+
+        <div class="fixed_top" style="">
+            <header id="header" class="header-box">
+                <div class="left" onclick="back()"></div>
+                <div class="center" id="titleS"></div>
+                <div class="right"tapmode onclick="little_window()"></div>
+            </header>
+        </div>
+        <div id='little-window' class="little-window" style="display:none">
+            <ul>
+                <li class="button" style=" list-style:none;" tapmode onclick="">分享</li>
+                <li class="button" id="changeLI" style=" list-style:none;" tapmode onclick="report(this.innerText)" >举报</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="answer" onclick="closelitwindow()">
+        <textarea disabled="disabled" style="width:90%;margin-top:20px; margin-left:5%;font-weight:400;font-size:20px;line-height:24px;color:black;word-break:break-all;" id="titlestr"></textarea>
+        <div class="replyer" style="margin-top:10px;">
+            <div class="replyer-left">
+                <div class="replyer-imag">
+                    <img id="suser_pic" src="../../icon/anonymous.jpg" alt="">
+                </div>
+            </div>
+            <div class="replyer-right">
+                <div class="replyer-name" id="nameOfUser">我是一只大橙子</div>
+                <div class="replyer-note">UI问题优秀回答者</div>
+            </div>
+            <div id="follow_logo" class="follow"tapmode onclick="change_follow()">+关注</div>
+        </div>
+
+        <div id='answer_content' class="content-body">
+            <p>
+
+            </p>
+        </div>
+        <ul id="content-imag" class="content-imag" style="padding-top:5%;"></ul>
+    </div>
+    <div id="footer" class="fixed_bottom">
+        <div class="approve" onclick="approve(this)"></div>
+        <div class="iconfont icon-diss disapprove" onclick="disapprove(this)"></div>
+        <div class="comment" onclick="open_comment()"></div>
+        <div class="collect" onclick="collect(this)"></div>
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../QandA/script/api.js"></script>
+<script type="text/javascript" src="../QandA/script/jquery.js"></script>
+<script type="text/javascript" src="../QandA/script/dropload.min.js"></script>
+<script type="text/javascript">
+
+    var as_id;
+    var as_data;
+    var as_dict = {};
+    var like_data = {};
+    var dislike_data = {};
+    var cs_dict = {};
+    var json_data = {};
+    var is_liked;
+    var is_collected;
+    var photoBrowser;
+    var jas_dict;
+    var curimg = [];
+    var as_is_anonymous;
+    var jas_data;
+    var author_id;
+    apiready = function () {
+        // header = $api.dom('header');
+        // $api.fixStatusBar(header);
+        as_is_anonymous = api.pageParam.is_anonymous;
+        photoBrowser = api.require('photoBrowser');
+        //alert(api.pageParam.article_id);
+        as_id = api.pageParam.article_id;
+        like_data={
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "cookie":"602dd276c7d77d4e1664f526c318ea96",
+            "article_id":as_id,
+            "is_like":0
+        };
+        dislike_data={
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "cookie":"602dd276c7d77d4e1664f526c318ea96",
+            "article_id":as_id,
+            "is_like":1
+        };
+        as_dict = {
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "cookie":"602dd276c7d77d4e1664f526c318ea96",
+            "article_id":as_id
+        };
+        jas_dict = {
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "cookie":"602dd276c7d77d4e1664f526c318ea96",
+            "aim_id":0
+        };
+        cs_dict = {
+            "user_id":$api.getStorage('user_id'),
+            "aim_id":""
+        }
+        json_data = {};
+
+
+
+        var main = $api.byId('header');
+        var footer = $api.byId('footer');
+
+        var header_H = $api.offset(header).h;
+        var footer_H = $api.offset(footer).h;
+        var footer_T = $api.offset(footer).t;
+        GetAnswer(as_dict);
+    }
+
+
+
+
+
+    function GetAnswer(json) {
+        $.ajax({
+            type: 'POST',
+            url: "http://47.105.160.217:80/api/group/getSpecificArticle/",
+            data:JSON.stringify(json),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+                //alert(JSON.stringify(result.data))
+                as_data =  result.data;
+
+                is_liked = as_data.is_liked;
+                is_collected = as_data.is_collect;
+                cs_dict.aim_id = as_data.author_info.author_id;
+
+                question_view();
+            },
+            error:function(){
+                console.log('回答加载失败');
+            }
+        });
+    }
+    function enterMainpge(id) {
+        api.openWin({
+            name:'mainPage'+id,
+            url:'../account/otherpage/otherFragment_frm.html',
+            pageParam:{
+                uid:id
+            }
+        })
+    }
+    function question_view() {
+        //alert(JSON.stringify(as_data.text));
+        if(as_data.author_info.is_followed_by_user==true){
+            document.getElementById('follow_logo').innerHTML = '取消关注';
+        }
+        as_is_anonymous = as_data.is_anonymous;
+        if (as_is_anonymous == 0) {
+            $api.dom('.replyer-name').innerHTML = as_data.author_info.author_name;
+            $api.dom('.replyer-note').innerHTML = '这里需要简介字段';
+            if(as_data.author_info.author_id==$api.getStorage('user_id')){
+                document.getElementById('changeLI').innerText = "删除"
+            }
+            document.getElementById('suser_pic').src = 'http://47.105.160.217/files/'+as_data.author_info.user_profile_url;
+            document.getElementById('suser_pic').onclick = function () {
+                enterMainpge(as_data.author_info.author_id);
+            }
+        }
+        else if (as_is_anonymous == 1) {
+            $api.dom('.replyer-name').innerHTML = '匿名用户';
+            $api.dom('.replyer-note').innerHTML = '我不想你看我';
+            $api.dom('#follow_logo').style.display = 'none';
+        }
+        var title= as_data.title;
+
+        document.getElementById('titlestr').innerText = title
+
+        var img_url_list = new Array();
+
+
+
+        // document.getElementById('answer_content').childNodes[1].innerHTML = as_data.content;<br />
+        document.getElementById('answer_content').childNodes[1].innerHTML = as_data.text+'<br /><br /><br />';
+        var $current = $(document.getElementById('answer_content').childNodes[1]);
+        $current.find("img").each(function(i){
+            $(this).css('padding','0px')
+        })
+
+        $api.dom('.approve').innerHTML = '感谢' + as_data.like_num;
+        $api.dom('.comment').innerHTML = as_data.comment_num;
+        $api.dom('.collect').innerHTML = as_data.collect_num;
+
+        if (is_liked == 0 ) { //点过赞 使点赞按键失效 激活点踩
+            $api.addCls($api.dom('.approve'),'approve_active')
+            $api.dom('.approve').disabled = 'true';
+            // alert($api.dom('.approve').disabled)
+            $api.dom('.disapprove').disabled = ''
+        }
+        else if (is_liked == 1)  { //
+            $api.addCls($api.dom('.disapprove'),'disapprove_active')
+            $api.dom('.approve').disabled = ''
+            $api.dom('.disapprove').disabled = 'true'
+        }
+        else {
+            $api.dom('.approve').disabled = ''
+            $api.dom('.disapprove').disabled = ''
+        }
+
+        if (is_collected == 1 ) { //收藏过
+            $api.addCls($api.dom('.collect'),'collect_active')
+        }
+    }
+
+    function create_pic(pic_url,j) {
+        curimg.push(pic_url);
+        var div = document.createElement('div');
+        var fig = document.createElement('figure');
+        fig.style.backgroundImage = "url(" + pic_url + ")";
+        fig.id = j;
+        fig.onclick = function(){fnOpen(this)};
+        div.appendChild(fig);
+        document.getElementById('content-imag').appendChild(div);
+    }
+
+    function fnOpen(target){
+        photoBrowser.open({
+            images: curimg,
+            bgColor: '#000',
+            activeIndex: target.id
+        }, function(ret, err) {
+            if (ret) {
+                api.openFrame({
+                    name: 'picturehead2',
+                    url: './picturehead2.html',
+                    rect: {
+                        x: 0,
+                        y: api.frameHeight*0.05,
+                        w: api.frameWidth,
+                        h: api.frameHeight*0.1
+                    },
+                });
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    function approve(tag) {
+        var  as_dict={
+            "user_id": $api.getStorage("user_id"),
+            "app_version":"",
+            "cookie":"",
+            "article_id":as_id , // int, 必需
+            "is_like":0
+        };
+        var current_like_num = parseInt($api.dom('.approve').innerHTML.replace('感谢','')); //获取页面当前的点赞数
+        if($api.hasCls($api.dom('.disapprove'),'disapprove_active')) { //如果点踩高亮
+            $.ajax({
+                type: 'POST',
+                url: "http://47.105.160.217:80/api/group/likeArticle/",
+                data:JSON.stringify(as_dict),
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点赞成功')
+                    console.log(JSON.stringify(result))
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点赞！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.removeCls($api.dom('.disapprove'), 'disapprove_active');
+                        $api.addCls($api.dom('.approve'), 'approve_active');
+
+                        $api.dom('.approve').innerHTML = '感谢' + String(current_like_num + 1) ;
+                        $api.addCls($api.dom('.approve'),'disabled')
+                        $api.removeCls($api.dom('.disapprove'),'disabled')
+                    }
+                    // view_tips(result)
+                },
+                error:function(){
+                    console.log('点赞失败');
+                }
+            });
+        }
+
+        else {
+            $.ajax({
+                type: 'POST',
+                // url: "http://47.105.160.217:80/api/questionAnswer/likeAnswer/",
+                url: "http://47.105.160.217:80/api/group/likeArticle/",
+
+                data:JSON.stringify(as_dict),
+                // crossDomain: true,
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点赞成功')
+                    console.log(JSON.stringify(result))
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点赞！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.dom('.approve').innerHTML = '感谢' + String(parseInt(as_data.like_num) + 1) ;
+                        $api.addCls($api.dom('.approve'),'disabled')
+                        $api.removeCls($api.dom('.disapprove'),'disabled')
+                        $api.addCls(tag, 'approve_active');
+                    }
+                    // view_tips(result)
+                },
+                error:function(){
+                    console.log('点赞失败');
+                }
+            });
+        };
+    }
+
+    function disapprove(tag) {
+        //alert(as_id)
+        var as_dict={
+            "user_id": $api.getStorage("user_id"),
+            "app_version":"",
+            "cookie":"",
+            "article_id":as_id , // int, 必需
+            "is_like":0
+        };
+        console.log(JSON.stringify(as_dict))
+        if( $api.hasCls($api.dom('.approve'),'approve_active') ) { //如果点赞高亮
+            $.ajax({
+                type: 'POST',
+                // url: "http://47.105.160.217:80/api/questionAnswer/dislikeAnswer/",
+                url: "http://47.105.160.217:80/api/group/likeArticle/",
+
+                data:JSON.stringify(as_dict),
+                // crossDomain: true,
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点踩成功')
+                    // view_tips(result)
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点踩！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else if (result.message == "You have accessed this answer") {
+                        api.toast({
+                            msg: '你已经采纳了这个回答！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.removeCls($api.dom('.approve'), 'approve_active');
+                        $api.addCls($api.dom('.disapprove'), 'disapprove_active');
+                        $api.dom('.approve').innerHTML = '感谢' + String(parseInt(as_data.like_num)) ;
+                        $api.addCls($api.dom('.disapprove'),'disabled')
+                        $api.removeCls($api.dom('.approve'),'disabled')
+                    }
+                },
+                error:function(e){
+                    alert(JSON.stringify(e));
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                // url: "http://47.105.160.217:80/api/questionAnswer/dislikeAnswer/",
+                url: "http://47.105.160.217:80/api/questionAnswer/likeArticle/",
+
+                data:JSON.stringify(as_dict),
+                // crossDomain: true,
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('点踩成功')
+                    if (result.message == "You can not click your own answer") {
+                        api.toast({
+                            msg: '你不能给自己点踩！',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                    else {
+                        $api.addCls(tag, 'disapprove_active');
+                        $api.removeCls($api.dom('.approve'),'disabled')
+                        $api.addCls($api.dom('.disapprove'),'disabled')
+                    }
+                },
+                error:function(){
+                    console.log('点踩失败');
+                }
+            });
+        };
+    }
+
+    function collect(tag) {
+        var as_dict = {
+            "user_id": "8a49e18c806b6b881f4eb1718ed23599",
+            "app_version":"",
+            "cookie":"",
+            "article_id": as_id // int, 必需
+        }
+        $.ajax({
+            type: 'POST',
+            // url: "http://47.105.160.217:80/api/questionAnswer/dislikeAnswer/",
+            url: "http://47.105.160.217:80/api/group/collectArticle/",
+            data:JSON.stringify(as_dict),
+            // crossDomain: true,
+            dataType: 'json',
+            async: false,
+            success:function(result){
+                console.log('取消收藏成功')
+            },
+            error:function(){
+                console.log('取消收藏失败');
+            }
+        });
+        if( $api.hasCls(tag,'collect_active') ) {  //已收藏
+            $api.removeCls(tag, 'collect_active');
+            $api.dom('.collect').innerHTML = parseInt($api.dom('.collect').innerHTML) - 1 ;
+        }
+        else {
+            $api.addCls(tag, 'collect_active');
+            $api.dom('.collect').innerHTML = parseInt($api.dom('.collect').innerHTML) + 1 ;
+        }
+
+    }
+
+    function open_comment() {
+      console.log(as_id)
+        api.openFrame({
+            name: 'comment_win',
+            url: './comment_win.html',
+            rect: {
+                x:0,
+                y:0,
+                w:api.winWidth,
+                h:api.winHeight
+            },
+            pageParam: {
+                article_id: as_id,
+                user_id: $api.getStorage('user_id'),
+                type:"strategy"
+            },
+            bgColor: 'rgba(0,0,0,0.6)'
+        });
+    }
+
+    function change_follow() {
+        var flag;
+        if (document.getElementById('follow_logo').innerHTML == '+关注') {
+            $.ajax({
+                type: 'POST',
+                url: "http://47.105.160.217:80/api/userInfo/concernUser/",
+                data:JSON.stringify(cs_dict),
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('关注用户成功')
+                    api.toast({
+                        msg: '关注成功',
+                        duration: 2000,
+                        location: 'middle'
+                    });
+                },
+                error:function(){
+                    console.log('关注用户失败');
+                }
+            });
+
+            flag = 1; //表示关注动作
+            document.getElementById('follow_logo').innerHTML = '取消关注';
+            document.getElementById('follow_logo').style.backgroundColor = '#8e8e8e';
+
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: "http://47.105.160.217:80/api/userInfo/concernUser/",
+                data:JSON.stringify(cs_dict),
+                dataType: 'json',
+                async: false,
+                success:function(result){
+                    console.log('取消关注成功')
+                    api.toast({
+                        msg: '取消关注成功',
+                        duration: 2000,
+                        location: 'middle'
+                    });
+                },
+                error:function(){
+                    console.log('取消关注用户失败');
+                }
+            });
+            flag = 0; //表示取消关注动作
+            document.getElementById('follow_logo').style.backgroundColor = '#6d7cd9';
+            document.getElementById('follow_logo').innerHTML = '+关注';
+        }
+
+    }
+
+    var litwindow = $api.dom('#little-window');
+
+    function little_window() {
+        if (litwindow.style.display == "none") {
+            litwindow.style.display = '';
+        }
+        else {
+            litwindow.style.display = 'none';
+        }
+    }
+    function closelitwindow() {
+        litwindow.style.display = 'none';
+    }
+
+    function back() {
+        jsFun = 'location.reload();';
+        api.execScript({
+            name:'answer_list',
+            script:jsFun
+        });
+        api.historyBack({
+        }, function(ret, err) {
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+    }
+
+    function report(text) {
+
+        if (text=="举报"){
+          $api.setStorage('reportSid',Number(api.pageParam.article_id))
+          api.openWin({
+            url:'report_win.html',
+            name:'report_win',
+            pageParam:{
+              r_id: Number(api.pageParam.article_id),
+              user_cookie:'',
+              report_type: 'strategy'
+            }
+          });
+            closelitwindow();
+        }
+        else {
+            var j = {
+                "app_version":'',
+                "user_id":$api.getStorage('user_id'),
+                "cookie":"",
+                "article_id":as_id,
+                "tag_id_list":""
+            }
+            $.ajax({
+                url:'http://47.105.160.217:80/api/group/deleteArticle/',
+                data:JSON.stringify(j),
+                method:'post',
+                success:function (ret) {
+                    api.toast({
+                        msg: '删除成功',
+                        duration: 2000,
+                        location: 'middle'
+                    })
+                    api.closeWin();
+
+                }
+            })
+        }
+    }
+
+</script>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+
+    <title>账号与完全</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <script type="text/javascript" src="../../script/aui-tab.js" ></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+
+
+
+</head>
+
+
+<script>
+
+    apiready = function(){
+
+    };
+
+    function closeWin(){
+      api.closeWin({
+      });
+    }
+
+    function logout(){
+        $api.rmStorage('user_id');
+        $api.rmStorage('cookie');
+
+
+        api.openWin({
+            name: 'login',
+            url: './login.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+</script>
+
+<body>
+
+    <header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+        <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+            <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+        </a>
+        <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">账号与完全</div>
+        <!-- <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="saveImageClip()">
+            <h3 style="color:#6d7cd9;padding-right: 10px;">确定</h3>
+        </div> -->
+    </header>
+
+    <div class="aui-content aui-margin-b-15" style="margin-top:50px">
+        <ul class="aui-list aui-list-in">
+
+            <!-- <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">隐私</div>
+                </div>
+            </li> -->
+            <li class="aui-list-item" onclick="logout()">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">退出当前账号</div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+    html,body {
+      height: 100%;
+      width: 100%;
+    }
+    .searchbar-box {
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 85%;
+      height: 100%;
+      float: left;
+    }
+    .inputbar {
+      position: relative;
+			width: 95%;
+			height: 35px;
+			margin-left: 7%;
+			background-color: #fbfbfb;
+      /*margin-left: -47%;
+      margin-top: -40%;*/
+      border-radius: 5px;
+    }
+    .input {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar img {
+			position: relative;
+			top: 10px;
+      width: 16px;
+      height: 18px;
+      margin-left: 8px
+    }
+    .filter-box {
+      position: relative;
+      display: table;
+      width: 14%;
+      height: 50px;
+      float: left;
+    }
+    .filter {
+      width: 30%;
+      height: 40%;
+			position: relative;
+			left: 35%;
+			top: 8px;
+      background-image: url(../icon/edit.png);
+      background-size: 15px 19px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+
+    .history-box {
+      position: relative;
+      width: 90%;
+      min-height:30%;
+      height: auto;
+      margin-left: 5%;
+      padding-top: 0;
+    }
+    .title_2-box {
+      position: relative;
+      padding-top: 0%;
+      width: 100%;
+      height: 50px;
+    }
+    .title_2 {
+      font-size: 20px; color: #000;
+      float: left;
+    }
+    .clean_history-box {
+      position: relative;
+      width: 25%;
+      height: 50%;
+      float: right;
+    }
+    .clean_history {
+      width: 100%;
+      font-size: 12px; color: #959595; text-align: right;
+      background-color: #fff;
+      border-radius: 3px;
+
+    }
+    .tag_2-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+			margin-top: 7%;
+    }
+    .tag_2 {
+      width: 33%;
+      height: 50px;
+			float: left;
+    }
+    .block_2 {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 16px; color: #000; text-align: left ;
+			padding-left: 10%;
+      line-height: 50px;
+    }
+    .block_2_mean {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #fbfbfb;
+      font-size: 18px; color: #6d7cd9; text-align:left;
+			padding-left: 8px;
+      line-height: 50px;
+    }
+
+    </style>
+</head>
+<body>
+  <div id=“body1” class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+          <img src="../icon/search.png" alt="">
+          <input id="input" type="text" oninput="chanege_content(event)" onpropertychange="chanege_content(event)"  class="input" placeholder="" style='padding-left:30px' onclick="">
+        </div>
+      </div>
+      <div class="filter-box">
+        <div class="filter"></div>
+      </div>
+  </div>
+  </div>
+
+  <div id="content" class="content-box">
+
+    <div class="history-box">
+      <div id="tags" class="tag_2-box">
+        <!-- <div id="tag-0" class="tag_2">
+          <div class="block_2_odd">全部</div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+var tags = new Array('我是王伟帆','我喜欢画画','王者荣耀','王者荣耀真好'); //全部标签
+var tags_time;
+
+var pos;
+	apiready = function(){
+		viewTags();
+		var input = document.getElementById('input');
+
+	};
+
+	function chanege_content(e) {
+		senddata(input.value);
+	}
+
+	function senddata(text) {
+		if (text.match(/^[ ]*$/)) {
+			viewTags();
+		}
+		else {
+			tags_time = new Array('第一章','第二章','第三章','数理统计') //实时
+			viewTags_time();
+		}
+
+	}
+
+	function viewTags() {
+		var parentNode = document.getElementById("tags");
+		parentNode.innerHTML = "";
+		var sourceNode = document.createElement("div");
+		sourceNode.setAttribute("id",'tag-0');
+		sourceNode.setAttribute("class","tag_2");
+		parentNode.appendChild(sourceNode);
+		var childnode = document.createElement("div");
+		childnode.setAttribute("class","block_2");
+		childnode.innerHTML = "全部";
+		childnode.onclick = function() {open_viewby_catas()}
+		sourceNode.appendChild(childnode);
+
+
+
+    for (var i = 0; i < tags.length; i++) {
+      var clonedNode = sourceNode.cloneNode(true);
+      clonedNode.childNodes[0].innerHTML = tags[i];
+      clonedNode.childNodes[0].setAttribute('class','block_2');
+      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+    }
+  };
+
+	function viewTags_time() {
+		var parentNode = document.getElementById("tags");
+		parentNode.innerHTML = "";
+		var sourceNode = document.createElement("div");
+		sourceNode.setAttribute("id",'tag-0');
+		sourceNode.setAttribute("class","tag_2");
+		parentNode.appendChild(sourceNode);
+		var childnode = document.createElement("div");
+		childnode.setAttribute("class","block_2");
+		childnode.innerHTML = "全部";
+		sourceNode.appendChild(childnode);
+
+    for (var i = 0; i < tags.length; i++) {
+      var clonedNode = sourceNode.cloneNode(true);
+      clonedNode.childNodes[0].innerHTML = tags_time[i];
+      clonedNode.childNodes[0].setAttribute('class','block_2');
+      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+    }
+  };
+
+	function open_viewby_catas() {
+		api.openWin({
+		    name: 'view_by_cata',
+		    url: './viewby_cata_hobby.html',
+				bgColor: '#fff'
+		});
+	}
+
+
+
+</script>
+</html>

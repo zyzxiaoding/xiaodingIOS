@@ -1,0 +1,441 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>他人的主页</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+    <script type="text/javascript" src="../../../script/api.js" ></script>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" href="../../../css/iconfont.css">
+    <script type="text/javascript" src="../../../script/aui-dialog.js" ></script>
+
+
+    <style type="text/css">
+
+    html{
+        background-color: white;
+    }
+
+    header {
+        position: relative;
+        width: 100%;
+        /*height: 600px;*/
+        /*background-color: #6d7cd9;*/
+        /*background:url(http://47.105.160.217/files/public/2019/03/29/47e03e50918155f.png);
+        background-repeat:no-repeat;
+        background-size:cover;*/
+        color: #ffffff;
+    }
+
+
+
+
+    .userinf1{
+        display: flex;
+        -webkit-box-orient: horizontal;
+        flex-direction: row;
+        align-items:center;
+        height: 140px;
+        width: auto;
+        padding-top: 30px;
+    }
+
+    .userinf2{
+        display: flex;
+        -webkit-box-orient: horizontal;
+        flex-direction: row;
+        width: auto;
+    }
+
+    .portrait{
+        position: relative;
+        margin: 24px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+    }
+
+
+    /*.aui-grid [class*=aui-col-] {
+        padding: 0.75rem 0;
+    }*/
+
+    .back_black{
+      position: absolute;
+        height: 100%;
+        width: 100%;
+        background: rgba(0,0,0,.4);
+    }
+    </style>
+</head>
+<body>
+    <!-- 顶部 -->
+    <header id="header" style="background:url();background-repeat: no-repeat;background-size: cover;">
+        <div class="back_black"></div>
+        <i class="aui-iconfont aui-icon-left" style="font-size: 20px;position: absolute;top: 5px;left: 10px;" onclick="api.closeWin({});"></i>
+
+
+        <font id="back" style="right:20px;position:absolute;top:10px;" onclick="open2list()"> <span class="iconfont icon-edit" ></span></font>
+
+        <div class="aui-hide" style="width:110px;position: absolute;right: 24px; top:35px;z-index:20;border-radius:10px" id="list2">
+            <ul class="aui-list aui-list-in" style="color:black;border-radius: 10px 10px 10px 10px">
+                <li class="aui-list-item" onclick="otherInf()" style="border-radius:10px;padding-left:22px;height:55px ">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">查看资料</div>
+                    </div>
+                </li>
+
+                <li class="aui-list-item" onclick="" style="border-radius:10px;padding-left:22px;height:55px ">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">&nbsp;&nbsp;&nbsp;&nbsp;举报</div>
+                    </div>
+                </li>
+
+                <li class="aui-list-item" onclick="" style="border-radius:10px;padding-left:22px;height:55px ">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">&nbsp;&nbsp;&nbsp;&nbsp;分享</div>
+                    </div>
+                </li>
+              <!-- <li class="aui-list-item" onclick="change_info()">
+                  <div class="aui-list-item-inner" style="padding-right: 0px">
+                      <div class="aui-list-item-title" style="font-size:13px">更改个人信息</div>
+                  </div>
+              </li>-->
+            </ul>
+        </div>
+
+
+        <div class="userinf1" onclick="otherInf()">
+            <img src="../../image/demo1.png" style="margin-right:20px"class="portrait" id ="portrait" >
+            <div style="z-index:10"> <font style="font-size:20px" id="user_nickname">我是一只大橙子</font></br>
+            <font class="descible" id="descible">Ui问题优秀回答者</font></div>
+        </div>
+
+        <div class="userinf2" style="margin-bottom: 10px;">
+            <div style="z-index:10;text-align: center;margin-left:24px;margin-bottom:44px;"  onclick="otherFol();"> <font id="follow">6</font></br> 关注</div>
+            <div style="z-index:10;text-align: center;margin-left:24px;"  onclick="otherFan();"><font id="fan">12</font></br>  粉丝</div>
+            <!-- <div style="z-index:10;text-align: center;margin-left:24px;"  onclick="openMyCoin()"><font id="gold">120</font></br> 金币</div> -->
+        </div>
+    </header>
+
+    <div class="aui-row " style="position:fixed;bottom:0px;width:100%;background-color:#e8e8e8;height:44px;box-shadow: rgba(0, 0, 0, 0.2) 0.5px 0px 0px 0px;">
+        <!-- <p><div class="aui-btn">默认按钮(default)</div></p> -->
+        <div  class="aui-btn aui-btn-primary aui-col-xs-6"  style="height:60px;padding-top:8px;background-color:white;color:#8e8e8e" onclick="addFollow()" id="setFollow">+关注</div>
+        <div  class="aui-btn aui-btn-primary aui-col-xs-6"  style="height:60px;padding-top:8px;background-color:white;color:#8e8e8e" onclick="chat()"><span>聊天</span></div>
+    </div>
+
+
+</body>
+
+<script type="text/javascript">
+var uid;
+apiready = function () {
+    //setUserInf();
+    uid=api.pageParam.uid;
+    console.log("uid"+uid);
+    getDetailInfo();
+
+    openHistory();
+
+
+
+
+
+    //canotSee();
+}
+
+
+
+    function getDetailInfo(){
+        //var otherID=api.pageParam.name;
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+
+        //if(cookie==null) return;
+
+        var json_userInfo={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"aim_user_id": uid,"info_type": "UserInfo"};
+        console.log(JSON.stringify(json_userInfo));
+        $.ajax({
+          url:'http://47.105.160.217:80/api/userInfo/getOtherUserInfo/',
+          type:'POST',
+          data:JSON.stringify(json_userInfo),
+          dataType:'json',
+          success:function (ret) {
+              console.log(JSON.stringify(ret.data));
+
+            if(ret.status==200){
+                $api.text($api.byId('user_nickname'), ret.data.user_nickname);
+                $api.text($api.byId('descible'), ret.data.user_self_description);
+
+              $api.text($api.byId('follow'), ret.data.user_likenum);
+              $api.text($api.byId('fan'), ret.data.user_fansnum);
+            //   $api.text($api.byId('gold'), ret.data.gold_num);
+
+
+
+                if (ret.data.user_profile_url) $api.attr($api.byId('portrait'), "src", "http://47.105.160.217/files/"+ret.data.user_profile_url);
+                //if (ret.data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background-repeat: no-repeat;background-size: cover;background:url(http://47.105.160.217/files/"+ret.data.user_zone_background_url);
+                if (ret.data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background:url(http://47.105.160.217/files/"+ret.data.user_zone_background_url+");background-repeat: no-repeat;background-size: cover;");
+              //$api.setStorage('user_id', ret.data.);
+
+              $api.removeAttr($api.byId('setFollow'), 'onclick');
+
+              if (ret.data.is_user_concerned==0) {
+                  $api.text($api.byId('setFollow'), '+关注');
+                  $api.attr($api.byId('setFollow'), 'onclick','addFollow()');
+              }else if (ret.data.is_user_concerned==1) {
+                    $api.text($api.byId('setFollow'), '已关注');
+                    $api.attr($api.byId('setFollow'), 'onclick','unFollow()');
+
+              }else{
+                  $api.text($api.byId('setFollow'), '互相关注');
+                  $api.attr($api.byId('setFollow'), 'onclick','unFollow()');
+
+              }
+
+
+                if (ret.data.is_user_action_history_show==0) {
+
+                    canotSee();
+                    api.closeFrame({name: 'otherHistory'});
+                    api.closeFrameGroup({name: 'otherHistoryGroup'});
+                }
+
+                }
+            },
+            error:function (ret) {
+                alert(JSON.stringify(ret))
+          },
+      })
+
+
+    }
+
+
+
+    function otherFan(){
+
+        api.openWin({
+            name: '粉丝',
+            url: './otherFan.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+    　　　　},
+            pageParam: {
+                uid: uid
+            }
+
+        });
+    }
+
+    function otherFol(){
+        api.openWin({
+            name: '关注',
+            url: './otherFollow.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+    　　　　},
+            pageParam: {
+                uid:uid
+            }
+        });
+    }
+
+    function openHistory(){
+        // if(open0Rclose){
+        //     api.closeFrame({name: 'myHistory'});
+        //     api.closeFrameGroup({name: 'history'});
+        //     open0Rclose=false;
+        //   return ;
+        // }
+
+        var body_h = $api.offset($api.dom('body')).h;
+        var header_h = $api.offset($api.dom('#header')).h-25;
+
+
+        api.openFrame({
+            name: 'otherHistory',
+            url: './otherHistory.html',
+            bounces: false,
+            bgColor : 'rgba(0,0,0,0.0)',
+            rect: {
+
+
+                marginLeft:0,    //相对父 window 左外边距的距离
+                marginTop:header_h,     //相对父 window 上外边距的距离
+                marginBottom:50,  //相对父 window 下外边距的距离
+                marginRight:0    //相对父 window 右外边距的距离
+            },
+            pageParam: {
+                header_h: header_h,
+                uid:uid
+            }
+        })
+    }
+
+    function canotSee(){
+
+
+        var body_h = $api.offset($api.dom('body')).h;
+        var header_h = $api.offset($api.dom('#header')).h-25;
+
+        api.openFrame({
+            name: 'canotSee',
+            url: './canotSee.html',
+            bounces: false,
+            bgColor : 'rgba(0,0,0,0.0)',
+            rect: {
+
+                marginLeft:0,    //相对父 window 左外边距的距离
+                marginTop:header_h,     //相对父 window 上外边距的距离
+                marginBottom:45,  //相对父 window 下外边距的距离
+                marginRight:0    //相对父 window 右外边距的距离
+            }
+        })
+    }
+
+    function open2list(){
+      if($api.hasCls($api.byId("list2"),'aui-hide')){
+        $api.removeCls($api.byId("list2"), 'aui-hide');
+      }else {
+        $api.addCls($api.byId("list2"), 'aui-hide');
+      }
+   }
+
+
+   function addFollow(){
+       var cookie=$api.getStorage('cookie');
+       var user_id=$api.getStorage('user_id');
+
+       //if(cookie==null) return;
+
+       var json_userInfo={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"aim_id":uid};
+       console.log(JSON.stringify(json_userInfo));
+       $.ajax({
+         url:'http://47.105.160.217:80/api/userInfo/concernUser/',
+         type:'POST',
+         data:JSON.stringify(json_userInfo),
+         dataType:'json',
+         success:function (ret) {
+           if(ret.status==200){
+                getDetailInfo();
+                alert("关注成功");
+
+
+             }
+           },
+
+           error:function (ret) {
+               alert(JSON.stringify(ret))
+         },
+
+       })
+  }
+
+
+  function unFollow(){
+    //   event.stopPropagation();
+      var cookie=$api.getStorage('cookie');
+      var user_id=$api.getStorage('user_id');
+
+      //if(cookie==null) return;
+
+      var json_userInfo={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"aim_id":uid};
+      console.log(JSON.stringify(json_userInfo));
+
+      $.ajax({
+        url:'http://47.105.160.217:80/api/userInfo/concernUser/',
+        type:'POST',
+        data:JSON.stringify(json_userInfo),
+        dataType:'json',
+        success:function (ret) {
+          if(ret.status==200){
+               //alert("你取消了关注");
+
+               getDetailInfo();
+
+          }
+
+          if (ret.status==203) {
+              //alert("不能关注自己");
+          }
+
+          },
+       error:function (ret) {
+          alert(JSON.stringify(ret))
+      }
+
+      })
+
+        //   new auiDialog({}).alert({
+        //     title:"是否取消关注？",
+        //     buttons:['取消','确定']
+        // },function(ret){
+        //     if(ret){
+        //       if(ret.buttonIndex==2){
+        //
+        //
+        //       }
+        //     }
+        // })
+
+  }
+
+  function chat(){
+      var user_id=$api.getStorage('user_id');
+
+      $.ajax({
+          type: 'POST',
+          url: "http://47.105.160.217:80/api/message/getPrivateMessageConfig/",
+          data: JSON.stringify({user_id:user_id,partner_id:uid}),
+          dataType: 'json',
+          async: false,
+          success:function(result){
+              console.log('获取私人聊天消息设置成功');
+              api.openWin({
+                  name: 'chat_win',
+                  url: '../../message/html/chat_win.html',
+                  slidBackEnabled: true,
+                  pageParam: {
+                      myname:  $api.text($api.byId('user_nickname')),
+                      partner_id: uid,
+                      special_concern: result.data.special_concern,
+                      ignore: result.data.ignore
+                  }
+              });
+          },
+          error:function(){
+            console.log('获取私人聊天消息设置失败！');
+          },
+      });
+
+  }
+
+
+ function otherInf(){
+
+     api.openWin({
+         name: 'otherInf',
+         url: './otherInf.html',
+         bounces: false,
+         animation:{
+             type: "push",
+             duration:300
+ 　　　　},
+         pageParam: {
+             uid:uid
+         }
+
+     });
+ }
+
+</script>
+</html>

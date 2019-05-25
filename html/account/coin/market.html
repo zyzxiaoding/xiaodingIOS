@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>金币商城</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: #f0f0f0;
+        }
+
+
+        .content{
+            margin-top: 50px;
+            padding-left: 10px;
+            padding-right:  10px;
+        }
+
+    </style>
+
+</head>
+<script type="text/javascript" src="../../../script/api.js"></script>
+
+
+<script type="text/javascript">
+function closeWin(){
+  api.closeWin({
+  });
+}
+</script>
+
+
+
+<body>
+  <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt" id="aui-header">
+      <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;">商城</div>
+
+  </header>
+
+    <div class="content" onclick="marketdetail()">
+
+
+
+        <section class="aui-grid aui-margin-b-15" style="background-color:#f0f0f0">
+            <div class="aui-row">
+                <div class="aui-col-xs-6" style="padding-top: 0px; padding-bottom: 0px;">
+                    <div class="aui-card-list" style="border-radius: 20px;margin-right: 10px;">
+                        <div class="aui-card-list-content">
+                            <img src="../../../image/l2.png" style="border-radius:20px 20px 0 0;"/>
+                        </div>
+                        <div class="aui-card-list-footer">
+                            <span>羊60</span>
+                            <span></span>
+                            <span>手机</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aui-col-xs-6" style="padding-top: 0px; padding-bottom: 0px;">
+                    <div class="aui-card-list" style="border-radius: 20px;margin-left: 10px;">
+                        <div class="aui-card-list-content">
+                            <img src="../../../image/l2.png" style="border-radius:20px 20px 0 0 ;"/>
+                        </div>
+                        <div class="aui-card-list-footer">
+                            <span>羊60</span>
+                            <span></span>
+                            <span>手机</span>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="aui-row">
+                <div class="aui-col-xs-6" style="padding-top: 0px; padding-bottom: 0px;">
+                    <div class="aui-card-list" style="border-radius: 20px;margin-right: 10px;">
+                        <div class="aui-card-list-content">
+                            <img src="../../../image/l2.png" style="border-radius:20px 20px 0 0;"/>
+                        </div>
+                        <div class="aui-card-list-footer">
+                            <span>羊60</span>
+                            <span></span>
+                            <span>手机</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aui-col-xs-6" style="padding-top: 0px; padding-bottom: 0px;">
+                    <div class="aui-card-list" style="border-radius: 20px;margin-left: 10px;">
+                        <div class="aui-card-list-content">
+                            <img src="../../../image/l2.png" style="border-radius:20px 20px 0 0 ;"/>
+                        </div>
+                        <div class="aui-card-list-footer">
+                            <span>羊60</span>
+                            <span></span>
+                            <span>手机</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aui-row">
+                <div class="aui-col-xs-6" style="padding-top: 0px; padding-bottom: 0px;">
+                    <div class="aui-card-list" style="border-radius: 20px;margin-right: 10px;">
+                        <div class="aui-card-list-content">
+                            <img src="../../../image/l2.png" style="border-radius:20px 20px 0 0;"/>
+                        </div>
+                        <div class="aui-card-list-footer">
+                            <span>羊60</span>
+                            <span></span>
+                            <span>手机</span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aui-col-xs-6" style="padding-top: 0px; padding-bottom: 0px;">
+                    <div class="aui-card-list" style="border-radius: 20px;margin-left: 10px;">
+                        <div class="aui-card-list-content">
+                            <img src="../../../image/l2.png" style="border-radius:20px 20px 0 0 ;"/>
+                        </div>
+                        <div class="aui-card-list-footer">
+                            <span>羊60</span>
+                            <span></span>
+                            <span>手机</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+
+
+
+
+
+    </div>
+
+</body>
+<script type="text/javascript">
+    function marketdetail(){
+        api.openWin({
+        　　　　name: '商品详情',
+        　　　　 url: './market-detail.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+</script>
+
+
+</html>

@@ -1,0 +1,384 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.4.5.css"/>
+    <style>
+        header{ background-color: #f2f2f2; }
+        header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+        header ul li.active{ display: block; }
+        .flex-con{
+          overflow: scroll;
+        }
+        .fixed_bottom {
+           position:fixed;
+           left:0px;
+           bottom:0px;
+           width:100%;
+           height:50px;
+           z-index:10;
+        }
+
+
+        .title {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          bottom: auto;
+          padding-top: 20px;
+          padding-right: 24px;
+          box-sizing: border-box;
+          font-size: 18px; color: #000000; text-align: left;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+        .tag {
+          /*border-bottom: 1px solid #d3d2d2;*/
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 100%;
+          height: 12px;
+          bottom: auto;
+          padding-top: 10px;
+          box-sizing: border-box;
+          font-size: 12px; color: #917dcf; text-align: left;
+        }
+        .description {
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+          padding-top: 20px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+        .interactive-box {
+          position: relative;
+          width: 100%;
+          height: 40px;
+          padding-top: 20px;
+        }
+        .approve-logo {
+          /*position: relative;*/
+          width: 64px;
+          height: 21.5px;
+          float: left;
+          background-image: url(../icon/approve.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          float: left;
+        }
+        .comment-logo {
+          width: 64px;
+          height: 21.5px;
+          float: left;
+          background-image: url(../icon/message.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          float: left;
+        }
+        .more-logo {
+          width: 32px;
+          height: 16.5px;
+          margin-right: 10px;
+          float: left;
+          background-image: url(../icon/more1.png);
+          background-size: 24px 5px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          float: right;
+        }
+
+        .guide {
+          position: fixed;
+          width: 100%;
+          height: 32px;
+          border-bottom: 1px solid #d3d2d2;
+          background-color: #fff;
+          z-index:10;
+
+        }
+        .guide-box {
+          position: relative;
+          width: 100%;
+          height: 32px;
+          background-color: #ffffff;
+        }
+
+        .content {
+          width: 100%;
+          height: auto;
+          padding-top: 15px;
+        }
+
+        .content-box {
+          position: relative;
+          padding: 5px;
+          width: 90%;
+          height: auto;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 15px;
+          box-shadow: 0 6px 20px #D7D7D7;
+        }
+        .total {
+          width: 60px;
+          height: 40px;
+          position: relative;
+          top: -40px;
+          left: -16px;
+          /*display: none;*/
+        }
+        .pop{
+          width:90%;
+          height:30px;
+          left: 5%;
+          border-radius: 4px;
+          position:relative;
+          /*display;*/
+          background-color:black;
+          font-size:16px;  color:#fff; text-align: center;
+          line-height: 30px;
+        }
+        .triangle-bottom {
+            width: 0;
+             height: 0;
+             border-left: 7px solid transparent;
+             border-right: 7px solid transparent;
+             border-top: 10px solid black;
+             /*position: relative;*/
+             margin-left: 25px;
+        }
+    </style>
+</head>
+<body>
+  <div id="wrap" class="flex-wrap flex-vertical">
+
+      <div class="content" id="main">
+
+      </div>
+  </div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+
+var as_data;
+var new_qs_id;
+var qs_list_dict;
+apiready = function () {
+  api.setRefreshHeaderInfo({
+      bgColor: '#ccc',
+      textColor: '#fff',
+      textDown: '下拉刷新...',
+      textUp: '松开刷新...'
+  }, function(ret, err) {
+    //重置页码、页面数据，请求数据
+
+      question_view();
+  });
+  // alert($api.getStorage('cur_tag_id'))
+  if ($api.getStorage('cur_tag_id') != null) {  //如果是通过点击进入的
+    cur_tag_id = parseInt($api.getStorage('cur_tag_id')) + 1;
+  }
+  else {  //如果是通过初始化进入的
+    cur_tag_id = 0;
+  }
+  console.log(cur_tag_id)
+
+  qs_list_dict = {
+    "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+    "tag_id": cur_tag_id
+  }
+  // if ($api.getStorage('new_question') != undefined) {
+  //   new_qs_id = $api.getStorage('new_question');
+  //   // $api.setStorage('new_question', 1);
+  // }
+  // else {
+  //   new_qs_id = 1;
+  // }
+  // console.log(new_qs_id)
+  // var qs_dict = {
+  //   "app_version":"",
+  //   "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+  //   "user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+  //   "type":"homework",
+  //   "question_id": new_qs_id
+  // }
+  get_qs_list(qs_list_dict);
+  // getData(qs_dict);
+  console.log(document.getElementById('content').innerHTML)
+
+}
+
+  function get_qs_list(json) {
+    console.log(JSON.stringify(json))
+    $.ajax({
+        type: 'POST',
+        // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+        url: "http://47.105.160.217:80/api/questionAnswer/getQuestions/",
+        data:JSON.stringify(json),
+        dataType: 'json',
+        async: false,
+        success:function(result){
+          console.log('问题批量加载成功！')
+          qs_data =  result.data;
+          question_view();
+        },
+        error:function(){
+          console.log('问题批量加载失败！');
+        }
+        });
+  }
+  function getData(json) {
+    $.ajax({
+        type: 'POST',
+        // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+        url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+        data:JSON.stringify(json),
+        dataType: 'json',
+        async: false,
+        success:function(result){
+          console.log('问题上传成功！')
+          qs_data =  result.data
+        },
+        error:function(){
+          console.log('问题上传失败！');
+        }
+        });
+  }
+  function question_view() {
+    console.log(JSON.stringify(qs_data))
+    parentNode = document.getElementById('main');
+    parentNode.innerHTML = ''; //清空
+    for (var j = 0; j < qs_data.length; j++) {
+      sourceNode = document.createElement('div');
+      sourceNode.setAttribute('class','content-box');
+      parentNode.appendChild(sourceNode);
+      childNode1 = document.createElement('div');
+      childNode1.setAttribute('class','tag'); //标签
+      var tag_content = '';
+
+      for (var i = 0; i<qs_data[j].tag.length; i++) {
+        if (i == 0) {
+          tag_content = tag_content + qs_data[j].tag[i];
+        }
+        else {
+          tag_content = tag_content + ' · ' + qs_data[j].tag[i];
+        }
+      }
+      childNode1.innerHTML = tag_content;
+      childNode2 = document.createElement('div');
+      childNode2.setAttribute('class','title'); //题目
+      childNode2.innerHTML = qs_data[j].title;
+      childNode2.onclick = function() {open_as_list()}
+      childNode2.setAttribute("tapmode",'');
+      childNode3 = document.createElement('div');
+      childNode3.setAttribute('class','description'); //简介
+      var description_total = qs_data[j].detail;
+      description_total = description_total.split('^&');
+      childNode3.innerHTML = description_total[0];
+      childNode4 = document.createElement('div');
+      childNode4.setAttribute('class','interactive-box'); //互动框
+      sourceNode.appendChild(childNode2)
+      sourceNode.appendChild(childNode1)
+      sourceNode.appendChild(childNode3)
+      sourceNode.appendChild(childNode4)
+      // grandNode1 = document.createElement('div');
+      // grandNode1.setAttribute('class','approve-logo');//点赞
+      // grandNode1.innerHTML = qs_data[j].;
+      grandNode2 = document.createElement('div');
+      grandNode2.setAttribute('class','comment-logo');//评论
+      grandNode2.innerHTML = qs_data[j].answer_num;
+      grandNode3 = document.createElement('div');
+      grandNode3.setAttribute('class','more-logo');
+      grandNode3.setAttribute('id','more-logo');
+      grandNode3.onmouseover = function() {show(this)};
+      // $(grandNode3).attr('onmouseout','hiden(this)');
+      grandNode3.onmouseout= function() {hiden(this)};
+
+      // childNode4.appendChild(grandNode1)
+      childNode4.appendChild(grandNode2)
+      childNode4.appendChild(grandNode3)
+      grandNode31 = document.createElement('div');
+      grandNode31.setAttribute('class','total');
+      grandNode31.style.display = 'none';
+      grandNode3.appendChild(grandNode31);
+      grandNode311 = document.createElement('div');
+      grandNode311.setAttribute('class','pop');
+      grandNode311.innerHTML = '举报';
+      grandNode311.onclick = function() {jubao(this)}
+      grandNode312 = document.createElement('div');
+      grandNode312.setAttribute('class','triangle-bottom');
+      grandNode31.appendChild(grandNode311)
+      grandNode31.appendChild(grandNode312)
+    }
+    api.refreshHeaderLoadDone();
+  }
+  function show(div) {
+    div.childNodes[0].style.display='';
+  }
+
+  function hiden(div) {
+    div.childNodes[0].style.display='none';
+  }
+
+
+  function open_as_list() {
+
+    api.openWin({
+        name: 'answer_list',
+        url: './answer_list.html',
+        pageParam: {
+            question_id: new_qs_id
+        }
+    });
+
+  }
+
+  function jubao(tag) {
+    alert('举报成功！')
+    // $.ajax({
+    //     type: 'POST',
+    //     // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+    //     url: "http://47.105.160.217:80/api/questionAnswer/reportAnswer/",
+    //     data:JSON.stringify(json),
+    //     dataType: 'json',
+    //     async: false,
+    //     success:function(result){
+    //       console.log('问题上传成功！')
+    //       qs_data =  result.data
+    //     },
+    //     error:function(){
+    //       console.log('问题上传失败！');
+    //     }
+    //     });
+
+  }
+
+
+
+</script>

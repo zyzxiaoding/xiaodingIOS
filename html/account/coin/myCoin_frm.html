@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>我的金币</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+    <script type="text/javascript" src="../../../script/doT.min.js"></script>
+
+    <script type="text/javascript" src="../../../script/doT.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <link rel="stylesheet" href="../../../css/iconfont.css">
+
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: white;
+        }
+
+
+        .list{
+            display: flex;
+            -webkit-box-orient: horizontal;
+            flex-direction: row;
+            align-items:center;
+            height: auto;
+            width: 100%;
+            position: relative;
+            margin-top: 50px;
+        }
+
+
+    </style>
+
+</head>
+
+
+<script>
+  apiready = function(){
+    getBalance();
+    initData();
+  };
+
+    function initData(){
+        var gold=$api.getStorage('gold');
+        if(gold)$api.text($api.byId('gold'), gold);
+    }
+  function getBalance(){
+
+
+      var cookie=$api.getStorage('cookie');
+      var user_id=$api.getStorage('user_id');
+
+      //if(cookie==null) return;
+
+      var json_userInfo={"app_version":"1.0","user_id":user_id, "user_cookie":cookie};
+      console.log(JSON.stringify(json_userInfo));
+      $.ajax({
+        url:'http://47.105.160.217:80/api/userInfo/getDetailInfo/',
+        type:'POST',
+        data:JSON.stringify(json_userInfo),
+        dataType:'json',
+        success:function (ret) {
+          if(ret.status==200){
+            $api.text($api.byId('gold'), ret.data.gold_num);
+            $api.setStorage('gold', ret.data.gold_num);
+
+              }
+          },
+          error:function (ret) {
+              //$api.toast( "网络错误", 2000 );
+              console.log(JSON.stringify(ret));
+              alert("网");
+        },
+    })
+
+
+
+  return 0;
+  }
+
+
+
+</script>
+
+
+<body>
+
+
+    <!-- <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt" id="aui-header">
+        <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+            <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+        </a>
+        <div class="aui-title" style="background-color: #ffffff;color: #000000;">我的金币</div>
+
+    </header> -->
+
+    <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+        <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+            <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+        </a>
+        <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">我的金币</div>
+        <!-- <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="">
+            <h3 style="color:#6d7cd9;padding-right: 10px;">确定</h3>
+        </div> -->
+    </header>
+
+
+
+    <div class="content" style="padding-left:20px;padding-right:20px">
+
+        <div style="background:linear-gradient(to right ,#6d7cd9, #917cdf);height:128px;width:100%;padding:20px;color:white; border-radius:10px;margin-top:20px;">
+        <div style="font-size:20px;">余额</div>
+        <div style="font-size:40px;" id="gold">30.00<span style="vertical-align:sub;font-size:20px;"></span></div>
+    </div>
+
+    <div class="list" onclick="transactionHistory()">
+        <!-- <img src="../../../image/detail_cardicon.png" alt=""> -->
+        <span class="iconfont icon-tubiaolunkuohua12" style="font-size: 20px;"></span> <font style="padding-left:10px"> 交易记录</font>
+        <i class="aui-iconfont aui-icon-right" style="position:absolute;right:10px;"></i>
+    </div>
+
+    <div class="list" onclick="myIncome()" style="margin-top:30px">
+        <span class="iconfont icon-shouru" style="font-size: 20px;"></span> <font style="padding-left:10px"> 我的收入</font>
+        <i class="aui-iconfont aui-icon-right" style="position:absolute;right:10px;"></i>
+    </div>
+
+
+    </div>
+
+</body>
+<script type="text/javascript">
+    function transactionHistory(){
+        api.openWin({
+            name: '交易记录',
+            url: './transactionHistory.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+
+    function myIncome(){
+        api.openWin({
+            name: '我的收入',
+            url: './myIncome.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+    function closeWin(){
+      api.closeWin({
+      });
+    }
+</script>
+
+</html>

@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+    <style type="text/css">
+        .aui-searchbar {
+            background: transparent;
+        }
+        .aui-bar-nav .aui-searchbar-input {
+            background-color: grey;
+        }
+        .aui-bar-light .aui-searchbar-input {
+            background-color: grey;
+        }
+        .aui-content-padded {
+            padding: 0.75rem;
+            background-color: grey;
+            margin-top: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+<header>
+<div class="aui-title" style="position: absolute;z-index: 2;margin-top: 0">
+    <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar-input aui-border-radius">
+            <span class="aui-iconfont aui-icon-search"></span>
+            <input type="search" placeholder="搜索题目/圈子/资源/攻略" id="search-input">
+            <span class="aui-iconfont aui-icon-camera"></span>
+        </div>
+    </div>
+</div>
+</header>
+<footer class="aui-bar aui-bar-tab" id="footer">
+        <div class="aui-bar-tab-item" tapmode>
+            <span class="iconfont icon-home" style="position: relative;
+    z-index: 20;
+    top: 0.1rem;
+    height: 1.3rem;
+    font-size: 1.1rem;
+    line-height: 1rem"></span>
+            <div class="aui-bar-tab-label">互助</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <span class="iconfont icon-quanzi" style="position: relative;
+    z-index: 20;
+    top: 0.1rem;
+    height: 1.3rem;
+    font-size: 1rem;
+    line-height: 1rem"></span>
+            <div class="aui-bar-tab-label">圈子</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <span class="aui-iconfont aui-icon-comment"></span>
+            <div class="aui-bar-tab-label">消息</div>
+        </div>
+        <div class="aui-bar-tab-item" tapmode>
+            <span class="aui-iconfont aui-icon-my"></span>
+            <div class="aui-bar-tab-label">我的</div>
+        </div>
+</footer>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript">
+    var header = $api.byId('header');
+    var headerPos = $api.offset(header);
+    var current_footer = '';
+    var photoBg = '';
+    var body_h = $api.offset($api.dom('body')).h;
+    var footer_h = $api.offset($api.byId('footer')).h;
+    $api.setStorage('footerH1', footer_h);
+    var UIScrollPicture;
+    var p = ['http://p2.so.qhimg.com/t011d3ccbad92e11237.jpg', './res/t01c8026adad49a51f.jpg', './res/gogd.jpg'];
+    var framegroupname = "question_homepage_frmgro";
+    apiready = function(){
+      api.addEventListener({
+        name: 'keyback'
+      }, function(ret, err){
+        api.toast({
+          msg: '再次点击返回键退出APP',
+          duration:2000,
+          location: 'bottom'
+        });
+        api.addEventListener({
+          name: 'keyback'
+        }, function(ret, err){
+          $api.setStorage("gesture",false);
+          api.closeWidget({
+          id: 'A6090599313090', //这里需要修改为自己的应用ID
+          retData: {name:'closeWidget'},
+          silent:true
+          });
+        });
+      });
+        api.openFrameGroup({
+            name: 'maingroup',
+            preload:0,
+            scrollEnabled:false,
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto',
+                marginBottom:footer_h
+            },
+            frames: [{
+                name: 'main',
+                url: '../New_homepage/html/question_homepage_win.html',
+                bounces:true,
+                pageParam:{
+                    path:photoBg,
+                    footer_H:footer_h
+                }
+            }, {
+                name:'circle',
+                url:'../New_homepage/html/quanzi_main_win.html',
+                bounces:true,
+                pageParam:{
+                        footer_H:footer_h
+                    }
+
+            },{
+                name:'Message',
+                url:'../message/html/message_head.html',
+                bounces:true,
+                pageParam:{
+                        footer_H:footer_h
+                }
+            },{
+              name:'Mine',
+              url:"../account/MineFragment_frm.html"
+            }
+          ]
+        }, function(ret, err) {
+            if(ret.index==0){
+              api.setFrameGroupAttr({
+               name: framegroupname,
+               hidden: true
+              });
+              api.setFrameGroupAttr({
+                 name: 'question_homepage_frmgro',
+                 hidden: false
+                });
+
+              framegroupname = "question_homepage_frmgro";
+            }
+            else if(ret.index==1){
+
+              api.setFrameGroupAttr({
+                 name: framegroupname,
+                 hidden: true
+               });
+              api.setFrameGroupAttr({
+                 name: 'circle_homepage_frmgro',
+                 hidden: false
+              });
+
+              framegroupname = "circle_homepage_frmgro";
+            }else if(ret.index==2){
+
+              api.setFrameGroupAttr({
+               name: framegroupname,
+               hidden: true
+              });
+
+              api.setFrameGroupAttr({
+               name: 'chatgroup',
+               hidden: false
+              });
+
+              framegroupname = "chatgroup";
+            }else if(ret.index==3){
+              api.setFrameGroupAttr({
+               name: framegroupname,
+               hidden: true
+              });
+            }
+        });
+        api.setStatusBarStyle({
+            style: 'light'
+        });
+        api.parseTapmode();
+        FooterTap();
+        $api.setStorage("reloadQSwin",1)
+    }
+
+    function FooterTap() {
+        var tab = new auiTab({
+            element:document.getElementById("footer")
+        },function(ret){
+            if(ret){
+                <!--to do the change of the footer
+                -->
+                switch (ret.index){
+                    case 1:
+                        api.setFrameGroupIndex({
+                            name: 'maingroup',
+                            index: 0
+                        });
+                        break;
+                        case 2:
+                            api.setFrameGroupIndex({
+                                name: 'maingroup',
+                                index: 1
+                            });
+                            break;
+                    case 3:
+                        api.setFrameGroupIndex({
+                            name: 'maingroup',
+                            index: 2
+                        });
+                        break;
+                    case 4:
+                        api.setFrameGroupIndex({
+                            name: 'maingroup',
+                            index: 3
+                        });
+                        //UIScrollPicture.close();
+                        break;
+                    default:
+                }
+
+            }
+        });
+
+    }
+
+    function closeWin(){
+        api.closeWin({
+        });
+    }
+
+
+
+</script>
+</html>

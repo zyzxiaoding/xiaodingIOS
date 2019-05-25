@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+		<style>
+    html,body {
+      height: 100%;
+      width: 100%;
+    }
+		.header-box {
+			/*border: 1px solid blue;*/
+			position: relative;
+			width: 100%;
+			height: 43px;
+			background-color: #ffffff
+		}
+		header {
+			position: fixed;
+			width: 100%;
+			height: 43px;
+			background-color: #ffffff;
+			z-index: 11;
+			box-shadow: 0 6px 20px #D7D7D7;
+		}
+		header .left {
+			position: relative;
+			width: 21.5px;
+			height: 43px;
+			left: 15px;
+			background-image: url(../icon/back.png);
+			background-size: 21.5px 15.5px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			float: left;
+		}
+		header .center {
+			position: relative;
+			left: 37.5%;
+			width: 25%;
+			height: 43px;
+			float: left;
+			font-size: 18px;
+			line-height: 43px;
+		}
+		header .right {
+			width: 10%;
+			height: 43px;
+			float: right;
+			margin-right: 7%;
+			display: table;
+		}
+		.right .word1 {
+			font-size: 14px; color: #6d7cd9; font-weight: bolder; text-align: center;
+			line-height: 43px;
+      display: table-cell;
+      vertical-align: middle;
+		}
+
+
+		.searchbar-box {
+      position: fixed;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+			padding-top: 5px;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .inputbar {
+      position: relative;
+			width: 90%;
+			height: 35px;
+			margin-left: 5%;
+			color: #000;
+			opacity: 0.5;
+			background-color: #f2f2f2;
+      border-radius: 5px;
+    }
+    .input {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar img {
+			position: relative;
+			top: 10px;
+      width: 16px;
+      height: 16px;
+      margin-left: 15px
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    .searchby_cata-box {
+      width: 90%;
+      height: 30%;
+      margin-left: 5%;
+    }
+
+
+    .history-box {
+      position: relative;
+      width: 92%;
+      height: auto;
+      margin-left: 5%;
+    }
+    .title_2-box {
+      position: relative;
+      width: 100%;
+      height: 25px;
+    }
+    .title_2 {
+      font-size: 16px; color: #000;
+      float: left;
+			font-weight: bolder;
+    }
+
+    .tag_box {
+      padding-bottom: 15px;
+      position: relative;
+      width: 100%;
+      height: auto;
+      /*margin-left: 5%;*/
+      margin-bottom: 0px;
+			/*overflow-y: scroll;*/
+    }
+    .tag_2 {
+    	/*border: 1px solid red;*/
+      width: 100%;
+      height: 40px;
+			float: left;
+    }
+    .block_2 {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 16px; color: #000; text-align: left ;
+      line-height: 40px;
+    }
+
+    .close {
+      width: auto;
+      height: 100%;
+      font-size: 12px; color: #6d7cd9; text-align: left ;
+      padding-left: 15px;
+      line-height: 35px;
+      float: left;
+    }
+
+		.tags_selected_box {
+			width: 100%;
+			height: 10%;
+			position: relative;
+		}
+
+    .tags_selected {
+      width: 100%;
+      height: 10%;
+      position: fixed;
+      top: 43px;
+      z-index: 10;
+      background-color: #fff;
+    }
+
+		.disabled {
+			pointer-events: none;
+		}
+
+    .cancel-box {
+        position: relative;
+        display: table;
+        width: 14%;
+        height: 100%;
+        float: right;
+        margin-top: -33px;
+    }
+    .cancel {
+        font-size: 18px; color: #6d7cd9; font-weight: bolder; text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+    .ui-helper-hidden-accessible {display: none;}
+    .ui-autocomplete { height: 100%;
+        background-color: #fff;
+        font-size: 16px; color: #000; text-align:left;font-weight: 600;
+        line-height: 40px;}
+     .ui-menu {height: 100%;
+         background-color: #fff;
+         font-size: 16px; color: #000; text-align:left;font-weight: 600;
+         line-height: 40px;}
+    .ui-menu .ui-menu-item a {
+        height: 100%;
+        background-color: #fff;
+        font-size: 16px; color: #000; text-align:left;font-weight: 600;
+        line-height: 40px;
+    }
+
+     .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus
+    {   height: 100%;
+        background-color: #fff;
+        font-size: 16px; color: #000; text-align:left;font-weight: 600;
+        line-height: 40px;}
+
+    </style>
+</head>
+<body onclick="hide(0)">
+	<div id=“body1” class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+					<div class="iconfont icon-research" style="text-indent:8px;line-height:35px;"> </div>
+          <input id="input" type="text"   class="input" placeholder="" style='padding-left:30px;outline:none;' oninput="hideHot(this.value)">
+            <div class="cancel-box">
+            </div>
+        </div>
+
+      </div>
+
+      <div class="filter-box">
+        <div class="filter"></div>
+      </div>
+  </div>
+  </div>
+
+  <div id="contentBox" class="content-box" >
+
+
+
+    <div class="history-box">
+      <div class="title_2-box">
+        <div class="title_2" style="margin-top:60px;margin-bottom:10px;">我关注的</div>
+      </div>
+      <div id="tag_box" class="tag_box">
+      </div>
+    </div>
+
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- <script type="text/javascript" src="../script/zepto.min.js"></script> -->
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../../../script/jqueryUI.js"></script>
+<script type="text/javascript">
+
+var people_list = []; //用来存放后端返回的关注列表
+var tag_dict;
+var tag_data;
+var cplist = new Array();  //用于存放每次添加@人时的列表,每次进入或者退出页面时需要被清空
+var people_count; //记录@的人数量
+var cuser_id_list = new Array();  //用于存放每次添加@人时的列表,每次进入或者退出页面时需要被清空
+var u_list=new Array();
+var uid_list = new Array();
+
+	apiready = function(){
+		cuser_id_list = [];
+		cplist = [];
+		tag_dict ={
+			"user_id":$api.getStorage('user_id'),
+			"since_id":0,
+  	  "page_size":999
+}
+		getData(tag_dict);
+		getList();
+		$('#input').autocomplete({
+            source:u_list,
+            messages: {
+            noResults: '',
+                results: function() {}
+        },
+            select:function (event,ui) {
+                add_searchTag(ui.item.value)
+            },
+						result:function(event,data,formatted){
+								$('#input').unautocomplete();
+						}
+        });
+		people_list = $api.getStorage('people_list');  //存放从后端取出来的user的关注标签
+	};
+	function hideHot(text) {
+        if(text!=null && text!=''){
+            hide(1)
+        }
+        else hide(0)
+    }
+	function hide(x) {
+	    if (x==1){
+            event.cancelBubble =true;
+	        document.getElementById('contentBox').style.display = 'none';
+	    }
+	    else
+            document.getElementById('contentBox').style.display = ''
+    }
+    function getList() {
+        var j ={
+            'user_id':$api.getStorage('user_id'),
+            'since_id':0,
+            'page_size':1000
+        }
+        $.ajax({
+            type: 'POST',
+            url: "http://47.105.160.217:80/api/userInfo/getUsersList/",
+            data:JSON.stringify(j),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+             //   alert(JSON.stringify(result))
+                for(var i =0 ;i<result.data.length;i++){
+                    u_list.push(result.data[i].nickname)
+                }
+            },
+            error:function (e) {
+                alert(JSON.stringify(e))
+            }
+        })
+    }
+	function getData(json) {
+		$.ajax({
+				type: 'POST',
+				url: "http://47.105.160.217:80/api/userInfo/getFollower/",
+				data:JSON.stringify(json),
+				dataType: 'json',
+				async: false,
+				success:function(result){
+					console.log('关注用户加载成功！')
+					tag_data =  result.data;
+					console.log(JSON.stringify(tag_data))
+
+					view_tags();
+				},
+				error:function(){
+					console.log('关注用户加载失败！');
+				}
+				});
+
+	}
+
+	function view_tags() {
+		for (var i=0; i<tag_data.length; i++) {
+			parentNode = document.getElementById('tag_box');
+			sourceNode = document.createElement('div');
+			sourceNode.setAttribute('class','tag_2');
+			sourceNode.setAttribute("tapmode",'');
+			sourceNode.setAttribute("id",tag_data[i].user_id);
+			// $(sourceNode).attr('onclick','add_tag(this)');
+			sourceNode.onclick = function(){add_tag(this)};
+			parentNode.appendChild(sourceNode);
+			childNode = document.createElement('div');
+			childNode.setAttribute('class','block_2');
+			sourceNode.appendChild(childNode);
+			grandNode = document.createElement('div');
+			grandNode.setAttribute('class','word');
+			grandNode.innerHTML = tag_data[i].user_nickname;
+			childNode.appendChild(grandNode);
+		}
+	}
+  function back(){
+      api.closeWin();
+  }
+
+	function delete_tag(tag){
+        tag.parentNode.parentNode.removeChild(tag.parentNode);
+
+    }
+  function add_searchTag(text) {
+        document.getElementById('input').value="";
+        cplist.push(text);
+        var uid = uid_list[u_list.indexOf(text)];
+        cuser_id_list.push(uid)
+        $api.setStorage('choose_user_id', cuser_id_list);
+        $api.setStorage('choose_people', cplist);
+        $api.setStorage('tags',text);
+        var jsfun ='line_num = Math.floor(($api.getStorage("people_num")-1)/3+1);' +
+            ' var parentNode = document.getElementById("tags_box");' +
+            'var sourceNode = document.createElement("div");' +
+            'sourceNode.setAttribute("class","tag_2");' +
+            'parentNode.appendChild(sourceNode);' +
+            'var childnode = document.createElement("div");' +
+            'childnode.setAttribute("class","block_2");' +
+            'sourceNode.appendChild(childnode); ' +
+            'var grandnode1 = document.createElement("div");' +
+            'grandnode1.setAttribute("class","word");' +
+            'grandnode1.innerHTML = $api.getStorage("tags");' +
+            'var grandnode2 = document.createElement("div");' +
+            'grandnode2.setAttribute("class","delete");' +
+            'grandnode2.innerHTML = "×";' +
+            'grandnode2.onclick=function(){delete_tag(this)};' +
+            'grandnode2.setAttribute("tapmode","");' +
+            'childnode.appendChild(grandnode1); ' +
+            'childnode.appendChild(grandnode2);' +
+            '$api.byId("selected_tags").style.display="";' +
+            'api.setFrameAttr({name: "at_frm",' +
+            'rect: {x: 0,y:45+45*line_num,w: api.winWidth,h: api.winHeight},});'
+        api.execScript({
+            name: 'at_win',
+            script: jsfun
+        });
+        people_count = $api.getStorage('people_num');
+        console.log(people_count)
+        $api.setStorage('people_num',parseInt(people_count)+1);
+				var tmp = $api.domAll('.tag_2');
+				for (var i = 0; i < tmp.length; i++) {
+					if (tmp[i].childNodes[0].childNodes[0].innerHTML == text) {
+						//alert(text)
+						$api.addCls(tmp[i], 'disabled');
+					}
+				}
+    }
+  function add_tag(div) {
+      var text = div.childNodes[0].childNodes[0].innerHTML;
+			cplist.push(text);
+			var user_id_text = div.id
+			cuser_id_list.push(user_id_text)
+			$api.setStorage('choose_user_id', cuser_id_list);
+			$api.setStorage('choose_people', cplist);
+      $api.setStorage('tags',text);
+      var jsfun ='line_num = Math.floor(($api.getStorage("people_num")-1)/3+1); var parentNode = document.getElementById("tags_box");var sourceNode = document.createElement("div");sourceNode.setAttribute("class","tag_2");parentNode.appendChild(sourceNode);var childnode = document.createElement("div");childnode.setAttribute("class","block_2");sourceNode.appendChild(childnode); var grandnode1 = document.createElement("div");grandnode1.setAttribute("class","word");grandnode1.innerHTML = $api.getStorage("tags");var grandnode2 = document.createElement("div");grandnode2.setAttribute("class","delete");grandnode2.innerHTML = "×";grandnode2.onclick=function(){delete_tag(this)};grandnode2.setAttribute("tapmode","");childnode.appendChild(grandnode1); childnode.appendChild(grandnode2);$api.byId("selected_tags").style.display="";api.setFrameAttr({name: "at_frm",rect: {x: 0,y:45+45*line_num,w: api.winWidth,h: api.winHeight},});'
+      api.execScript({
+          name: 'at_win',
+          script: jsfun
+      });
+      people_count = $api.getStorage('people_num');
+			console.log(people_count)
+      $api.setStorage('people_num',parseInt(people_count)+1);
+			$api.addCls(div, 'disabled');
+  }
+
+	function Reactive(name) {
+		list2 = $api.domAll('.disabled');
+		for (var i = 0; i < cplist.length; i++) {
+			if (list2[i].childNodes[0].childNodes[0].innerHTML == name) {
+				$api.removeCls(list2[i], 'disabled');
+				var index = cplist.indexOf(name)
+				cplist.splice(index,1)
+				cuser_id_list.splice(index,1)
+				$api.setStorage('choose_user_id', cuser_id_list);
+				$api.setStorage('choose_people', cplist);
+			}
+		}
+	}
+
+</script>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/dropload.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+
+    <style>
+    html,
+    body {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        height: 100%;
+        background-color: transparent;
+    }
+
+    section {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        overflow: auto;
+    }
+
+    footer {
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        border-radius: 14px 14px 0 0;
+    }
+    .total {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .top-box {
+       position: relative;
+       width: 100%;
+       height:50px;
+
+    }
+    .top-fixed {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      z-index: 10;
+    }
+    .left {
+      position: absolute;
+      left:0px;
+      bottom: 0px;
+      width:100px;
+      height: 50px;
+      font-size: 18px; color: #000; text-align: center;
+      line-height: 50px;
+			font-weight: bold;
+    }
+    .right {
+      position: absolute;
+      right: 0px;
+      width:50px;
+      height: 50px;
+      font-size: 18px; color: #000; text-align: center;
+      line-height: 50px;
+			font-weight: bold;
+    }
+
+
+    .comment {
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      overflow-y:scroll;
+			margin-bottom: 30px;
+      /*padding-right: 24px;*/
+    }
+    .comment-box {
+      /*border: 1px solid red;*/
+      width: 100%;
+      height: auto;
+      padding-top: 18px;
+			padding-bottom: 12px;
+    }
+    .comment-box-left {
+    	/*border: 1px solid red;*/
+			width: 9%;
+      height: auto;
+      float: left;
+      padding-left: 4%;
+    }
+    .comment-user-imag {
+    	/*padding-top: 3px;*/
+      width: 36px;
+      height: 36px;
+    }
+    .comment-user-imag img {
+    	margin-top:5px;
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+    }
+    .comment-box-right {
+      /*border: 1px solid blue;*/
+			width: 60%;
+      height: auto;
+      float: left;
+    }
+    .comment-user-name {
+      width: auto;
+      height: 16px;
+      font-size: 13px; color: #8e8e8e; text-align: left;
+      padding-left: 8px;
+    }
+    .comment-user-data {
+      width: auto;
+      height: 14px;
+      font-size: 14px; color: #8e8e8e; text-align: left;
+      padding-top: 10px;
+      padding-left: 8px
+    }
+    .comment-user-comment {
+      /*border: 1px solid red;*/
+      width: 100%;
+      height: auto;
+      font-size: 16px; color: #000000; text-align: left;
+      padding-top: 10px;
+      padding-left: 8px
+    }
+    .comment-approve {
+      /*border: 1px solid red;*/
+      width: 54px;
+      height: 21.5px;
+      float: right;
+      margin-right: 4%;
+      text-align: right;
+      line-height: 23px;
+			letter-spacing:3px;
+    }
+    span div.selected {
+    	color: #000
+    }
+
+    .input-comment {
+      /*border-top: 1px solid #d3d2d2;*/
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 10%;
+      background-color: #fff;
+      /*padding-right: 24px;*/
+    }
+
+
+
+    </style>
+</head>
+<body>
+  <footer>
+    <div class="total">
+
+    <div id='comment' class="comment"style="">
+    </div>
+
+    <div class="input-comment">
+
+    </div>
+</div>
+  </footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+var current_id = 0;		//页码
+var qs_dict;
+var since_id = 0;
+var comm_data;
+var as_dict;
+var total_num;
+var comment_id_list = new Array();
+
+    apiready = function(){
+      as_dict = {
+    "app_version":"",
+		"user_id":  $api.getStorage('user_id'),
+		"user_cookie": api.pageParam.user_cookie,
+    "type":"homework",
+    "question_id":api.pageParam.question_id,
+    "answer_id":api.pageParam.answer_id
+		}
+		console.log(JSON.stringify(as_dict))
+      qs_dict = {
+  		"app_version":"",
+			"user_id":  $api.getStorage('user_id'),
+			"user_cookie": api.pageParam.user_cookie,
+  		"question_id":api.pageParam.question_id,
+  		"answer_id":api.pageParam.answer_id,
+  		"since_id": since_id,
+  		"page_size": 10
+  		};
+			console.log(api.pageParam.question_id)
+			console.log(api.pageParam.answer_id)
+      UIChatBox = api.require("UIChatBox");
+      OpenChatbox();
+      getCommentNum();
+		fnInitData();
+		fnInitEvent();
+    };
+
+     function getCommentNum() {
+       $.ajax({
+           type: 'POST',
+           url: "http://47.105.160.217:80/api/questionAnswer/getSpecifyAnswer/",
+           data:JSON.stringify(as_dict),
+           dataType: 'json',
+           async: true,
+           success:function(result){
+             total_num = result.data.comment_num;
+             $api.setStorage('comm_num',total_num);
+						 jsFun = 'var comment_num = $api.byId("comment-num");$api.text(comment_num, $api.getStorage("comm_num") + "评论");'
+						 api.execScript({
+								 frameName: 'comment_win',
+								 script: jsFun
+						 });
+           },
+           error:function(){
+             console.log('加载评论数量失败');
+           }
+       });
+     }
+
+
+    function fnInitData(){
+      qs_dict.since_id = since_id;
+    	api.showProgress({
+			title:"获取数据中...",
+			text: '请稍等...'
+        });
+    $.ajax({
+        type: 'POST',
+        url: "http://47.105.160.217:80/api/questionAnswer/getComment/",
+        data:JSON.stringify(qs_dict),
+        dataType: 'json',
+        async: true,
+        success:function(result){
+          console.log('获取评论成功')
+          comm_data = result.data;
+					comm_num = comm_data.length;
+					for (var i = 0; i<comm_data.length; i++) {
+						comment_id_list.push(comm_data[i].comment_id);
+					}
+          // total_num = comm_data.length;
+          if(comm_data.length > 0){
+            //调用页面渲染的方法
+            api.hideProgress();
+            fnInitView(comm_data);
+          }
+          else {
+            api.toast({msg:'没数据了，别拽了'});
+            api.hideProgress();
+            since_id -= 9;
+          };
+        },
+        error:function(){
+          console.log('加载评论失败');
+        }
+    });
+		// alert($api.getStorage("comm_num"))
+    jsFun = 'var comment_num = $api.byId("comment-num");$api.text(comment_num, $api.getStorage("comm_num") + "评论");'
+    api.execScript({
+        frameName: 'comment_win',
+        script: jsFun
+    });
+
+
+    };
+
+    function fnInitView(comm){
+        var parentNode = document.getElementById('comment')
+        for (var i = parseInt(current_id); i < parseInt(current_id) + comm.length; i++) {
+        var sourceNode = document.createElement('span');
+        sourceNode.setAttribute('id','comment-box-' + i);
+        sourceNode.setAttribute('class','comment-box');
+        parentNode.appendChild(sourceNode);
+        var childNode1 = document.createElement('div');
+        childNode1.setAttribute('class','comment-box-left');
+        sourceNode.appendChild(childNode1);
+        var grandNode1 = document.createElement('div');
+        grandNode1.setAttribute('class','comment-user-imag');
+        childNode1.appendChild(grandNode1);
+        imgNode = document.createElement('img');
+				imgNode.src = 'http://47.105.160.217/files/'+ comm[i - parseInt(current_id)].author_info['user_profile_url'];
+        grandNode1.appendChild(imgNode);
+
+
+
+        var childNode2 = document.createElement('div');
+        childNode2.setAttribute('class','comment-box-right');
+        sourceNode.appendChild(childNode2);
+        grandNode1 = document.createElement('div');
+        grandNode1.setAttribute('class','comment-user-name');
+        grandNode1.innerHTML = comm[i - parseInt(current_id)].author_info['author_name'];
+        childNode2.appendChild(grandNode1);
+        grandNode2 = document.createElement('div');
+        grandNode2.setAttribute('class','comment-user-data');
+        grandNode2.innerHTML = comm[i - parseInt(current_id)].comment_postdate;
+        childNode2.appendChild(grandNode2);
+        grandNode3 = document.createElement('div');
+        grandNode3.setAttribute('class','comment-user-comment');
+        grandNode3.innerHTML = comm[i - parseInt(current_id)].content;
+        childNode2.appendChild(grandNode3);
+
+        var childNode3 = document.createElement('div');
+        childNode3.setAttribute('class','iconfont icon-zan comment-approve');
+        childNode3.innerHTML = comm[i - parseInt(current_id)].comment_like_num;
+        $(childNode3).attr('onclick','click_approve(this)');
+				if (comm[i - parseInt(current_id)].is_on == 0) {  //点过赞了
+					$api.addCls(childNode3,'selected');
+				}
+        sourceNode.appendChild(childNode3);
+
+  		}
+      // console.log(parentNode.innerHTML)
+      current_id = current_id + comm.length
+    };
+    /**
+     * 初始化页面监听事件
+     */
+    function fnInitEvent(){
+    	/**上拉加载 */
+    	api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold: 0
+		    }
+		}, function(ret, err){
+			//页码+1，继续请求数据
+			since_id += 9;
+			fnInitData();
+		});
+		/** 下拉刷新 */
+		// api.setRefreshHeaderInfo({
+		//     bgColor: '#ccc',
+		//     textColor: '#fff',
+		//     textDown: '下拉刷新...',
+		//     textUp: '松开刷新...'
+		// }, function(ret, err) {
+		// 	//重置页码、页面数据，请求数据
+		//     since_id = 0;
+    //     var parentNode = document.getElementById('comment')
+    //     parentNode.innerHTML = ''
+		//     fnInitData();
+		// });
+    };
+
+
+      function closeUIchat() {
+				UIChatBox.hide()
+        UIChatBox.close();
+				// jsFun = '$api.dom(".comment").innerHTML = parseInt($api.dom(".comment").innerHTML) + 1';
+				jsFun = '$api.dom(".comment").innerHTML = parseInt($api.dom(".comment").innerHTML) + 1'
+				api.execScript({
+					name:'hobby_question_detail',
+					script:jsFun
+				});
+        api.closeFrame({
+					name:'comment_win'
+				})
+				api.closeFrame({
+					name:'comment_frm'
+				})
+      }
+
+			function closeUIchat_nofresh() {
+        UIChatBox.hide();
+        UIChatBox.close();
+        api.closeFrame({
+					name:'comment_win'
+				})
+				api.closeFrame({
+					name:'comment_frm'
+				})
+      }
+
+      function click_approve( tag ) {
+        if ($api.hasCls(tag,'selected')) {
+          $api.removeCls(tag, 'selected');
+    			tag.innerHTML = parseInt(tag.innerHTML) - 1;
+    			var tag_id= $(tag.parentNode).attr('id').replace(/[^0-9]/ig,"");
+    			var comment_dict = {
+    			    "app_version":"",
+							"user_id":  $api.getStorage('user_id'),
+							"user_cookie": api.pageParam.user_cookie,
+    					"question_id":api.pageParam.question_id,
+    					"answer_id":api.pageParam.answer_id,
+    			    "comment_id":comment_id_list[tag_id]
+    			}
+    			$.ajax({
+    			    type: 'POST',
+    			    // url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+    			    url: "http://47.105.160.217:80/api/questionAnswer/likeComment/",
+    			    data:JSON.stringify(comment_dict),
+    			    // crossDomain: true,
+    			    dataType: 'json',
+    			    async: false,
+    			    success:function(result){
+    			      console.log('取消点赞成功')
+    			      // view_tips(result)
+    			    },
+    			    error:function(){
+    			      console.log('取消点赞失败');
+    			    }
+    			});
+        }
+        else {
+          $api.addCls(tag, 'selected');
+    			tag.innerHTML = parseInt(tag.innerHTML) + 1;
+    			var tag_id= $(tag.parentNode).attr('id').replace(/[^0-9]/ig,"");
+
+					console.log(api.pageParam.question_id)
+					console.log(comment_id_list[tag_id])
+    			var comment_dict = {
+    			    "app_version":"",
+							"user_id":  $api.getStorage('user_id'),
+							"user_cookie": api.pageParam.user_cookie,
+    					"question_id":api.pageParam.question_id,
+    					"answer_id":api.pageParam.answer_id,
+    			    "comment_id":comment_id_list[tag_id]
+    			}
+    			$.ajax({
+    			    type: 'POST',
+    			    // url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+    			    url: "http://47.105.160.217:80/api/questionAnswer/likeComment/",
+    			    data:JSON.stringify(comment_dict),
+    			    // crossDomain: true,
+    			    dataType: 'json',
+    			    async: false,
+    			    success:function(result){
+    			      console.log('点赞成功')
+    			      // view_tips(result)
+    			    },
+    			    error:function(){
+    			      console.log('点赞失败');
+    			    }
+    			});
+        }
+      }
+
+      function addComment(comment) {
+    		new_comment = {
+        "app_version":"",
+				"user_id":  $api.getStorage('user_id'),
+				"user_cookie": api.pageParam.user_cookie,
+        "type":"homework",
+    		"question_id":api.pageParam.question_id,
+    		"answer_id":api.pageParam.answer_id,
+        "content":comment
+			}
+				console.log(JSON.stringify(new_comment))
+    			$.ajax({
+    			type: 'POST',
+    			url: "http://47.105.160.217:80/api/questionAnswer/postComment/",
+    			data:JSON.stringify(new_comment),
+    			// crossDomain: true,
+    			dataType: 'json',
+    			async: false,
+    			success:function(result){
+    				console.log('评论成功！')
+    				cmm_data =  result.data
+    				closeUIchat();
+    				// view_tips(result)
+    			},
+    			error:function(){
+    				console.log('评论失败！');
+    			}
+    		});
+    		total_num += 1;  //评论数+1
+				var parentNode = document.getElementById('comment')
+				var sourceNode = document.createElement('span');
+        sourceNode.setAttribute('id','comment-box-' + parseInt(total_num)-1);
+        sourceNode.setAttribute('class','comment-box');
+        parentNode.appendChild(sourceNode);
+        var childNode1 = document.createElement('div');
+        childNode1.setAttribute('class','comment-box-left');
+        sourceNode.appendChild(childNode1);
+        var grandNode1 = document.createElement('div');
+        grandNode1.setAttribute('class','comment-user-imag');
+        childNode1.appendChild(grandNode1);
+        imgNode = document.createElement('img');
+        imgNode.src = '../image/09-014416_603.jpg';
+        grandNode1.appendChild(imgNode);
+
+				var tmp = $api.getStorage('comm_num');
+				$api.setStorage('comm_num',parseInt(tmp)+1);
+				jsFun = 'var comment_num = $api.byId("comment-num");$api.text(comment_num, $api.getStorage("comm_num") + "评论");'
+				api.execScript({
+						frameName: 'comment_win',
+						script: jsFun
+				});
+    	}
+
+      function OpenChatbox() {
+    		UIChatBox.open({
+        placeholder: '来说点什么吧！',
+        maxRows: 4,
+        texts: {
+            sendBtn: {
+                title: '发送'
+            }
+        },
+        styles: {
+						width:0,
+						color:'#fff',
+            inputBar: {
+                borderColor: '#fff',
+                bgColor: '#fff',
+								textSize:15,
+            },
+            inputBox: {
+                borderColor: '#fff',
+                bgColor: '#ebebeb',
+								topMargin:5,
+            },
+            sendBtn: {
+                titleColor: '#fff',
+                bg: '#6d7cd9',
+                activeBg: '#65a709',
+                titleSize: 14
+            }
+        },
+        ret: {
+        eventType: 'send',  //字符串类型；回调的事件类型，
+                            //取值范围：
+                            //show（该模块打开成功）
+                            //send（用户点击发送按钮）
+                            //clickExtras（用户点击附加功能面板内的按钮）
+                            //clickRecord（用户点击录音功能面板内的按钮）
+        index: 0,           //数字类型；当 eventType 为 clickExtras 时，此参数为用户点击附加功能按钮的索引，否则为 undefined
+        msg: '',             //字符串类型；当 eventType 为 send 时，此参数返回输入框的内容，否则返回 undefined
+        inputBarHeight:30   //数字类型；输入框及左右按钮整体区域的高度
+    }
+    }, function(ret, err) {
+        if (ret.msg != undefined && ret.msg != '') {
+    			addComment(ret.msg);
+          UIChatBox.closeKeyboard();
+        } else {
+
+        }
+    });
+    	}
+
+
+</script>
+</html>

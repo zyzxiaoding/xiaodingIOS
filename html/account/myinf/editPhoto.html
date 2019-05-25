@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+
+
+    <style type="text/css">
+        html{ background-color: grey; }
+        #foot_div {
+                display: block;
+                bottom: 0px;
+                padding-left : 20px;
+                padding-right : 20px;
+                /*right: 18px;*/
+                min-width: 200px;
+                line-height: 30px;
+                width:100%;
+                position: fixed;
+                /*border: 1px solid #fff;*/
+                text-align: center;
+                color: #fff;
+                background: #000;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+        <a class="aui-btn aui-pull-left"  tapmode onclick="back()">
+            <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+        </a>
+        <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">设置头像</div>
+        <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="saveImageClip()">
+            <h3 style="color:#6d7cd9;padding-right: 10px;">确定</h3>
+        </div>
+    </header>
+
+    <!-- <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt;position:fixed" id="aui-header">
+        <a class="aui-btn aui-pull-left" tapmode onclick="back()">
+            <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+        </a>
+        <div class="aui-title" style="background-color: #ffffff;color: #000000;">设置头像</div>
+        <div class="next_btn" onclick="saveImageClip()" style="position:fixed;right:0" >
+            <h3 style="margin-top:0px;margin-bottom:0px;color:black">确定</h3>
+        </div>
+    </header> -->
+</body>
+<script type="text/javascript">
+
+	// var FNImageClip;
+    // apiready = function() {
+    //     FNImageClip = api.require('FNImageClip');
+    //
+    // };
+
+    var FNImageClip;
+    var type;
+    apiready = function() {
+        var img_src = api.pageParam.img_src;
+        var t = api.pageParam.type;
+        type=t;
+        FNImageClip = api.require('FNImageClip');
+        openImageClip(img_src);
+        //安卓关闭
+        if (api.systemType == 'android') {
+                backForAndroid();
+        }
+    };
+
+    /**
+ * 安卓点击返回的时候
+ * 周枫
+ * 2015.10.14
+ */
+function backForAndroid() {
+        api.addEventListener({
+                name : "keyback"
+        }, function(ret, err) {
+                back();
+        });
+}
+
+    /**
+ * 对头像进行裁剪
+ * 周枫
+ * 2016.5.21
+ */
+function openImageClip(img_src){
+
+        var rect_w = api.winWidth;
+        var rect_h = api.winHeight;
+        var clip_w = parseInt(rect_w - 2);
+        var clip_y = parseInt((rect_h - clip_w - 30) / 2);
+
+        var header_h = $api.offset($api.dom('header')).h;
+        FNImageClip.open({
+            rect: {
+                x: 0,
+                y: header_h,
+                w: rect_w,
+                h: rect_h
+            },
+            srcPath: img_src,
+            style: {
+                    //（可选项）字符串类型；图片裁剪控件遮罩层背景，支持 rgb，rgba，#；默认：#888
+                mask: '#000',
+                clip: {
+                        //（可选项）数字类型；裁剪区域的宽度，当 appearance 为 circular 时，w 为半径；默认：rect.w / 2
+                    w: clip_w,
+                    //（可选项）数字类型；裁剪区域的高度，当 appearance 为 circular 时，h 无效；默认：w
+                    h: clip_w,
+                    x: 0,
+                    y: clip_y,
+                    borderColor: '#0f0',
+                    borderWidth: 0,
+                    //（可选项）字符串类型；裁剪区域的形状，支持 circular | rectangle；默认：rectangle
+                    appearance: 'rectangle'
+                }
+            },
+            mode : 'image',
+            fixedOn: api.frameName
+        }, function(ret, err){
+
+        });
+    }
+
+    function back() {
+        closeImageClip();
+        api.closeFrame({
+                name : 'editPhoto'
+        });
+    }
+    function closeImageClip(){
+        FNImageClip.close();
+    }
+    function resetImageClip(){
+        FNImageClip.reset();
+    }
+
+    function saveImageClip(){
+        FNImageClip.save({
+            destPath: 'fs://imageClip/result.png',
+            copyToAlbum: false,
+            quality: 1
+        },function(ret, err){
+            if(err) {
+                return;//popToast('服务器繁忙，请稍后再试');
+            }
+            var img_temp = ret.destPath;
+            console.log("临时文件："+img_temp);
+            saveImg(ret.destPath,1,1);
+        });
+    }
+
+
+            //保存剪辑图像
+      function saveImg(path,valueId,imgId) {
+          var cookie=$api.getStorage('cookie');
+          var user_id=$api.getStorage('user_id');
+
+        api.showProgress({
+            title: '上传中...',
+            text: '先喝杯茶...',
+        });
+        //上传剪辑后的图像到服务器
+        api.ajax({
+            // report : false,
+            url : 'http://47.105.160.217:80/api/upload/',
+            //这里是我们约定好的后台上传图片的位置 ，你可以根据你的需求来改
+            method : 'post',
+            cache : 'false',
+            timeout : 30,
+            dataTpye : 'json',
+            data : {
+                files : {
+                    file : path
+                },
+                values: {
+                  type: 'public'
+                }
+            }
+        }, function(ret, err) {
+
+            if (ret.message=="SUCCESS") {
+
+              var urlpath='http://47.105.160.217:80/files/'+ret.data.path;
+              console.log(urlpath);
+
+                if(type==1){
+                    var json_ver={"app_version":"1.0","user_id":user_id,"user_cookie":cookie,"user_profile_url":ret.data.path};
+                }else if (type==2) {
+                    var json_ver={"app_version":"1.0","user_id":user_id,"user_cookie":cookie,"user_zone_background_url":ret.data.path};
+                }
+                $.ajax({
+                    url:'http://47.105.160.217:80/api/userInfo/updateUserInfo/',
+                    type:'POST',
+                    data:JSON.stringify(json_ver),
+                    dataType:'json',
+                    success:function (ret) {
+                      if(ret.status==200){
+                        if (ret.data=="Success") {
+                            alert("个人头像上传成功");
+                            console.log(JSON.stringify(ret));
+                            api.sendEvent({
+                                name: 'UserHasLogin'
+                            });
+                            setTimeout(function() {back()},500);
+                           api.hideProgress();
+                        }
+                      }
+
+                    },
+                    error:function (ret) {
+                        alert(JSON.stringify(ret))
+                    },
+                });
+
+
+            }
+            if (ret.status == 1) {
+              api.toast({
+                  msg : ret.info
+              });
+            }
+            //上传进度
+            if (ret.status == 0) {
+                api.toast({
+                    msg : '上传错误',
+                    duration : 3000,
+                    location : 'bottom'
+                });
+            } else if (ret.status == 1) {
+                // $api.byId(valueId).value = ret.id;
+                // $api.byId(imgId).src = ret.path;
+             }
+        });
+      }
+
+
+
+
+
+
+
+
+
+
+    // function fnOpen(){
+    //     FNImageClip.open({
+    //         rect: {
+    //             x: 0,
+    //             y: document.querySelector('.main').offsetHeight,
+    //             w: api.winWidth,
+    //             h: api.winHeight - document.querySelector('.main').offsetHeight
+    //         },
+    //         srcPath: 'widget:/res/pic1.png',
+    //         highDefinition: true,
+    //         style: {
+    //             mask: 'rgba(55,55,55,0.3)',
+    //             clip: {
+    //                 w: 150,
+    //                 h: 150,
+    //                 x: 80,
+    //                 y: 20,
+    //                 borderColor: '#0f0',
+    //                 borderWidth: 1,
+    //                 appearance: 'rectangle'
+    //             }
+    //         },
+    //         mode:'image'
+    //     }, function(ret, err){
+    //         if( ret ){
+    //             alert( JSON.stringify( ret ) );
+    //         }else{
+    //             alert( JSON.stringify( err ) );
+    //         }
+    //     });
+    // }
+
+    // function fnSave(){
+    //     FNImageClip.save({
+    //         destPath: 'fs://res/pic1.png',
+    //         copyToAlbum: true,
+    //         quality: 1
+    //     },function(ret, err){
+    //         if(ret) {
+    //             alert(JSON.stringify(ret));
+    //         } else{
+    //             alert(JSON.stringify(err));
+    //         }
+    //     });
+    // }
+    function fnClose(){
+        FNImageClip.close();
+    }
+    function fnReset(){
+        FNImageClip.reset();
+    }
+</script>
+</html>

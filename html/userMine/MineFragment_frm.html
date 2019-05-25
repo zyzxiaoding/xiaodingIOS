@@ -1,0 +1,413 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>AUI快速完成布局</title>
+    <link rel="stylesheet" type="text/css" href="../account/css/aui.css" />
+    <style type="text/css">
+
+    html,
+    body {
+
+        height: 100%;
+        background-color: #fff;
+    }
+
+    header {
+        position: relative;
+        width: 100%;
+        /*height: 600px;*/
+        background-color: #6d7cd9;
+        color: #ffffff;
+
+
+    }
+
+    .userinf1{
+        /*display: -webkit-box;
+        display: -webkit-flex;*/
+        display: flex;
+        -webkit-box-orient: horizontal;
+        flex-direction: row;
+        align-items:center;
+        height: 150px;
+        width: auto;
+
+    }
+
+    .userinf2{
+        /*display: -webkit-box;
+        display: -webkit-flex;*/
+        display: flex;
+        -webkit-box-orient: horizontal;
+        /*-webkit-flex-flow: column;*/
+        /*flex-flow: row;*/
+        flex-direction: row;
+        /*height: 70px;*/
+        width: auto;
+
+    }
+
+    .portrait{
+        position: relative;
+
+        margin: 24px;
+
+        width: 80px;
+        height: 80px;
+
+
+        border-radius: 50%;
+    }
+
+    .name {
+        /*position: relative;*/
+        /*margin-left: 180px;
+        top: 60px;*/
+        font-size: 20px;
+    }
+
+    .descible {
+        font-size: 15px;
+    }
+
+
+    .follow{
+        text-align: center;;
+        margin-left:  24px;
+
+    }
+
+
+    .fan{
+        text-align: center;
+        margin-left:  24px;
+        margin-bottom: 20px;
+
+    }
+
+    .coin_num{
+        position: relative;
+        text-align: center;;
+        width: 40px;
+        height: 20px;
+    }
+
+    .coin{
+        text-align: center;
+        margin-left:  24px;
+    }
+
+
+
+        .aui-grid [class*=aui-col-] {
+            padding: 0.75rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部 -->
+    <header id="header">
+        <div class="userinf1">
+            <img src="../account/image/demo1.png" class="portrait" id ="portrait">
+            <div  id="username_______"> <font class="name">我是一只大橙子</font></br><font class="descible">Ui问题优秀回答者</font></div>
+            <div class="descible"> </div>
+
+        </div>
+
+
+        <div class="userinf2" style="margin-bottom: 10px;">
+            <div class="follow" onclick="openFollow();"> <font>6</font></br> 关注</div>
+
+            <div class="fan"><font>12</font></br>  粉丝</div>
+
+            <div class="coin" onclick="openMyCoin()"><font>120</font></br> 金币</div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- <section class="aui-content" id="user-info">
+        <div class="aui-list aui-media-list aui-list-noborder aui-bg-info">
+            <div class="aui-list-item aui-list-item-middle">
+                <div class="aui-media-list-item-inner ">
+                    <div class="aui-list-item-media" style="width:3rem;">
+                        <img src="../image/demo1.png" class="aui-img-round" >
+                    </div>
+                    <div class="aui-list-item-inner aui-list-item-arrow">
+                        <div class="aui-list-item-text text-white aui-font-size-18">38dd4ef6d</div>
+                        <div class="aui-list-item-text text-white">
+                           <div><i class="aui-iconfont aui-icon-mobile aui-font-size-14"></i>152****0989</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+
+    <!-- <section class="aui-content aui-grid aui-margin-b-15">
+        <div class="aui-row">
+            <div class="aui-col-xs-4 aui-border-r" onclick="openFollow();">
+                <big class="aui-text-warning">0.00<small> </small></big>
+                <div class="aui-gird-lable aui-font-size-12">信誉分</div>
+            </div>
+            <div class="aui-col-xs-4 aui-border-r">
+                <big class="aui-text-danger">0.00<small> 个</small></big>
+                <div class="aui-gird-lable aui-font-size-12">等级</div>
+            </div>
+            <div class="aui-col-xs-4">
+                <big class="aui-text-success">0.00<small> 分</small></big>
+                <div class="aui-gird-lable aui-font-size-12">积分</div>
+            </div>
+        </div>
+    </section> -->
+
+
+    <!-- 控制右侧滚动条 -->
+    <section class="aui-content">
+        <ul class="aui-list aui-list-in aui-margin-b-15">
+            <li class="aui-list-item" onclick="favorite();">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-location aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">收藏夹</div>
+                </div>
+            </li>
+            <li class="aui-list-item" onclick="market()">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-like aui-text-danger"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">金币商城</div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-image aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">联系我们</div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">选项4</div>
+                    <div class="aui-list-item-right">内容4</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">选项4</div>
+                    <div class="aui-list-item-right">内容4</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">选项4</div>
+                    <div class="aui-list-item-right">内容4</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">选项4</div>
+                    <div class="aui-list-item-right">内容4</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-cart aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">选项4</div>
+                    <div class="aui-list-item-right">内容4</div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-cert aui-text-warning"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">选项5</div>
+                    <div class="aui-list-item-right">内容5</div>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="aui-list aui-list-in aui-margin-b-15" >
+            <li class="aui-list-item" onclick="login();">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-location aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title"  >登录</div>
+                </div>
+            </li>
+            <li class="aui-list-item"  onclick="register();">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-like aui-text-danger"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title" >注册</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item"  onclick="verified();">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-like aui-text-danger"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title" >实名验证</div>
+                </div>
+            </li>
+
+        </ul>
+    </section>
+
+</body>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript">
+    function favorite(){
+        api.openWin({
+        　　　　name: 'login',
+        　　　　 url: '../account/favorite.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+
+    function login(){
+        api.openWin({
+        　　　　name: 'login',
+        　　　　 url: '../account/login.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+
+    function register(){
+        api.openWin({
+        　　　　name: 'register',
+        　　　　 url: '../account/register.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "movein",
+        　　　　duration:100
+        　　　　}
+        　　　　});
+    }
+
+    function verified(){
+        api.openWin({
+        　　　　name: 'verified',
+        　　　　 url: '../account/verified.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+    apiready = function () {
+        userListener();
+        setUserInf();
+        openHistory();
+    }
+
+    function userListener(){
+
+    }
+
+    function setUserInf(){
+
+    }
+
+    function openFollow(){
+        api.openWin({
+        　　　　name: 'verified',
+        　　　　 url: '../account/myFan.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+
+    function openMyCoin(){
+        api.openWin({
+        　　　　name: 'verified',
+        　　　　 url: '../account/coin/myCoin_frm.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+
+    function market(){
+        api.openWin({
+        　　　　name: '商店',
+        　　　　 url: '../account/coin/market.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+
+
+
+
+    function openHistory(){
+
+        // var body_h = $api.offset($api.dom('body')).h;
+        // api.openFrame({
+        //     name: 'MineFragment_frm',
+        //     url: 'account/login_no.html',
+        //     bounces: false,
+        //     rect: {
+        //         x: 0,
+        //         y: '100px',
+        //         w: 'auto',
+        //         h: '500px',
+        //
+        //         //marginBottom:50    //相对父 window 下外边距的距离
+        //     }
+        // })
+    }
+
+</script>
+</html>

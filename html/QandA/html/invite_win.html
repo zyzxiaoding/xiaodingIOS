@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+		<style>
+		html,body {
+      height: 100%;
+      width: 100%;
+    }
+		.header-box {
+			/*border: 1px solid blue;*/
+			position: relative;
+			width: 100%;
+			height: 43px;
+			background-color: #ffffff
+		}
+		header {
+			position: fixed;
+			width: 100%;
+			height: 43px;
+			background-color: #ffffff;
+			z-index: 11;
+			/*box-shadow: 0 6px 20px #D7D7D7;*/
+		}
+		header .left {
+			position: relative;
+			width: 10%;
+			height: 43px;
+			left: 4%;
+			background-image: url(../icon/back.png);
+			background-size: 21.5px 15.5px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			float: left;
+		}
+		header .center {
+			position: relative;
+			left: 0%;
+			width: 70%;
+			margin-left: 5%;
+			height: 43px;
+			float: left;
+			font-size: 18px;
+			line-height: 43px;
+			font-weight: bolder;
+			text-align: center;
+		}
+		header .left {
+      /*border: 1px solid red;*/
+      position: relative;
+			top: 0px;
+			width: 10%;
+			height: 43px;
+			left: 4%;
+      background-image: url(../icon/back.png);
+      background-size: 21.5px 15.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      float: left;
+    }
+		header .right {
+			width: 10%;
+			height: 43px;
+			float: right;
+			margin-right: 4%;
+			display: table;
+		}
+		.right .word1 {
+			font-size: 14px; color: #6d7cd9; text-align: right;
+			line-height: 43px;
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+
+		.searchbar-box {
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      float: left;
+    }
+    .inputbar {
+      position: relative;
+			width: 95%;
+			height: 35px;
+			margin-left: 7%;
+			background-color: #fbfbfb;
+      /*margin-left: -47%;
+      margin-top: -40%;*/
+      border-radius: 5px;
+    }
+    .input {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar img {
+			position: relative;
+			top: 10px;
+      width: 16px;
+      height: 18px;
+      margin-left: 8px
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    .searchby_cata-box {
+      width: 90%;
+      height: 30%;
+      margin-left: 5%;
+    }
+    .title_1-box {
+      position: relative;
+      width: 100%;
+      height: 50%;
+      display: table;
+    }
+    .title_1 {
+      font-size: 20px; color: #000;
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .tag_1-box {
+      width: 100%;
+      height: 50%;
+    }
+    .tag_1 {
+      width: 33%;
+      height: 100%;
+      float: left;
+    }
+    .block_1 {
+      position: relative;
+      width: 70%;
+      height: 50%;
+      left: 50%;
+      top: 50%;
+      margin-left: -35%;
+      margin-top: -25%;
+      background-color: #ebebeb;
+      font-size: 18px; color: #6d7cd9; text-align: center;
+      line-height: 150%;
+      border-radius: 5px;
+    }
+
+    .history-box {
+      position: relative;
+      width: 90%;
+      height: auto;
+      margin-left: 5%;
+      padding-top: 4%;
+			padding-bottom: 10%;
+    }
+    .title_2-box {
+      position: relative;
+			float: left;
+      width: 100%;
+      height: 50px;
+    }
+    .title_2 {
+      font-size: 20px; color: #000;
+      float: left;
+    }
+    .clean_history-box {
+      position: relative;
+      width: 25%;
+      height: 50%;
+      float: right;
+    }
+    .clean_history {
+      width: 100%;
+      font-size: 12px; color: #959595; text-align: right;
+      background-color: #fff;
+      border-radius: 3px;
+
+    }
+    .tag_2-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+		.tag_2 {
+      width: 33%;
+      height: 45px;
+			float: left;
+			padding: 2.5px;
+			/*margin-top: 3%;*/
+    }
+    .block_2 {
+      position: relative;
+      left: 8%;
+      width: 88%;
+      height: 100%;
+      background-color: #e5e5e5;
+			border-radius: 3px;
+      /*box-shadow: 0 6px 20px #D7D7D7;*/
+    }
+    .word {
+      position: relative;
+      width: 70%;
+      height: 100%;
+      font-size: 16px; color: #8e8e8e; text-align: left ;
+      text-indent: 10px;
+      line-height: 40px;
+      float: left;
+			text-overflow: -o-ellipsis-lastline;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			word-break:break-all;
+    }
+    .delete {
+      position: relative;
+      width: 30%;
+      height: 100%;
+      font-size: 20px; color: #8e8e8e; text-align: left ;
+      text-indent: 10px;
+      line-height: 40px;
+      float: left;
+    }
+
+
+    .close {
+      width: auto;
+      height: 100%;
+      font-size: 12px; color: #6d7cd9; text-align: left ;
+      padding-left: 15px;
+      line-height: 35px;
+      float: left;
+    }
+
+		.tags_selected_box {
+			width: 100%;
+			height: auto;
+			position: relative;
+      /*margin-top: 2.5%*/
+		}
+
+    .tags_selected {
+      width: 100%;
+      height: auto;
+      position: fixed;
+      top: 45px;
+      z-index: 10;
+      background-color: #fff;
+      /*margin-top: 2.5%*/
+
+    }
+
+
+    </style>
+</head>
+<body>
+	<div class="header-box">
+	<!-- <header id="header" class="">
+		<div class="left"tapmode onclick="back()"></div>
+		<div class="center">邀请回答</div>
+		<div class="right">
+			<div class="word1"tapmode onclick="fabu()">发送</div>
+		</div>
+	</header> -->
+
+	<header class="aui-bar aui-bar-nav" style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+				<a class="aui-btn aui-pull-left"  tapmode onclick="back();">
+						<span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+				</a>
+				<div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">邀请回答</div>
+				<div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="fabu()">
+						<h3 style="color:#6d7cd9;padding-right: 10px;">发送</h3>
+				</div>
+		</header>
+
+	</div>
+
+	<div id="selected_tags" class="tags_selected_box" style="display:none">
+	  <div id="tags_box" class="tags_selected">
+	  </div>
+	</div>
+
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+
+var line_num;
+var invite_dict;
+
+	apiready = function(){
+		init(); //将相关数组清空
+    var tags_box = $('#www');
+    tags = $api.byId('tags_box');
+    header_H = $api.offset(tags).h;
+    header_T = $api.offset(tags).t;
+
+    api.openFrame({
+        name: 'invite_frm',
+        url: './invite_frm.html',
+        rect: {
+            x: 0,
+            y: header_T + header_H+45,
+            w: api.winWidth,
+            h: api.winHeight
+        },
+        pageParam: {
+					question_id: api.pageParam.question_id,
+					user_id:$api.getStorage('user_id'),
+					user_cookie:api.pageParam.user_cookie
+        },
+        bounces: false,
+        bgColor: 'rgba(0,0,0,0)',
+        vScrollBarEnabled: true,
+        hScrollBarEnabled: true
+    });
+    tags_box.bind('DOMNodeInserted',function(e){
+    $api.setStorage('people_num',tags.children.length);
+    })
+	};
+
+	function init() {
+		cplist= [];
+		people_count=0;
+		$api.setStorage("people_num",0);
+		$api.setStorage("choose_people",[]);
+		list_init = $api.domAll(".disabled");
+		for (var i =0; i<list_init.length;i++)
+		{$api.removeCls(list_init[i], "disabled");}
+	}
+  function delete_tag(tag) {
+    name = tag.parentNode.childNodes[0].innerHTML;
+    $api.setStorage('delete_name',name)
+    var jsfun ='name = $api.getStorage("delete_name");Reactive(name)'
+    api.execScript({
+        frameName: 'invite_frm',
+        script: jsfun
+    });
+    tag.parentNode.parentNode.parentNode.removeChild(tag.parentNode.parentNode);
+		// alert($api.getStorage("people_num"))
+    if (($api.getStorage('people_num')-1)%3 == 0) {
+			if ($api.getStorage('people_num') == 1) {
+				var jsfun ='line_num = Math.floor(($api.getStorage("people_num")-1)/3+1); $api.byId("selected_tags").style.display="none";api.setFrameAttr({name: "invite_frm",rect: {x: 0,y:60+60*line_num,w: api.winWidth,h: api.winHeight},});'
+				api.execScript({
+						name: 'invite_win',
+						script: jsfun
+				});
+			}
+			else {
+				var jsfun ='line_num = Math.floor(($api.getStorage("people_num")-1)/3+1); $api.byId("selected_tags").style.display="";api.setFrameAttr({name: "invite_frm",rect: {x: 0,y:60+60*line_num,w: api.winWidth,h: api.winHeight},});'
+				api.execScript({
+						name: 'invite_win',
+						script: jsfun
+				});
+			}
+    }
+    count = $api.getStorage('people_num');
+    $api.setStorage('people_num',parseInt(count)-1);
+  }
+
+  function back(){
+		api.historyBack({
+			}, function(ret, err) {
+					if (!ret.status) {
+							api.closeWin();
+					}
+			});
+  }
+
+
+
+	function fabu(){
+		var people_list = $api.getStorage('people_list');  //用户关注的标签
+		var choose_people = $api.getStorage('choose_people'); //用户选择的标签
+		var choose_user_id = $api.getStorage('choose_user_id'); //用户选择的标签
+		var user_id_list = '';
+		for (var i = 0; i < choose_user_id.length; i++) {
+			if (i != choose_user_id.length-1) {
+				user_id_list = user_id_list + choose_user_id[i] + ','
+			}
+			else {
+				user_id_list = user_id_list + choose_user_id[i]
+			}
+		}
+		invite_dict = {
+			"user_id": $api.getStorage('user_id'),
+			"user_cookie": api.pageParam.user_cookie,
+			"question_id": api.pageParam.question_id,
+			"target_id_list": user_id_list
+		}
+		console.log(JSON.stringify(invite_dict))
+		if (choose_people.length != 0) {
+			$.ajax({
+					type: 'POST',
+					url: "http://47.105.160.217:80/api/message/sendInvitationMessage/",
+					data:JSON.stringify(invite_dict),
+					dataType: 'json',
+					async: false,
+					success:function(result){
+						console.log('邀请回答成功')
+					},
+					error:function(){
+						console.log('邀请回答失败');
+					}
+					});
+
+			api.historyBack({
+        }, function(ret, err) {
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+		}
+	}
+
+
+</script>
+</html>

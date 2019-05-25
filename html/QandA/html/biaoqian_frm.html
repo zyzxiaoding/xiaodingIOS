@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+
+		<style>
+
+    html,body {
+      height: 100%;
+      width: 100%;
+    }
+    .cancel-box {
+        position: relative;
+        display: table;
+        width: 14%;
+        height: 100%;
+        float: right;
+        margin-top: -33px;
+    }
+    .cancel {
+        font-size: 1.2rem; color: #6d7cd9; text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+    }
+		.searchbar-box {
+			/*border: 1px solid red;*/
+      position: relative;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 35px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .inputbar {
+      position: relative;
+			width: 90%;
+			height: 35px;
+			margin-left: 5%;
+			color: #000;
+			opacity: 0.5;
+			background-color: #f2f2f2;
+      border-radius: 5px;
+    }
+    .input {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar img {
+			position: relative;
+			top: 10px;
+      width: 16px;
+      height: 16px;
+      margin-left: 15px
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    .searchby_cata-box {
+      width: 90%;
+      height: 30%;
+      margin-left: 5%;
+    }
+
+
+    .history-box {
+      position: relative;
+      width: 92%;
+      height: auto;
+      margin-left: 5%;
+    }
+    .title_2-box {
+      position: relative;
+      width: 100%;
+      height: 25px;
+    }
+    .title_2 {
+      font-size: 16px; color: #000;
+      float: left;
+			font-weight: bolder;
+    }
+
+    .tag_box {
+      padding-bottom: 15px;
+      position: relative;
+      width: 100%;
+      height: 120px;
+      /*margin-left: 5%;*/
+      margin-bottom: 0px;
+			overflow-y: scroll;
+    }
+    .tag_2 {
+    	/*border: 1px solid red;*/
+      width: 33%;
+      height: 40px;
+			float: left;
+    }
+    .block_2 {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 16px; color: #000; text-align: left ;
+      line-height: 40px;
+    }
+
+    .close {
+      width: auto;
+      height: 100%;
+      font-size: 12px; color: #6d7cd9; text-align: left ;
+      padding-left: 15px;
+      line-height: 35px;
+      float: left;
+    }
+
+		.tags_selected_box {
+			width: 100%;
+			height: 10%;
+			position: relative;
+		}
+
+    .tags_selected {
+      width: 100%;
+      height: 10%;
+      position: fixed;
+      top: 43px;
+      z-index: 10;
+      background-color: #fff;
+    }
+
+		.disabled {
+			pointer-events: none;
+		}
+		.maginline {
+			width: 100%;
+			height: 4px;
+			background-color: #000;
+			opacity: 0.03;
+		}
+		.ui-helper-hidden-accessible {display: none;}
+    .ui-autocomplete { height: 300px;
+			display:block;
+        z-index:99999; 
+        background-color: #fff;
+        font-size: 16px; color: #000; text-align:left;font-weight: 600;
+        line-height: 40px;}
+     .ui-menu {height: 100%;
+         background-color: #fff;
+         font-size: 16px; color: #000; text-align:left;font-weight: 600;
+         line-height: 40px;}
+    .ui-menu .ui-menu-item a {
+        height: 100%;
+        background-color: #fff;
+        font-size: 16px; color: #000; text-align:left;font-weight: 600;
+        line-height: 40px;
+    }
+
+     .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus
+    {   height: 100%;
+        background-color: #fff;
+        font-size: 16px; color: #000; text-align:left;font-weight: 600;
+        line-height: 40px;}
+
+    </style>
+</head>
+<body onclick="hide(0)">
+	<div id=“body1” class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+					<div class="iconfont icon-research" style="text-indent: 8px;color:#8e8e8e;line-height:35px;"></div>
+          <input id="input" type="text"  class="input" placeholder="" style='padding-left:30px;outline:none;' oninput="hideHot(this.value)">
+        </div>
+      </div>
+      <div class="filter-box">
+        <div class="filter"></div>
+      </div>
+  </div>
+  </div>
+
+  <div id="contentBox" class="content-box">
+
+
+		<div class="maginline" style="margin-top:15px;margin-bottom:20px">
+		</div>
+    <div class="history-box">
+      <div class="title_2-box">
+        <div class="title_2">我关注的</div>
+      </div>
+      <div id="tag_box" class="tag_box">
+      </div>
+    </div>
+
+		<div class="maginline" style="margin-top:0px;margin-bottom:20px">
+		</div>
+
+		<div class="history-box">
+      <div class="title_2-box">
+        <div class="title_2">热门标签</div>
+      </div>
+      <div id="pop_tag" class="tag_box">
+
+      </div>
+    </div>
+
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<!-- <script type="text/javascript" src="../script/zepto.min.js"></script> -->
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../../../script/jqueryUI.js"></script>
+<script type="text/javascript">
+
+var tags_list = [];
+var tag_dict;
+var tag_data;
+var pop_tag;
+var list = new Array();
+var count;
+var localList = [];
+	apiready = function(){
+		list = [];
+		tag_dict ={
+			"user_id":  $api.getStorage('user_id'),
+			"since_id":0,
+  	  "page_size":999
+};
+getData(tag_dict);
+		//存放从后端取出来的user的关注标签
+view_tags();
+$('#input').autocomplete({
+				source:tags_list,
+				messages: {
+						noResults: '',
+						results: function() {}
+				},
+				select:function (event,ui) {
+						console.log(ui)
+						console.log(event)
+						add_searchTag(ui.item.value)
+				}
+		});
+	}
+
+
+
+function hide(x) {
+    if (x==1){
+        event.cancelBubble =true;
+        document.getElementById('contentBox').style.display = 'none';
+    }
+    else
+        document.getElementById('contentBox').style.display = ''
+}
+
+    function hideHot(text) {
+        if(text!=null && text!=''){
+            hide(1)
+        }else hide(0)
+
+    }
+	function getData(json) {
+		$.ajax({
+				type: 'POST',
+				// url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+				url: "http://47.105.160.217:80/api/tag/getTags/",
+				data:JSON.stringify(json),
+				// crossDomain: true,
+				dataType: 'json',
+				async: false,
+				success:function(result){
+				console.log('关注标签加载成功')
+				tag_data =  result.data
+				console.log(tag_data.length)
+
+				// view_tips(result)
+				},
+				error:function(){
+				console.log('关注标签加载失败');
+				}
+				});
+				$.ajax({
+						type: 'POST',
+						// url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+						url: "http://47.105.160.217:80/api/firstpage/getPopularGroups/",
+						data:JSON.stringify(json),
+						// crossDomain: true,
+						dataType: 'json',
+						async: false,
+						success:function(result){
+						console.log('热门标签加载成功')
+						pop_tag =  result.data;
+						console.log(tag_data.length)
+
+						// view_tips(result)
+						},
+						error:function(){
+						console.log('热门标签加载失败');
+						}
+						});
+
+	}
+	function view_tags() {
+		if (tag_data.length <= 9) {
+			for (var i=0; i<tag_data.length; i++) {
+				parentNode = document.getElementById('tag_box');
+				sourceNode = document.createElement('div');
+				sourceNode.setAttribute('class','tag_2');
+				sourceNode.setAttribute("tapmode",'');
+				// $(sourceNode).attr('onclick','add_tag(this)');
+				sourceNode.onclick = function(){add_tag(this)};
+				parentNode.appendChild(sourceNode);
+				childNode = document.createElement('div');
+				childNode.setAttribute('class','block_2');
+				sourceNode.appendChild(childNode);
+				grandNode = document.createElement('div');
+				grandNode.setAttribute('class','word');
+				grandNode.innerHTML = tag_data[i].name;
+
+				childNode.appendChild(grandNode);
+			}
+		}
+		else {
+			for (var i=0; i<9; i++) {
+				parentNode = document.getElementById('tag_box');
+				sourceNode = document.createElement('div');
+				sourceNode.setAttribute('class','tag_2');
+				sourceNode.setAttribute("tapmode",'');
+				// $(sourceNode).attr('onclick','add_tag(this)');
+				sourceNode.onclick = function(){add_tag(this)};
+				parentNode.appendChild(sourceNode);
+				childNode = document.createElement('div');
+				childNode.setAttribute('class','block_2');
+				sourceNode.appendChild(childNode);
+				grandNode = document.createElement('div');
+				grandNode.setAttribute('class','word');
+				grandNode.innerHTML = tag_data[i].name;
+				childNode.appendChild(grandNode);
+			}
+
+		}
+        for (var i =0;i<tag_data.length;i++){
+            tags_list.push(tag_data[i].name);
+        }
+		if (pop_tag.length <= 9) {
+			for (var i=0; i<pop_tag.length; i++) {
+				parentNode = document.getElementById('pop_tag');
+				sourceNode = document.createElement('div');
+				sourceNode.setAttribute('class','tag_2');
+				sourceNode.setAttribute("tapmode",'');
+				// $(sourceNode).attr('onclick','add_tag(this)');
+				sourceNode.onclick = function(){add_tag(this)};
+				parentNode.appendChild(sourceNode);
+				childNode = document.createElement('div');
+				childNode.setAttribute('class','block_2');
+				sourceNode.appendChild(childNode);
+				grandNode = document.createElement('div');
+				grandNode.setAttribute('class','word');
+				grandNode.innerHTML = pop_tag[i].name;
+				childNode.appendChild(grandNode);
+			}
+		}
+		else {
+			for (var i=0; i<9; i++) {
+				parentNode = document.getElementById('pop_tag');
+				sourceNode = document.createElement('div');
+				sourceNode.setAttribute('class','tag_2');
+				sourceNode.setAttribute("tapmode",'');
+				// $(sourceNode).attr('onclick','add_tag(this)');
+				sourceNode.onclick = function(){add_tag(this)};
+				parentNode.appendChild(sourceNode);
+				childNode = document.createElement('div');
+				childNode.setAttribute('class','block_2');
+				sourceNode.appendChild(childNode);
+				grandNode = document.createElement('div');
+				grandNode.setAttribute('class','word');
+				grandNode.innerHTML = pop_tag[i].name;
+				childNode.appendChild(grandNode);
+			}
+		}
+
+
+
+
+	}
+  function back(){
+      api.closeWin();
+  }
+  function change_content(event) {
+      var json_dict = {
+          "user_id":$api.getStorage('user_id'),
+          "since_id" : 0,
+          "page_size": 1000
+      };
+  }
+Array.prototype.contains = function ( needle ) {
+    for (i in this) {
+        if (this[i] == needle) return true;
+    }
+    return false;
+}
+	function delete_tag(tag){
+        tag.parentNode.parentNode.removeChild(tag.parentNode);
+    }
+    function add_searchTag(text) {
+	    document.getElementById('input').value="";
+	    if(list.contains(text)){
+	        alert('can not choose twice!')
+        }else {
+            list.push(text);
+            $api.setStorage('choose_tags', list);
+            $api.setStorage('tags',text);
+            var jsfun ='line_num = Math.floor(($api.getStorage("tags_num")-1)/3+1); var parentNode = document.getElementById("tags_box");var sourceNode = document.createElement("div");sourceNode.setAttribute("class","tag_2");parentNode.appendChild(sourceNode);var childnode = document.createElement("div");childnode.setAttribute("class","block_2");sourceNode.appendChild(childnode); var grandnode1 = document.createElement("div");grandnode1.setAttribute("class","word");grandnode1.innerHTML = $api.getStorage("tags");var grandnode2 = document.createElement("div");grandnode2.setAttribute("class","delete");grandnode2.innerHTML = "×";grandnode2.onclick=function(){delete_tag(this)};grandnode2.setAttribute("tapmode","");childnode.appendChild(grandnode1); childnode.appendChild(grandnode2);$api.byId("selected_tags").style.display="";api.setFrameAttr({name: "biaoqian_frm",rect: {x: 0,y:45+45*line_num,w: api.winWidth,h: api.winHeight},});'
+            api.execScript({
+                name: 'biaoqian_win',
+                script: jsfun
+            });
+            count = $api.getStorage('tags_num');
+            $api.setStorage('tags_num',parseInt(count)+1);
+        }
+				var tmp = $api.domAll('.tag_2');
+				for (var i = 0; i < tmp.length; i++) {
+					if (tmp[i].childNodes[0].childNodes[0].innerHTML == text) {
+						$api.addCls(tmp[i], 'disabled');
+					}
+				}
+    }
+  function add_tag(div) {
+		console.log($api.getStorage("tags_num"))
+		console.log($api.getStorage('choose_tags'))
+		if ($api.getStorage('choose_tags').length < 3) {
+			text = div.childNodes[0].childNodes[0].innerHTML;
+			list.push(text);
+			$api.setStorage('choose_tags', list);
+			console.log($api.getStorage('choose_tags'))
+      $api.setStorage('tags',text);
+      var jsfun ='line_num = Math.floor(($api.getStorage("tags_num")-1)/3+1); var parentNode = document.getElementById("tags_box");var sourceNode = document.createElement("div");sourceNode.setAttribute("class","tag_2");parentNode.appendChild(sourceNode);var childnode = document.createElement("div");childnode.setAttribute("class","block_2");sourceNode.appendChild(childnode); var grandnode1 = document.createElement("div");grandnode1.setAttribute("class","word");grandnode1.innerHTML = $api.getStorage("tags");var grandnode2 = document.createElement("div");grandnode2.setAttribute("class","delete");grandnode2.innerHTML = "×";grandnode2.onclick=function(){delete_tag(this)};grandnode2.setAttribute("tapmode","");childnode.appendChild(grandnode1); childnode.appendChild(grandnode2);$api.byId("selected_tags").style.display="";api.setFrameAttr({name: "biaoqian_frm",rect: {x: 0,y:45+45*line_num,w: api.winWidth,h: api.winHeight},});'
+      api.execScript({
+          name: 'biaoqian_win',
+          script: jsfun
+      });
+      count = $api.getStorage('tags_num');
+      $api.setStorage('tags_num',parseInt(count)+1);
+			$api.addCls(div, 'disabled');
+		}
+		else {
+			api.toast({
+			    msg: '最多选择三个标签~',
+			    duration: 1000,
+			    location: 'bottom'
+			});
+
+		}
+  }
+
+	function Reactive(name) {
+		list1 = $api.domAll('.disabled');
+		for (var i = 0; i < list.length; i++) {
+			if (list1[i].childNodes[0].childNodes[0].innerHTML == name) {
+				$api.removeCls(list1[i], 'disabled');
+				var index = list.indexOf(name)
+				list.splice(index,1)
+				$api.setStorage('choose_tags', list);
+			}
+		}
+	}
+
+
+
+	function fabu(){
+		api.openWin({
+				name: 'fabu',
+				url: '../html/question_submit.html',
+				bgColor: "#fff"
+		});
+	}
+</script>
+</html>

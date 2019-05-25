@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+ </head>
+<body style="background-color: white">
+    <div id="content" style=" position: relative; min-height: 300px;height:auto;border: 3px;background-color: white">
+        <input id="biaoti" type="text" placeholder="请输入标题" style="font-size:18px;color: black;width: 90%;height: 50px;margin-left: 5%">
+        <div style="height: 1px;margin-left:5%;width: 95%;background-color: #000000;opacity: 0.1"></div>
+        <div id="guo" aria-placeholder="请输入正文" style="margin-top: 3%;color: black;min-height:100px;height:auto;width: 90%;margin-left: 5%" contenteditable="true"></div>
+    </div>
+    <div style="margin-top: 10px;height: 4px;width: 100%;background-color: #000000;opacity: 0.03"></div>
+    <div style="width:100%;height:70px;float: left;margin-top: 8px;background-color: white">
+        <div id="imgDiv" style="margin-top: 20px">
+            <h3 style="float: left;margin-top: 5px; margin-left: 5%">选择封面</h3>
+            <span class="aui-iconfont aui-icon-right" style="border-radius:50%;margin-right:5%;color: #000000;margin-top:5px;font-weight: bolder;float: right"></span>
+            <img  src="./image/demo1.png"  id="strategy_cover" tapmode onclick="selectCoverPic()" style="border-radius:50%;margin-top:-3px;margin-right:8px;height:40px;width:40px;float: right;">
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript">
+    var img_list='';
+    var json;
+    apiready = function(){
+        api.parseTapmode();
+        var i = 0;
+        $api.setStorage('strategy_is_anonymous',0);
+        api.addEventListener({
+            name:'photoSelected'
+        },function (ret,error) {
+            var s = ret.value.path;
+            s = s.replace(/"/g,"");
+            s = s.replace(/\\/g,"");
+            $('#strategy_cover').src=s;
+            var cloudPath;
+
+            api.ajax({
+                url:'http://47.105.160.217/api/upload/',
+                method:'post',
+                data:{
+                    files:{
+                        file:s
+                    }
+                },
+                contentType:false,
+                processData:false
+            },function (ret,error) {
+                if(ret){
+                    cloudPath = 'http://47.105.160.217/files/'+ret.data.path;
+                    document.getElementById('guo').innerHTML=document.getElementById('guo').innerHTML+ "<img src=\" "+cloudPath+" \" style=\"width: 100%\"/>"
+                        +"<br />";
+                }
+                else {
+                    alert(JSON.stringify(error))
+                }
+            });
+
+        })
+    };
+    function addLine() {
+        document.getElementById('guo').innerHTML=document.getElementById('guo').innerHTML +
+                "------------------------------------------<br/>"
+    }
+    function selectCoverPic(){
+        api.getPicture({
+            targetHeight:600,
+            targetWidth:800,
+            sourceType:'album',
+            encodingType:'jpg',
+            mediaValue:'pic',
+            destinationType:'url',
+            allowEdit:true,
+            quality:100,
+            saveToPhotoAlbum:false
+        },function (ret,err) {
+            if(ret){
+                var se = ret.data;
+
+                //alert(se);
+                se = se.replace(/"/g,"");
+                se = se.replace(/\\/g,"");
+                document.getElementById('strategy_cover').src = se;
+                api.ajax({
+                    url:'http://47.105.160.217/api/upload/',
+                    method:'post',
+                    data:{
+                        files:{
+                            file:se
+                        }
+                    },
+                    contentType:false,
+                    processData:false
+                },function (ret,err) {
+                    if(ret){
+                        img_list = '' + ret.data.path;
+                        json = {
+                            "app_version":"",
+                            "user_id":$api.getStorage('user_id'),
+                            "cookie":"",
+                            "title":""+$('#biaoti').val(),
+                            "tag_id_list":""+api.pageParam.tag_id,
+                            "content":''+$('#guo').html(),
+                            "is_anonymous":$api.getStorage('strategy_is_anonymous'),
+                            "img_list":''+img_list
+                        }
+
+                    }else {
+                        alert(JSON.stringify(err))
+                    }
+                })
+            }
+        })
+    }
+    function postStrategy() {
+              $.ajax({
+                  url:'http://47.105.160.217:80/api/group/postArticle/',
+                  type:'POST',
+                  data:JSON.stringify(json),
+                  // crossDomain: true,
+                  dataType: 'json',
+                  success:function (ret) {
+                      //alert(JSON.stringify(ret));
+                      back()
+                  },
+                  error:function (error) {
+                      alert(JSON.stringify(error))
+                  }
+              })
+
+    }
+    function back(){
+        api.historyBack({
+        },function(ret,err){
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+    }
+</script>
+</html>

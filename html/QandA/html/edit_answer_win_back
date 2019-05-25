@@ -1,0 +1,964 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style1.css" />
+    <style>
+        /*header ul li { height: 50px; line-height: 50px; text-align: center; display: block; color: #323237; position: relative;font-size: 18px;  }
+*/
+
+        #footer {
+            box-shadow: 0 -6px 20px #D7D7D7;
+        }
+
+        #footer ul li {
+            padding-top: 36px;
+            padding-bottom: 4px;
+            background: url() no-repeat center 2px;
+            background-size: auto 25px;
+            text-align: center;
+        }
+
+        #footer ul li:nth-child(1) {
+            background-image: url(../image/@.png);
+        }
+
+        #footer ul li:nth-child(2) {
+            background-image: url(../image/award.png);
+        }
+
+        #footer ul li:nth-child(3) {
+            background-image: url(../image/picture.png);
+        }
+
+        #footer ul li:nth-child(4) {
+            background-image: url(../image/set.png);
+        }
+
+        .flex-con {
+            overflow: hidden;
+        }
+
+        header {
+            position: relative;
+            margin-top: 20px;
+            width: 100%;
+            height: 43px;
+            box-shadow: 0 6px 20px #D7D7D7;
+        }
+
+        header .left {
+          position: relative;
+          top: 0px;
+          width: 21.5px;
+          height: 43px;
+          left: 15px;
+          background-image: url(../icon/back.png);
+          background-size: 21.5px 15.5px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          float: left;
+        }
+
+        header .center {
+					position: relative;
+          margin-left: 15%;
+          width: 56%;
+          height: 43px;
+          line-height: 43px;
+					font-size: 20px; color: #000000; text-align: center;
+					float: left;
+          font-weight: bold;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+				}
+
+        header .right {
+            position: absolute;
+            margin: auto;
+            top: 0;
+            left: 70%;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 25px;
+            box-sizing: border-box;
+            line-height: 25px;
+            font-size: 15px;
+            color: #6D7CD9;
+            text-align: right;
+            font-weight: bolder;
+        }
+
+        .title {
+            width: 85%;
+            padding: 25px;
+            text-align: left;
+            font-size: 23px;
+            outline: none;
+        }
+
+        .line {
+            margin: 0 auto;
+            width: 85%;
+            border-top: 1px solid #E1E1E1;
+        }
+
+        .content {
+            margin-top: 2%;
+            width:88%;
+            position: relative;
+            height:auto;
+            padding-top: 20px;
+            padding-left: 30px;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        .figure-list div {
+            display: inline-block;
+            width: 40%;
+            margin: 0.4% 1% 0.4% 1%;
+        }
+
+        .figure-list figure {
+            position: relative;
+            width: 100%;
+            height: 0;
+            line-height: 160%;
+            overflow: hidden;
+            margin: 0;
+            padding-bottom: 70%;
+            /* 关键就在这里 */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body style="height:100%;">
+    <div id="wrap1" style="position:relative;height:100%;">
+        <header>
+            <div class="left"tapmode onclick="back()"></div>
+            <div class="center">一句话描述一句话描述一句话描述</div>
+            <div class="right"tapmode onclick="submit_answer()">完成</div>
+        </header>
+        <div id="main" class="flex-con">
+            <!-- <div class="line"></div> -->
+          <textarea id="cont" class="content" rows="4" placeholder="请输入问题描述" ></textarea></textarea>
+        </div>
+        <ul class="figure-list" id="images" style="margin-top:2.5%;text-align:center;"> </ul>
+        <!-- <div id="xuanshang" style="visibility:hidden;margin-top:8%;padding-bottom:3%">
+            <div style="margin-left:8%;margin-bottom:3%;font-size:13px;font-weight:bold">悬赏<p style="margin-left:65%;font-size:13px;color:blue;display:inline-block;" onclick="noxuanshang()">取消悬赏</p></div>
+            <div style="margin-left:7%;margin-bottom:5%;border-bottom:1px solid #D3D3D3;padding-bottom:;">
+                <label style="font-size:25px;">￥</label>
+                <input id="money" style="font-size:25px;color:#E6655E;" type="text" name="" value="" disabled="disabled">
+            </div>
+            <div style="margin-left:8%;margin-bottom:13%;border-bottom:0.5px solid #D3D3D3;padding-bottom:2.5%;">
+                <textarea id="beizhu" style="font-size:12px;color:grey;width:90%;font-weight:bold;" rows="3" disabled="disabled"></textarea>
+            </div>
+        </div> -->
+        <!--<div id="footer" class="border-t">
+        <ul class="flex-wrap">
+            <li tapmode="hover" onclick="yaoqing();" class="flex-con" >邀请</li>
+            <li tapmode="hover" onclick="xuanshang();" class="flex-con" >悬赏</li>
+            <li tapmode="hover" onclick="picture();" class="flex-con" >图片</li>
+            <li tapmode="hover" class="flex-con">设置</li>
+        </ul>
+    </div>-->
+
+        <div  id="foot" style="position: absolute;bottom:0;height:7%;width:100%;box-shadow: 0 -6px 20px #D7D7D7;text-align:center;background-color:white;">
+          <div style="display:inline-block;text-align:center;margin-right:10%;margin-top:2%;" onclick="picture();"><img src="../icon/picture.png" alt="" width="50%">
+              <div style="text-align:center;font-size:10px;"></div>
+          </div>
+            <div style="display:inline-block;margin-right:10%;margin-top:2%;" onclick="yaoqing();"><img src="../icon/@.png" alt="" width="50%">
+                <div style="text-align:center;font-size:10px;"></div>
+            </div>
+            <div style="display:inline-block;text-align:center;margin-left:5%;margin-top:2%;" onclick="add_line();"><img src="../icon/award.png" alt="" width="50%">
+                <div style="text-align:center;font-size:10px;"></div>
+            </div>
+            <div style="display:inline-block;text-align:center;margin-left:10%;margin-top:2%;"><img src="../icon/set.png" alt="" width="50%">
+                <div style="text-align:center;font-size:10px;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    var UIAlbumBrowser;
+    var jpgInfoManager;
+    var exifInterface;
+    var photoBrowser;
+    var newpicture;
+    var i = 0;
+    var degree = 0;
+    var degrees = new Array(100);
+    var imgarr = [];
+    var curimg = [];
+    var imgnumber = 0;
+    var names=["张玉哲","林中平","王伟帆","王伟帆"];
+    var base64_list = new Array();
+    var pic_url_list = new Array();
+    window.onresize = function () {
+          var h = $(window).height();
+          var u = navigator.userAgent;
+          if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
+            if(h <= window.screen.availHeight/1.5){
+                $('#foot').css({'position':'static',"margin-top":"-.5rem",'display':'none'});
+            }else{
+                $('#foot').css({'position':'absolute','display':'block'});
+            }
+          }
+        }
+          $('textarea').on('focus',function(){
+          $('#foot').hide();
+          })
+          $('textarea').on('blur',function(){
+          $('#foot').show();
+          })
+
+    apiready = function() {
+            UIAlbumBrowser = api.require('UIAlbumBrowser');
+            jpgInfoManager = api.require('jpgInfoManager');
+            exifInterface = api.require('exifInterface');
+            photoBrowser = api.require('photoBrowser');
+            $api.setStorage('money',"");
+        		$api.setStorage('beizhu',"");
+            $('.content').keydown(function(event){
+                if(event.keyCode==8){
+                  var textObj = $(this).get(0);
+                  var rangeStart=textObj.selectionStart;
+                  var rangeEnd=textObj.selectionEnd;
+                  var delValue = textObj.value.substring(rangeStart-1,rangeStart);
+                  var flag = false;
+                  var name="";
+                  var index = 0;
+                  if(delValue==" "){
+                    index=rangeStart-1;
+                    while(index>0){
+                        if(textObj.value.substring(index-1,index)=="@"){
+                            name = textObj.value.substring(index,rangeStart-1);
+                            flag = true;
+                            break;
+                        }
+                        else{
+                            index--;
+                        }
+                    }
+                    if(flag){
+                      for(var i = 0; i < names.length; i++){
+                          if(name === names[i]){
+                              var movenumber=name.length+2;
+                              names.splice(i,1);
+                              var tempStr1=textObj.value.substring(0,index);
+                              var tempStr2=textObj.value.substring(rangeStart);
+                              textObj.value=tempStr1+tempStr2;
+                              textObj.focus();
+                              textObj.selectionStart = textObj.selectionEnd = index;
+                              break;
+                          }
+                      }
+                    }
+                  }
+                }
+            });
+            $api.fixStatusBar($api.dom('header'));
+            api.setStatusBarStyle({
+                style: 'dark',
+                color: '#6ab494'
+            });
+        }
+        //打开图片选择器
+    function UIAlbumBrowser_imagePicker_A() {
+        UIAlbumBrowser.imagePicker({
+            max: 9,
+            styles: {
+                bg: '#000000',
+                //cameraImg: 'widget://res/cameraImg.png',
+                mark: {
+                    position: 'top_right',
+                    size: 20
+                },
+                nav: {
+                    bg: '#000000',
+                    cancelColor: '#fff',
+                    cancelSize: 16,
+                    nextStepColor: '#7fff00',
+                    nextStepSize: 16
+                },
+                thumbnail: { //（可选项）返回的缩略图配置，**建议本图片不要设置过大** 若已有缩略图，则使用已有的缩略图。若要重新生成缩略图，可先调用清除缓存接口api.clearCache()。
+                    w: 50, //（可选项）数字类型；返回的缩略图的宽；默认：原图的宽度
+                    h: 50 //（可选项）数字类型；返回的缩略图的宽；默认：原图的高度
+                }
+            },
+            animation: true,
+        }, function(ret) {
+            if (ret.eventType == 'nextStep') {
+                if (ret.list && ret.list.length > 0) {
+                    imgarr = ret.list;
+                    //UIAlbumBrowser_transPath();
+                    for (var i = 0; i < imgarr.length; i++) {
+                        (function(i) {
+                            jpgInfoManager.getImgInfo({
+                                imagePath: imgarr[i].path
+                            }, function(ret1, err1) {
+                                degree = 0;
+                                alert(imgarr[i].path);
+                                if (ret1) {
+                                    if (ret1.info.orientation == 3 || ret1.info.orientation == 5) {
+                                        degree = 180;
+                                    }
+                                    if (ret1.info.orientation == 4 || ret1.info.orientation == 6) {
+                                        degree = 90;
+                                    }
+                                    if (ret1.info.orientation == 2 || ret1.info.orientation == 8) {
+                                        degree = 270;
+                                    }
+                                    exifInterface.setDegreeExif({
+                                        picPath: imgarr[i].path,
+                                        degrees: degree
+                                    }, function(ret2, err2) {
+                                        alert(ret2.newPicPath);
+                                        curimg.push(ret2.newPicPath);
+                                        imgnumber++;
+
+                                        if (curimg.length == imgnumber) {
+                                            if (imgnumber <= 4) {
+                                                document.getElementById('images').innerHTML = "";
+                                                for (var j = 0; j < curimg.length; j++) {
+                                                    var li = document.createElement('LI');
+                                                    var fig = document.createElement('figure');
+                                                    fig.style.backgroundImage = "url(" + curimg[j] + ")";
+                                                    li.appendChild(fig);
+                                                    document.getElementById('images').appendChild(li);
+                                                }
+                                            } else {
+                                                document.getElementById('images').innerHTML = "";
+                                                for (var j = 0; j < 4; j++) {
+                                                    var li = document.createElement('LI');
+                                                    var fig = document.createElement('figure');
+                                                    fig.style.backgroundImage = "url(" + curimg[j] + ")";
+                                                    li.appendChild(fig);
+                                                    document.getElementById('images').appendChild(li);
+                                                }
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    alert(JSON.stringify(err1));
+                                }
+                            });
+                        })(i);
+                    }
+                    UIAlbumBrowser.closePicker();
+                    //alert(JSON.stringify(ret));
+
+                }
+            }
+            if (ret.originalPath && ret.originalPath.length > 0) {
+                jpgInfoManager.getImgInfo({
+                    imagePath: ret.originalPath
+                }, function(ret1, err1) {
+                    if (ret1) {
+                        degree = 0;
+                        if (ret1.info.orientation == 3 || ret1.info.orientation == 5) {
+                            degree = 180;
+                        }
+                        if (ret1.info.orientation == 4 || ret1.info.orientation == 6) {
+                            degree = 90;
+                        }
+                        if (ret1.info.orientation == 2 || ret1.info.orientation == 8) {
+                            degree = 270;
+                        }
+                        exifInterface.setDegreeExif({
+                            picPath: ret.originalPath,
+                            degrees: degree
+                        }, function(ret2, err2) {
+                            var li = document.createElement('LI');
+                            var fig = document.createElement('figure');
+                            fig.style.backgroundImage = "url(" + ret2.newPicPath + ")";
+                            li.appendChild(fig);
+                            document.getElementById('images').appendChild(li);
+
+                        });
+                    } else {
+                        alert(JSON.stringify(err1));
+                    }
+                });
+
+            }
+
+        });
+    }
+    //打开图片选择器_IOS
+    function UIAlbumBrowser_imagePicker() {
+        UIAlbumBrowser.imagePicker({
+            max: 9,
+            styles: {
+                bg: '#000000',
+                //cameraImg: 'widget://res/cameraImg.png',
+                mark: {
+                    position: 'top_right',
+                    size: 20
+                },
+                nav: {
+                    bg: '#000000',
+                    cancelColor: '#fff',
+                    cancelSize: 16,
+                    nextStepColor: '#7fff00',
+                    nextStepSize: 16
+                },
+                thumbnail: { //（可选项）返回的缩略图配置，**建议本图片不要设置过大** 若已有缩略图，则使用已有的缩略图。若要重新生成缩略图，可先调用清除缓存接口api.clearCache()。
+                    w: 100, //（可选项）数字类型；返回的缩略图的宽；默认：原图的宽度
+                    h: 100 //（可选项）数字类型；返回的缩略图的宽；默认：原图的高度
+                }
+            },
+            animation: true,
+        }, function(ret) {
+            if (ret.eventType == 'nextStep') {
+                if (ret.list && ret.list.length > 0) {
+                    imgarr = ret.list;
+                    jpgInfoManager_getImgInfo();
+                }
+                UIAlbumBrowser.closePicker();
+                //alert(JSON.stringify(ret));
+            }
+            if (ret.originalPath && ret.originalPath.length > 0) {
+                jpgInfoManager.getImgInfo({
+                    imagePath: ret.originalPath
+                }, function(ret1, err1) {
+                    if (ret1) {
+                        degree = 0;
+                        if (ret1.info.orientation == 3 || ret1.info.orientation == 5) {
+                            degree = 180;
+                        }
+                        if (ret1.info.orientation == 4 || ret1.info.orientation == 6) {
+                            degree = 90;
+                        }
+                        if (ret1.info.orientation == 2 || ret1.info.orientation == 8) {
+                            degree = 270;
+                        }
+                        exifInterface.setDegreeExif({
+                            picPath: ret.originalPath,
+                            degrees: degree
+                        }, function(ret2, err2) {
+                            curimg.push(ret2.newPicPath);
+                            imgnumber++;
+                            createPicture();
+
+                        });
+                    } else {
+                        alert(JSON.stringify(err1));
+                    }
+                });
+
+            }
+
+        });
+    }
+    function createPicture(){
+      if (imgnumber <= 4) {
+          document.getElementById('images').innerHTML = "";
+          for (var j = 0; j < curimg.length; j++) {
+              var div = document.createElement('div');
+              var fig = document.createElement('figure');
+              fig.style.backgroundImage = "url(" + curimg[j] + ")";
+              fig.id = j;
+              fig.onclick = function(){fnOpen(this)};
+              div.appendChild(fig);
+              document.getElementById('images').appendChild(div);
+          }
+      } else {
+          document.getElementById('images').innerHTML = "";
+          for (var j = 0; j < 4; j++) {
+              var div = document.createElement('div');
+              var fig = document.createElement('figure');
+              fig.id = j;
+              fig.onclick=function(){fnOpen(this)};
+              fig.style.backgroundImage = "url(" + curimg[j] + ")";
+              if(j==3){
+                  fig.style.backgroundColor="grey";
+                  fig.style.opacity="0.5";
+                  fig.style.verticalAlign = "middle";
+                  fig.style.textAlign="center";
+                  fig.style.fontSize="70px";
+                  fig.style.color="black";
+                  var str="+" + String(imgnumber-4);
+                  fig.innerHTML= str;
+              }
+              div.appendChild(fig);
+              document.getElementById('images').appendChild(div);
+          }
+      }
+    }
+    function jpgInfoManager_getImgInfo() {
+        jpgInfoManager.getImgInfo({
+            imagePath: imgarr[i].path
+        }, function(ret1, err1) {
+            degrees[i] = 0;
+            if (ret1) {
+                if (ret1.info.orientation == 3 || ret1.info.orientation == 5) {
+                    degrees[i] = 180;
+                }
+                if (ret1.info.orientation == 4 || ret1.info.orientation == 6) {
+                    degrees[i] = 90;
+                }
+                if (ret1.info.orientation == 2 || ret1.info.orientation == 8) {
+                    degrees[i] = 270;
+                }
+                i++;
+                if (i < imgarr.length) {
+                    jpgInfoManager_getImgInfo();
+                } else {
+                    i = 0;
+                    exifInterface_setDegreeExif();
+                }
+            } else {
+                alert(JSON.stringify(err1));
+            }
+        });
+    }
+
+    function exifInterface_setDegreeExif() {
+        if(imgarr[i].path.endsWith(".png")){
+            i++;
+            if (i < imgarr.length) {
+                exifInterface_setDegreeExif();
+            } else {
+                i = 0;
+                UIAlbumBrowser_transPath();
+            }
+        }
+        else {
+          exifInterface.setDegreeExif({
+            picPath: imgarr[i].path,
+            degrees: degrees[i]
+          }, function(ret2, err2) {
+            imgarr[i].path = ret2.newPicPath;
+            i++;
+            if (i < imgarr.length) {
+                exifInterface_setDegreeExif();
+            } else {
+                i = 0;
+                UIAlbumBrowser_transPath();
+            }
+          });
+        }
+    }
+
+    function UIAlbumBrowser_transPath() {
+        UIAlbumBrowser.transPath({
+            path: imgarr[i].path
+        }, function(ret3, err3) {
+            if (ret3) {
+                curimg.push(ret3.path);
+                imgnumber++;
+                i++;
+                if (i < imgarr.length) {
+                    UIAlbumBrowser_transPath();
+                } else {
+                    i = 0;
+                    if (imgnumber <= 4) {
+                        document.getElementById('images').innerHTML = "";
+                        for (var j = 0; j < curimg.length; j++) {
+                            var div = document.createElement('div');
+                            var fig = document.createElement('figure');
+                            fig.style.backgroundImage = "url(" + curimg[j] + ")";
+                            fig.id = j;
+                            fig.onclick = function(){fnOpen(this)};
+                            div.appendChild(fig);
+                            document.getElementById('images').appendChild(div);
+                        }
+                    } else {
+                        document.getElementById('images').innerHTML = "";
+                        for (var j = 0; j < 4; j++) {
+                            var div = document.createElement('div');
+                            var fig = document.createElement('figure');
+                            fig.id = j;
+                            fig.onclick=function(){fnOpen(this)};
+                            fig.style.backgroundImage = "url(" + curimg[j] + ")";
+ /*fig.style.backgroundImage = "url(" + curimg[j] + "),url(../image/grey.jpg)"; fig.style.backgroundRepeat= "no-repeat, no-repeat"; fig.style.backgroundPosition ="80% 0, 100% 80%";*/ /*if (j==3){ var img = document.createElement('img'); img.src = "../image/grey.jpg";
+img.style.opacity="0.5"; img.style.width="30%"; img.style.height="100%"; img.style.zIndex="11"; fig.appendChild(img); }*/
+                            if(j==3){
+                                fig.style.backgroundColor="grey";
+                                fig.style.opacity="0.5";
+                                fig.style.verticalAlign = "middle";
+                                fig.style.textAlign="center";
+                                fig.style.fontSize="70px";
+                                fig.style.color="black";
+                                var str="+" + String(imgnumber-4);
+                                fig.innerHTML= str;
+                            }
+                            div.appendChild(fig);
+                            document.getElementById('images').appendChild(div);
+                        }
+                    }
+                }
+            } else {
+                alert(JSON.stringify(err3));
+            }
+        });
+    }
+
+    function fnOpen(target){
+      photoBrowser.open({
+          images: curimg,
+          bgColor: '#000',
+          activeIndex: target.id
+      }, function(ret, err) {
+          if (ret) {
+            api.openFrame({
+              name: 'picturehead',
+              url: './picturehead.html',
+              rect: {
+                  x: 0,
+                  y: api.frameHeight*0.05,
+                  w: api.frameWidth,
+                  h: api.frameHeight*0.1
+              },
+              });
+          } else {
+              alert(JSON.stringify(err));
+          }
+      });
+    }
+
+    function deleteImage(){
+      photoBrowser.getIndex(function(ret, err) {
+          if (ret) {
+            photoBrowser.deleteImage({
+                index: ret.index
+            });
+            imgnumber--;
+            curimg.splice(ret.index,1);
+            if(imgnumber==0){
+              photoBrowser.close();
+              createPicture();
+              api.closeFrame({
+                  name: 'picturehead'
+              });
+            }
+          } else {
+              alert(JSON.stringify(err));
+          }
+      });
+    }
+
+    function submit_answer() {
+      for (var i =0 ;i<curimg.length ;i++) {
+        var img = curimg[i];
+        var image = new Image();
+        image.src = img;
+        image.crossOrigin = '';
+        var base64 = getBase64Image(image);
+        base64_list.push(base64)
+      }
+      send_base64();//将base64转化为文件并且传给后端
+      var content = document.getElementById('cont').value;
+      document.getElementById('cont').value = '';
+      for (var i = 0; i < pic_url_list.length; i++) {
+        content = content + '\n' + '^&' +pic_url_list[i];
+      }
+      $api.setStorage('ans_content',content);
+      console.log(typeof($api.getStorage('ans_content')))
+      as_dict = {
+          "app_version":"",
+          "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+          "user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+          "type":"homework",
+          "img_list":"",
+          "question_id": api.pageParam.question_id,
+          "content": $api.getStorage('ans_content')
+      }
+      $.ajax({
+        type: 'POST',
+        url: "http://47.105.160.217:80/api/questionAnswer/postAnswer/",
+        data:JSON.stringify(as_dict),
+        dataType: 'json',
+        async: false,
+        success:function(result){
+          console.log('回答问题成功,ID:'+result.data['answer_id']);
+          $api.setStorage('ans_content','');
+        },
+        error:function(){
+          console.log('回答问题失败');
+        }
+      });
+      api.closeWin({
+          name: 'answer_list'
+      });//刷新作用
+      api.openWin({
+          name: 'answer_list',
+          url: './answer_list.html',
+          pageParam: {
+              question_id: api.pageParam.question_id
+          }
+      });
+    }
+    function dataURLtoFile(dataurl, filename) {
+        var arr = dataurl.split(',');
+        // var mime = arr[0].match(/:(.*?);/)[1];
+        var bstr = atob(arr[1]);
+        var n = bstr.length;
+        var u8arr = new Uint8Array(n);
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        // return new File([u8arr], filename, {type:mime});
+        return new File([u8arr], filename);
+      }
+
+
+
+    function send_base64() {
+      pic_url_list = [];
+      for (var i=0; i<base64_list.length; i++) {
+        var test_file = dataURLtoFile(base64_list[i],'file.jpg');
+        var formData = new FormData()
+        formData.append('file', test_file)
+        formData.append('type', 'public')
+        $.ajax({
+                type:"POST",
+                url:"http://47.105.160.217:80/api/upload/",
+                data:formData,
+                async:false,
+                processData: false,
+                contentType: false,
+                success:function(result){
+                  console.log('图片上传成功')
+                  console.log(JSON.stringify(result))
+                  pic_url_list.push(result.data.path)
+                  // view_tips(result)
+                },
+                error:function(){
+                  console.log('图片上传失败');
+                }
+      })
+    }
+  }
+    function getBase64Image(img) {
+      var width = img.width, height = img.height;
+         //计算缩放比例
+      var rate = 1;
+      // if (width >= height) {
+      //    if (width > 200) {
+      //        rate = 200 / width;
+      //        }
+      //    } else {
+      //        if (height > 350) {
+      //          rate = 350 / height;
+      //        }
+      //    };
+        img.width = width * rate;
+        img.height = height * rate;
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+        var dataURL = canvas.toDataURL("image/jpeg"+ext,0.92);
+        return dataURL;
+      }
+
+
+
+
+
+
+    function yaoqing() {
+        var content = $api.dom(".content");
+        var addstr="";
+        for(var i=0;i<names.length;i++){
+          addstr=addstr+"@"+names[i]+" ";
+        }
+        insertText(content,addstr);
+        moveEnd(content);
+        /*api.openFrame({
+            name: 'biaoqian',
+            url: './@.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight
+            },
+            bgColor: 'rgba(0,0,0,0.6)',
+            // bounces: false,
+        });*/
+    }
+
+    function insertText(obj, str) {
+        if (document.selection) {
+            var sel = document.selection.createRange();
+            sel.text = str;
+        } else if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
+            var startPos = obj.selectionStart,
+                endPos = obj.selectionEnd,
+                cursorPos = startPos,
+                tmpStr = obj.value;
+            obj.value = tmpStr.substring(0, startPos) + str + tmpStr.substring(endPos, tmpStr.length);
+            cursorPos += str.length;
+            obj.selectionStart = obj.selectionEnd = cursorPos;
+        } else {
+            obj.value += str;
+        }
+    }
+
+    function moveEnd(obj) {
+        obj.focus();
+        var len = obj.value.length;
+        if (document.selection) {
+            var sel = obj.createTextRange();
+            sel.moveStart('character', len);
+            sel.collapse();
+            sel.select();
+        } else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+            obj.selectionStart = obj.selectionEnd = len;
+        }
+    }
+
+    function picture() {
+        //$api.append($api.dom("#images"),'<img src="../image/eg_tulip.jpg" width="80%"/>');
+        //  document.getElementById("images").innerHTML='<img src="../image/eg_tulip.jpg" width="100%" />';
+        UIAlbumBrowser_imagePicker();
+    }
+
+    function funIniGroup() {
+        var eHeaderLis = $api.domAll('header li'),
+            frames = [];
+        for (var i = 0, len = eHeaderLis.length; i < len; i++) {
+            frames.push({
+                name: 'frame' + i,
+                url: './html/frame' + i + '.html',
+                bgColor: 'rgba(0,0,0,.2)',
+                bounces: true
+            })
+        }
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight
+            },
+            index: 0,
+            frames: frames
+        }, function(ret, err) {
+
+        });
+    }
+
+    // 随意切换按钮
+    function randomSwitchBtn(tag) {
+        if (tag == $api.dom('#footer li.active')) return;
+        var eFootLis = $api.domAll('#footer li'),
+            eHeaderLis = $api.domAll('header li'),
+            index = 0;
+        for (var i = 0, len = eFootLis.length; i < len; i++) {
+            if (tag == eFootLis[i]) {
+                index = i;
+            } else {
+                $api.removeCls(eFootLis[i], 'active');
+                $api.removeCls(eHeaderLis[i], 'active');
+            }
+        }
+        $api.addCls(eFootLis[index], 'active');
+        $api.addCls(eHeaderLis[index], 'active');
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+    }
+
+    function add_line() {
+      var text_line = document.getElementById('cont');
+      text_line.value = text_line.value + ' \n ' + '------------------------------' + ' \n '
+      moveEnd(text_line)
+    }
+
+    var autoTextarea = function(elem, extra, maxHeight) {
+        maxHeight = document.body.clientHeight * 0.5;
+        extra = extra || 0;
+        var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+            isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+            addEvent = function(type, callback) {
+                elem.addEventListener ?
+                    elem.addEventListener(type, callback, false) :
+                    elem.attachEvent('on' + type, callback);
+            },
+            getStyle = elem.currentStyle ? function(name) {
+                var val = elem.currentStyle[name];
+
+                if (name === 'height' && val.search(/px/i) !== 1) {
+                    var rect = elem.getBoundingClientRect();
+                    return rect.bottom - rect.top -
+                        parseFloat(getStyle('paddingTop')) -
+                        parseFloat(getStyle('paddingBottom')) + 'px';
+                };
+
+                return val;
+            } : function(name) {
+                return getComputedStyle(elem, null)[name];
+            },
+            minHeight = parseFloat(getStyle('height'));
+
+        elem.style.resize = 'none';
+
+        var change = function() {
+            var scrollTop, height,
+                padding = 0,
+                style = elem.style;
+
+            if (elem._length === elem.value.length) return;
+            elem._length = elem.value.length;
+
+            if (!isFirefox && !isOpera) {
+                padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+            };
+            scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+            elem.style.height = minHeight + 'px';
+            if (elem.scrollHeight > minHeight) {
+                if (maxHeight && elem.scrollHeight > maxHeight) {
+                    height = maxHeight;
+                    style.overflowY = 'auto';
+                } else {
+                    height = elem.scrollHeight;
+                    style.overflowY = 'hidden';
+                };
+                style.height = height + extra + 'px';
+                elem.currHeight = parseInt(style.height);
+            };
+        };
+
+        addEvent('propertychange', change);
+        addEvent('input', change);
+        addEvent('focus', change);
+        change();
+    };
+    function back() {
+      api.historyBack({
+        }, function(ret, err) {
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+    }
+</script>

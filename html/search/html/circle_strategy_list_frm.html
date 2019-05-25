@@ -1,0 +1,620 @@
+<!DOCTYPE HTML>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+    <style>
+        .tag_strategy {
+            position: absolute;
+            bottom: 0;
+            padding-left: 6.4%;
+            width: 60%;
+            height: auto;
+            /*bottom: auto*/
+            box-sizing: border-box;
+            font-size: 14px; color: #6d7cd9; text-align: left;
+            float: left;
+        }
+        .searchbar-box {
+            position: relative;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            z-index: 10;
+        }
+        .searchbar {
+            position: fixed;
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            z-index: 10;
+        }
+        .inputbar-box {
+            position: relative;
+            width: 85%;
+            height: 100%;
+            float: left;
+        }
+        .inputbar {
+            position: absolute;
+            width: 94%;
+            height: 80%;
+            left: 3%;
+            top: 10%;
+            background-color: #ebebeb;
+            border-radius: 5px;
+        }
+        .inputbar .input {
+            width: 85%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .inputbar .camera {
+            width: 15%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-image: url(../icon/camera.png);
+            background-size: 17px 14.5px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        .cancel-box {
+            position: relative;
+            display: table;
+            width: 14%;
+            height: 100%;
+            float: left;
+        }
+        .start_question {
+            font-size: 18px; color: #6d7cd9; font-weight: bolder; text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .inputbar .search-logo {
+            width: 15%;
+            height: 100%;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            background-image: url(../icon/search.png);
+            background-size: 17px 14.5px;
+            background-position: center left;
+            background-repeat: no-repeat;
+        }
+        .fixed_bottom {
+            position:fixed;
+            left:0px;
+            bottom:0px;
+            width:100%;
+            height:7%;
+            z-index:10;
+        }
+        .flex-con{
+            overflow: scroll;
+        }
+
+        nav {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;;
+            -webkit-box-orient: horizontal;
+            -webkit-flex-flow: row;
+            flex-flow: row;
+            position: relative;
+            width: 100%;
+            height: 64px;
+        }
+        .test {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            width: 100%;
+            height: 35px;
+            overflow-x:scroll;
+            border-bottom: 1px solid #d3d2d2;
+            padding-left:12.5%;
+        }
+        .menu-cata{
+            width: 25%;
+            position: relative;
+            height: 37.5px;
+            line-height: 37.5px;
+            font-size: 18px; color: #000; text-align: center;
+
+            white-space:nowrap;
+        }
+        .menu-cata.selected {
+            font-size: 19px; color: #6d7cd9; font-weight: bolder;
+        }
+
+        .title_strategy {
+            /*border: 1px solid red;*/
+            padding-top: 18px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 60%;
+            height: auto;
+            bottom: auto;
+            box-sizing: border-box;
+            font-size: 18px; color: #000000; text-align: left;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            float: left;
+        }
+        .title_question {
+            /*border: 1px solid green;*/
+            padding-top: 18px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 60%;
+            height: auto;
+            bottom: auto;
+            box-sizing: border-box;
+            font-size: 18px; color: #000000; text-align: left;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .tag {
+            /*border: 1px solid blue;*/
+            position: relative;
+            margin-top:7px;
+            padding-left: 6.4%;
+            width: 60%;
+            height: auto;
+            /*bottom: auto*/
+            box-sizing: border-box;
+            font-size: 14px; color: #6d7cd9; text-align: left;
+            float: left;
+        }
+        span{
+            font-size: 14px; color: #6d7cd9; text-align: left;
+        }
+        .left-box {
+            /*border: 1px solid red;*/
+            width: 60%;
+            height: 100px;
+            position: relative;
+            float: left;
+        }
+        .right-box {
+            /*border: 1px solid green;*/
+            width: 39%;
+            float: left;
+        }
+        .image{
+            /*border: 1px solid red;*/
+            position: relative;
+            width: 28.266%;
+            height:70px ;
+            float: right;
+            margin-right: 6.4%;
+            top: 23px;
+            /*top:12%;*/
+            /*left:65%;*/
+        }
+        .description {
+            /*border: 1px solid red;*/
+            position: relative;
+            margin-top: 11px;
+            padding-left: 6.4%;
+            width: 95%;
+            height: auto;
+            font-size: 16px; color: black; text-align: left;font-weight: lighter;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            font-family:Verdana,"华文细黑";
+        }
+        .interactive-box {
+            /*border:  1px solid blue;*/
+            display: flex;
+            align-items:Center;
+            margin-top:11px;
+            margin-bottom: 10px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 95%;
+            height:auto;
+        }
+        .interactive-box-st {
+            /*border:  1px solid blue;*/
+            display: flex;
+            align-items:Center;
+            margin-top:10px;
+            margin-bottom: 10px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 95%;
+            height:auto;
+        }
+        .avatar{
+            position: relative;
+            display: inline-block;
+            height : 17px;
+            width : 17px;
+            border-radius: 50%;
+        }
+        .username{
+            position: relative;
+            left:6px;
+            width: auto;
+            display: inline-block;
+            font-size: 14px;
+            line-height: 20px;
+            color:#8e8e8e;
+        }
+        .ask_num {
+            display: inline-block;
+            position: absolute;
+            top:2.7%;
+            left:37%;
+            text-align: center;
+            font-size: 12px;
+            line-height: 21.5px;
+            color: #8e8e8e;
+        }
+        .approve-logo {
+            /*border: 1px solid red;*/
+            margin-left: 28px;
+            position: relative;
+            top:0%;
+            font-size: 15px;
+            border-left: 1px solid #d3d2d2;
+            padding-left: 21px;
+            margin-bottom: 2px;
+            color: #8e8e8e;
+        }
+        .comment-logo {
+            margin-bottom: 2px;
+            /*border: 1px solid red;*/
+            margin-left: 20px;
+            position: relative;
+            top:0%;
+            font-size: 15px;
+            color: #8e8e8e;
+        }
+        .more-logo {
+            border: 1px solid red;
+            position: absolute;
+            width: auto;
+            height: auto;
+            float: right;
+            right:6.4%;
+            color: #000;
+        }
+        .content-box {
+            /*border: 1px solid red;*/
+            position: relative;
+            width: 100%;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .maginline {
+            width: 100%;
+            height: 4px;
+            background-color: #000;
+            opacity: 0.03;
+        }
+        .is_solved {
+            display: inline-block;
+            position: relative;
+            top:0%;
+            left:0%;
+            width: 10px;
+            height: 10px;
+        }
+        .is_rewarded {
+            display: inline-block;
+            position: relative;
+            top:0%;
+            left:0%;
+            width: 10px;
+            height: auto;
+        }
+        .more-cata{
+            width: 52%;
+            height: 26px;
+            position: absolute;
+            background-color: #e5e5e5;
+            display: inline-block;
+            top:2.7%;
+            right: 40px;
+        }
+        .more-cata-cancel {
+            width: 52%;
+            height: 26px;
+            position: absolute;
+            background-color: #e5e5e5;
+            display: inline-block;
+            top:2.7%;
+            right: 40px;
+        }
+        .more-cata1 {
+            width: 32%;
+            height: 100%;
+            font-size:12px;color: #000; text-align: center;
+            float: left;
+            border-right:2.5px solid #fff;
+            line-height: 26px;
+        }
+
+        .uppon-box {
+            /*border: 1px solid red;*/
+            width: 100%;
+            height: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="list" v-cloak >
+    <div id="qs_list" style="display:none" class="item border-1px-bottom" v-for="(lists,index) in list">
+        <div class="content-box" >
+            <div class="uppon-box">
+                <div class="left-box">
+                    <div class="title_strategy" style="width:100%;padding-left:10.666%;" v-bind:id="lists.id"  onclick="openGroupStrategy(this.id)">
+                        {{lists.title}}
+                    </div>
+                    <div class="tag_strategy" style="width:100%; padding-left:10.666%">
+                        <span>{{lists.tag_name}}</span>
+                    </div>
+                </div>
+                <div class="right-box">
+                    <img class="image" style="width:71.66%"  v-bind:src="lists.img_list"/>
+                </div>
+            </div>
+
+            <div class="interactive-box-st" style="padding-top:10px;" onclick="">
+                <img class="avatar" v-if="lists.is_anonymous==false" v-bind:src="lists.author_info.user_profile_url"/>
+                <img class="avatar" v-if="lists.is_anonymous==true" src=""/>
+                <div class="username" v-if="lists.is_anonymous==false" onclick="bubble_hide()">{{lists.author_info.author_name}}·{{lists.like_num}}感谢</div>
+                <div class="username" v-if="lists.is_anonymous==true">匿名用户·{{lists.like_num}}感谢</div>
+                <!-- <div class="approve-logo" v-if="lists.type=='strategy'">{{lists.approve_num}}</div> -->
+            </div>
+            <div class="maginline">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery.js"></script>
+<script type="text/javascript" src="../../../script/dropload.min.js"></script>
+<script type="text/javascript" src="../../../script/echo.min.js"></script>
+<script type="text/javascript" src="../../../script/vue.min.js"></script>
+<script type="text/javascript" src="../../../script/aui-tab.js"></script>
+<script type="text/javascript">
+    var pageN;
+    var cacheDir;
+    var current_id;
+    var connectType;
+    apiready= function () {
+        pageN= 0;
+        connectType = '';
+        current_id = 0;
+
+        netCheck();
+        cacheDir= api.cacheDir;
+        if(connectType =='') {
+            api.readFile({
+                path: cacheDir + '/' + 'strategy_list' + api.pageParam.keywords + '/' + api.frameName + '.json'
+            }, function (ret, err) {
+                if (ret.status) {
+                    //alert(ret.data)
+                    paintView(ret.data, 2)
+                } else {
+                    paintView(getGroupArticle(0), 1);
+                }
+            });
+        }else {
+            paintView(getGroupArticle(0),1)
+        }
+        fnInitEvent();
+    };
+    function getGroupArticle(sid) {
+        var retData='';
+        json = {
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "user_cookie":"",
+            "keywords":api.pageParam.keywords,
+            "since_id":sid,
+            "page_size":10,
+            'search_scope':'articles'
+        };
+        $.ajax({
+            url:'http://47.105.160.217:80/api/search/search/',
+            type:'POST',
+            data:JSON.stringify(json),
+            dataType:'json',
+            async:false,
+            success:function (ret) {
+                //alert(JSON.stringify(ret))
+                retData= ret.data.articles;
+                api.writeFile({
+                    path: cacheDir + '/'+api.pageParam.keywords + '/' + api.frameName + '.json',
+                    data:JSON.stringify(ret.data.articles)
+                });
+            },
+            error:function (error) {
+                alert(JSON.stringify(error))
+                retData = error
+            }
+        });
+        return retData;
+    }
+    function openGroupStrategy(id) {
+        api.openWin({
+            name:'strategy_detail'+id,
+            url:'../../circle/circle_strategy_detail.html',
+            pageParam:{
+                article_id:id
+            }
+        })
+    }
+    function refresh() {
+        current_id = 0;
+        var fs = api.require('fs');
+        fs.rmdir({
+            path:cacheDir + '/'+ 'strategy_list'+api.pageParam.keywords + '/' + api.frameName + '.json'
+        },function (ret,err) {
+            if (ret){
+                location.reload();
+            }else {
+                alert(JSON.stringify(err))
+            }
+        });
+
+    }
+    function loadMore(t){
+        api.showProgress({
+            title:"获取数据中。。。",
+            text:"please wait my baby!!!"
+        });
+        var z = getGroupArticle(t);
+        paintView(z,1);
+        api.hideProgress();
+    }
+    function paintView(data,type) {
+        echo.init({
+            offset: 0, // 指定距离视窗上下左右位置图片预加载 Number|String Default: 0
+            throttle: 500, // 延迟加载  Number|String	Default: 250
+            unload: true
+        });
+        var lis;
+        if (type==2){
+            lis = $.parseJSON(data)
+        }else {
+            lis = data;
+        }
+        {
+            //alert(JSON.stringify(lis))
+            if (lis.length != 0) {
+                var total = document.getElementById('qs_list')
+                total.style.display = ''
+                if (current_id == 0) {
+                    window.ListVue = new Vue({
+                        el: '.list',
+                        data: {
+                            list: [],
+                            timeout: false
+                        },
+                        mounted: function() {
+                            this.$nextTick(function() {
+                                this.fnInit();
+                            });
+                        },
+                        beforeDestroy: function() {
+                            this.timeout = true;
+                        },
+                        methods: {
+                            fnInit: function(){
+                                for (var j = 0; j < lis.length; j++) {
+                                    lis[j].author_info.user_profile_url = 'http://47.105.160.217:80/files/' + lis[j].author_info.user_profile_url;
+                                    lis[j].img_list = 'http://47.105.160.217:80/files/' + lis[j].img_list;
+                                }
+                                for (var j = 0; j < lis.length; j++) {
+                                    window.ListVue.list.push(lis[j]);
+                                }
+                            }
+                        },
+                        filters: {
+                            // 时间转换
+                            formatTime: function(v) {
+                                return new Date(v).popular();
+                            }
+
+                        }
+                    });
+                    current_id += 9;
+                }
+                else {
+                    var tag_name;
+                    for (var j = 0; j < lis.length; j++) {
+                        lis[j].author_info.user_profile_url = 'http://47.105.160.217:80/files/' + lis[j].author_info.user_profile_url;
+                        lis[j].img_list = 'http://47.105.160.217:80/files/' + lis[j].img_list;
+                    }
+                    for (var j = 0; j < lis.length; j++) {
+                        window.ListVue.list.push(lis[j])
+                    }
+                }
+            }
+        }
+    }
+    function fnInitEvent() {
+        /**上拉加载 */
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 10
+            }
+        }, function(ret, err) {
+            //页码+1，继续请求数据
+            pageN += 1;
+            loadMore(pageN*10);
+        });
+        /** 下拉刷新 */
+        api.setRefreshHeaderInfo({
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...'
+        }, function(ret, err) {
+            //重置页码、页面数据，请求数据
+            if(ret){
+                pageN=0;
+                refresh();
+                api.refreshHeaderLoadDone();
+            }
+        });
+    }
+    function imgCache(urlimg,id) {
+        var lurl ='';
+        api.imageCache({
+            url:urlimg
+        },function (ret) {
+            lurl =ret.url;
+            document.getElementById(id).setAttribute('data-echo',lurl);
+        });
+    }
+    function netCheck() {
+        connectType = api.addEventListener({
+            name:'online'
+        },function (ret,err) {
+            connectType = ret.connectionType;
+        });
+        api.addEventListener({
+            name:'offline'
+        })
+    }
+</script>

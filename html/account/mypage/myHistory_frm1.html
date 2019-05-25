@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>历史线</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/api.css"/> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/style.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <link rel="stylesheet" href="../../../css/iconfont.css">
+    <script type="text/javascript" src="../../../script/template.js"></script>
+    <script type="text/javascript" src="../../../script/doT.js"></script>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+
+    <style>
+    /*body{
+        background-color:white;
+    }*/
+
+    html,body {
+    height: 100%;
+    background-color: rgba(0, 0, 0,0);
+    overflow:hidden;
+    }
+    /*header{
+        height: 40px;
+        width: auto;
+        background-color: white;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-align: center;
+        display: flex;
+    }*/
+
+    .box{
+        padding: 0px 0 40px 30px;
+        background-color: white;
+    }
+    .box >ul{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        transition: all 0.5s linear;
+        top:0
+    }
+    .box >ul:before{
+        content: "";
+        display: block;
+        width: 0;
+        height: 100%;
+        border:1px dashed #f1f1f1;
+        position: absolute;
+        top:8px;
+        left:-12px
+    }
+    .box >ul li{
+        margin: 32px 60px 40px;
+        margin-left: 0px;
+        margin-right:  0px;
+
+        position: relative;
+        padding: 10px 20px;
+        background:rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        line-height: 20px;
+        /*width: 35%*/
+    }
+    .box ul li > span{
+        content: "";
+        display: block;
+        width: 0;
+        height: 100%;
+        /*border:1px solid #fff;*/
+        position: absolute;
+        top:0;
+        left:-10px
+    }
+    .box ul li > span:before{
+        content: "";
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background:#6e7dda;
+        border:3px solid #b5bdeb;
+        position: absolute;
+        left:-7.5px
+    }
+
+    .box ul li > span:before{top:3px}
+    /*.box ul li > span:after{top:95%}*/
+
+    .box .time span{
+        position: absolute;
+        left: -100px;
+        font-size:80%;
+        font-weight: bold;
+    }
+    .box .time span:first-child{
+        top:-2px;
+        left: -20px;
+        /*padding-top: 5px;*/
+    }
+    .info{
+        padding-left: 5px;
+    }
+    header{
+        height: 50px;
+        width: auto;
+        background-color: white;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-align: center;
+        display: flex;
+    }
+
+
+    div.active{
+        color: #6e7bdb;
+        padding-bottom:1px;
+         solid #f00;
+         border-bottom: 3px solid #6d7cd9;
+
+        width:fit-content;
+        margin:0 auto;
+
+    }
+
+
+    .table1{    //  不滚动部分
+        overflow: hidden;
+        height: 50px;
+    }
+    .table2{    //  滚动部分
+        border:1px solid #000000;
+        width:100%;
+        height:calc(100% - 50px);
+        overflow:scroll;
+    }
+
+    /*.border-bottom:after {
+     content: '';
+     position: absolute;
+     left: 4px;
+     top: auto;
+     bottom: 0;
+     right: auto;
+     height: 4px;
+     width: 30px;
+     background-color: #6d7cd9;
+ }*/
+    </style>
+
+
+</head>
+
+
+
+
+<script>
+
+    apiready = function(){
+        getData();
+        api.addEventListener({name:'scrolltobottom'}, function(ret, err){getData();});
+        initData();
+        var  t=0;
+
+        $("#scroll").scroll(function(){
+            var $this =$(this),
+            viewH =$(this).height(),//可见高度
+            contentH =$(this).get(0).scrollHeight-38,//内容高度
+            scrollTop =$(this).scrollTop();//滚动高度
+            // console.log(viewH);
+            // console.log(contentH);
+            // console.log(scrollTop);
+            console.log(scrollTop/(contentH -viewH));
+            console.log(contentH -viewH-scrollTop);
+           if(contentH -viewH-scrollTop>=10){ //到达底部100px时,加载新内容
+           // 这里加载数据..
+            //getData();
+           }
+           if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+           // 这里加载数据..
+            //getData();
+            if(t<scrollTop){
+            //下滚
+                getData();
+                console.log("下滚");
+
+            }else{
+            //上滚
+            }
+            setTimeout(function(){ t = scrollTop ; },0)
+           }
+        });
+
+    }
+
+    function initData(){
+
+        var _data=$api.getStorage('myinf_art');
+        if(_data=="")return;
+        var evalText = doT.template($("#category-goods-tmpl").html());
+
+        $api.html($api.byId("first-list"), evalText(_data));
+    }
+
+    var since_id=0;
+    var page_size=10;
+
+    function getData(){
+
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+
+        if(cookie==null) return;
+
+        var json_fan={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"since_id":since_id,"page_size":3};
+        console.log(JSON.stringify(json_fan));
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getArticleHistory/',
+            type:'POST',
+            data:JSON.stringify(json_fan),
+            dataType:'json',
+            success:function (ret) {
+                if(ret.status==200){
+
+                //$api.text($api.byId('user_nickname'), ret.data.user_nickname);
+
+                //   if (since_id>15) {
+                //       _data=[];
+                //   }
+                var _data=ret.data;
+                console.log(JSON.stringify(_data));
+                var evalText = doT.template($("#category-goods-tmpl").html());
+
+                // $api.append($api.byId("first-list"), evalText(_data));
+
+
+                console.log(JSON.stringify(_data));
+                console.log("since_id"+since_id);
+                if(since_id==0){
+                    console.log("since_id"+since_id);
+                    $api.setStorage('myinf_art', _data);
+                    $api.html($api.byId("first-list"), evalText(_data));
+                    if(_data==null) $api.html(flag, '<h1>这里为空</h1>');
+                }else {
+                    console.log("since_id"+since_id);
+
+                    if(_data==""){
+                        $api.toast( '到头了', 300 );
+                        return;
+                    }
+                    $api.append($api.byId("first-list"), evalText(_data));
+                }
+
+                since_id+=3;
+              }
+                //alert(JSON.stringify(ret))
+            },
+            error:function (ret) {
+                //alert(JSON.stringify(ret))
+            },
+        })
+
+
+    }
+
+    function switchBtn(tag) {
+        // if( tag == $api.dom('#nav li div.active') )return;
+        console.log(tag);
+        var eHeaderLis = $api.domAll('header li ');
+        var list0=$api.dom('#list0');
+        var list1=$api.dom('#list1');
+        var list2=$api.dom('#list2');
+
+        // $api.removeCls(list0, 'active');
+        // $api.removeCls(list1, 'active');
+        // $api.removeCls(list2, 'active');
+        //
+        // if(tag==0) $api.addCls( list0, 'active');
+        // if(tag==1) $api.addCls( list1, 'active');
+        // if(tag==2) $api.addCls( list2, 'active');
+        api.setFrameGroupIndex({
+            name: 'history',
+            index: tag
+        });
+    }
+
+    function openArticle(target_id){
+            api.openWin({
+                name: 'question',
+                url: '../../circle/circle_strategy_detail.html',
+                bounces: false,
+                pageParam:{
+                    article_id:target_id,
+                    user_id:$api.getStorage('user_id'),
+                    user_cookie:''
+                }
+    　　　　});
+
+    }
+
+
+</script>
+
+<body>
+    <header class="aui-row table1" style="padding-top:20px;height:50px;align-items: center;text-align: center;background-color:white !important;border-radius:20px 20px 0 0;background-color:red"  >
+
+        <div onclick="switchBtn(0);" class="aui-col-xs-4 "  id="list0">问答</div>
+        <div onclick="switchBtn(1);" class="aui-col-xs-4 active"  id="list1">经验</div>
+        <div onclick="switchBtn(2);" class="aui-col-xs-4" id="list2">资源</div>
+    </header>
+
+    <div class="box table2" id="scroll">
+        <ul id="first-list" >
+            <li style="padding-top: 0px;padding-left: 0px;">
+                <span></span>
+
+                <div class="info">
+                <span style="color:#919be3">09-14</span>
+                <div style="position:relative;padding-top:10px">
+                    <div style="position:relative;top:0px;">   <span style="color:#6d7cd9" class="iconfont icon-shuxian"></span> <p>{{= item.action }}</p></div>
+                    <div style="padding:10px;line-height:40px">
+                        <span class="iconfont icon-tubiaolunkuohua12" style="font-size: 20px;float:right"></span>
+                        <p style="color:black;font-size:30px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">9招必备考研大法9招必备考研大法9招必备考研大法9招必备考研大法</p>
+                    </div>
+                    <div style="height:1px;border-top:1px solid #8582a5;margin-bottom:10px;"> </div>
+
+                    <div style="border-left:5px solid #6078ff;position:relative;"> 我上传了3份资料</div>
+                    <div style="padding:10px;font-size:30px;line-height:40px">9招必备考研大法 </div>
+                    <div style="height:1px;border-top:1px solid rgba(0, 0, 0, 0.26);margin-bottom:10px;"> </div>
+
+
+                </div>
+
+                </div>
+
+            </li>
+            <li style="padding-top: 0px;padding-left: 0px;">
+                <span></span>
+
+                <div class="info">
+                <span style="color:#919be3">09-14</span>
+                <div style="position:relative;padding-top:10px">
+                    <div style="position:relative;top:0px;right: 5px;">   <span style="color:#6d7cd9;font-weight: bolder" class="iconfont icon-shuxian"></span> <font  style="margin-left: -5px;"> {{= item.action }} </font> </div>
+                    <div style="padding:10px;line-height:40px">
+                        <span class="iconfont icon-tubiaolunkuohua12" style="font-size: 20px;float:right"></span>
+                        <p style="color:black;font-size:30px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">9招必备考研大法9招必备考研大法9招必备考研大法9招必备考研大法</p>
+                    </div>
+                    <div style="height:1px;border-top:1px solid #8582a5;margin-bottom:10px;"> </div>
+
+                    <div style="border-left:5px solid #6078ff;position:relative;"> 我上传了3份资料</div>
+                    <div style="padding:10px;font-size:30px;line-height:40px">9招必备考研大法 </div>
+                    <div style="height:1px;border-top:1px solid rgba(0, 0, 0, 0.26);margin-bottom:10px;"> </div>
+
+
+                </div>
+
+                </div>
+
+            </li>
+
+            <li style="padding-top: 0px;padding-left: 0px;">
+                <span></span>
+                <div class="info">
+
+                        <span>09-14</span>
+
+                <div style="position:relative;padding-top:10px">
+                    <div style="position:relative;top:0px;">   <span style="color:#6d7cd9" class="iconfont icon-shuxian"></span> <font>{{= item.action }}</font></div>
+
+                    <div style="padding:10px;line-height:40px">
+                        <span class="iconfont icon-tubiaolunkuohua12" style="font-size: 20px;float:right"></span>
+                        <p style="color:black;font-size:30px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">9招必备考研大法9招必备考研大法9招必备考研大法9招必备考研大法</p>
+                    </div>
+                    <div style="height:1px;border-top:1px solid ##d8d8d8;margin-bottom:10px;"> </div>
+
+                    <div style="border-left:5px solid #6078ff;position:relative;"> 我上传了3份资料</div>
+                    <div style="padding:10px;font-size:30px;line-height:40px">9招必备考研大法 </div>
+                    <div style="height:1px;border-top:1px solid rgba(0, 0, 0, 0.15);margin-bottom:10px;"> </div>
+                </div>
+
+                </div>
+
+            </li>
+
+
+        </div>
+        </ul>
+
+            </div>
+
+    </body>
+
+
+</body>
+
+</html>
+
+<!-- 必须加上type="text/x-dot-template" -->
+<script id="category-goods-tmpl" type="text/x-dot-template">
+
+{{~it:item:index}}
+<li style="padding-top: 0px;padding-left: 0px;">
+    <span></span>
+    <div class="info">
+        <span style="color:#919be3">{{= item.date }}</span>
+
+        <div style="position:relative;padding-top:18px">
+
+            {{~it[index].actions:item:j}}
+            <div style="position:relative;top:0px;right: 5px;">   <span style="color:#6d7cd9;font-weight: bolder" class="iconfont icon-shuxian"></span> <font  style="margin-left: -5px;"> {{= item.action }} </font> </div>
+
+            <div style="padding:2px 10px 4px 10px;line-height:40px" onclick="openArticle('{{= item.target_id }}')">
+                <p style="color:black;font-size:16px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{= item.description }}</p>
+            </div>
+            <div style="margin-left:10px;height:1px;border-top:1px solid #ffffff;margin-bottom:13px;"> </div>
+            {{~}}
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+</li>
+
+{{~}}
+
+</script>

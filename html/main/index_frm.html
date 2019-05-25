@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>XD首页</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <style type="text/css">
+        .question-box{
+
+        }
+        .resource {
+            position: relative;
+            width: 100%;
+            height: 70px;
+            background-color: #FFF;
+            margin-top: 35px;
+        }
+        .resource-left {
+            width: 15%;
+            height: auto;
+            float: left;
+            padding-left: 24px;
+        }
+        .resource-imag {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            background-color: #6d7cd9;
+            font-size: 18px; color: #fff; text-align: center; font-weight: bold;
+            line-height: 50px;
+        }
+        .item{
+            font-size: 1.5rem;
+            color: white;
+            margin-left: 10px;
+        }
+        .circleItem{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            margin-left: 10px;
+            margin-top: 10px;
+            background-color: #03a9f4;
+        }
+        .ccdiv{
+            float: left;
+            width: 23%;
+            margin-left: 2%;
+            height: 80px;
+        }
+        .halfCard{
+            width: 48%;
+            margin-top: 20px;
+            float: left;
+            border-radius: 5px;
+            height: 200px;
+            background-color: white
+        }
+        .halfCimg{
+            width: 100%;
+            height: 100px;
+            margin-top: -20px;
+        }
+        .halfCion{
+            float: left;
+
+        }
+        .halfLabel{
+            float: left;
+            margin-left: 10px;
+            color: #03a9f4;
+        }
+        .halfText{
+            float: left;
+            margin-left: 10px;
+        }
+        .leftPhoto{
+            height: 60px;
+            width: 60px;
+        }
+        .rightR{
+            float: left;
+        }
+        .nameR{
+            font-size: large;
+            float: left;
+        }
+        .noteR{
+            color: grey;
+            font-size: x-small;
+            float: left;
+            margin-left: 20px;
+        }
+    </style>
+
+</head>
+<body style="margin-left: 5%;width: 90%">
+
+<div class="aui-content">
+    <div style="height: 120pt">
+
+    </div>
+    <div>
+        <div class="ccdiv" tapmode onclick="openChoice(this.innerText)">
+            <div class="circleItem">
+                <span class="aui-iconfont aui-icon-calendar item"></span>
+            </div>
+            <div style="float: left; margin-left: 19px;" >问答</div>
+        </div>
+
+        <div class="ccdiv"  tapmode onclick="openChoice(this.innerText)">
+            <div class="circleItem" >
+                <span class="aui-iconfont aui-icon-calendar item"></span>
+            </div>
+            <div style="float: left; margin-left: 19px;">攻略</div>
+        </div>
+
+        <div class="ccdiv"  tapmode onclick="openChoice(this.innerText)">
+            <div class="circleItem">
+                <span class="aui-iconfont aui-icon-calendar item"></span>
+            </div>
+            <div style="float: left; margin-left: 19px;">资源</div>
+        </div>
+
+        <div class="ccdiv"  tapmode onclick="openChoice(this.innerText)">
+            <div class="circleItem">
+                <span class="aui-iconfont aui-icon-calendar item"></span>
+            </div>
+            <div style="float: left; margin-left: 19px;">题库</div>
+        </div>
+    </div>
+    <div>
+        <div style="float: left;font-size: small;margin-top: 30px; margin-left: 30px;" tapmode onclick="openChoice(this.innerText)">精品攻略推荐 <span class="aui-iconfont aui-icon-right"></span></div>
+        <section class="aui-content-padded" style="float: left">
+            <div class="aui-card-list" style="margin-top: -20px;">
+                <div class="halfCard" >
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right" ></span>
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right"></span>
+                    <img src="img/tapPhoto.png" class="halfCimg">
+                    <div class="halfText">
+                    <span class="aui-iconfont aui-icon-home halfCion"  ></span>
+                        &nbsp&nbsp国庆节出游攻略请看这里
+                    </div>
+                    <div class="halfLabel" >
+                        <div style="float: left"  tapmode onclick="openCircle(this.innerText)">摄影·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">旅游·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">体验</div>
+                    </div>
+                </div>
+                <div class="halfCard" style="margin-left: 4%;">
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right" >100</span>
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right">100</span>
+                    <img src="img/tag.png" class="halfCimg">
+                    <div class="halfText">
+                    <span class="aui-iconfont aui-icon-home halfCion" >
+                    </span> &nbsp&nbsp国庆节出游攻略请看这里</div>
+                    <div class="halfLabel">
+                        <div style="float: left"   tapmode onclick="openCircle(this.innerText)">摄影·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">旅游·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">体验</div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-card-list">
+                <div class="halfCard">
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right" ></span>
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right"></span>
+                    <img src="img/tapPhoto.png" class="halfCimg">
+                    <div class="halfText">
+                        <span class="aui-iconfont aui-icon-home halfCion"  ></span>
+                        &nbsp&nbsp国庆节出游攻略请看这里</div>
+                    <div class="halfLabel">
+                        <div style="float: left"  tapmode onclick="openCircle(this.innerText)">摄影·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">旅游·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">体验</div>
+                    </div>
+                </div>
+                <div class="halfCard" style="margin-left: 4%;">
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right" >100</span>
+                    <span class="aui-iconfont aui-icon-home halfCion" style="float: right">100</span>
+                    <img src="img/tag.png" class="halfCimg">
+                    <div class="halfText">
+                    <span class="aui-iconfont aui-icon-home halfCion" >
+                    </span> &nbsp&nbsp国庆节出游攻略请看这里</div>
+                    <div class="halfLabel">
+                        <div style="float: left"  tapmode onclick="openCircle()">摄影·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">旅游·</div>
+                        <div style="float: left" tapmode onclick="openCircle(this.innerText)">体验</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div>
+        <div style="float: left;font-size: small;margin-top: 30px; margin-left: 30px;" tapmode onclick="openChoice(this.innerText)">精品问答推荐 <span class="aui-iconfont aui-icon-right"></span></div>
+        <section class="aui-content-padded" style="float: left">
+        <div class="aui-card-list question-box">
+            <div class="aui-card-list-header">
+                <span class="aui-iconfont aui-icon-mail" style="background: red;color: white;float: left;border-radius: 50%;"></span>
+                <div style="float: left;margin-left: -50px">现在的年轻人吃不了苦吗？</div>
+            </div>
+            <div class="halfLabel" style="font-size: x-small">
+                <div style="float: left"  tapmode onclick="openCircle()">摄影·</div><div style="float: left">旅游·</div><div style="float: left">体验</div>
+            </div>
+            <div class="aui-card-list-content-padded">
+                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+            </div>
+            <div class="aui-card-list-footer">
+                <span class="aui-iconfont aui-icon-gear" style="float: left"></span>
+                <span class="aui-iconfont aui-icon-mail" style="float: left"></span>
+                <span class="aui-iconfont aui-icon-more" style="float: right"></span>
+            </div>
+        </div>
+        <div class="aui-card-list question-box">
+            <div class="aui-card-list-header">
+                <span class="aui-iconfont aui-icon-mail" style="background: red;color: white;float: left;border-radius: 50%;"></span>
+                <div style="float: left;margin-left: -50px">现在的年轻人吃不了苦吗？</div>
+            </div>
+            <div class="halfLabel" style="font-size: x-small">摄影·旅游·体验</div>
+            <div class="aui-card-list-content-padded">
+                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+                内容区域，卡片列表布局样式可以实现APP中常见的各类样式
+            </div>
+            <div class="aui-card-list-footer">
+                <span class="aui-iconfont aui-icon-gear" style="float: left"></span>
+                <span class="aui-iconfont aui-icon-mail" style="float: left"></span>
+                <span class="aui-iconfont aui-icon-more" style="float: right"></span>
+            </div>
+        </div>
+    </section>
+    </div>
+    <div>
+        <div style="float: left;font-size: small;margin-top: 30px; margin-left: 30px;" tapmode onclick="openChoice(this.innerText)">精品资源推荐 <span class="aui-iconfont aui-icon-right"></span></div>
+        <section class="aui-content-padded" style="float: left; width: 100%">
+            <div class="aui-card-list" style="width: 90%">
+                <div class="aui-card-list-header" tapmode onclick="openResourceD()" style="width: 100%">
+                    <div class="resource-left">
+                        <div id="resource-type" class="resource-imag">
+                            PDF
+                        </div>
+                    </div>
+                <div class="rightR">
+                    <div class="nameR">高数习题锦集</div>
+                    <div>
+                        <div class="noteR">128捧</div>
+                        <div class="noteR">0踩</div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="aui-card-list" style="width: 90%">
+                <div class="aui-card-list-header" tapmode onclick="openResourceD()" style="width: 100%">
+                    <div class="resource-left">
+                        <div id="resource-type" class="resource-imag">
+                            PDF
+                        </div>
+                    </div>
+                    <div class="rightR">
+                        <div class="nameR">高数习题锦集</div>
+                        <div>
+                            <div class="noteR">128捧</div>
+                            <div class="noteR">0踩</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../../script/api.js" ></script>
+<script type="text/javascript" src="../../script/aui-tab.js" ></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript" src="../../script/jquery.mobile-1.4.5.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+        $('.halfCard').click (function () { openStrategy(1) })
+        $('.question-box').click ( function () {
+            api.openWin({
+                name:'index_question',
+                url:'../QandA/answer_list.html',
+                pageParam: {
+                    question_id: 1,
+                    answer_id: 1,
+                    user_id: 'e3b3dc8d20b7052f5c0799f3aa4e9f3e',
+                    type:"question"
+                }
+            })
+        })
+        var path_i = api.pageParam.path;
+        api.parseTapmode();
+        api.openFrame({
+            name: 'search',
+            url: './search_frm.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: '40',
+                marginTop:0
+            },
+            bgColor:'rgba(0,0,0,0)',
+            pageParam:{
+                pathS:path_i
+            }
+        });
+    };
+    function openChoice(name) {
+        switch (name){
+            case '问答':api.openWin({
+                name:'QandA_index',
+                url:'../QandA/Wenda_homepage.html',
+                pageParam:{
+                    name:'test'
+                }
+            });break;
+            case '精品问答推荐':api.openWin({
+                name:'QandA_index',
+                url:'../QandA/Wenda_homepage.html',
+                pageParam:{
+                    name:'test'
+                }
+            });break;
+            case '攻略':api.openWin({
+                name:'QandA_index',
+                url:'../circle/circle_strategy_list.html',
+                pageParam:{
+                    name:'test'
+                }
+            });break;
+            case '精品攻略推荐':api.openWin({
+                name:'QandA_index',
+                url:'../circle/circle_strategy_list.html',
+                pageParam:{
+                    name:'test'
+                }
+            });break;
+            case '资源':api.openWin({
+                name:'QandA_index',
+                url:'../QandA/resource_list_win.html',
+                pageParam:{
+                    name:'test'
+                }
+            });break;
+            case '精品资源推荐':api.openWin({
+                name:'QandA_index',
+                url:'../QandA/resource_list_win.html',
+                pageParam:{
+                    name:'test'
+                }
+            });break;
+            case '题库':api.openWin({
+                name:'QandA_index',
+                url:'../QandA/tiku_win.html',
+                pageParam:{
+                    name:'test'
+                }
+            });break;
+            default:break;
+        }
+    }
+    function openStrategy(name) {
+        api.openWin({
+            name:'circle_strategy',
+            url:'../circle/circle_strategy_detail.html',
+            pageParam:{
+                article_id:name
+            }
+        })
+    }
+    function openCircle( name ) {
+        name = name.replace("·","");
+        api.openWin({
+            name: 'circle_index',
+            url: '../circle/circle_index.html',
+            bounces: false,
+            rect:{
+                x:0,
+                y:0,
+                h:'auto',
+                w:'auto'
+            },
+            pageParam:{
+                name:name
+            },
+        });
+        api.closeWin({
+            name:'circle_strategy'
+        });
+    }
+    function openResourceD() {
+        api.openWin({
+            name:'Resource_detail',
+            url:'../QandA/resource_detail.html'
+        })
+    }
+    function closeWin(){
+        api.closeWin({
+        });
+    }
+
+
+</script>
+</html>

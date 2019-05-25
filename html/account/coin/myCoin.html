@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+    <title>我的金币</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/style.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <style>
+
+
+    </style>
+
+</head>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<!-- <script type="text/javascript" src="../../script/template.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script> -->
+
+<script>
+
+    apiready = function(){
+        api.parseTapmode();
+        var header = $api.byId('header');
+        // $api.fixStatusBar(header);
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+        api.openFrame({
+            name: 'myCoin_frm',
+            url: 'myCoin_frm.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: 'auto',
+
+                // marginBottom:50    //相对父 window 下外边距的距离
+            }
+        })
+    };
+
+</script>
+
+<body>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,377 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+    body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+        header{ background-color: #f2f2f2; }
+        header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+        header ul li.active{ display: block; }
+				#footer{  background-color: #f2f2f2;}
+        #footer ul li{  padding-top: 30px; padding-bottom: 8px; background: url() no-repeat center 2px; background-size: 25px 25px; text-align: center; }
+        #footer ul li.active{ color: #000; }
+        #footer ul li:nth-child(1){ background-image: url(../icon/message.png); }
+        #footer ul li:nth-child(2){ background-image: url(../icon/approve.png); }
+        #footer ul li:nth-child(3){ background-image: url(../icon/oppose.png); }
+        #footer ul li:nth-child(4){ background-image: url(../icon/collect.png); }
+        #footer ul li:nth-child(1).active{ background-image: url(../icon/message.png); }
+        #footer ul li:nth-child(2).active{ background-image: url(../icon/agreechousen.png); }
+        #footer ul li:nth-child(3).active{ background-image: url(../icon/oppose.png); }
+        #footer ul li:nth-child(4).active{ background-image: url(../icon/collect.png); }
+        .flex-con{
+          overflow: scroll;
+        }
+        .fixed_bottom {
+           position:fixed;
+           left:0px;
+           bottom:0px;
+           width:100%;
+           height:7%;
+           z-index:10;
+        }
+        .fixed_top {
+           position:fixed;
+           left:0px;
+           top:0px;
+           width:100%;
+           height:7%;
+           z-index:10;
+        }
+        .header-box {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          background-color: #ffffff
+        }
+        header {
+          width: 100%;
+          height: 100%;
+          background-color: #ffffff;
+          z-index: 10;
+
+        }
+        header .left {
+          position: absolute;
+          top: 15px;
+          width: 21.5px;
+          height: 15.5px;
+          left: 15px;
+          background-image: url(../icon/back.png);
+          background-size: 21.5px 15.5px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+        header .right {
+          position: absolute;
+          top: 15px;
+          width: 5px;
+          height: 19px;
+          right: 15px;
+          background-image: url(../icon/more.png);
+          background-size: 5px 19px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+        .title {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          padding-left: 24px;
+          padding-top: 15%;
+          padding-right: 24px;
+          box-sizing: border-box;
+          font-size: 20px; color: #000000; text-align: left;
+          font-weight: bold;
+        }
+        nav {
+          /*border: 1px solid red;*/
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;;
+          -webkit-box-orient: horizontal;
+          -webkit-flex-flow: row;
+          flex-flow: row;
+          position: relative;
+          width: 100%;
+          height: 64px;
+        }
+        nav .menu-cata{
+          border-top: 1px solid #d3d2d2;
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+          flex: 1;
+          width: 100%;
+          height: 37.5px;
+          line-height: 37.5px;
+          font-size: 12px; color: #8e8e8e; text-align: center;
+        }
+        nav .menu-cata.selected {
+          font-size: 18px; color: #6d7cd9; font-weight: bolder;
+        }
+
+				nav .reward {
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+          flex: 1;
+          width: 100%;
+          height: 64px;
+          line-height: 64px;
+          font-size: 16px; color: #000; text-align: center;
+        }
+
+				.reward img {
+					height: 16px;
+					width: 16px;
+					vertical-align: middle;
+				}
+
+        .reward-logo {
+        	position: relative;
+        	width: 70%;
+					height: 50%;
+					top: 25%;
+					left: 15%;
+          background-color: #e6655e;
+          border-radius: 4px;
+          text-align: center;
+          line-height: 32px;
+					font-size: 16px; color: #fff; text-align: left;
+          text-indent: 5px;
+        }
+
+
+				.content-imag {
+		      width: 100%;
+		      position: relative;
+		      padding-top: 15px;
+		    }
+		    .content-imag img {
+		      width: 327px;
+		      height: 139px;
+		      border-radius: 14px;
+		      margin-left: 24px;
+		      margin-right: 24px;
+		    }
+
+        #little-window ul li {
+          height:50px;
+          font-size: 16px; color: #000; text-align: center;
+          line-height: 50px;
+        }
+        .little-window {
+          /*border: 1px solid red;*/
+          position: fixed;
+          right: 24px;
+          top: 50px;
+          height: 50px;
+          width: 113.5px;
+          background-color: #fff;
+          font-size: 16px;color: #000; text-align: center;
+          z-index: 10;
+          box-shadow:  darkgrey  1px 1px 1px 1px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="wrap">
+  <div class="fixed_top">
+  <header id="header" class="header-box">
+    <div class="left" onclick="back()"></div>
+    <div class="center"></div>
+    <div class="right" onclick="little_window()"></div>
+  </header>
+  </div>
+  <div id='little-window' class="little-window" style="display:none" onclick="little_window()">
+    <ul>
+      <li>举报</li>
+    </ul>
+  </div>
+  <div id = "title" class="title">
+  现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？
+  </div>
+  <div class="content-imag">
+  <img src="../image/eg_tulip.jpg" alt="测试图片">
+  </div>
+
+    <div id="main">
+			<nav>
+        <div id="reward" class="reward" onclick="" tapmode>
+          <div id="reward-num" class="reward-logo">
+						悬赏￥60元
+					</div>
+				</div>
+        <div class="reward" onclick="" tapmode>
+          <img src="../icon/edit.png" alt="">
+          写回答
+				</div>
+      </nav>
+      <nav id="nav">
+        <div id="menu-cata-0" class="menu-cata selected" onclick="changeIframe(0)" tapmode>推荐回答</div>
+        <div id="menu-cata-1" class="menu-cata" onclick="changeIframe(1)" tapmode>全部回答</div>
+      </nav>
+      <iframe id="frame1" src="../html/intro_answer.html" width="100%" height="90%" scrolling="no" frameborder="no">
+      </iframe>
+    </div>
+    <div id="footer" class="fixed_bottom">
+        <ul class="flex-wrap" >
+            <li tapmode="hover" onclick="open_comment()" class="flex-con active" ></li>
+            <li tapmode="hover" onclick="approve(this)" class="flex-con" ></li>
+            <li tapmode="hover" onclick="disapprove(this)" class="flex-con" ></li>
+            <li tapmode="hover" onclick="collect( this )" class="flex-con" >120</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+var json_dict = {
+"app_version":"",
+"user_id":"",
+"user_cookie":"",
+"question_id":123,
+"answer_id":123,
+"since_id": 0,
+"page_size": 10
+};
+var json_data = {};
+var page_now = 0;
+
+    apiready = function() {
+      tmp = document.getElementById('frame1');
+      var global_height = $api.getStorage('global_height');
+      tmp.style.height = parseInt(parseInt(global_height)+100) +'px';
+      Getdata(json_dict);
+      json_data.title = '现在的年轻人啊!';
+      json_data.like_num = 12;
+      json_data.dislike_num = 13;
+      json_data.comm_num = 7;
+      question_view();
+
+    }
+
+    function Getdata(json) {
+      $.ajax({
+        type: "post",
+        url: "../questionAnswer/getComment/",
+          dataType : "json",
+          data: JSON.stringify(json),
+          success: function (d) {
+          json_data = d; //是否需要将json转化为{}才能赋给json_data?
+        }
+      });
+    }
+
+    function question_view() {
+      document.getElementById('title').innerHTML = json_data.title;
+      document.getElementById('footer').childNodes[1].childNodes[1].innerHTML = json_data.comm_num;
+      document.getElementById('footer').childNodes[1].childNodes[3].innerHTML = json_data.like_num;
+      document.getElementById('footer').childNodes[1].childNodes[5].innerHTML = json_data.dislike_num;
+    }
+
+
+    function changeIframe(page) {
+      if (page != page_now) {
+        tmp1 = document.getElementById('menu-cata-' + parseInt(page));
+        $api.addCls(tmp1, 'selected');
+        tmp2 = document.getElementById('menu-cata-' + (1-parseInt(page)));
+        $api.removeCls(tmp2, 'selected');
+        page_now = page;
+        if (page == 0) {
+          document.getElementById('frame1').src = "../html/intro_answer.html";
+        }
+        else {
+          document.getElementById('frame1').src = "../html/all_answer.html";
+        }
+
+      }
+    }
+
+    function approve(tag) {
+      if(  $api.hasCls(tag,'active') ) {
+        $api.removeCls(tag, 'active');
+        document.getElementById('footer').childNodes[1].childNodes[3].innerHTML = parseInt(document.getElementById('footer').childNodes[1].childNodes[3].innerHTML) - 1 ;
+
+      }
+      else {
+        $api.addCls(tag, 'active');
+        document.getElementById('footer').childNodes[1].childNodes[3].innerHTML = parseInt(document.getElementById('footer').childNodes[1].childNodes[3].innerHTML) + 1 ;
+      };
+      }
+
+          function disapprove(tag) {
+            if( $api.hasCls(tag,'active') ) {
+              $api.removeCls(tag, 'active');
+              document.getElementById('footer').childNodes[1].childNodes[5].innerHTML = parseInt(document.getElementById('footer').childNodes[1].childNodes[5].innerHTML) - 1 ;
+
+            }
+            else {
+              $api.addCls(tag, 'active');
+              document.getElementById('footer').childNodes[1].childNodes[5].innerHTML = parseInt(document.getElementById('footer').childNodes[1].childNodes[5].innerHTML) + 1 ;
+            };
+            }
+
+            function collect(tag) {
+  						if( $api.hasCls(tag,'active') ) {
+  			              $api.removeCls(tag, 'active');
+  			              document.getElementById('footer').childNodes[1].childNodes[7].innerHTML = parseInt(document.getElementById('footer').childNodes[1].childNodes[7].innerHTML) - 1 ;
+
+  			            }
+  			      else {
+  			              $api.addCls(tag, 'active');
+  			              document.getElementById('footer').childNodes[1].childNodes[7].innerHTML = parseInt(document.getElementById('footer').childNodes[1].childNodes[7].innerHTML) + 1 ;
+  			            };
+  					}
+
+            function open_comment() {
+              api.openFrame({
+                        name: 'comment',
+                        url: './comment_box.html',
+                        rect: {
+                                x:0,
+                                y:0,
+                                w:api.winWidth,
+                                h:api.winHeight
+                        },
+                        bgColor: 'rgba(0,0,0,0.6)',
+                        // bounces: false,
+            });
+          }
+
+          var litwindow = $api.dom('#little-window');
+
+            function little_window() {
+              if (litwindow.style.display == "none") {
+                litwindow.style.display = '';
+              }
+              else {
+                litwindow.style.display = 'none';
+              }
+            }
+            function closelitwindow() {
+              litwindow.style.display = 'none';
+            }
+
+    function back() {
+      api.openWin({
+          name: 'home',
+          url: '../index.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+
+</script>

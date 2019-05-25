@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="../../../css/style_login.css" rel="stylesheet" type="text/css"/>
+
+
+
+    <title>个人主页里的资源</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+
+    <script type="text/javascript" src="../../../script/doT.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/aui-dialog.js" ></script>
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: #f0f0f0;
+        }
+    </style>
+
+</head>
+
+
+<script>
+
+var uid;
+    apiready = function(){
+    uid=api.pageParam.uid;
+        getItems();
+        api. addEventListener({name:'scrolltobottom'}, function(ret, err){getItems(); });
+    };
+    var since_id=0;
+    var page_size=10;
+
+    function getItems(){
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+        if(cookie==null) return;
+
+
+
+
+      var flag = $api.byId('insert');
+      // 编译模板函数
+      var tempFn = doT.template($api.byId('template').innerHTML);
+      // 使用模板函数生成HTML文本
+
+      var json_getItems={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"since_id":since_id,"page_size":10,"target_id": uid};
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getOthersSourceHistory/',
+            type:'POST',
+            data:JSON.stringify(json_getItems),
+            dataType:'json',
+            success:function (ret) {
+              if(ret.status==200){
+
+                  var _data=ret.data;
+                  for(var p in _data){//遍历json数组时，这么写p为索引，0,1
+                      var arr = _data[p].url.split(".");
+                      _data[p].url=arr[arr.length - 1];
+
+                    console.log(_data[p].url + " ");
+
+                  }
+
+                  var resultHTML = tempFn(_data);
+                  $api.append(flag, resultHTML);
+                    since_id+=10;
+                //if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+
+              }
+                //alert(JSON.stringify(ret))
+            },
+            error:function (ret) {
+                var _data=ret.data;
+                _data=data_;
+                var resultHTML = tempFn(data_);
+                $api.append(flag, resultHTML);
+              alert(JSON.stringify(ret));
+            },
+        })
+      return 0;
+      }
+
+      function openRes(target_id){
+
+              api.openWin({
+                  name: 'question',
+                  url: '../../circle/circle_resource_detail.html',
+                  bounces: false,
+                  pageParam:{
+                      source_id : target_id,
+                      user_id:$api.getStorage('user_id'),
+                      user_cookie:''
+                  }
+      　　　　});
+      }
+
+
+</script>
+
+
+<style>
+body{
+    background-color:#f0f0f0;
+}
+</style>
+
+<body>
+    <div class="aui-content aui-margin-b-15">
+    <ul class="aui-list aui-media-list" id="insert">
+
+
+
+    </ul>
+</div>
+
+
+</body>
+</html>
+
+<script type="text/template" id="template">
+
+{{~it:value:index}}
+
+<li class="aui-list-item aui-list-item-middle" onclick="openRes('{{=value.id}}')" style="padding-left: 24px;">
+    <div class="aui-media-list-item-inner">
+        <div class="aui-list-item-media" style="width: 3rem;padding-top: 15px;padding-bottom: 15px;">
+
+            {{? value.url ==='jpg' }}
+            <div style="background-color:#e6655e;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">jpg</font></div>
+
+            {{?? value.url ==='m4a'}}
+            <div style="background-color:#917dcf;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">m4a</font></div>
+            {{??}}
+            <div style="background-color:green;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">{{=value.url}}</font></div>
+            {{?}}
+
+        </div>
+        <div class="aui-list-item-inner" style="font-size:16px">
+            <div class="aui-list-item-text">
+                <div class="aui-list-item-title aui-font-size-16" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{=value.name}}</div>
+                <!-- <div class="aui-list-item-right">08:00</div> -->
+            </div>
+            <div class="aui-list-item-text">
+                {{=value.dislike_number}}捧，{{=value.like_number}}踩
+            </div>
+        </div>
+    </div>
+</li>
+
+{{~}}
+
+</script>

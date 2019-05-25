@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+    <title>编辑个人信息</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/api.css"/> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/style.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+    <link rel="stylesheet" href="../../../css/iconfont.css">
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: #f0f0f0;
+        }
+
+        header{
+          position: relative;
+          width: 100%;
+          height: 100%;
+          /*background-color: #6d7cd9;*/
+          background:url(../../../image/mine/header-bg.png);
+          background-repeat:no-repeat;
+          background-size:cover;
+          color: #ffffff;
+        }
+        /*#back::after{content: "";padding-top: 10%;display: block;}*/
+        /*#header::after{content: "";padding-top: 20%;display: block;}*/
+        .back_black{
+          position: absolute;
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,.5);
+        }
+    </style>
+    <!-- <script type="text/javascript" src=" doT.min.js"></script> -->
+
+</head>
+<script type="text/javascript" src="../../../script/api.js"></script>
+
+
+<script>
+
+    apiready = function(){
+
+    };
+
+
+</script>
+
+    <body>
+
+      <!-- 顶部 -->
+      <header id="header" style="position:relative">
+        <div class="back_black"></div>
+
+        <font id="back" style="left: 50%;transform: translate(-50%,0%);position: absolute;top: 10px;"> 更换头像</font>
+        <font id="back" style="right: 20px;position: absolute;top: 10px;" onclick="ok()"> 确定</font>
+
+        <font position="absolute" id="back"> <span class="aui-iconfont aui-icon-left" style="color: white;" onclick="api.closeWin();" ></span></font>
+        <font id="back" style="left: 50%;transform: translate(-50%,0%);position: absolute;"> </font>
+
+        <img src="../../../image/demo1.png" class="portrait" id ="portrait" style="border: 3px solid #fff;position: relative;height:120px;left: 50%;transform: translate(-50%,0);border-radius:50%;height:100px;width:100px;margin-top: 70px;">
+          <div style="width: 100%;height: 50px;position: relative;margin-top: 100px;" onclick="getPicture(1)"><font id="back" style="position:absolute;margin-left: 50%;transform: translate(-50%,0%);"> <span class="iconfont icon-xiangji-copy" style="font-size: 40px;"></span></font></div>
+          <div style="width: calc(100% - 60px);margin-left:30px;height: 1px;position: relative;margin-top: 20px;background-color:white"></div>
+
+          <div style="width: 100%;height: 50px;position: relative;margin-top: 20px;" class="" onclick="getPicture(2)"><font  id="back" style="position:absolute;margin-left: 50%;transform: translate(-50%,0%);"> <span class="iconfont icon-photo1" style="font-size: 40px;"></span></font></div>
+
+          <!-- <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);">
+
+              <img src="../../../image/demo1.png" class="portrait" id ="portrait" style="height:120px;border-radius:50%;">
+              <img src="../../../image/demo1.png" class="portrait" id ="portrait" style="height:30px;margin:0 auto">
+
+          </div> -->
+
+
+
+      </header>
+
+
+
+
+    </body>
+
+</html>
+
+<script type="text/javascript">
+
+    //var photonum=1;
+
+    function showAction(){
+      $api.addCls($api.byId("list2"), 'aui-hide');
+      //photonum=num;
+      api.actionSheet({
+          title: '上传背景图片',
+          cancelTitle: '取消',
+          buttons: ['拍照','从手机相册选择']
+      }, function(ret, err) {
+          if (ret) {
+              getPicture(ret.buttonIndex);
+          }
+      });
+    }
+
+
+
+
+
+
+function getPicture(sourceType) {
+    if(sourceType==1){ // 拍照
+        //获取一张图片
+        api.getPicture({
+            sourceType: 'camera',
+            encodingType: 'png',
+            mediaValue: 'pic',
+            allowEdit: true,
+            quality: 90,
+            saveToPhotoAlbum: true
+        }, function(ret, err) {
+            // 获取拍照数据并处理
+            if (ret) {
+              console.log(ret);
+                var imgSrc = ret.data;
+                saveImg(ret.data,"valueId","imgId");
+                // if (imgSrc != "") {
+                //     var ele=$api.dom('#avatar');
+                //     $api.attr(ele,'src',imgSrc);
+                // }
+            }
+        });
+      }else if (sourceType == 2) {
+                       //手机相册选图片
+         api.getPicture({
+             sourceType : 'library',
+             encodingType : 'png',
+             mediaValue : 'pic',
+             destinationType : 'url',
+             allowEdit : true,
+             quality : 100,
+             preview:true,
+             saveToPhotoAlbum : false
+         }, function(ret, err) {
+              //  alert(JSON.stringify(ret.data));
+             if (ret) {
+               console.log(ret);
+               saveImg(ret.data,"valueId","imgId");
+                 var imgSrc = ret.data;
+                 openImageClipFrame(imgSrc);
+                //  if (imgSrc != "") {
+                //      var ele=$api.dom('#avatar');
+                //      $api.attr(ele,'src',imgSrc);
+                //      //fileLoader();
+                //  }
+            } else {
+                 api.toast({
+                     msg : '图像获取失败',
+                     duration : 3000,
+                     location : 'bottom'
+                 });
+             }
+         });
+
+        }
+      }
+              //保存剪辑图像
+        function saveImg(path,valueId,imgId) {
+          api.showProgress({
+              title: '上传中...',
+              text: '先喝杯茶...',
+          });
+          //上传剪辑后的图像到服务器
+          api.ajax({
+              // report : false,
+              url : 'http://47.105.160.217:80/api/upload/',
+              //这里是我们约定好的后台上传图片的位置 ，你可以根据你的需求来改
+              method : 'post',
+              cache : 'false',
+              timeout : 30,
+              dataTpye : 'json',
+              data : {
+                  files : {
+                      file : path
+                  },
+                  values: {
+                    type: 'public'
+                  }
+              }
+          }, function(ret, err) {
+               //alert(JSON.stringify(ret));
+              api.hideProgress();
+              if (ret.message=="SUCCESS") {
+                var urlpath='http://47.105.160.217:80/files/'+ret.data.path;
+                console.log(urlpath);
+
+
+              }
+              if (ret.status == 1) {
+                api.toast({
+                    msg : ret.info
+                });
+              }
+              //上传进度
+              if (ret.status == 0) {
+                  api.toast({
+                      msg : '上传错误',
+                      duration : 3000,
+                      location : 'bottom'
+                  });
+              } else if (ret.status == 1) {
+                  $api.byId(valueId).value = ret.id;
+                  $api.byId(imgId).src = ret.path;
+               }
+          });
+        }
+
+        /**
+         * 打开图片裁剪页面
+         * 周枫
+         * 2016.5.21
+         */
+        function openImageClipFrame(img_src){
+
+            api.openFrame({
+                name : 'editPhoto',
+                scrollToTop : true,
+                allowEdit : true,
+                url : 'editPhoto.html',
+                rect : {
+                    x : 0,
+                    y : 0,
+                    w : api.winWidth,
+                    h : api.winHeight,
+                },
+                animation : {
+                    type : "reveal", //动画类型（详见动画类型常量）
+                    subType : "from_right", //动画子类型（详见动画子类型常量）
+                    duration : 300
+                },
+                pageParam : {
+                    img_src : img_src
+                },
+                vScrollBarEnabled : false,
+                hScrollBarEnabled : false,
+                //页面是否弹动 为了下拉刷新使用
+                bounces : false
+            });
+        }
+</script>

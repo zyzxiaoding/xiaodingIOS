@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css" />
+</head>
+<body style="background-color: white">
+<div style="height: 4px;width: 100%;background-color: #000000;opacity: 0.03"></div>
+<div id="pic">
+
+</div>
+    <a id="chooseF"  class="file" style="height: 30px;width: 80px;text-align: center;margin-top: 50px">选择文件
+        <input id="files"  type="file" multiple = "multiple" onchange="drawFile()">
+    </a>
+<div style="margin-top: 30px;height: 4px;width: 100%;background-color: #000000;opacity: 0.03"></div>
+<div id="content" style="position: relative;height: 500px;border: 3px;background-color: white">
+
+    <input id="reTitle" type="text" placeholder="请输入标题" style="margin-top:10px;color: black;width: 90%;height: 50px;font-size:18px;margin-left: 5%">
+    <div style="height: 1px;margin-left:5%;width: 95%;background-color: #000000;opacity: 0.1"></div>
+    <div id="guo" aria-placeholder="请输入正文" style="color: black;height:300px;width: 90%;margin-left: 5%;margin-top: 3%;" contenteditable="true"></div>
+</div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript">
+    var basicURL = "http://47.105.160.217/api/";
+    var fileBrowser;
+    var i = 0;
+    var postD="";
+    var fileList = new Array(File);
+    apiready = function(){
+        api.parseTapmode();
+        fileBrowser = api.require('fileBrowser');
+        $api.setStorage('resource_is_anonymous',0);
+
+    };
+    function drawFile() {
+        var f = document.getElementById('files').files[0];
+        fileList.push(f);
+        i++;
+        var pic = document.getElementById('pic');
+        var s = f.name.split('.')[1];
+        pic.innerHTML = pic.innerHTML + "<div class=\"aui-card-list\" >\n" +
+            "        <div class=\"aui-card-list-header\" tapmode onclick=\"openResourceD()\" style=\"width: 100%\">\n" +
+            "            <div class=\"resource-left\">\n" +
+            "                <div id=\"resource-type\" class=\"resource-imag\">\n" +
+            "                    "+s+"\n" +
+            "                </div>\n" +
+            "            </div>\n" +
+            "            <div class=\"rightR\">\n" +
+            "                <div class=\"nameR\"></div>\n" +
+            "                <div>\n" +
+            "                </div>\n" +
+            "            </div>\n" +
+            "        </div>\n" +
+            "    </div>"
+        $('#chooseF').addClass('aui-hide')
+    }
+    function addLine() {
+        document.getElementById('guo').innerHTML=document.getElementById('guo').innerHTML +
+            "------------------------------------------<br/>"
+    }
+    function uploadFile() {
+        var t = fileList.pop();
+        var formdata = new FormData();
+        formdata.append('file',t);
+        formdata.append('type','public');
+        $.ajax({
+            url:'http://47.105.160.217/api/upload/',
+            method:'post',
+            data:formdata,
+            contentType:false,
+            processData:false,
+            async:false,
+            success:function (ret) {
+                alert('uploading');
+                if (ret){
+                    //alert($('#guo').html());
+                   postD={
+                       "user_id": $api.getStorage('user_id'),
+                        "url": ''+ret.data.path,
+                        "name": ''+$('#reTitle').val(),
+                        "description":''+$('#guo').html(),
+                        "img_list": "",
+                        "tag_id_list": ""+api.pageParam.tag_id,
+                        "is_anonymous":$api.getStorage('resource_is_anonymous')
+                   };
+                   console.log(JSON.stringify(postD));
+                   //alert(JSON.stringify(postD));
+                    $.ajax({
+                        url: 'http://47.105.160.217/api/group/postSource/',
+                        method: 'post',
+                        data: JSON.stringify(postD),
+                        contentType: false,
+                        processData: false,
+                        success: function (ret) {
+                            alert('上传成功');
+                            back();
+                        },
+                        error: function (error) {
+                            alert(JSON.stringify(error))
+                        }
+                    })
+                }
+
+            }
+        })
+
+
+
+
+
+    }
+    function back(){
+        api.historyBack({
+        },function(ret,err){
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+    }
+</script>
+</html>

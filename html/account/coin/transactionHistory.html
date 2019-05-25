@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>交易记录</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+    <script type="text/javascript" src="../../../script/doT.min.js"></script>
+
+    <script type="text/javascript" src="../../../script/doT.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: #fbfbfb;
+        }
+
+    </style>
+
+</head>
+
+
+<script>
+apiready = function(){
+  //setItems();
+  getData();
+  api.addEventListener({name:'scrolltobottom'}, function(ret, err){getData();});
+};
+
+function setItems(){
+    var goods_list = [{
+              "month": "1",
+              "input": "10.00",
+              "output": "1",
+              "H": [{
+                      "username": "用户名",
+                      "descible": "简介",
+                      "money": "100",
+                      "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+                  },
+                  {
+                      "username": "用户名2",
+                      "descible": "简介2",
+                      "money": "100",
+                      "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+                  }
+              ]
+          },
+                 {
+                    "month": "22",
+                    "input": "102.00",
+                    "output": "22",
+                    "H": [{
+                            "username": "用户名",
+                            "descible": "简介",
+                            "money": "100",
+                            "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+                        },
+                        {
+                            "username": "用户名2",
+                            "descible": "简介2",
+                            "money": "100",
+                            "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+                        }
+                    ]
+                }
+      ];
+
+    var evalText = doT.template($("#category-goods-tmpl").html());
+
+    $api.append($api.byId("insert"), evalText(goods_list));
+
+       //$("#category-goods").html(evalText(goods_list));
+}
+
+
+var since_id=1;
+var page_size=10;
+
+function getData(){
+
+    var cookie=$api.getStorage('cookie');
+    var user_id=$api.getStorage('user_id');
+
+    if(cookie==null) return;
+
+    var json_fan={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"since_id":since_id,"page_size":10};
+    console.log(JSON.stringify(json_fan));
+
+    $.ajax({
+        url:'http://47.105.160.217:80/api/userInfo/getTransactionLog/',
+        type:'POST',
+        data:JSON.stringify(json_fan),
+        dataType:'json',
+        success:function (ret) {
+            if(ret.status==200){
+
+            //$api.text($api.byId('user_nickname'), ret.data.user_nickname);
+            var _data=ret.data;
+            alert(JSON.stringify(_data));
+            // _data= [{
+            //           "month": "1",
+            //           "input": "10.00",
+            //           "output": "1",
+            //           "H": [{
+            //                   "username": "用户名",
+            //                   "descible": "简介",
+            //                   "money": "100",
+            //                   "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+            //               },
+            //               {
+            //                   "username": "用户名2",
+            //                   "descible": "简介2",
+            //                   "money": "100",
+            //                   "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+            //               }
+            //           ]
+            //       },
+            //              {
+            //                 "month": "22",
+            //                 "input": "102.00",
+            //                 "output": "22",
+            //                 "H": [{
+            //                         "username": "用户名",
+            //                         "descible": "简介",
+            //                         "money": "100",
+            //                         "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+            //                     },
+            //                     {
+            //                         "username": "用户名2",
+            //                         "descible": "简介2",
+            //                         "money": "100",
+            //                         "logo": "http://image.diandodo.com/zhudianbao/Uploads/User/u1250000222/20160723/201607231342158687.png@250h_250w_1e_1c"
+            //                     }
+            //                 ]
+            //             }
+            //   ];
+
+            var evalText = doT.template($("#category-goods-tmpl").html());
+
+            $api.append($api.byId("insert"), evalText(_data));
+          }
+            //alert(JSON.stringify(ret))
+        },
+        error:function (ret) {
+          api.hideProgress();
+            alert(JSON.stringify(ret))
+        },
+    })
+
+
+}
+
+
+function closeWin(){
+  api.closeWin({
+  });
+}
+
+</script>
+
+
+<body>
+
+  <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt;position:fixed" id="aui-header" onclick="setItems()">
+      <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;">交易记录</div>
+
+  </header>
+
+  <header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+      <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">交易记录</div>
+      <!-- <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="saveImageClip()">
+          <h3 style="color:#6d7cd9;padding-right: 10px;">确定</h3>
+      </div> -->
+  </header>
+
+    <div id="insert" style="padding-top:45px">
+
+
+    <!-- <section style="padding-top:15px;">
+        <div class="aui-card-list" style="border-radius: 0;">
+            <div class="aui-card-list-header">
+                <div >
+                    <font style="font-size:20px">本月</font>
+                    <font style="color:red">总收入10元</font>&nbsp;&nbsp;
+                    <font>收入10元</font>
+                </div>
+            </div>
+
+            <div class="aui-card-list-content">
+                <ul class="aui-list aui-media-list" style="border-top:0px">
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="padding-right: 0px;width: 60px;padding-top: 20px;padding-bottom: 20px;">
+                                <img style="height:48px;width:48px" src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-16" >我是一只大橙子</div>
+                                    <div class="aui-list-item-right aui-font-size-16" style="color:red">-10.0</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14" style="color:#8e8e8e">UI问题优秀回答者</div>
+                                    <div class="aui-list-item-right ">11-14</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="padding-right: 0px;width: 60px;">
+                                <img style="height:48px;width:48px" src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">我是一只大橙子</div>
+                                    <div class="aui-list-item-right" style="color:red">-10.0</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">UI问题优秀回答者</div>
+                                    <div class="aui-list-item-right">11-14</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <section style="padding-top:0px;">
+        <div class="aui-card-list" style="border-radius: 0;">
+            <div class="aui-card-list-header">
+                <div >
+                    <font style="font-size:20px">本月</font>
+                    <font style="color:red">总收入10元</font>&nbsp;&nbsp;
+                    <font>收入10元</font>
+                </div>
+            </div>
+
+            <div class="aui-card-list-content">
+                <ul class="aui-list aui-media-list" style="border-top:0px">
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="padding-right: 0px;width: 60px;">
+                                <img style="height:48px;width:48px" src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14" style="color:#8e8e8e">我是一只大橙子</div>
+                                    <div class="aui-list-item-right">-10.0</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">UI问题优秀回答者</div>
+                                    <div class="aui-list-item-right">11-14</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="aui-list-item aui-list-item-middle">
+                        <div class="aui-media-list-item-inner">
+                            <div class="aui-list-item-media" style="padding-right: 0px;width: 60px;">
+                                <img style="height:48px;width:48px" src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                            </div>
+                            <div class="aui-list-item-inner ">
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">我是一只大橙子</div>
+                                    <div class="aui-list-item-right">-10.0</div>
+                                </div>
+                                <div class="aui-list-item-text">
+                                    <div class="aui-list-item-title aui-font-size-14">UI问题优秀回答者</div>
+                                    <div class="aui-list-item-right">11-14</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </section> -->
+
+
+
+
+    </div>
+
+    <div id="category-goods">
+
+
+    </div>
+
+
+
+</body>
+
+
+</html>
+
+
+<!-- 必须加上type="text/x-dot-template" -->
+<script id="category-goods-tmpl" type="text/x-dot-template">
+
+{{~it:item:index}}
+<section style="">
+        <div class="aui-card-list" style="border-radius: 0;margin-bottom: 0.25rem;">
+
+        <div class="aui-card-list-header">
+            <div >
+                <font style="font-size:20px">本月</font>
+                <font style="color:red">{{= index }}</font>&nbsp;&nbsp;
+                <font>收入10元</font>
+            </div>
+        </div>
+
+        <div class="aui-card-list-content">
+            <ul class="aui-list aui-media-list" style="border-top:0px">
+
+                 {{~it[index].H:item:j}}
+
+                 <li class="aui-list-item aui-list-item-middle">
+                     <div class="aui-media-list-item-inner">
+                         <div class="aui-list-item-media" style="padding-right: 0px;width: 60px;padding-top: 20px;padding-bottom: 20px;">
+                             <img style="height:48px;width:48px" src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                         </div>
+                         <div class="aui-list-item-inner ">
+                             <div class="aui-list-item-text">
+                                 <div class="aui-list-item-title aui-font-size-16" >{{= item.username }}</div>
+                                 <div class="aui-list-item-right aui-font-size-20" style="color:red">-10.0</div>
+                             </div>
+                             <div class="aui-list-item-text">
+                                 <div class="aui-list-item-title aui-font-size-14" style="color:#8e8e8e">{{= item.descible }}</div>
+                                 <div class="aui-list-item-right ">11-14</div>
+                             </div>
+                         </div>
+                     </div>
+                 </li>
+
+
+                {{~}}
+
+            </ul>
+        </div>
+    </div>
+</section>
+{{~}}
+
+</script>

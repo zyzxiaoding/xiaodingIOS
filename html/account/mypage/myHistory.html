@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>自己的主页</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/api.css"/> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/style.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+    <script type="text/javascript" src="../../../script/api.js"></script>
+
+    <style>
+
+        /*html,body {
+        height: 100%;
+        background-color: #f0f0f0;
+        }*/
+
+        header{
+            height: 40px;
+            width: auto;
+            background-color: white;
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            -webkit-box-align: center;
+            display: flex;
+        }
+
+        html,body,header{
+            border-radius:30px 30px 0px 0px;
+            background-color: transparent !important;
+        }
+
+
+        div.active{
+            color: #0006ff;
+            padding-bottom:1px;
+             border-bottom:4px;
+             solid #f00;
+             border-bottom: 5px solid #0081EF;
+
+            width:fit-content;
+            margin:0 auto;
+
+        }
+
+
+    </style>
+
+</head>
+<!-- <script type="text/javascript" src="../../script/template.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script> -->
+
+<script>
+
+    apiready = function(){
+        funIniGroup();
+    };
+
+
+    function funIniGroup(){
+        api.parseTapmode();
+
+        var body_h = $api.offset($api.dom('#body')).h;
+
+        var frameHeight = api.frameHeight;  // 比如： 504
+        var screenHeight = api.screenHeight;
+        var frameName = api.frameName;  //比如： trans-con
+        console.log(frameName);
+
+
+        console.log(frameHeight);
+        console.log(screenHeight);
+        console.log(startHeight);
+
+        var startHeight=api.pageParam.header_h;
+
+
+        var frames_history = [];
+
+        frames_history.push( {
+            name: 'quesyion',
+            url: 'myHistory_frm0.html',
+            bgColor : 'rgba(0,0,0,.2)',
+            animation:{
+                type:"movein",                //动画类型（详见动画类型常量）
+                subType:"from_bottom",       //动画子类型（详见动画子类型常量）
+                duration:300                //动画过渡时间，默认300毫秒
+            },
+            bounces:false      //界面是否可以上拉和下拉
+        } )
+        frames_history.push( {
+            name: 'strategy',
+            url: 'myHistory_frm1.html',
+            bgColor : 'rgba(0,0,0,.2)',
+            bounces:false
+        } )
+        frames_history.push( {
+            name: 'resource',
+            url: 'myHistory_frm2.html',
+            bgColor : 'rgba(0,0,0,.2)',
+            bounces:true
+        } )
+
+
+        api.openFrameGroup({
+            name: 'history',
+            scrollEnabled: true,
+            rect: {
+                x: 0,
+                y: startHeight+body_h,
+                w: 'auto',
+                h: 'auto'
+            },
+
+            index: 0,
+            frames: frames_history
+        }, function (ret, err) {
+            var index = ret.index;
+            var tag=index;
+
+            var eHeaderLis = $api.domAll('header li ');
+            var list0=$api.dom('#list0');
+            var list1=$api.dom('#list1');
+            var list2=$api.dom('#list2');
+
+            $api.removeCls(list0, 'active');
+            $api.removeCls(list1, 'active');
+            $api.removeCls(list2, 'active');
+
+            if(tag==0) $api.addCls( list0, 'active');
+            if(tag==1) $api.addCls( list1, 'active');
+            if(tag==2) $api.addCls( list2, 'active');
+            //switchBtn(index);
+
+        });
+    }
+
+    function switchBtn(tag) {
+        // if( tag == $api.dom('#nav li div.active') )return;
+        console.log(tag);
+        var eHeaderLis = $api.domAll('header li ');
+        var list0=$api.dom('#list0');
+        var list1=$api.dom('#list1');
+        var list2=$api.dom('#list2');
+
+        $api.removeCls(list0, 'active');
+        $api.removeCls(list1, 'active');
+        $api.removeCls(list2, 'active');
+
+        if(tag==0) $api.addCls( list0, 'active');
+        if(tag==1) $api.addCls( list1, 'active');
+        if(tag==2) $api.addCls( list2, 'active');
+        api.setFrameGroupIndex({
+            name: 'history',
+            index: tag
+        });
+    }
+</script>
+
+<body id="body" style="height:100%">
+    <header class="aui-row" style="align-items: center;text-align: center;background-color:white !important"  >
+
+        <div onclick="switchBtn(0);" class="aui-col-xs-4" class="active" id="list0">问答</div>
+        <div onclick="switchBtn(1);" class="aui-col-xs-4" id="list1">攻略</div>
+        <div onclick="switchBtn(2);" class="aui-col-xs-4" id="list2">资源</div>
+    </header>
+
+    <!-- <header class="header" id="header" style="text-align: center;">
+
+        <div  class="backicon" style="position: absolute;"></div>
+
+        <div id="nav" class="nav" style="width:70%; margin: 0 auto">
+            <ul class="aui-row" >
+                <li tapmode="hover" onclick="switchBtn(0);" class="aui-col-xs-4 flex-con"><div class="active" id="list0">问答</div></li>
+                <li tapmode="hover" onclick="switchBtn(1);" class="aui-col-xs-4 flex-con" ><div  id="list1">攻略</div></li>
+                <li tapmode="hover" onclick="switchBtn(2);" class="aui-col-xs-4 flex-con" ><div  id="list2">资源</div></li>
+            </ul>
+        </div>
+    </header> -->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,1129 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航1</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <style>
+        .flex-con{
+          overflow: scroll;
+        }
+        .fixed_bottom {
+           position:fixed;
+           left:0px;
+           bottom:0px;
+           width:100%;
+           height:50px;
+           z-index:10;
+        }
+        .fixed_top {
+           position:fixed;
+           left:0px;
+           top:0px;
+           width:100%;
+           height:50px;
+           z-index:10;
+        }
+        /*.header-box {
+          position: relative;
+          width: 100%;
+          height: 50px;
+          background-color: #ffffff
+        }*/
+        header {
+          position: relative;
+          width: 100%;
+          height: 50px;
+          background-color: #ffffff;
+          z-index: 10;
+
+        }
+        header .left {
+          position: absolute;
+          top: 15px;
+          width: 21.5px;
+          height: 15.5px;
+          left: 4%;
+          background-image: url(../icon/back.png);
+          background-size: 21.5px 15.5px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+        header .center {
+          position: absolute;
+          width: 70%;
+          height: 100%;
+          right: 55px;
+        }
+        header .right {
+          /*border: 1px solid red;*/
+          position: absolute;
+          top: 10px;
+          width: 40px;
+          height: 25px;
+          right: 0px;
+          background-image: url(../icon/more.png);
+          background-size: 5px 19px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+
+        .question_box {
+          position: relative;
+          width: 100%;
+          height: auto;
+        }
+        .title {
+          position: relative;
+          width: 100%;
+          height: auto;
+          bottom: auto;
+          padding-left: 6.4%;
+          padding-top: 15%;
+          padding-right: 24px;
+          box-sizing: border-box;
+          font-size: 20px; color: #000000; text-align: left;
+          font-weight: bold;
+        }
+        .title_img {
+          /*position: absolute;*/
+          width: 15px;
+          height: 15px;
+          right: 0;
+          margin-top: 5px;
+          margin-right: 7px;
+          background-image: url(../icon/yijiejue.png);
+          background-size: 15px 15px;
+          background-position: bottom left;
+          background-repeat: no-repeat;
+          float: left;
+          }
+          .answer_img {
+            /*position: absolute;*/
+            width: 100px;
+            height: 15px;
+            right: 0;
+            margin-top: 5px;
+            margin-right: 8px;
+            background-image: url(../icon/yijiejue.png);
+            background-size: 15px 15px;
+            background-position: bottom left;
+            background-repeat: no-repeat;
+            font-size: 14px; color: #6d7cd9; text-align: left;
+            line-height: 15px;
+            text-indent: 15px;
+            float: right;
+            margin-left: 5px;
+            }
+        .tag {
+          /*border-bottom: 1px solid #d3d2d2;*/
+          position: relative;
+          width: 60%;
+          height: 12px;
+          bottom: auto;
+          padding-left: 24px;
+          padding-top: 6px;
+          box-sizing: border-box;
+          font-size: 15px; color: #6d7cd9; text-align: left;
+          float:left;
+        }
+        .description {
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 90%;
+          margin-left: 6.4%;
+          height: auto;
+          bottom: auto;
+          margin-top: 3px;
+          box-sizing: border-box;
+          /*border-bottom: 1px solid rgba(0,0,0,0.1);*/
+          /*border: 1px solid transparent;
+          border-color: transparent;
+           border-color: rgba(0,0,0,0);*/
+        }
+        .description_word {
+          /*border: 1px solid red;*/
+					position: relative;
+          width: 100%;
+          height: auto;
+          min-height: 20px;
+          font-size: 17px; color: #000; text-align: left;
+        }
+        .description_img {
+          /*border: 1px solid red;*/
+          /*border: 1px solid blue;*/
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+        }
+
+        .show_all {
+          /*float: left;*/
+          position: relative;
+          width: auto;
+          height: auto;
+          font-size: 16px; color: #6d7cd9;text-align: right;
+          margin-top: -15px;
+          /*padding-bottom: 16px;*/
+        }
+        .show_less {
+          position: relative;
+          width: auto;
+          height: auto;
+          font-size: 16px; color: #6d7cd9;text-align: right;
+        }
+
+        nav {
+          position: relative;
+          width: 90%;
+          margin: auto;
+          height: 20px;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          /*box-sizing: border-box;*/
+        }
+        .menu-catas_a {
+          /*border: 1px solid red ;*/
+          width: 33%;
+          height: 20px;
+          font-size: 15px; color: #000; text-align: center;
+          /*text-align: 23px;*/
+          float: left;
+          margin-bottom: 0px;
+          /*border-right:1px solid #d3d2d2;*/
+        }
+
+        .menu-catas {
+          width: 33%;
+          height: 20px;
+          font-size: 15px; color: #000; text-align: center;
+          /*text-align: 23px;*/
+          float: left;
+        }
+
+        .content-imag div {
+            width: 100%;
+            margin-top: 5%;
+            border-radius: 0px;
+            margin-left: 0px;
+            position: relative;
+        }
+
+        .content-imag figure {
+            /*border: 1px solid red;*/
+            position: relative;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            margin: 0;
+            padding-bottom: 60%;
+            /* 关键就在这里 */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 1;
+        }
+
+        .reward-box {
+          position: relative;
+          width: 25%;
+          height: 32px;
+          margin: 0 auto;
+          float: left;
+          margin-left: 15%;
+        }
+         .reward {
+          position: relative;
+          left: 0%;
+          width: 100%;
+          height: 30px;
+        }
+
+        .reward-logo {
+          /*border: 1px solid red;*/
+        	position: relative;
+        	width: 85%;
+					height: 100%;
+					background-image: url(../icon/award.png);
+          background-size: 14px 14px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: left;
+          line-height: 32px;
+          text-indent: 10px;
+					font-size: 14.5px; color: #000; text-align: center;
+        }
+
+
+        #little-window ul li {
+          width: 100%;
+          height:50px;
+          font-size: 16px; color: #000; text-align: center;
+          line-height: 50px;
+        }
+        .little-window {
+          /*border: 1px solid red;*/
+          position: fixed;
+          right: 24px;
+          top: 50px;
+          height: 150px;
+          width: 113.5px;
+          background-color: #fff;
+          font-size: 16px;color: #000; text-align: center;
+          z-index: 10;
+          box-shadow:  #efefef  2px 2px 2px 2px;
+        }
+
+        .button {
+          margin-top: 0px;
+          width: 100%;
+          height: 40px;
+          color: white;
+          background: #fff;  //默认的颜色
+          border-radius: 0px;
+        }
+
+
+  .button:active {
+          width: 100%;
+          height: 40px;
+          color: white;
+          border-radius: 0px;
+          background: #cbcbcb;
+          opacity: 0.5;
+  }
+
+
+        .question_info {
+          position: relative;
+          width: 100%;
+          height: auto;
+        }
+
+        .answer {
+          position: relative;
+          width: 100%;
+          height: auto;
+          background-color: #fff;
+          margin-top: 10px;
+        }
+        .answer-box {
+          width: 90%;
+          height: auto;
+          padding-bottom: 10px;
+          margin-top: 10px;
+          margin-left: 5%;
+          /*padding-right: auto;*/
+          /*border-bottom: 1px solid #d3d2d2;*/
+
+        }
+        .answer-box-left {
+          width: 9%;
+          height: auto;
+          float: left;
+        }
+        .answer-box-left .answer-user-imag {
+          width: 30px;
+          height: 30px;
+        }
+        .answer-user-imag img {
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+        }
+        .answer-box-right {
+          width: 88%;
+          height: auto;
+          float: left;
+        }
+        .answer-user-name {
+          margin-top: 5px;
+          width: auto;
+          height: 16px;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+          padding-left: 8px;
+          float: left;
+
+        }
+        .answer-user-comment {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #000; text-align: left;
+          padding-top: 15px;
+          padding-left: 8px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          word-break:break-all;
+        }
+
+        .interactive-box {
+          margin-top: 5px;
+          width: auto;
+          height: 16px;
+          /*margin-left: 43%;*/
+          float: right;
+        }
+        .approve-logo {
+          width: 32px;
+          height: 16px;
+          float: left;
+          line-height: 21.5px;
+          letter-spacing:3px;
+        }
+        .comment-logo {
+          width: 64px;
+          height: 21.5px;
+          float: left;
+          background-image: url(../icon/message.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          float: left;
+        }
+
+
+        .question_info {
+          position: relative;
+          width: 100%;
+          height: auto;
+        }
+
+        .maginline {
+          width: 100%;
+    			height: 4px;
+    			background-color: #000;
+    			opacity: 0.03;
+        }
+        .maginline2 {
+          width: 100%;
+          height: 4px;
+          margin-left: 0%;
+          background-color: #000;
+          opacity: 0.03;
+        }
+        .disabled {
+          pointer-events: none;
+         }
+
+    </style>
+</head>
+<body style="background-color: #ffffff;">
+<div id="wrap" >
+    <div id="question_info" class="question_info">
+      <!-- <div class="fixed_top" style="">
+      <header id="header" class="" style="">
+        <div class="left"tapmode onclick="back()"></div>
+        <div class="center" onclick="closelitwindow()"></div>
+        <div class="right"tapmode onclick="little_window()" ></div>
+      </header>
+      </div> -->
+
+      <header class="aui-bar aui-bar-nav" style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+            <a class="aui-btn aui-pull-left"  tapmode onclick="back();">
+                <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+            </a>
+            <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;" onclick="closelitwindow()"></div>
+            <div class="right"tapmode onclick="little_window()" ></div>
+        </header>
+
+      <div id='little-window' class="little-window" style="display:none">
+        <ul>
+          <li class="button" tapmode onclick="yaoqing()">邀请回答</li>
+          <li class="button" >分享</li>
+          <li id="alti" class="button" tapmode onclick="report()">举报</li>
+        </ul>
+      </div>
+      <div class="question_box" tapmode onclick="closelitwindow()" style="">
+        <div id = "title" class="title" tapmode>
+
+        </div>
+        <div id="tag"  class="tag" tapmode  >
+           ·  ·
+        </div>
+        <div class="reward-box">
+          <div id="reward" class="reward" onclick="" >
+            <div id="reward-num" class="reward-logo">
+              悬赏0元
+            </div>
+          </div>
+        </div>
+        <div class="description">
+          <div id="description_word" class="description_word"tapmode>
+
+          </div>
+          <ul id="content-imag" class="content-imag" style="padding-bottom:5%;"></ul>
+
+        </div>
+        <div class="maginline2">
+        </div>
+      </div>
+
+    </div>
+    <nav id="nav">
+      <a class="menu-catas_a" onclick="invite()">@大佬</a>
+      <a id="same_question" class="menu-catas_a" onclick="same_question()">+关注</a>
+      <a id="menu-catas" class="menu-catas" onclick="start_answer()">写回答</a>
+    </nav>
+
+    <div class="maginline">
+    </div>
+
+    <div id="answer" class="answer" onclick="closelitwindow()" >
+    </div>
+</div>
+
+
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+var curimg = [];
+var qs_dict;
+var as_dict;
+var as_data;
+var litwindow = $api.dom('#little-window');
+    apiready = function() {
+      if (api.pageParam.from_page == 'edit_answer_win') {
+        api.addEventListener({
+          name: 'keyback'
+        }, function(ret, err){
+          api.openWin({
+              name: 'main',
+              url: '../../main/index.html',
+              pageParam:{
+                  // footer_H:api.pageParam.footer_H,
+                  from_page: 'circle_index'
+              }
+          });
+        });
+      }
+      else if (api.pageParam.from_page == 'interaction') {
+        api.addEventListener({
+          name: 'keyback'
+        }, function(ret, err){
+            api.closeWin();
+        });
+      }
+      // question_box_pos = warp_H + warp_T;
+      var nav = $api.dom("#nav");
+      photoBrowser = api.require('photoBrowser');
+      var qs_id = api.pageParam.question_id;
+      photoBrowser = api.require('photoBrowser');
+      var main = $api.byId('header');
+      var title = $api.byId('title');
+      var tag = $api.byId('tag');
+      var footer = $api.byId('footer');
+
+      var qs_id = api.pageParam.question_id;
+      as_dict = {
+          "app_version":"",
+          "user_id":$api.getStorage('user_id'),
+          "user_cookie":api.pageParam.user_cookie,
+          "type":"homework",
+          "question_id":qs_id,
+          "since_id": 0,
+          "page_size": 20
+      }
+      qs_dict = {
+          "app_version":"",
+          "user_id":$api.getStorage('user_id'),
+          "user_cookie":api.pageParam.user_cookie,
+          "type":"homework",
+          "question_id": qs_id
+      }
+
+      GetQuestion(qs_dict);
+      question_view();
+      GetAnswer(as_dict)
+      show_less();
+    }
+
+    function show_all() {
+      document.getElementById('show_all').style.display='none'
+      $(".description_word").each(function(){
+        str=qs_data.detail+'<div id="show_less" class="show_less" tapmode onclick="show_less()">收起<div style="line-height:16px;float:right">︿</div></div>';  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替
+        $(this).html(str);                   //将替换的值赋值给当前对象
+        });
+    }
+
+    function show_less() {
+      if (document.getElementById('show_less') != null) {
+        document.getElementById('show_less').style.display='none';
+      }
+      $(".description_word").each(function(){
+        var len=$(this).text().length;   //当前HTML对象text的长度
+        if(len>45){
+            var str="";
+            str=$(this).text().substring(0,45)+"..."+'<div id="show_all" class="show_all" tapmode onclick="show_all()">展开问题描述<div style="line-height:25px;float:right">﹀</div></div>';  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替            $(this).html(str);                   //将替换的值赋值给当前对象
+            $(this).html(str);                   //将替换的值赋值给当前对象
+        }
+        });
+    }
+
+    function GetQuestion(json) {
+      $.ajax({
+        type: 'POST',
+        url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+        data:JSON.stringify(json),
+        dataType: 'json',
+        async: false,
+        success:function(result){
+          console.log('问题加载成功')
+          qs_data =  result.data
+          console.log(JSON.stringify(qs_data))
+        },
+        error:function(){
+          console.log('问题加载失败');
+        }
+});
+    }
+
+
+    function create_pic(pic_url,j) {
+      curimg.push(pic_url);
+      var div = document.createElement('div');
+      var fig = document.createElement('figure');
+      fig.style.backgroundImage = "url(" + pic_url + ")";
+      fig.id = j;
+      fig.onclick = function(){fnOpen(this)};
+      div.appendChild(fig);
+      document.getElementById('content-imag').appendChild(div);
+    }
+
+    function fnOpen(target){
+      photoBrowser.open({
+          images: curimg,
+          bgColor: '#000',
+          activeIndex: target.id
+      }, function(ret, err) {
+          if (ret) {
+            api.openFrame({
+              name: 'picturehead1',
+              url: './picturehead1.html',
+              rect: {
+                  x: 0,
+                  y: api.frameHeight*0.05,
+                  w: api.frameWidth,
+                  h: api.frameHeight*0.1
+              },
+              });
+          } else {
+              alert(JSON.stringify(err));
+          }
+      });
+    }
+
+    function start_answer() {
+      console.log(api.pageParam.footer_H)
+      api.closeWin({
+          name: 'edit_answer_win_new'
+      });
+      api.openWin({
+          name: 'edit_answer_win_new',
+          url: './edit_answer_win_new.html',
+          pageParam: {
+              question_id: api.pageParam.question_id,
+              user_id : $api.getStorage('user_id'),
+              user_cookie : api.pageParam.user_cookie,
+              footer_H:api.pageParam.footer_H
+          },
+          bgColor: '#000',
+      });
+      jsFun = '';
+      api.execScript({
+          name: 'edit_answer_win_new',
+          script: jsFun
+      });
+    }
+
+    function same_question() {
+      $.ajax({
+          type: 'POST',
+          // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+          url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+          data:JSON.stringify(qs_dict),
+          dataType: 'json',
+          async: false,
+          success:function(result){
+            change();
+          },
+          error:function(){
+            console.log('关注失败');
+          }
+      });
+    }
+
+    function change() {
+      if (qs_data.is_concerned == true) {
+        $("#same_question").text('+关注')
+        console.log('取消关注成功');
+        api.toast({
+            msg: '取消关注成功',
+            duration: 2000,
+            location: 'bottom'
+        });
+        GetQuestion(qs_dict);
+      }
+      else if (qs_data.is_concerned != true) {
+        $("#same_question").text('取消关注')
+        console.log('同问成功');
+        api.toast({
+            msg: '关注成功',
+            duration: 2000,
+            location: 'bottom'
+        });
+        GetQuestion(qs_dict);
+      }
+    }
+
+    function invite() {
+      api.openWin({
+          name: 'invite_win',
+          url: './invite_win.html',
+          pageParam: {
+            question_id: api.pageParam.question_id,
+            user_id : $api.getStorage('user_id'),
+            user_cookie : api.pageParam.user_cookie
+          },
+          bgColor: '#fff',
+      });
+
+    }
+
+    function back() {
+      if (api.pageParam.from_page == 'edit_answer_win') {
+        api.openWin({
+            name: 'main',
+            url: '../../main/index.html',
+            pageParam:{
+                // footer_H:api.pageParam.footer_H,
+                from_page: 'circle_index'
+            }
+        });
+      }
+      else if (api.pageParam.from_page == 'interaction') {
+        api.closeWin();
+      }
+      else {
+        api.closeWin();
+      }
+    }
+    function show_all() {
+      document.getElementById('show_all').style.display='none'
+      $(".description_word").each(function(){
+        str=qs_data.detail+'<div id="show_less" class="show_less" onclick="show_less()">收起<div style="line-height:16px;float:right">︿</div></div>';  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替
+        $(this).html(str);                   //将替换的值赋值给当前对象
+        });
+    }
+
+    function show_less() {
+      if (document.getElementById('show_less') != null) {
+        document.getElementById('show_less').style.display='none';
+      }
+      $(".description_word").each(function(){
+        var len=$(this).text().length;   //当前HTML对象text的长度
+        if(len>50){
+            var str="";
+            str=$(this).text().substring(0,50)+"..."+'<div id="show_all" class="show_all" onclick="show_all()">展开问题描述<div style="line-height:25px;float:right">﹀</div></div>';  //使用字符串截取，获取前30个字符，多余的字符使用“......”代替            $(this).html(str);                   //将替换的值赋值给当前对象
+            $(this).html(str);                   //将替换的值赋值给当前对象
+        }
+        });
+    }
+
+
+
+    function GetAnswer(json) {
+      $.ajax({
+    type: 'POST',
+    // url: "http://47.105.160.217:80/api/questionAnswer/getAnswer/",
+    url: "http://47.105.160.217:80/api/questionAnswer/getAnswer/",
+    data:JSON.stringify(json),
+    // crossDomain: true,
+    dataType: 'json',
+    async: false,
+    success:function(result){
+      console.log('回答列表加载成功')
+      as_data =  result.data
+      console.log(JSON.stringify(as_data))
+      answer_view();
+      // view_tips(result)
+    },
+    error:function(){
+      console.log('回答列表加载失败');
+    }
+});
+    }
+
+    function question_view() {
+      if (qs_data.author_info.author_id == $api.getStorage('user_id'))
+      {
+        var tmp = document.getElementById('alti');
+        tmp.innerHTML = '删除问题';
+        $(tmp).attr('onclick','delete_question()')
+      }
+      if (qs_data.is_solved == true) {
+        img = document.createElement('div');
+        img.setAttribute('class','title_img');
+        sourceNode = document.getElementById('title')
+        sourceNode.appendChild(img)
+      }
+      document.getElementById('title').innerHTML = document.getElementById('title').innerHTML + qs_data.title;
+
+      // document.getElementById('follow_num').innerHTML = '已有'+qs_data.concern_num+'人关注'
+			var tag_content = '';
+			var tmp = JSON.stringify(qs_data.tag)
+      var reg = new RegExp( '"' , "g" )
+      tmp = tmp.replace(reg,'')
+      // var reg = new RegExp( '\[' , "g" )
+      // tmp.replace(reg,'')
+      // var reg = new RegExp( '\]' , "g" )
+      // tmp.replace(reg,'')
+			// tmp = tmp.replace('"','')
+			// tmp = tmp.replace('"','')
+			tmp = tmp.replace('[','')
+			tmp = tmp.replace(']','')
+			tmp = tmp.split(',')
+      console.log(tmp)
+			for (var i = 0; i<tmp.length; i++) {
+				if (i != tmp.length - 1) {
+					tag_content = tag_content + tmp[i] + ' · ';
+				}
+				else {
+					tag_content = tag_content + tmp[i];
+				}
+			}
+      // console.log(tag_content[tag_content.length-2])
+
+      document.getElementById('tag').innerHTML = tag_content;
+      var description_total = qs_data.detail;
+      var img_url_list = new Array();
+      description_total = description_total.split('^&');
+      if (description_total.length != 1) {  //如果有图片
+        for (var j = 1; j < description_total.length; j++) {
+          img_url_list.push(description_total[j])
+        }
+      }
+      for (var j = 0; j < img_url_list.length; j++) {
+        url = "http://47.105.160.217:80/files/" + img_url_list[j];
+        $.ajax({
+            type: 'GET',
+            url: url,
+            async: false,
+            success:function(result) {
+                console.log('图片加载成功')
+                // console.log(url)
+                create_pic(url)
+            },
+            error:function() {
+                console.log('图片加载失败');
+                }
+            });
+      }
+      document.getElementById('description_word').innerHTML = description_total[0];
+      document.getElementById('reward').childNodes[1].innerHTML = '悬赏'+qs_data.reward+'元';
+      console.log(qs_data.is_concerned)
+      if (qs_data.is_concerned == true) {
+        $('#same_question').text('取消关注')
+      }
+      else {
+        $('#same_question').text('+关注')
+      }
+    }
+
+    function create_pic(pic_url,j) {
+      curimg.push(pic_url);
+      var div = document.createElement('div');
+      var fig = document.createElement('figure');
+      fig.style.backgroundImage = "url(" + pic_url + ")";
+      fig.id = j;
+      fig.onclick = function(){fnOpen(this)};
+      div.appendChild(fig);
+      document.getElementById('content-imag').appendChild(div);
+    }
+
+    function delete_question() {
+      $.ajax({
+          type: 'POST',
+          // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+          url: "http://47.105.160.217:80/api/questionAnswer/deleteQuestion/",
+          data:JSON.stringify(qs_dict),
+          dataType: 'json',
+          async: false,
+          success:function(result){
+            console.log('删除问题成功')
+            api.closeWin({
+                name: 'answer_list'
+            });
+          },
+          error:function(){
+            console.log('删除问题失败');
+          }
+      });
+    }
+
+    function fnOpen(target){
+      photoBrowser.open({
+          images: curimg,
+          bgColor: '#000',
+          activeIndex: target.id
+      }, function(ret, err) {
+          if (ret) {
+            api.openFrame({
+              name: 'picturehead1',
+              url: './picturehead1.html',
+              rect: {
+                  x: 0,
+                  y: api.frameHeight*0.05,
+                  w: api.frameWidth,
+                  h: api.frameHeight*0.1
+              },
+              });
+          } else {
+              alert(JSON.stringify(err));
+          }
+      });
+    }
+
+    function answer_view() {
+      for (var i = 0; i < parseInt(as_data.length); i++) {
+        parentNode = document.getElementById('answer')
+        sourceNode = document.createElement('span');
+        sourceNode.setAttribute('id','answer-'+i);
+        sourceNode.setAttribute('class','answer-box');
+        parentNode.appendChild(sourceNode);
+        childNode1 = document.createElement('div');
+        childNode1.setAttribute('class','answer-box-left');
+        sourceNode.appendChild(childNode1);
+        grandNode = document.createElement('div');
+        grandNode.setAttribute('class','answer-user-imag');
+        childNode1.appendChild(grandNode);
+        imgNode = document.createElement('img');
+        imgNode.src = 'http://47.105.160.217/files/' + as_data[i].author_info.user_profile_url;
+        // console.log(typeof(as_data[i].author_info.author_id))
+        // var tmp = 'c940c5ecf0d8bf93d2117ff7cb465745'
+        // console.log(tmp)
+        // $(imgNode).attr('onclick','enterMainpge(' + toString(tmp) + ')')
+        console.log(as_data[i].author_info.author_id)
+        imgNode.onclick = function () {
+          console.log(as_data[i].author_info.author_id)
+            enterMainpge(as_data[i].author_info.author_id);
+        }
+        grandNode.appendChild(imgNode);
+
+        childNode2 = document.createElement('div');
+        childNode2.setAttribute('class','answer-box-right');
+        sourceNode.appendChild(childNode2);
+        grandNode1 = document.createElement('div');
+        grandNode1.setAttribute('class','answer-user-name');
+        if (as_data[i].is_anonymous == 0) {
+          grandNode1.innerHTML = as_data[i].author_info.author_name;
+        }
+        else {
+          grandNode1.innerHTML = '匿名用户';
+        }
+
+        if (as_data[i].is_approved == true) {
+          img = document.createElement('div');
+          img.setAttribute('class','answer_img');
+          img.innerHTML = '回答已认证'
+          grandNode1.appendChild(img)
+        }
+
+        childNode2.appendChild(grandNode1);
+        grandNode3 = document.createElement('div');
+        grandNode3.setAttribute('class','interactive-box');
+        childNode2.appendChild(grandNode3);
+        interNode1 = document.createElement('div');
+        interNode1.setAttribute('class','iconfont icon-zan approve-logo');
+        interNode1.innerHTML = as_data[i].like_num;
+        grandNode3.appendChild(interNode1);
+        grandNode2 = document.createElement('div');
+        grandNode2.setAttribute('class','answer-user-comment');
+        var this_content = as_data[i].content;
+        // this_content = $('替换!!!').replaceALL('img')
+        grandNode2.innerHTML = this_content;
+        var tmp_text = grandNode2.innerText;
+        grandNode2.innerHTML = tmp_text;
+        childNode2.appendChild(grandNode2);
+        childs = grandNode2.childNodes;
+        var $current = $(grandNode2)
+        $current.find("img").each(function(i){
+          $(this).remove();
+        })
+
+        // grandNode2.removeChild(childs[1])
+        // console.log(grandNode2.innerHTML)
+
+        // console.log(childNode2.childNodes[2].('#myweChat=wwf3550288').length)
+        // console.log(grandNode2.childNodes[0].innerHTML)
+        // console.log(grandNode2.childNodes[1].innerHTML)
+        // console.log(grandNode2.childNodes[2].innerHTML)
+        // console.log(grandNode2.childNodes[3].innerHTML)
+
+      }
+      for (var j=0; j<as_data.length; j++) {
+        tmp = document.getElementById('answer-'+j);
+        tmp1 = as_data[j].answer_id;
+        tmp2 = as_data[j].question_id;
+        as_is_anonymous = as_data[j].is_anonymous;
+        $(tmp.childNodes[1].childNodes[2]).attr('onclick','open_answer_detail('+tmp1+','+tmp2+','+as_is_anonymous+')')
+        $(tmp.childNodes[1].childNodes[2]).attr('tapmode','')
+      }
+
+    }
+
+
+
+
+var litwindow = $api.dom('#little-window');
+
+      function little_window() {
+        var tmp = $api.byId('menu-catas');
+        $api.addCls(tmp, 'disabled');
+        if (litwindow.style.display == "none") {
+          litwindow.style.display = 'block';
+        }
+        else {
+          litwindow.style.display = 'none';
+        }
+      }
+
+
+      function closelitwindow() {
+        var tmp = $api.byId('menu-catas');
+        $api.removeCls(tmp, 'disabled');
+        // $api.removeCls(tmp, 'disabled');
+        // $('#menu-catas').attr("disabled",false);
+        litwindow.style.display = 'none';
+      }
+
+    function change_follow() {
+      var flag;
+      if (document.getElementById('follow_logo').innerHTML == '+关注') {
+        flag = 1; //表示关注动作
+        document.getElementById('follow_logo').innerHTML = '取消关注';
+        $.ajax({
+            type: 'POST',
+            // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+            url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+            data:JSON.stringify(qs_dict),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+              console.log('关注成功')
+              tmp =  result.message
+            },
+            error:function(){
+              console.log('关注失败');
+            }
+        });
+      }
+      else {
+        flag = 0; //表示取消关注动作
+        document.getElementById('follow_logo').innerHTML = '+关注';
+        $.ajax({
+            type: 'POST',
+            url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+            data:JSON.stringify(qs_dict),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+              console.log('取关成功')
+              tmp =  result.message
+            },
+            error:function(){
+              console.log('取关失败');
+            }
+        });
+      }
+
+    }
+
+    function enterMainpge(id) {
+        api.openWin({
+            name:'mainPage'+id,
+            url:'../../account/otherpage/otherFragment_frm.html',
+            pageParam:{
+                uid:id
+            }
+        })
+    }
+
+    function open_answer_detail(as_id,qs_id,as_is_anonymous) {
+      api.openWin({
+          name: 'hobby_question_detail',
+          url: './hobby_question_detail.html',
+          pageParam: {
+            question_id: qs_id,
+            answer_id: as_id,
+            is_anonymous:as_is_anonymous,
+            user_id:$api.getStorage('user_id'),
+            user_cookie:$api.getStorage('user_id')
+          }
+      });
+    }
+
+    function edit_answer() {
+      api.openWin({
+          name: 'edit_answer_win',
+          url: './edit_answer_win.html',
+          pageParam: {
+              question_id: api.pageParam.question_id,
+              user_id:$api.getStorage('user_id'),
+              user_cookie:api.pageParam.user_cookie
+          }
+      });
+
+    }
+
+    function yaoqing() {
+      closelitwindow();
+      api.openWin({
+          name: 'invite_win',
+          url: './invite_win.html',
+          pageParam: {
+            question_id: api.pageParam.question_id,
+            user_id:$api.getStorage('user_id'),
+            user_cookie:api.pageParam.user_cookie
+          }
+      })
+    }
+
+    function report() {
+
+      api.openWin({
+          name: 'report_win',
+          url: './report_win.html',
+          animation: {
+            type: 'none'
+          },
+          pageParam: {
+              question_id: api.pageParam.question_id,
+              user_id:$api.getStorage('user_id'),
+              user_cookie:api.pageParam.user_cookie,
+              from_page:'answer_list',
+              report_type: 'QUESTION'
+          }
+      });
+
+
+      closelitwindow();
+    }
+
+</script>

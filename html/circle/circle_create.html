@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+    <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+        <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+    </a>
+    <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">创建圈子</div>
+    <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="openTagChoosing()">
+        <h3 style="color:#6d7cd9;padding-right: 10px;" >完成</h3>
+    </div>
+</header>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+        var header = $api.byId('aui-header');
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+        api.openFrame({
+            name: 'circle_create_frm',
+            url: 'circle_create_frm.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: 'auto'
+            }
+        })
+
+
+    };
+
+    var jsfun = 'circleApplyCreate();'
+    function openTagChoosing() {
+       api.execScript({
+           frameName:'circle_create_frm',
+           script:jsfun
+       })
+    }
+    function closeWin(){
+        api.closeWin({
+        });
+    }
+</script>
+</html>

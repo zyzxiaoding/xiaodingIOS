@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../QandA/css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../QandA/css/style1.css"/>
+    <style>
+        html,
+        body {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+            height: 100%;
+            background-color: transparent;
+        }
+
+        section {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            overflow: auto;
+        }
+
+        footer {
+            width: 30%;
+            margin-left: 65%;
+            height: auto;
+            margin-top:10%;
+            background-color: #fff;
+            border-radius: 8px 8px 8px 8px;
+        }
+
+        .tips {
+            width: 100%;
+            height: 50px;
+            font-size: 16px; color: #000; text-align: center;
+
+        }
+    </style>
+</head>
+<body>
+<!-- <div id="dialog">
+    <img id="erweima" src="../image/myerweima.png" tapmode onclick="api.closeFrame()"/>
+</div> -->
+<section tapmode  onclick="closeUIchat()">
+<footer>
+    <div class="tips" style="  line-height:60px;" tapmode onclick="report_circle()">举报</div>
+    <div class="tips"style="  line-height:40px" tapmode onclick="share_circle()">分享</div>
+</footer>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<!-- <script type="text/javascript" src="../script/zepto.min.js"></script> -->
+<script type="text/javascript">
+
+    apiready = function(){
+
+    };
+    function closeUIchat() {
+        api.closeFrame();
+    }
+    function share_circle() {
+        api.closeFrame();
+    }
+    function report_circle() {
+      api.openWin({
+        url:'report_win.html',
+        name:'report_win',
+        pageParam:{
+          r_id: 1,
+          user_cookie:'',
+          report_type: 'circle'
+        }
+      });
+
+        api.closeFrame();
+    }
+
+</script>
+</html>

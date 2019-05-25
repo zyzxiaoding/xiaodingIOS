@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.mobile-1.4.5.css"/>
+    <style>
+        header{ background-color: #f2f2f2; }
+        header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+        header ul li.active{ display: block; }
+        .flex-con{
+          overflow: scroll;
+        }
+        .fixed_bottom {
+           position:fixed;
+           left:0px;
+           bottom:0px;
+           width:100%;
+           height:50px;
+           z-index:10;
+        }
+
+
+        .title {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 90%;
+          height: auto;
+          bottom: auto;
+          padding-top: 10px;
+          padding-left: 5%;
+          box-sizing: border-box;
+          font-size: 14px; color: #000000; text-align: left;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+        .tag {
+          /*border-bottom: 1px solid #d3d2d2;*/
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 90%;
+          height: 17px;
+          bottom: auto;
+          padding-top: 5px;
+          padding-left: 5%;
+          box-sizing: border-box;
+          font-size: 12px; color: #917dcf; text-align: left;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+        }
+        .description {
+          /*border: 1px solid blue;*/
+          width: 100%;
+          height: auto;
+          font-size: 16px; color: #8e8e8e; text-align: left;
+          padding-top: 20px;
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+        .interactive-box {
+          width: 100%;
+          height: 40px;
+          padding-top: 20px;
+        }
+        .approve-logo {
+          width: 32px;
+          height: 21.5px;
+          background-image: url(../icon/approve.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          font-size: 8px;color: #fff;text-align: right;
+          float: right;
+        }
+        .comment-logo {
+          width: 32px;
+          height: 21.5px;
+          background-image: url(../icon/message.png);
+          background-size: 15px 15px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          line-height: 21.5px;
+          font-size: 8px;color: #fff;text-align: right;
+          float: right;
+        }
+        .more-logo {
+          width: 32px;
+          height: 16.5px;
+          margin-right: 10px;
+          float: left;
+          background-image: url(../icon/more1.png);
+          background-size: 24px 5px;
+          background-position: left center;
+          background-repeat: no-repeat;
+          text-align: center;
+          color: #fff;
+          float: right;
+        }
+
+        .guide {
+          position: fixed;
+          width: 100%;
+          height: 32px;
+          border-bottom: 1px solid #d3d2d2;
+          background-color: #fff;
+          z-index:10;
+
+        }
+        .guide-box {
+          position: relative;
+          width: 100%;
+          height: 32px;
+          background-color: #ffffff;
+        }
+
+        .content {
+          width: 100%;
+          height: auto;
+          padding-top: 15px;
+          padding-left: 0%;
+        }
+
+        .content-box {
+          position: relative;
+          width: 43%;
+          height: 180px;
+          margin-right: auto;
+          margin-bottom: 15px;
+          box-shadow: 0 6px 20px #D7D7D7;
+          margin-left: 4%;
+          float: left;
+          border-radius: 5px;
+        }
+
+        .image_title {
+          position: relative;
+          width: 100%;
+          height: 100px;
+          top: 0;
+          left: 0;
+          background-image: url(../image/eg_tulip.jpg);
+          background-size: 100% 100%;
+          background-position: center center;
+          background-repeat: no-repeat;
+          text-align: center;
+          border-radius: 5px;
+
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+
+    <div class="content" id="main">
+      <div class="content-box">
+        <div class="image_title">
+          <div class="approve-logo">120</div>
+          <div class="comment-logo">120</div>
+        </div>
+        <div id = "title" class="title"  onclick="">现在的年轻人吃不了苦吗？现在的年轻
+        </div>
+        <div id="tag"  class="tag"  onclick="">
+          摄影摄影 · 旅游旅游 · 体验体验
+        </div>
+      </div>
+
+      <div class="content-box">
+        <div class="image_title">
+          <div class="approve-logo">120</div>
+          <div class="comment-logo">120</div>
+        </div>
+        <div id = "title" class="title"  onclick="">
+        现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？
+        </div>
+        <div id="tag"  class="tag"  onclick="">
+          摄影 · 旅游 · 体验
+        </div>
+      </div>
+
+      <div class="content-box">
+        <div class="image_title">
+          <div class="approve-logo">120</div>
+          <div class="comment-logo">120</div>
+        </div>
+        <div id = "title" class="title"  onclick="">
+        现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？
+        </div>
+        <div id="tag"  class="tag"  onclick="">
+          摄影 · 旅游 · 体验
+        </div>
+      </div>
+
+      <div class="content-box">
+        <div class="image_title">
+          <div class="approve-logo">120</div>
+          <div class="comment-logo">120</div>
+        </div>
+        <div id = "title" class="title"  onclick="">
+        现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？
+        </div>
+        <div id="tag"  class="tag"  onclick="">
+          摄影 · 旅游 · 体验
+        </div>
+      </div>
+
+      <div class="content-box">
+        <div class="image_title">
+          <div class="approve-logo">120</div>
+          <div class="comment-logo">120</div>
+        </div>
+        <div id = "title" class="title"  onclick="">
+        现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？现在的年轻人吃不了苦吗？
+        </div>
+        <div id="tag"  class="tag"  onclick="">
+          摄影 · 旅游 · 体验
+        </div>
+      </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../script/jquery.mobile-1.4.5.js"></script>
+<script type="text/javascript">
+
+$("#more-logo").click(function(){
+  // $('#myPop').attr('data-arrow','b')
+  $('#jubao').text('举报')
+  // $('#myPop').html('举报')
+  // $('#myPop').val('举报')
+})
+
+
+</script>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/dropload.css"/>
+    <style>
+    html,
+    body {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        height: 100%;
+        background-color: transparent;
+    }
+
+    section {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        overflow: auto;
+    }
+
+    footer {
+        width: 100%;
+        height: 85%;
+        background-color: #fff;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        border-radius: 14px 14px 0 0;
+    }
+    .total {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .top-box {
+       position: relative;
+       width: 100%;
+       height:50px;
+
+    }
+    .top-fixed {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      z-index: 10;
+    }
+    .left {
+      position: absolute;
+      left:0px;
+      bottom: 0px;
+      width:100px;
+      height: 50px;
+      font-size: 16px; color: #000; text-align: center;
+      line-height: 50px;
+    }
+    .right {
+      position: absolute;
+      right: 0px;
+      width:50px;
+      height: 50px;
+      font-size: 16px; color: #000; text-align: center;
+      line-height: 50px;
+    }
+
+
+    .comment {
+      /*border-top: 1px solid #d3d2d2;*/
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 80%;
+      background-color: #fff;
+      overflow-y:scroll;
+      /*padding-right: 24px;*/
+    }
+    .comment .comment-box {
+      /*border: 1px solid red;*/
+      width: 100%;
+      height: auto;
+      padding-top: 36px
+    }
+    .comment-box .comment-box-left {
+      width: 36px;
+      height: auto;
+      float: left;
+      padding-left: 24px;
+    }
+    .comment-box-left .comment-user-imag {
+      width: 36px;
+      height: 36px;
+    }
+    .comment-user-imag img {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+    }
+    .comment-box-right {
+      /*border: 1px solid blue;*/
+      width: 239px;
+      height: auto;
+      float: left;
+    }
+    .comment-user-name {
+      width: auto;
+      height: 16px;
+      font-size: 16px; color: #000000; text-align: left;
+      padding-left: 8px
+    }
+    .comment-user-data {
+      width: auto;
+      height: 14px;
+      font-size: 14px; color: #8e8e8e; text-align: left;
+      padding-top: 10px;
+      padding-left: 8px
+    }
+    .comment-user-comment {
+      /*border: 1px solid red;*/
+      width: 100%;
+      height: auto;
+      font-size: 16px; color: #8e8e8e; text-align: left;
+      padding-top: 15px;
+      padding-left: 8px
+    }
+    .comment-approve {
+      /*border: 1px solid red;*/
+      width: 54px;
+      height: 21.5px;
+      float: left;
+      padding-left: 6px;
+      background-image: url(../icon/approve.png);
+      background-size: 21.5px 21.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      text-align: right;
+      line-height: 21.5px;
+    }
+    span div.selected {
+      background-image: url(../icon/agreechousen.png);
+    }
+
+    .input-comment {
+      /*border-top: 1px solid #d3d2d2;*/
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 10%;
+      background-color: #fff;
+      /*padding-right: 24px;*/
+    }
+
+
+
+    </style>
+</head>
+<body>
+	<!-- <div id="dialog">
+		<img id="erweima" src="../image/myerweima.png" tapmode onclick="api.closeFrame()"/>
+	</div> -->
+  <section tapmode  onclick="closeUIchat()"></section>
+  <footer>
+    <div class="total">
+    <div class="top-box">
+      <div class="top-fixed">
+      <div id='comment-num' class="left">
+
+      </div>
+      <div class="right" onclick="closeUIchat()">X</div>
+      </div>
+    </div>
+
+    <div id='comment' class="comment">
+      <span id='comment-box-0' class="comment-box">
+
+        <div class="comment-box-left">
+        <div class="comment-user-imag">
+          <img src="../image/09-014416_603.jpg" alt="">
+        </div>
+        </div>
+
+        <div class="comment-box-right">
+        <div id="comment-user-name" class="comment-user-name">
+
+        </div>
+        <div class="comment-user-data">
+
+        </div>
+        <div class="comment-user-comment">
+
+        </div>
+      </div>
+      <div id="ff1" class="comment-approve" onclick="click_approve( this )" >
+        12
+      </div>
+    </span>
+
+</div>
+    <div class="input-comment">
+
+    </div>
+</div>
+  </footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+var UIChatBox;
+var skip = 0;		//页码
+var limit = 10;		//每页条数
+var datas = new Array(); //页面数据存储的数组
+var comm_num = 11 ;
+
+
+	apiready = function(){
+    UIChatBox = api.require("UIChatBox");
+    UIChatBox.open();
+		fnInitData();
+		fnInitEvent();
+
+		var json_dict = {
+		"app_version":"",
+		"user_id":"",
+		"user_cookie":"",
+		"question_id":123,
+		"answer_id":123,
+		"since_id": 0,
+		"page_size": 10
+	};
+
+		$.ajax({
+			type: "post",
+			url: "../questionAnswer/getComment/",
+				dataType : "json",
+				data: JSON.stringify(json_dict),
+				success: function (d) {
+				console.log(d);
+			}
+		});
+
+		var comment_num = $api.byId('comment-num');
+		$api.text(comment_num, comm_num + '评论');
+
+	};
+
+	function fnInitData(){
+		//请求参数
+		var ajaxValues = {
+			where:{},
+		skip:skip,
+		limit:limit,
+		order:"createdAt DESC"
+		};
+		// 加载loading
+		api.showProgress({
+		title:"获取数据中...",
+		text: '请稍等...'
+			});
+	//api.ajax
+		api.ajax({
+				url:'https://d.apicloud.com/mcm/api/timeline',
+				headers:{
+			"X-APICloud-AppId":"A6078991134970",
+			"X-APICloud-AppKey":"bb3d0326284e1306de46d29c928e9fa8632d156c.1523672167637"
+		},
+		data:{
+			values:{
+				filter:JSON.stringify(ajaxValues)
+			}
+		},
+		dataType:"json",
+		method:"get",
+			},function(ret,err){
+				//取消loading
+				api.hideProgress();
+				if(ret){
+					//把请求到的数据遍历添加进页面数据的数组
+					if(ret.length > 0){
+						for (var i = 0,len = ret.length; i < len ; i++) {
+							datas.push(ret[i]);
+						};
+						//调用页面渲染的方法
+						fnInitView(datas);
+					}else{
+						api.toast({msg:'没数据了，别拽了'});
+						skip-=1;
+					};
+					console.log("第"+(skip+1).toString()+"页");
+				}else{
+					alert("交互失败");
+				};
+			});
+	};
+
+	/**
+	 * 渲染页面布局
+	 *
+	 * @param {Array} data
+	 */
+	function fnInitView(data){
+
+		//声明容器 并置空
+		var box = document.getElementById("comment");
+		//box.innerHTML = "";
+		//遍历页面数据的数组进行创建标签,插入容器
+		var sourceNode = document.getElementById("comment-box-0"); // 获得被克隆的节点对象
+		for (var i = 1;i < data.length ; i++) {
+			var clonedNode = sourceNode.cloneNode(true); // 克隆节点
+			clonedNode.setAttribute("id", "comment-box-" + i); // 修改一下id 值，避免id 重复
+			sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+		};
+
+		var name = new Array();
+		var data = new Array();
+		var content = new Array();
+		var approve_num = new Array();
+
+		for (var i=0;i<data.length;i++) {
+			name[i] = '小红'+i;
+			data[i] = '2011-01-01' + '第' + i;
+			content[i] = i+'我是内容我是内容我是内容我是内容我是内容'
+			approve_num[i] = i;
+		}
+
+		for (var j = 0; j < data.length; j++) {
+			var tmpNode = document.getElementById('comment-box-'+ j).childNodes;
+			tmpNode[3].childNodes[1].innerHTML = name[j];
+			tmpNode[3].childNodes[3].innerHTML = data[j];
+			tmpNode[3].childNodes[5].innerHTML = content[j];
+			tmpNode[5].innerHTML = approve_num[j];
+		}
+	};
+
+
+	/**
+	 * 初始化页面监听事件
+	 */
+	function fnInitEvent(){
+		/**上拉加载 */
+		api.addEventListener({
+			name:'scrolltobottom',
+			extra:{
+					threshold:10
+			}
+	}, function(ret, err){
+		//页码+1，继续请求数据
+		skip+=1;
+		fnInitData();
+	});
+	};
+
+
+  function closeUIchat() {
+    UIChatBox.hide();
+    UIChatBox.close();
+    api.closeFrame();
+  }
+  function click_approve( tag ) {
+    if ($api.hasCls(tag,'selected')) {
+      $api.removeCls(tag, 'selected');
+			tag.innerHTML = parseInt(tag.innerHTML) - 1;
+    }
+    else {
+      $api.addCls(tag, 'selected');
+			tag.innerHTML = parseInt(tag.innerHTML) + 1;
+
+    }
+  }
+</script>
+</html>

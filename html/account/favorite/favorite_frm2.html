@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>资源</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/api.css"/> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/style.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+
+    <script type="text/javascript" src="../../../script/doT.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/aui-dialog.js" ></script>
+
+
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: #f0f0f0;
+        }
+
+    </style>
+
+</head>
+
+
+<script>
+
+
+apiready = function(){
+    getItems();
+    api. addEventListener({name:'scrolltobottom'}, function(ret, err){getItems(); });
+    initData();
+};
+
+function initData(){
+    var flag = $api.byId('insert');
+    var tempFn = doT.template($api.byId('template').innerHTML);
+    var favorite_source=$api.getStorage('favorite_source');
+    if (favorite_source=="") return;
+    $api.html(flag, tempFn(favorite_source));
+}
+
+
+    var since_id=0;
+    var page_size=10;
+    function getItems(){
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+
+      var flag = $api.byId('insert');
+      // 编译模板函数
+      var tempFn = doT.template($api.byId('template').innerHTML);
+      // 使用模板函数生成HTML文本
+
+                  //
+
+        var json_getItems={"app_version":"1.0","user_id":$api.getStorage('user_id'),"user_cookie":cookie,"type":2,"since_id":since_id, "page_size":10};
+        console.log(JSON.stringify(json_getItems));
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getUserCollectionList/',
+            type:'POST',
+            data:JSON.stringify(json_getItems),
+            dataType:'json',
+            success:function (ret) {
+              if(ret.status==200){
+
+                  var _data=ret.data;
+                //   _data=data_;
+                //   var resultHTML = tempFn(data_);
+                //   $api.append(flag, resultHTML);
+                // for(var p in _data){//遍历json数组时，这么写p为索引，0,1
+                //     var arr = _data[p].url.split(".");
+                //     _data[p].url=arr[arr.length - 1];
+                //
+                //   console.log(_data[p].url + " ");
+                //
+                // }
+
+                  console.log(JSON.stringify(_data));
+                  console.log("since_id"+since_id);
+
+                  if(since_id==0){
+                      console.log("since_id"+since_id);
+                      $api.setStorage('favorite_source', _data);
+                      $api.html(flag, tempFn(_data));
+                      if(_data=='') $api.html(flag, '<h1>收藏夹内容为空</h1>');
+                  }else {
+                      console.log("since_id"+since_id);
+
+                      if(_data==""){
+                          $api.toast( '到头了', 300 );
+                          return;
+                      }
+                      $api.append(flag, tempFn(_data));
+                  }
+
+                  since_id+=10;
+
+                //if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+
+              }
+                //alert(JSON.stringify(ret))
+            },
+            error:function (ret) {
+              alert(JSON.stringify(ret));
+            },
+        })
+      return 0;
+      }
+
+
+      var dialog = new auiDialog({});
+      function dia(k){
+          dialog.alert({
+              title:"是否删除",
+              // msg:'这里是内容',
+              buttons:['取消','确定']
+          },function(ret){
+              if(ret){
+                if(ret.buttonIndex==2){
+
+                    alert("删除成功");
+
+                }
+              }
+          })
+
+      }
+
+      function delect(id){
+          var cookie=$api.getStorage('cookie');
+          var user_id=$api.getStorage('user_id');
+
+          var json_getItems={"app_version":"1.0","user_id":user_id,"user_cookie":cookie};
+
+            $.ajax({
+                url:'http://47.105.160.217:80/api/userInfo/getCollectedAnswer/',
+                type:'POST',
+                data:JSON.stringify(json_getItems),
+                dataType:'json',
+                success:function (ret) {
+                    if(ret.status==200){
+
+
+                  //if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+
+                    }
+                //alert(JSON.stringify(ret))
+                },
+                error:function (ret) {
+                    alert(JSON.stringify(ret));
+                },
+          })
+
+      }
+
+      function openRes(target_id){
+
+              api.openWin({
+                  name: 'question',
+                  url: '../../circle/circle_resource_detail.html',
+                  bounces: false,
+                  pageParam:{
+                      source_id : target_id,
+                      user_id:$api.getStorage('user_id'),
+                      user_cookie:''
+                  }
+      　　　　});
+      }
+
+
+</script>
+
+<body>
+
+
+
+
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-media-list" id="insert">
+
+
+
+
+
+        </ul>
+    </div>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+<script type="text/template" id="template">
+
+{{~it:value:index}}
+
+
+
+<li class="aui-list-item aui-list-item-middle" onclick="openRes('{{=value.source_id}}')" style="padding-left: 24px;">
+    <div class="aui-media-list-item-inner">
+        <div class="aui-list-item-media" style="width: 3rem;padding-top: 15px;padding-bottom: 15px;">
+
+            {{? value.article_image ==='jpg' }}
+            <div style="background-color:#e6655e;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">jpg</font></div>
+
+            {{?? value.article_image ==='m4a'}}
+            <div style="background-color:#917dcf;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">m4a</font></div>
+            {{??}}
+            <div style="background-color:green;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">res</font></div>
+            {{?}}
+
+        </div>
+        <div class="aui-list-item-inner" style="font-size:16px">
+            <div class="aui-list-item-text">
+                <div class="aui-list-item-title aui-font-size-16">{{=value.source_name}}</div>
+                <!-- <div class="aui-list-item-right">08:00</div> -->
+            </div>
+            <div class="aui-list-item-text">
+                {{=value.like_num}}捧
+            </div>
+        </div>
+    </div>
+</li>
+
+
+
+
+
+{{~}}
+
+</script>
+<!-- ，{{=value.dislike_num}}踩 -->

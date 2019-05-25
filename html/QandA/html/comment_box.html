@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/dropload.css"/>
+    <style>
+    html,
+    body {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        height: 100%;
+        background-color: transparent;
+    }
+
+    section {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        overflow: auto;
+    }
+
+    footer {
+        width: 100%;
+        height: 85%;
+        background-color: #fff;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        border-radius: 14px 14px 0 0;
+    }
+    .total {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .top-box {
+       position: relative;
+       width: 100%;
+       height:50px;
+
+    }
+    .top-fixed {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      z-index: 10;
+    }
+    .left {
+      position: absolute;
+      left:0px;
+      bottom: 0px;
+      width:100px;
+      height: 50px;
+      font-size: 18px; color: #000; text-align: center;
+      line-height: 50px;
+			font-weight: bold;
+    }
+    .right {
+      position: absolute;
+      right: 0px;
+      width:50px;
+      height: 50px;
+      font-size: 18px; color: #000; text-align: center;
+      line-height: 50px;
+			font-weight: bold;
+    }
+
+
+    .comment {
+      /*border-top: 1px solid #d3d2d2;*/
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 80%;
+      background-color: #fff;
+      overflow-y:scroll;
+      /*padding-right: 24px;*/
+    }
+    .comment-box {
+      /*border: 1px solid red;*/
+      width: 100%;
+      height: auto;
+      padding-top: 36px
+    }
+    .comment-box-left {
+      width: 36px;
+      height: auto;
+      float: left;
+      padding-left: 24px;
+    }
+    .comment-user-imag {
+      width: 36px;
+      height: 36px;
+    }
+    .comment-user-imag img {
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+    }
+    .comment-box-right {
+      /*border: 1px solid blue;*/
+      width: 239px;
+      height: auto;
+      float: left;
+    }
+    .comment-user-name {
+      width: auto;
+      height: 16px;
+      font-size: 16px; color: #000000; text-align: left;
+      padding-left: 8px;
+			font-weight: bold;
+    }
+    .comment-user-data {
+      width: auto;
+      height: 14px;
+      font-size: 13px; color: #8e8e8e; text-align: left;
+      padding-top: 10px;
+      padding-left: 8px
+    }
+    .comment-user-comment {
+      /*border: 1px solid red;*/
+      width: 100%;
+      height: auto;
+      font-size: 16px; color: #8e8e8e; text-align: left;
+      padding-top: 15px;
+      padding-left: 8px
+    }
+    .comment-approve {
+      /*border: 1px solid red;*/
+      width: 54px;
+      height: 21.5px;
+      float: left;
+      padding-left: 6px;
+      background-image: url(../icon/approve.png);
+      background-size: 18px 18px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      text-align: right;
+      line-height: 21.5px;
+    }
+    span div.selected {
+      background-image: url(../icon/agreechousen.png);
+    }
+
+    .input-comment {
+      /*border-top: 1px solid #d3d2d2;*/
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 10%;
+      background-color: #fff;
+      /*padding-right: 24px;*/
+    }
+
+
+
+    </style>
+</head>
+<body>
+	<!-- <div id="dialog">
+		<img id="erweima" src="../image/myerweima.png" tapmode onclick="api.closeFrame()"/>
+	</div> -->
+  <section tapmode  onclick="closeUIchat()"></section>
+  <footer>
+    <div class="total">
+    <div id = "top_box" class="top-box">
+      <div class="top-fixed">
+      <div id='comment-num' class="left">
+
+      </div>
+      <div class="right" onclick="closeUIchat()">X</div>
+      </div>
+    </div>
+
+    <div id='comment' class="comment">
+      <span id='comment-box-0' class="comment-box" style="display:none">
+
+        <div class="comment-box-left">
+        <div class="comment-user-imag">
+          <img src="../image/09-014416_603.jpg" alt="">
+        </div>
+        </div>
+
+        <div class="comment-box-right">
+        <div id="comment-user-name" class="comment-user-name">
+        </div>
+
+        <div class="comment-user-data">
+        </div>
+
+        <div class="comment-user-comment">
+        </div>
+
+      </div>
+      <div id="ff1" class="comment-approve" onclick="click_approve( this )" >
+
+      </div>
+    </span>
+
+</div>
+    <div class="input-comment">
+
+    </div>
+</div>
+  </footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+var UIChatBox;
+var data = new Array();
+var content = new Array();
+var approve_num = new Array();
+var comm_data;
+var cmm_data;
+var comment_id_list = new Array();
+var qs_dict;
+var new_comment;
+
+
+
+$("#top_box").on("touchstart", function(e) {
+    // 判断默认行为是否可以被禁用
+    if (e.cancelable) {
+        // 判断默认行为是否已经被禁用
+        if (!e.defaultPrevented) {
+            e.preventDefault();
+        }
+    }
+    startX = e.originalEvent.changedTouches[0].pageX,
+    startY = e.originalEvent.changedTouches[0].pageY;
+});
+$("#top_box").on("touchend", function(e) {
+    // 判断默认行为是否可以被禁用
+    if (e.cancelable) {
+        // 判断默认行为是否已经被禁用
+        if (!e.defaultPrevented) {
+            e.preventDefault();
+        }
+    }
+    moveEndX = e.originalEvent.changedTouches[0].pageX,
+    moveEndY = e.originalEvent.changedTouches[0].pageY,
+    X = moveEndX - startX,
+    Y = moveEndY - startY;
+    //下滑
+    if ( Y > 200 && $(document).scrollTop() == 0) {
+			closeUIchat();
+    }
+
+});
+
+	apiready = function(){
+		InitComment();
+    UIChatBox = api.require("UIChatBox");
+    OpenChatbox();
+	};
+
+	function InitComment() {
+		qs_dict = {
+		"app_version":"",
+		"user_id":"56bd1d4d9719fe9d5474d173336645c3",
+		"user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+		"question_id":api.pageParam.question_id,
+		"answer_id":api.pageParam.answer_id,
+		"since_id": 0,
+		"page_size": 10
+		};
+		api.showProgress({
+		title:"获取数据中...",
+		text: '请稍等...'
+			});
+
+	$.ajax({
+			type: 'POST',
+			url: "http://47.105.160.217:80/api/questionAnswer/getComment/",
+			data:JSON.stringify(qs_dict),
+			dataType: 'json',
+			async: false,
+			success:function(result){
+				console.log('加载评论成功')
+				comm_data =  result.data
+				api.hideProgress();
+			},
+			error:function(){
+				api.toast({msg:'没数据了，别拽了'});
+				console.log('加载评论失败');
+			}
+	});
+		comm_num = comm_data.length;
+		var comment_num = $api.byId('comment-num');
+		$api.text(comment_num, comm_num + '评论');
+		for (var i = 0; i<comm_data.length; i++) {
+			comment_id_list.push(comm_data[i].comment_id);
+		}
+
+		var sourceNode = document.getElementById("comment-box-0"); // 获得被克隆的节点对象
+		for (var i = 1; i < comm_num; i++) {
+			var clonedNode = sourceNode.cloneNode(true); // 克隆节点
+			clonedNode.setAttribute("id", "comment-box-" + i); // 修改一下id 值，避免id 重复
+			sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			clonedNode.style.display = '';
+
+			//alert("Item "+i+": "+tmpNode2.innerHTML);
+		}
+
+		for (var j = 0; j < comm_num; j++) {
+			var tmpNode = document.getElementById('comment-box-'+ j).childNodes;
+			document.getElementById('comment-box-'+ j).style.display = '';
+			tmpNode[3].childNodes[1].innerHTML = comm_data[j].author_info['author_name'];
+			tmpNode[3].childNodes[3].innerHTML = comm_data[j].comment_postdate;
+			tmpNode[3].childNodes[5].innerHTML = comm_data[j].content;
+			tmpNode[5].innerHTML = comm_data[j].comment_like_num;
+			if (comm_data[j].is_on == 0) {  //点过赞了
+				$api.addCls(tmpNode[5],'selected');
+			}
+		}
+	}
+	function OpenChatbox() {
+		UIChatBox.open({
+    placeholder: '来说点什么吧！',
+    maxRows: 4,
+    texts: {
+        sendBtn: {
+            title: '发送'
+        }
+    },
+    styles: {
+        inputBar: {
+            borderColor: '#fff',
+            bgColor: '#fff'
+        },
+        inputBox: {
+            borderColor: '#fff',
+            bgColor: '#ebebeb'
+        },
+        sendBtn: {
+            titleColor: '#fff',
+            bg: '#76c30b',
+            activeBg: '#65a709',
+            titleSize: 14
+        }
+    },
+    ret: {
+    eventType: 'send',  //字符串类型；回调的事件类型，
+                        //取值范围：
+                        //show（该模块打开成功）
+                        //send（用户点击发送按钮）
+                        //clickExtras（用户点击附加功能面板内的按钮）
+                        //clickRecord（用户点击录音功能面板内的按钮）
+    index: 0,           //数字类型；当 eventType 为 clickExtras 时，此参数为用户点击附加功能按钮的索引，否则为 undefined
+    msg: '',             //字符串类型；当 eventType 为 send 时，此参数返回输入框的内容，否则返回 undefined
+    inputBarHeight:30   //数字类型；输入框及左右按钮整体区域的高度
+}
+}, function(ret, err) {
+    if (ret.msg != undefined && ret.msg != '') {
+			addComment(ret.msg);
+      UIChatBox.closeKeyboard();
+    } else {
+
+    }
+});
+	};
+
+	function addComment(comment) {
+		new_comment = {
+    "app_version":"",
+    "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+    "user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+    "type":"homework",
+		"question_id":api.pageParam.question_id,
+		"answer_id":api.pageParam.answer_id,
+    "content":comment
+		}
+			$.ajax({
+			type: 'POST',
+			url: "http://47.105.160.217:80/api/questionAnswer/postComment/",
+			data:JSON.stringify(new_comment),
+			// crossDomain: true,
+			dataType: 'json',
+			async: false,
+			success:function(result){
+				console.log('评论成功！')
+				cmm_data =  result.data
+				closeUIchat();
+				// view_tips(result)
+			},
+			error:function(){
+				console.log('评论失败！');
+			}
+		});
+		comm_num += 1;  //评论数+1
+		var sourceNode = document.getElementById("comment-box-0"); // 获得被克隆的节点对象
+		var clonedNode = sourceNode.cloneNode(true); // 克隆节点
+		clonedNode.setAttribute("id", "comment-box-" + comm_num); // 修改一下id 值，避免id 重复
+		if (sourceNode.parentNode.children[0]) {
+			sourceNode.parentNode.insertBefore(clonedNode,sourceNode.parentNode.children[0]); // 在父节点插入克隆的节点
+		}
+		else {
+			sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+		}
+
+
+    var tmpNode = document.getElementById("comment-box-"+comm_num).childNodes;
+    tmpNode[3].childNodes[1].innerHTML = '小文';
+		var myDate = new Date();
+
+    tmpNode[3].childNodes[3].innerHTML = myDate.toLocaleDateString();
+    tmpNode[3].childNodes[5].innerHTML = comment;
+    tmpNode[5].innerHTML = 0;
+		document.getElementById("comment-box-"+comm_num).style.display = '';
+
+
+		var comment_num = $api.byId('comment-num');  //修改弹窗标题中的评论数
+		comment_num.innerHTML = comm_num + '评论'
+	}
+
+  function closeUIchat() {
+    UIChatBox.hide();
+    UIChatBox.close();
+    api.closeFrame();
+		jsFun = 'location.reload();';
+		api.execScript({
+			name:'hobby_question_detail',
+			script:jsFun
+		});
+
+  }
+  function click_approve( tag ) {
+    if ($api.hasCls(tag,'selected')) {
+      $api.removeCls(tag, 'selected');
+			tag.innerHTML = parseInt(tag.innerHTML) - 1;
+			var tag_id= $(tag.parentNode).attr('id').replace(/[^0-9]/ig,"");
+			var comment_dict = {
+			    "app_version":"",
+			    "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+			    "user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+					"question_id":api.pageParam.question_id,
+					"answer_id":api.pageParam.answer_id,
+			    "comment_id":comment_id_list[tag_id]
+			}
+			$.ajax({
+			    type: 'POST',
+			    // url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+			    url: "http://47.105.160.217:80/api/questionAnswer/likeComment/",
+			    data:JSON.stringify(comment_dict),
+			    // crossDomain: true,
+			    dataType: 'json',
+			    async: false,
+			    success:function(result){
+			      console.log('取消点赞成功')
+			      // view_tips(result)
+			    },
+			    error:function(){
+			      console.log('取消点赞失败');
+			    }
+			});
+    }
+    else {
+      $api.addCls(tag, 'selected');
+			tag.innerHTML = parseInt(tag.innerHTML) + 1;
+			var tag_id= $(tag.parentNode).attr('id').replace(/[^0-9]/ig,"");
+			var comment_dict = {
+			    "app_version":"",
+			    "user_id":"56bd1d4d9719fe9d5474d173336645c3",
+			    "user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+					"question_id":api.pageParam.question_id,
+					"answer_id":api.pageParam.answer_id,
+			    "comment_id":comment_id_list[tag_id]
+			}
+			$.ajax({
+			    type: 'POST',
+			    // url: "http://47.105.160.217:80/api/questionAnswer/getQuestion/",
+			    url: "http://47.105.160.217:80/api/questionAnswer/likeComment/",
+			    data:JSON.stringify(comment_dict),
+			    // crossDomain: true,
+			    dataType: 'json',
+			    async: false,
+			    success:function(result){
+			      console.log('点赞成功')
+			      // view_tips(result)
+			    },
+			    error:function(){
+			      console.log('点赞失败');
+			    }
+			});
+    }
+  }
+</script>
+</html>

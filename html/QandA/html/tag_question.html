@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+    html,body {
+      height: 100%;
+      width: 100%;
+    }
+		.header-box {
+			/*border: 1px solid blue;*/
+
+			position: relative;
+			width: 100%;
+			height: 43px;
+			background-color: #ffffff
+		}
+		header {
+			position: fixed;
+			width: 100%;
+			height: 43px;
+			background-color: #ffffff;
+			z-index: 11;
+			box-shadow:0 2px 8px -1px grey;
+
+		}
+		header .left {
+			top: 15px;
+			width: 21.5px;
+			height: 43px;
+			left: 15px;
+			background-image: url(../icon/back.png);
+			background-size: 21.5px 15.5px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			float: left;
+		}
+		header .center {
+			padding-left: 20px;
+			width: 25%;
+			height: 43px;
+			float: left;
+			line-height: 43px;
+		}
+		header .right {
+			width: 10%;
+			height: 43px;
+			float: right;
+			margin-right: 7%;
+			display: table;
+		}
+		.right .word1 {
+			font-size: 14px; color: #6d7cd9; font-weight: bolder; text-align: center;
+			line-height: 43px;
+      display: table-cell;
+      vertical-align: middle;
+		}
+
+
+    .searchbar-box {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+			padding-top: 3%;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 7%;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      float: left;
+    }
+    .inputbar {
+      position: absolute;
+      width: 94%;
+      height: 80%;
+      left: 50%;
+      top: 50%;
+      margin-left: -47%;
+      margin-top: -40%;
+      background-color: #fafafa;
+      border-radius: 5px;
+    }
+    .inputbar .input {
+      width: 85%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar img {
+      width: 14px;
+      height: 50%;
+      padding-left: 10px;
+      padding-top: 10px;
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+    .searchby_cata-box {
+      width: 90%;
+      height: 30%;
+      margin-left: 5%;
+    }
+    .title_1-box {
+      position: relative;
+      width: 100%;
+      height: 50%;
+      display: table;
+    }
+    .title_1 {
+      font-size: 20px; color: #000;
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .tag_1-box {
+      width: 100%;
+      height: 50%;
+    }
+    .tag_1 {
+      width: 33%;
+      height: 100%;
+      float: left;
+    }
+    .block_1 {
+      position: relative;
+      width: 70%;
+      height: 50%;
+      left: 50%;
+      top: 50%;
+      margin-left: -35%;
+      margin-top: -25%;
+      background-color: #ebebeb;
+      font-size: 18px; color: #6d7cd9; text-align: center;
+      line-height: 150%;
+      border-radius: 5px;
+    }
+
+    .history-box {
+      position: relative;
+      width: 90%;
+      height: auto;
+      margin-left: 5%;
+      padding-top: 4%;
+			padding-bottom: 10%;
+    }
+    .title_2-box {
+      position: relative;
+			float: left;
+      width: 100%;
+      height: 50px;
+    }
+    .title_2 {
+      font-size: 20px; color: #000;
+      float: left;
+    }
+    .clean_history-box {
+      position: relative;
+      width: 25%;
+      height: 50%;
+      float: right;
+    }
+    .clean_history {
+      width: 100%;
+      font-size: 12px; color: #959595; text-align: right;
+      background-color: #fff;
+      border-radius: 3px;
+
+    }
+    .tag_2-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    .tag_2 {
+      width: auto;
+      height: 50px;
+			padding-right: 15px;
+			float: left;
+    }
+    .block_2 {
+      position: relative;
+      width: auto;
+      height: 70%;
+      border-radius: 5px;
+    }
+    .word {
+      width: auto;
+      height: 100%;
+      font-size: 12px; color: #6d7cd9; text-align: left ;
+      padding-left: 6px;
+      line-height: 35px;
+			background-color: #fafafa;
+			padding-right: 6px;
+      float: left;
+    }
+    .close {
+      width: auto;
+      height: 100%;
+      font-size: 12px; color: #6d7cd9; text-align: left ;
+      padding-left: 15px;
+      line-height: 35px;
+      float: left;
+    }
+
+
+    </style>
+</head>
+<body>
+	<div class="header-box">
+	<header id="header" class="">
+		<div class="left" onclick="back()"></div>
+		<div class="center">选择标签</div>
+		<div class="right">
+			<div class="word1">发布</div>
+		</div>
+
+	</header>
+	</div>
+
+  <div class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+          <img src="../icon/search.png" alt="">
+          <input type="text" class="input" placeholder="搜索人" style='padding-left:30px' >
+        </div>
+      </div>
+  </div>
+  </div>
+
+  <div class="content-box">
+
+    <div class="history-box">
+      <div class="tag_2-box">
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">@ 小汪</div>
+            <div class="close">X</div>
+          </div>
+        </div>
+				<div class="tag_2">
+          <div class="block_2">
+            <div class="word">@ 小汪小汪小汪小汪小汪小汪小汪</div>
+            <div class="close">X</div>
+          </div>
+        </div>
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">@ 小黄</div>
+            <div class="close">X</div>
+          </div>
+        </div>
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">@ 小绿</div>
+            <div class="close">X</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="history-box">
+      <div class="title_2-box">
+        <div class="title_2">我关注的</div>
+      </div>
+      <div class="tag_2-box" style="padding-top:8%">
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">
+              工程热力学第一章习题
+            </div>
+          </div>
+        </div>
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">
+              工程热力学第一章习题
+            </div>
+          </div>
+        </div>
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">
+              工程热力学第一章习题
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+		<div class="history-box">
+      <div class="title_2-box">
+        <div class="title_2">热门标签</div>
+      </div>
+      <div class="tag_2-box" style="padding-top:8%">
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">
+              工程热力学第一章习题
+            </div>
+          </div>
+        </div>
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">
+              工程热力学第一章习题
+            </div>
+          </div>
+        </div>
+        <div class="tag_2">
+          <div class="block_2">
+            <div class="word">
+              工程热力学第一章习题
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto.min.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+
+	};
+
+</script>
+</html>

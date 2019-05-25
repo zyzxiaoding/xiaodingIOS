@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+    html,body {
+      height: 100%;
+      width: 100%;
+    }
+    .searchbar-box {
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      z-index: 10;
+    }
+		.searchbar {
+			position: fixed;
+			width: 100%;
+			height: 50px;
+			border-bottom: 1px solid #d3d2d2;
+			background-color: #fff;
+			z-index: 10;
+		}
+		.inputbar-box {
+			position: relative;
+			width: 85%;
+			height: 100%;
+			float: left;
+		}
+		.inputbar {
+      position: absolute;
+      width: 94%;
+      height: 80%;
+      left: 3%;
+      top: 10%;
+      /*margin-left: -47%;
+      margin-top: -40%;*/
+      background-color: #ebebeb;
+      border-radius: 5px;
+    }
+    .inputbar .input {
+      width: 85%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar .camera {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-image: url(../icon/camera.png);
+      background-size: 17px 14.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .cancel-box {
+      position: relative;
+      display: table;
+      width: 14%;
+      height: 100%;
+      float: left;
+    }
+    .cancel {
+      font-size: 18px; color: #6d7cd9; font-weight: bolder; text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+    .searchby_cata-box {
+      width: 90%;
+      height: 30%;
+      margin-left: 5%;
+    }
+    .title_1-box {
+      position: relative;
+      width: 100%;
+      height: 50%;
+      display: table;
+    }
+    .title_1 {
+      font-size: 20px; color: #000;
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .tag_1-box {
+      width: 100%;
+      height: 50%;
+    }
+    .tag_1 {
+      width: 33%;
+      height: 100%;
+      float: left;
+    }
+    .block_1 {
+      position: relative;
+      width: 70%;
+      height: 50%;
+      left: 50%;
+      top: 50%;
+      margin-left: -35%;
+      margin-top: -25%;
+      background-color: #ebebeb;
+      font-size: 18px; color: #6d7cd9; text-align: center;
+      line-height: 150%;
+      border-radius: 5px;
+    }
+
+    .history-box {
+      position: relative;
+      width: 90%;
+      min-height:30%;
+      height: auto;
+      margin-left: 5%;
+      padding-top: 5%;
+    }
+    .title_2-box {
+      position: relative;
+      padding-top: 0%;
+      width: 100%;
+      height: 50px;
+    }
+    .title_2 {
+      font-size: 20px; color: #000;
+      float: left;
+    }
+    .clean_history-box {
+      position: relative;
+      width: 25%;
+      height: 50%;
+      float: right;
+    }
+    .clean_history {
+      width: 100%;
+      font-size: 12px; color: #959595; text-align: right;
+      background-color: #fff;
+      border-radius: 3px;
+
+    }
+    .tag_2-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+    }
+    .tag_2 {
+      width: 100%;
+      height: 50px;
+    }
+    .block_2_odd {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #ebebeb;
+      font-size: 18px; color: #6d7cd9; text-align: left ;
+      padding-left: 6px;
+      line-height: 54px;
+      border-radius: 5px;
+
+    }
+    .block_2_mean {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 18px; color: #6d7cd9; text-align:left;
+      padding-left: 6px;
+      line-height: 54px;
+    }
+
+		.history-box img {
+			position: relative;
+			width: 50%;
+			height: 20%;
+			left: 20%;
+			margin-top:20%;
+			margin-bottom: 20%;
+		}
+
+
+
+
+    </style>
+</head>
+<body>
+  <div class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+          <input id="input" type="text" class="input" placeholder="搜索题目/圈子/资源/攻略" style="padding-left:10px">
+          <div class="camera"></div>
+        </div>
+      </div>
+      <div class="cancel-box">
+        <div class="cancel" onclick="back()">取消</div>
+      </div>
+  </div>
+  </div>
+
+  <div class="content-box">
+
+		<div id="nothing-box" class="history-box" style="display:none">
+			<img src="../image/nothing.png" alt="">
+      <div class="title_2-box">
+        <div class="title_2">逛逛其他热门</div>
+      </div>
+      <div class="tag_2-box">
+        <div id="hot-tip-0" class="tag_2" style="display:none">
+          <div class="block_2_mean"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="wd-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div id="type" class="title_2">问答</div>
+        <div class="clean_history-box">
+          <div id="view_all" class="clean_history">查看全部></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="wd-tip-0" class="tag_2" style="display:none">
+          <div class="block_2_mean"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="dt-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div class="title_2">动态</div>
+        <div class="clean_history-box">
+          <div class="clean_history">查看全部 ></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="dt-tip-0" class="tag_2" style="display:none">
+          <div class="block_2_mean"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="gl-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div class="title_2">攻略</div>
+        <div class="clean_history-box">
+          <div class="clean_history">查看全部 ></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="gl-tip-0" class="tag_2" style="display:none">
+          <div class="block_2_mean"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="zy-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div class="title_2">资源</div>
+        <div class="clean_history-box">
+          <div class="clean_history">查看全部 ></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="zy-tip-0" class="tag_2" style="display:none">
+          <div class="block_2_mean"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+var back_tips = new Array();
+var wd_tips = new Array();
+var dt_tips = new Array();
+var gl_tips = new Array();
+var zy_tips = new Array();
+var hot_tips = new Array();
+var type;
+var content;
+var flag;
+	apiready = function(){
+		type = api.pageParam.type; //获取点击类别
+		content = api.pageParam.content; //获取搜索内容
+		flag = api.pageParam.flag; //获取搜索进入方式
+		// flag = 2; //通过改flag的值选择搜索进入方式 1代表分类查看  2代表搜索查看
+		document.getElementById("input").value = content;
+		GetData(flag);  //测试
+		page_view(flag);
+
+
+	};
+
+	function GetData(flag) { //判断是哪种搜索方式
+		if (flag==1) {
+			back_tips[0] ='工程热力学';
+			back_tips[1] ='工程热力学第1章习题'
+			back_tips[2] ='工程热力学第2章习题'
+			back_tips[3] ='工程热力学第3章习题'
+			back_tips[4] ='工程热力学第4章习题'
+		}
+		else {
+			wd_tips[0] = '问答第一条'
+			wd_tips[1] = '问答第二条'
+			wd_tips[2] = '问答第三条'
+
+			dt_tips[0] = '动态第一条'
+			dt_tips[1] = '动态第二条'
+			dt_tips[2] = '动态第三条'
+
+			gl_tips[0] = '攻略第一条'
+			gl_tips[1] = '攻略第二条'
+			gl_tips[2] = '攻略第三条'
+
+			zy_tips[0] = '资源第一条'
+			zy_tips[1] = '资源第二条'
+			zy_tips[2] = '资源第三条'
+
+			hot_tips[0] = '热门第一条'
+			hot_tips[1] = '热门第二条'
+			hot_tips[2] = '热门第三条'
+		}
+
+	}
+
+	function page_view(flag) {
+		if (flag == 1 && back_tips != '') {
+			alert('通过分类进入')
+			document.getElementById('view_all').innerHTML = "";
+			document.getElementById('type').innerHTML = type;
+			var sourceNode = document.getElementById('wd-tip-0');
+
+	    for (var i = 1; i < back_tips.length + 1; i++) {
+	      var clonedNode = sourceNode.cloneNode(true);
+	      clonedNode.setAttribute('id','result-tip-'+i);
+	      clonedNode.style.display = '';
+	      if (i%2 == 0) {
+					clonedNode.childNodes[1].setAttribute('class','block_2_odd');
+	      }
+	      else {
+	        clonedNode.childNodes[1].setAttribute('class','block_2_mean');
+	      }
+				clonedNode.childNodes[1].innerHTML = back_tips[i-1];
+	      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+	    }
+			document.getElementById('wd-box').style.display = ''; //显示出来
+		}
+		else if (flag == 1 && back_tips == '') {
+			alert('没有数据')
+			openBlankPage();
+		}
+
+		else if (flag != 1) { //搜索进入方式
+			alert('通过搜索进入')
+			if (wd_tips == '' && gl_tips == '' && zy_tips == '' && dt_tips == '') {
+				alert('没有数据')
+				openBlankPage();
+			}
+			else {
+				if (wd_tips != '') {
+					var sourceNode = document.getElementById('wd-tip-0');
+			    for (var i = 1; i < wd_tips.length + 1; i++) {
+			      var clonedNode = sourceNode.cloneNode(true);
+			      clonedNode.setAttribute('id','wd-tip-'+i);
+			      clonedNode.style.display = '';
+			      if (i%2 == 0) {
+							clonedNode.childNodes[1].setAttribute('class','block_2_odd');
+			      }
+			      else {
+			        clonedNode.childNodes[1].setAttribute('class','block_2_mean');
+			      }
+						clonedNode.childNodes[1].innerHTML = wd_tips[i-1];
+			      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			    }
+					document.getElementById('wd-box').style.display = ''; //显示出来
+				}
+				if (dt_tips != '') {
+					var sourceNode = document.getElementById('dt-tip-0');
+			    for (var i = 1; i < dt_tips.length + 1; i++) {
+			      var clonedNode = sourceNode.cloneNode(true);
+			      clonedNode.setAttribute('id','dt-tip-'+i);
+			      clonedNode.style.display = '';
+			      if (i%2 == 0) {
+							clonedNode.childNodes[1].setAttribute('class','block_2_odd');
+			      }
+			      else {
+			        clonedNode.childNodes[1].setAttribute('class','block_2_mean');
+			      }
+						clonedNode.childNodes[1].innerHTML = dt_tips[i-1];
+			      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			    }
+					document.getElementById('dt-box').style.display = ''; //显示出来
+				}
+
+				if (gl_tips != '') {
+					var sourceNode = document.getElementById('gl-tip-0');
+			    for (var i = 1; i < gl_tips.length + 1; i++) {
+			      var clonedNode = sourceNode.cloneNode(true);
+			      clonedNode.setAttribute('id','gl-tip-'+i);
+			      clonedNode.style.display = '';
+			      if (i%2 == 0) {
+							clonedNode.childNodes[1].setAttribute('class','block_2_odd');
+			      }
+			      else {
+			        clonedNode.childNodes[1].setAttribute('class','block_2_mean');
+			      }
+						clonedNode.childNodes[1].innerHTML = gl_tips[i-1];
+			      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			    }
+					document.getElementById('gl-box').style.display = ''; //显示出来
+				}
+
+				if (zy_tips != '') {
+					var sourceNode = document.getElementById('zy-tip-0');
+			    for (var i = 1; i < zy_tips.length + 1; i++) {
+			      var clonedNode = sourceNode.cloneNode(true);
+			      clonedNode.setAttribute('id','zy-tip-'+i);
+			      clonedNode.style.display = '';
+			      if (i%2 == 0) {
+							clonedNode.childNodes[1].setAttribute('class','block_2_odd');
+			      }
+			      else {
+			        clonedNode.childNodes[1].setAttribute('class','block_2_mean');
+			      }
+						clonedNode.childNodes[1].innerHTML = zy_tips[i-1];
+			      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			    }
+					document.getElementById('zy-box').style.display = ''; //显示出来
+				}
+			}
+		}
+
+		function openBlankPage() {
+			var sourceNode = document.getElementById('hot-tip-0');
+			for (var i = 1; i < hot_tips.length + 1; i++) {
+				var clonedNode = sourceNode.cloneNode(true);
+				clonedNode.setAttribute('id','hot-tip-'+i);
+				clonedNode.style.display = '';
+				if (i%2 == 0) {
+					clonedNode.childNodes[1].setAttribute('class','block_2_odd');
+				}
+				else {
+					clonedNode.childNodes[1].setAttribute('class','block_2_mean');
+				}
+				clonedNode.childNodes[1].innerHTML = hot_tips[i-1];
+				sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			}
+			document.getElementById('nothing-box').style.display = ''; //显示出来
+		}
+
+	}
+
+	function back() {
+		api.openWin({
+		    name: 'search_global',
+		    url: './search_global.html',
+		    pageParam: {
+		        name: 'test'
+		    }
+		});
+
+	}
+
+</script>
+</html>

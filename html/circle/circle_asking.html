@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api1.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style1.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+</head>
+
+<body>
+<div id="wrap1">
+    <header>
+        <div class="left"onclick="back()"></div>
+        <div class="center">提问</div>
+        <div class="right" tapmode onclick="biaoqian()">下一步</div>
+    </header>
+    <div id="main" class="flex-con">
+        <textarea id="title" class="title" rows="1" placeholder="请输入标题"></textarea>
+        <div class="line"></div>
+        <textarea class="content" datatype="required" id="cont" msg="必填项" name="grxygzjh" onfocus="autoTextarea(this,0,1)" placeholder="请输入问题描述" style="width:87%; background: transparent; text-align:left;maxHeight:50%;" ; type="text" validateid="validate_21">
+</textarea>
+    </div>
+    <ul class="figure-list" id="images" style="margin-top:2.5%;text-align:center;"> </ul>
+    <div id="xuanshang" style="visibility:hidden;margin-top:8%;padding-bottom:3%">
+        <div style="margin-left:8%;margin-bottom:3%;font-size:13px;font-weight:bold">悬赏<p style="margin-left:65%;font-size:13px;color:blue;display:inline-block;" onclick="noxuanshang()">取消悬赏</p></div>
+        <div style="margin-left:7%;margin-bottom:5%;border-bottom:1px solid #D3D3D3;padding-bottom:;">
+            <label style="font-size:25px;">￥</label>
+            <input id="money" style="font-size:25px;color:#E6655E;" type="text" name="" value="" disabled="disabled">
+        </div>
+        <div style="margin-left:8%;margin-bottom:13%;border-bottom:0.5px solid #D3D3D3;padding-bottom:2.5%;">
+            <textarea id="beizhu" style="font-size:12px;color:grey;width:90%;font-weight:bold;" rows="3" disabled="disabled"></textarea>
+        </div>
+    </div>
+
+    <div style="position: fixed;bottom:0;height:7%;width:100%;box-shadow: 0 -6px 20px #D7D7D7;text-align:center;background-color:white;">
+        <div style="display:inline-block;text-align:center;margin-right:10%;margin-top:2%;" onclick="yaoqing();"><img src="../../icon/@.png" alt="" width="50%">
+            <div style="text-align:center;font-size:10px;">邀请</div>
+        </div>
+        <div style="display:inline-block;text-align:center;margin-right:5%;margin-top:2%;" onclick="xuanshang();"><img src="../../icon/award.png" alt="" width="50%">
+            <div style="text-align:center;font-size:10px;">悬赏</div>
+        </div>
+        <div style="display:inline-block;text-align:center;margin-left:5%;margin-top:2%;" onclick="UIAlbumBrowser_imagePicker();"><img src="../../icon/picture.png" alt="" width="50%">
+            <div style="text-align:center;font-size:10px;">图片</div>
+        </div>
+        <div style="display:inline-block;text-align:center;margin-left:10%;margin-top:2%;"><img src="../../icon/set.png" alt="" width="50%">
+            <div style="text-align:center;font-size:10px;">设置</div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript">
+    var i = 0;
+    var currentImage=0;
+    var degrees = new Array(100);
+    var imgarr = [];
+    var curimg = [];
+    var imgnumber = 0;
+    var names=["张玉哲","林中平","王伟帆","王伟帆"];
+    apiready = function() {
+
+        $api.setStorage('money',"");
+        $api.setStorage('beizhu',"");
+        $('.content').keydown(function(event){
+            if(event.keyCode==8){
+                var textObj = $(this).get(0);
+                var rangeStart=textObj.selectionStart;
+                var rangeEnd=textObj.selectionEnd;
+                var delValue = textObj.value.substring(rangeStart-1,rangeStart);
+                var flag = false;
+                var name="";
+                var index = 0;
+                if(delValue==" "){
+                    index=rangeStart-1;
+                    while(index>0){
+                        if(textObj.value.substring(index-1,index)=="@"){
+                            name = textObj.value.substring(index,rangeStart-1);
+                            flag = true;
+                            break;
+                        }
+                        else{
+                            index--;
+                        }
+                    }
+                    if(flag){
+                        for(var i = 0; i < names.length; i++){
+                            if(name === names[i]){
+                                var movenumber=name.length+2;
+                                names.splice(i,1);
+                                var tempStr1=textObj.value.substring(0,index);
+                                var tempStr2=textObj.value.substring(rangeStart);
+                                textObj.value=tempStr1+tempStr2;
+                                textObj.focus();
+                                textObj.selectionStart = textObj.selectionEnd = index;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        $api.fixStatusBar($api.dom('header'));
+        api.setStatusBarStyle({
+            style: 'dark',
+            color: '#6ab494'
+        });
+    }
+    //打开图片选择器
+
+    function UIAlbumBrowser_imagePicker() {
+        api.getPicture({targetHeight:600,targetWidth:800,
+            sourceType:'album',
+            encodingType:'jpg',
+            mediaValue:'pic',
+            destinationType:'url',
+            allowEdit:true,
+            quality:100,
+            targetWidth:100,
+            targetHeight:100,
+            saveToPhotoAlbum:false
+        },function (ret,err) {
+            if(ret){
+                document.getElementById('images').innerHTML= document.getElementById('images').innerHTML+"<img src = "+JSON.stringify(ret.data)+' ' +
+                    'style:"float:left;width:25%;margin-left:6%;margin-top:20px;"" />'
+                curimg.add(JSON.stringify(ret.data));
+                currentImage = currentImage + 1
+            }
+            else {
+                alert(JSON.stringify(err))
+            }
+        })
+
+    }
+
+
+    function deleteImage(){
+        photoBrowser.getIndex(function(ret, err) {
+            if (ret) {
+                photoBrowser.deleteImage({
+                    index: ret.index
+                });
+                imgnumber--;
+                curimg.splice(ret.index,1);
+                if(imgnumber==0){
+                    photoBrowser.close();
+                    createPicture();
+                    api.closeFrame({
+                        name: 'picturehead'
+                    });
+                }
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    function xuanshang() {
+        api.openFrame({
+            name: 'xuanshang',
+            url: './xuanshang.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight
+            },
+            bgColor: 'rgba(0,0,0,0.6)',
+            // bounces: false,
+        });
+    }
+
+    function noxuanshang(){
+        document.getElementById("xuanshang").style.visibility="hidden";
+        $api.setStorage('money',"");
+        $api.setStorage('beizhu',"");
+    }
+
+    function biaoqian() {
+        $api.setStorage('choose_tags', '');
+        var title = document.getElementById('title').value;
+        var content = document.getElementById('cont').value;
+        var money = document.getElementById('money').value;
+        $api.setStorage('title', title);
+        $api.setStorage('content', content);
+        $api.setStorage('reward', money);
+        api.openWin({
+            name: 'biaoqian_win',
+            url: './biaoqian_win.html',
+            bgColor: "#fff",
+        });
+        location.reload()
+        jsFun = 'list = []'
+        api.execScript({
+            name: 'biaoqian_win',
+            script: jsFun
+        });
+
+    }
+
+    function yaoqing() {
+        var content = $api.dom(".content");
+        var addstr="";
+        for(var i=0;i<names.length;i++){
+            addstr=addstr+"@"+names[i]+" ";
+        }
+        insertText(content,addstr);
+        moveEnd(content);
+        /*api.openFrame({
+            name: 'biaoqian',
+            url: './@.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight
+            },
+            bgColor: 'rgba(0,0,0,0.6)',
+            // bounces: false,
+        });*/
+    }
+
+    function insertText(obj, str) {
+        if (document.selection) {
+            var sel = document.selection.createRange();
+            sel.text = str;
+        } else if (typeof obj.selectionStart === 'number' && typeof obj.selectionEnd === 'number') {
+            var startPos = obj.selectionStart,
+                endPos = obj.selectionEnd,
+                cursorPos = startPos,
+                tmpStr = obj.value;
+            obj.value = tmpStr.substring(0, startPos) + str + tmpStr.substring(endPos, tmpStr.length);
+            cursorPos += str.length;
+            obj.selectionStart = obj.selectionEnd = cursorPos;
+        } else {
+            obj.value += str;
+        }
+    }
+
+    function moveEnd(obj) {
+        obj.focus();
+        var len = obj.value.length;
+        if (document.selection) {
+            var sel = obj.createTextRange();
+            sel.moveStart('character', len);
+            sel.collapse();
+            sel.select();
+        } else if (typeof obj.selectionStart == 'number' && typeof obj.selectionEnd == 'number') {
+            obj.selectionStart = obj.selectionEnd = len;
+        }
+    }
+
+    function funIniGroup() {
+        var eHeaderLis = $api.domAll('header li'),
+            frames = [];
+        for (var i = 0, len = eHeaderLis.length; i < len; i++) {
+            frames.push({
+                name: 'frame' + i,
+                url: './html/frame' + i + '.html',
+                bgColor: 'rgba(0,0,0,.2)',
+                bounces: true
+            })
+        }
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {
+                x: 0,
+                y: $api.dom('header').offsetHeight,
+                w: api.winWidth,
+                h: $api.dom('#main').offsetHeight
+            },
+            index: 0,
+            frames: frames
+        }, function(ret, err) {
+
+        });
+    }
+
+    // 随意切换按钮
+    function randomSwitchBtn(tag) {
+        if (tag == $api.dom('#footer li.active')) return;
+        var eFootLis = $api.domAll('#footer li'),
+            eHeaderLis = $api.domAll('header li'),
+            index = 0;
+        for (var i = 0, len = eFootLis.length; i < len; i++) {
+            if (tag == eFootLis[i]) {
+                index = i;
+            } else {
+                $api.removeCls(eFootLis[i], 'active');
+                $api.removeCls(eHeaderLis[i], 'active');
+            }
+        }
+        $api.addCls(eFootLis[index], 'active');
+        $api.addCls(eHeaderLis[index], 'active');
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+    }
+
+    var autoTextarea = function(elem, extra, maxHeight) {
+        maxHeight = document.body.clientHeight * 0.5;
+        extra = extra || 0;
+        var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+            isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+            addEvent = function(type, callback) {
+                elem.addEventListener ?
+                    elem.addEventListener(type, callback, false) :
+                    elem.attachEvent('on' + type, callback);
+            },
+            getStyle = elem.currentStyle ? function(name) {
+                var val = elem.currentStyle[name];
+
+                if (name === 'height' && val.search(/px/i) !== 1) {
+                    var rect = elem.getBoundingClientRect();
+                    return rect.bottom - rect.top -
+                        parseFloat(getStyle('paddingTop')) -
+                        parseFloat(getStyle('paddingBottom')) + 'px';
+                };
+
+                return val;
+            } : function(name) {
+                return getComputedStyle(elem, null)[name];
+            },
+            minHeight = parseFloat(getStyle('height'));
+
+        elem.style.resize = 'none';
+
+        var change = function() {
+            var scrollTop, height,
+                padding = 0,
+                style = elem.style;
+
+            if (elem._length === elem.value.length) return;
+            elem._length = elem.value.length;
+
+            if (!isFirefox && !isOpera) {
+                padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+            };
+            scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+            elem.style.height = minHeight + 'px';
+            if (elem.scrollHeight > minHeight) {
+                if (maxHeight && elem.scrollHeight > maxHeight) {
+                    height = maxHeight;
+                    style.overflowY = 'auto';
+                } else {
+                    height = elem.scrollHeight;
+                    style.overflowY = 'hidden';
+                };
+                style.height = height + extra + 'px';
+                // scrollTop += parseInt(style.height) - elem.currHeight;
+                // document.body.scrollTop = scrollTop;
+                // document.documentElement.scrollTop = scrollTop;
+                elem.currHeight = parseInt(style.height);
+            };
+        };
+
+        addEvent('propertychange', change);
+        addEvent('input', change);
+        addEvent('focus', change);
+        change();
+    };
+    function back() {
+        api.historyBack({
+        }, function(ret, err) {
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+    }
+</script>

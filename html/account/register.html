@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="../../css/style_login.css" rel="stylesheet" type="text/css"/>
+    <!-- <script type="text/javascript" src="../../script/jquery.min_login.js"></script> -->
+
+
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+
+    <style>
+    .aui-code-box {
+        padding: 10px 0;
+        text-align: center;
+    }
+    body{
+        background-color: white;
+    }
+
+
+
+    .aui-code-box p {
+        color: #cccccc;
+        font-size: 0.85rem;
+        position: relative;
+        width: 100%;
+        background: #fff;
+        padding: 0 20px;
+        margin-top: 20px;
+    }
+    .aui-code-line {
+        position: relative;
+    }
+    .aui-code-line:after {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        left: 20px;
+        width: 90%;
+        height: 1px;
+        border-bottom: 1px solid #D9D9D9;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    }
+    .aui-code-line-input {
+        padding: 10px 0;
+        height: 50px;
+        width: 100%;
+        font-size: 14px;
+        background: none;
+        border: none;
+        color: #333;
+    }
+
+
+    </style>
+
+
+</head>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script>
+    function getVerifyCode(){
+        var phone = $api.val($api.byId('phone'));
+
+
+
+        var phoneReg=/^[1][3,4,5,7,8][0-9]{9}$/;
+
+          if (!phoneReg.test(phone)) {
+
+              api.toast({
+        　　　　　　msg:'请输入正确的手机号码',
+        　　　　　　duration: '1300',
+        　　　　　　localtion: 'middle'
+      　　　　 });
+
+              return ;
+
+          }
+
+
+
+          var json_phone={"phone_number": phone};
+          $.ajax({
+              url:'http://47.105.160.217:80/api/login/sendIDCode/',
+              type:'POST',
+              data:JSON.stringify(json_phone),
+              dataType:'json',
+              success:function (ret) {
+                if(ret.status==200){
+                  if (ret.data.message=="sendIDCode success") {
+                      api.toast({
+                　　　　　　msg:'获取验证码成功',
+                　　　　　　duration: '1300',
+                　　　　　　localtion: 'middle'
+              　　　　 });
+                  }
+                }
+                  alert(JSON.stringify(ret))
+              },
+              error:function (ret) {
+                  alert(JSON.stringify(ret))
+              },
+          })
+
+
+          return;
+
+
+
+    }
+
+    function register(){
+        var nickname = $api.trim($api.val($api.byId('nickname')));
+        var password = $api.val($api.byId('password'));
+        var verifyCode = $api.val($api.byId('verifyCode'));
+        var phone = $api.val($api.byId('phone'));
+
+        if (!nickname) {
+            api.toast({
+                msg: '请输入昵称',
+                duration: 1000,
+                location: 'middle'
+            });
+            return;
+        }else if(nickname.length>15) {
+            api.toast({
+                msg: '昵称长度不能大于15位',
+                duration: 1000,
+                location: 'middle'
+            });
+            return;
+        }else{
+            // var patt = /^[a-zA_Z][a-zA-Z0-9_]{4,19}$/;
+            // if(!patt.test(username)){
+            //     api.toast({
+            //         msg: '首尾为字母，只含有英文和数字',
+            //         duration: 1000,
+            //         location: 'middle'
+            //     });
+            //     return;
+            // }
+        }
+
+
+        if (!password) {
+            api.toast({
+                msg: '请输入密码',
+                duration: 1000,
+                location: 'middle'
+            });
+            return;
+        }else if(password.length<6||password.length>20) {
+            api.toast({
+                msg: '密码长度在6位到20位之间',
+                duration: 1000,
+                location: 'middle'
+            });
+            return;
+        }else{
+            var patt = /[a-zA-Z0-9_]{6,19}$/;
+            if(!patt.test(password)){
+                api.toast({
+                    msg: '含有非法字符',
+                    duration: 1000,
+                    location: 'middle'
+                });
+                return;
+            }
+        }
+
+        if(!verifyCode){
+            api.toast({
+                msg: '请输入验证码',
+                duration: 1000,
+                location: 'middle'
+            });
+            return;
+
+        }else if (verifyCode.length!=4) {
+            api.toast({
+                msg: '请输入4位验证码',
+                duration: 1000,
+                location: 'middle'
+            });
+            return;
+        }
+
+
+        /*** 加载动画 ***/
+        api.showProgress({
+            title : ' ',
+            text : '玩命加载中...',
+            modal : true
+        });
+
+        var json_reg={"phone_number": ""+phone,"password": password,"nick_name": nickname,"IDCode": ""+verifyCode};
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/login/register/',
+            type:'POST',
+            data:JSON.stringify(json_reg),
+            dataType:'json',
+            success:function (ret) {
+              api.hideProgress();
+                if(ret.status==200){
+                    if(ret.data.error=="User already exists"){
+                      api.toast({
+              　　　　　　msg:'用户已经存在',
+              　　　　　　duration: '1200',
+              　　　　　　localtion: 'middle'
+            　　　　　　});
+                      return;
+                    }
+
+                    if(ret.data.error=="Invalid id code"){
+                      api.toast({
+              　　　　　　msg:'验证码错误',
+              　　　　　　duration: '1200',
+              　　　　　　localtion: 'middle'
+            　　　　　　});
+                      return;
+                    }
+                    if(ret.data.error){
+                      api.toast({
+              　　　　　　msg:'错误',
+              　　　　　　duration: '1200',
+              　　　　　　localtion: 'middle'
+            　　　　　　});
+                      return;
+                    }
+                }
+
+              if(ret.status==200){
+            //      setTimeout(function() {
+            //         api.openWin({
+            //     　　　　name: 'index',
+            //    　　　　 url: '../../../index.html',
+            //     　　　　bounces: false,
+            //    　　　　 animation:{
+            //         　　　　type: "push",
+            //         　　　　duration:300
+            //     　　　　}
+            // 　　　　});
+            //       }, 1000);
+
+                if (ret.data.user_id) $api.setStorage('user_id', ret.data.user_id);
+                if (ret.data.user_cookie) $api.setStorage('user_cookie', ret.data.user_cookie);
+
+                api.sendEvent({
+                    name: 'UserHasLogin'
+                });
+
+                api.toast({
+        　　　　　　msg:'注册成功',
+        　　　　　　duration: '5000',
+        　　　　　　localtion: 'middle'
+      　　　　　　});
+
+
+              }
+                alert(JSON.stringify(ret))
+            },
+            error:function (ret) {
+              api.hideProgress();
+              alert(JSON.stringify(ret))
+            },
+        });
+
+
+    }
+
+    function tiaokuan(){
+        api.openWin({
+        　　　　name: 'index',
+        　　　　 url: 'https://passport.baidu.com/static/passpc-account/html/protocal.html',
+        　　　　bounces: false,
+        　　　　 animation:{
+        　　　　type: "push",
+        　　　　duration:300
+        　　　　}
+        　　　　});
+    }
+
+    function closeWin(){
+      api.closeWin({
+      });
+    }
+
+</script>
+
+
+
+
+<body>
+
+  <!-- <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt" id="aui-header">
+      <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;">注册</div>
+
+  </header> -->
+
+  <header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+      <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">注册</div>
+      <!-- <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="saveImageClip()">
+          <h3 style="color:#6d7cd9;padding-right: 10px;">确定</h3>
+      </div> -->
+  </header>
+
+
+    <div class="aui-code-box">
+
+        <p class="aui-code-line">
+            <input type="text" class="aui-code-line-input" name="nickname" value="" id="nickname" autocomplete="off" placeholder="请输入昵称"/>
+        </p>
+        <p class="aui-code-line aui-code-line-clear">
+            <i class="aui-show  operate-eye-open"></i>
+            <input type="password"  name="userPassword"  id="password" class="aui-code-line-input password" placeholder="请输入密码" value="">
+        </p>
+
+        <p class="aui-code-line ">
+            <input type="number"  name="phone"  id="phone" class="aui-code-line-input " placeholder="请输入手机号" value="">
+            <span style="position: absolute; top:20%; right:30px; color:blue;color:#6d7cd9" onclick="getVerifyCode()"  > 获取验证码 </span>
+        </p>
+
+        <p class="aui-code-line ">
+            <input type="number"  name="verifyCode"  id="verifyCode" class="" placeholder="请输入验证码" value=""  >
+        </p>
+
+
+
+        <div style="padding-top: 40px;">
+            <input class="aui-checkbox" type="checkbox" name="demo1" checked="" style="background-color: #6d7cd9;border: solid 1px #6d7cd9;width: 18px;height: 18px;margin-top:2px"> 同意 <a onclick="tiaokuan()" style="color:#6d7cd9">用户条款 </a>
+        </div>
+        <div class="aui-btn-sm" onclick="register()" style="margin: 20px; padding: 10px; border-radius: 20px;background-color:#6d7cd9;color:white">   注册  </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+function initWxBind() {
+wx = api.require('wx');
+wx.isInstalled(function(ret, err) {
+    if (!ret.installed) {
+        alert('当前设备未安装微信客户端');
+        retun;
+    }
+
+    wx.auth(function(ret, err) {
+        if (ret.status) {
+            console.log("返回认证的用户key"+ret.code);
+            wx.getToken({
+                code: ret.code
+            }, function(ret, err) {
+                if (ret.status) {
+                    api.showProgress({
+                        style: 'default',
+                        animationType: 'fade',
+                        title: '授权成功',
+                        text: '绑定处理中...',
+                        modal: true
+                    });
+
+                    var provideName="wx_" + BASE_APP_TYPE;
+                    //临时存储openId,与accessToken后面绑定账号时用到(绑定用完需要清理掉)
+                    loginParam.provideName=provideName;
+                    loginParam.openId=ret.openId;
+                    loginParam.accessToken=ret.accessToken;
+                    loginParam.refreshToken=ret.dynamicToken;
+                    $api.setStorage('loginParam', loginParam);
+                    //获取wx头像，昵称
+                    wx.getUserInfo({
+                        accessToken: ret.accessToken,
+                        openId: ret.openId
+                    }, function(ret, err) {
+                        if (ret.status) {
+                            // 绑定成功
+                            var loginParam=$api.getStorage('loginParam');
+                            loginParam.nickName=ret.nickname;
+                            loginParam.avatar=ret.headimgurl;
+                            $api.setStorage('loginParam', loginParam);
+                            // 实现绑定动作
+                            bindAccount(function (res) {
+                                if (res == true) {
+                                    // 发送页面刷新事件
+                                    var toast = new auiToast();
+                                    toast.success({
+                                        title: "绑定成功",
+                                        duration: 2000
+                                    });
+                                    setTimeout("location.reload()", 2000);
+                                }
+                            });
+                            api.hideProgress();
+                        }
+                    });
+
+                } else {
+                    alert(JSON.stringify(err))
+                }
+            });
+        } else {
+            var toast = new auiToast();
+            toast.fail({
+                title: "微信授权绑定失败",
+                duration: 1500
+            });
+        }
+    });
+
+});
+}
+
+function bindAccount(callback) {
+    var loginParam = $api.getStorage('loginParam');
+    var user       = $api.getStorage('user');
+    api.ajax({
+        url: BASE_REQUEST_URL + '/Customer/AssociateAccountWithExistCustomer',
+        method: 'post',
+        data: {
+            values: {
+                provideName: loginParam.provideName,
+                openId: loginParam.openId,
+                accessToken: loginParam.accessToken,
+                refreshToken: loginParam.refreshToken,
+                userName: user.login_name,
+                nickName: loginParam.nickName,
+                avatar: loginParam.avatar,
+            }
+        }
+    }, function(ret, err) {
+        if (ret.status == 1) {
+            callback(true);
+        }
+        callback(false);
+    });
+}
+</script>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+
+    <div id="resource_content" class="answer">
+        <div id="resouce-box" class="resource" style="display:none">
+            <div class="resource-left">
+                <div id="resource-type" class="resource-imag">
+                    PDF
+                </div>
+            </div>
+            <div class="resource-right">
+                <div id="resource-name" class="resource-name"></div>
+                <div class="resource-note"></div>
+                <div class="resource-note"></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery.js"></script>
+<script type="text/javascript" src="../../../script/dropload.min.js"></script>
+<script type="text/javascript">
+    var json_dict;
+    var cacheDir,connectType;
+    var pageN = 0;
+    var json_data= {};
+    function netCheck() {
+        connectType = api.addEventListener({
+            name:'online'
+        },function (ret,err) {
+            connectType = ret.connectionType;
+        });
+        api.addEventListener({
+            name:'offline'
+        })
+    }
+    apiready = function () {
+        connectType = '';
+        netCheck();
+        cacheDir= api.cacheDir;
+        if(connectType =='')
+        api.readFile({
+            path:cacheDir + '/'+'resource_list'+api.pageParam.keywords + '/' + api.frameName + '.json'
+        },function (ret,err) {
+            if(ret.status){
+                //alert(ret.data);
+                resouce_view(ret.data,2)
+            }else {
+                resouce_view(Getdata(0),1) ;
+            }
+        });
+        else  resouce_view(Getdata(0),1);
+        fnInitEvent();
+
+    };
+    function openResourceDetail(id) {
+        api.openWin({
+            name:'Resource_detail',
+            url:'../../circle/circle_resource_detail.html',
+            pageParam:{
+                sourceID:id
+            }
+        })
+    }
+
+    function Getdata(sid) {
+        var ret;
+        json_dict = {
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "user_cookie":"",
+            "keywords":api.pageParam.keywords,
+            "since_id":sid,
+            "page_size":10,
+            'search_scope':'resource'
+        };
+        alert('begin');
+        $.ajax({
+            method: "post",
+            url: "http://47.105.160.217/api/search/search/",
+            dataType : "json",
+            data: JSON.stringify(json_dict),
+            async:false,
+            success: function (d) {
+                //alert(JSON.stringify(d));
+                ret = d.data.resources;
+                api.writeFile({
+                    path: cacheDir + '/'+'resource_list'+api.pageParam.keywords + '/' + api.frameName + '.json',
+                    data:JSON.stringify(d.data..resources)
+                });
+            },
+            error:function (e) {
+                ret = e;
+                alert(JSON.stringify(e))
+            }
+        });
+            return ret;
+    }
+    function refresh() {
+        var fs = api.require('fs');
+        fs.rmdir({
+            path:cacheDir + '/'+'resource_list'+api.pageParam.keywords + '/' + api.frameName + '.json',
+        },function (ret,err) {
+            if (ret){
+                document.getElementById('resource_content').innerHTML="<div id=\"resouce-box\" class=\"resource\" style=\"display:none\">\n" +
+                    "            <div class=\"resource-left\">\n" +
+                    "                <div id=\"resource-type\" class=\"resource-imag\">\n" +
+                    "                    PDF\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "            <div class=\"resource-right\">\n" +
+                    "                <div id=\"resource-name\" class=\"resource-name\"></div>\n" +
+                    "                <div class=\"resource-note\"></div>\n" +
+                    "                <div class=\"resource-note\"></div>\n" +
+                    "            </div>\n" +
+                    "        </div>";
+
+                resouce_view(Getdata(0),1);
+            }else {
+                alert(JSON.stringify(err))
+            }
+        });
+
+    }
+    function loadMore(t){
+        api.showProgress({
+            title:"获取数据中。。。",
+            text:"please wait my baby!!!"
+        });
+        var z = Getdata(t);
+        resouce_view(z,1);
+        api.hideProgress();
+    }
+    function resouce_view(data,type) {
+        var  rdata;
+        if (type==2){
+            rdata =$.parseJSON(data)
+        }else {
+            rdata = data
+        }
+        var sourceNode = document.getElementById("resouce-box"); // 获得被克隆的节点对象
+        for (var i = 0; i < rdata.length; i++) {
+            //alert(JSON.stringify(rdata[i]));
+            var clonedNode = sourceNode.cloneNode(true); // 克隆节点
+            clonedNode.setAttribute("id", "resouce-box-" + rdata[i].id); // 修改一下id 值，避免id 重复
+            clonedNode.setAttribute("onclick","openResourceDetail("+rdata[i].id+")");
+            sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+            clonedNode.style.display = '';
+        }
+        sourceNode.style.display='none';
+        for (var i = 0; i < rdata.length; i++) {
+            tmp = document.getElementById("resouce-box-" + rdata[i].id);
+            tmp.childNodes[1].childNodes[1].innerHTML = rdata[i].url.split('.')[1];
+            var t = rdata[i].name;
+            if(t.length>6)t = t.substring(0,6)+'...';
+            tmp.childNodes[3].childNodes[1].innerHTML = t;
+            tmp.childNodes[3].childNodes[3].innerHTML = rdata[i].like_num+'赞,';
+            tmp.childNodes[3].childNodes[5].innerHTML = rdata[i].dislike_num+'踩';
+        }
+    }
+    function fnInitEvent() {
+        /**上拉加载 */
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 10
+            }
+        }, function(ret, err) {
+            //页码+1，继续请求数据
+            pageN += 1;
+            loadMore(pageN*10);
+        });
+        /** 下拉刷新 */
+        api.setRefreshHeaderInfo({
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...'
+        }, function(ret, err) {
+            //重置页码、页面数据，请求数据
+            if(ret){
+                pageN=0;
+                refresh();
+                api.refreshHeaderLoadDone();
+            }
+        });
+    }
+
+
+
+</script>

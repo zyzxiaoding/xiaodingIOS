@@ -1,0 +1,508 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+    <script type="text/javascript" src="../script/jquery.js"></script>
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+
+    <!-- Insert this line above script imports  -->
+
+
+    <!-- Insert this line after script imports -->
+
+</head>
+
+<style>
+body{
+    word-break:break-all;
+    background-color: white;
+ }
+    html,body{
+        height: 100%;
+    }
+    iframe{
+    width: : 100%;
+    height: 80%;
+    background-color: white;
+    }
+
+    hr {
+    display: block;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
+    border-style: inset;
+    border-width: 1px;
+    }
+    html , body{
+        -webkit-user-select:text;
+        -moz-user-select:text;
+        -ms-user-select:text;
+        user-select:text;
+    }
+
+    ul, li {
+    list-style: inherit;
+    }
+
+    ul,ol{
+        padding-left: 40px;
+    }
+
+    .red_Color{
+
+        color: #6d7cd9;
+    }
+
+    #triangle{
+        width: 0;
+        height: 0;
+        border: 15px solid red;
+        border-left-width: 10px;
+        border-right-width: 10px;
+        border-top-color: #e6e6e6;
+        border-bottom: none;
+        border-left-color: white;
+        border-right-color: white;
+    }
+
+
+</style>
+<body>
+
+
+
+<header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt" id="aui-header">
+    <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+        <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+    </a>
+    <div class="aui-title" style="background-color: #ffffff;color: #000000;">写回答</div>
+    <div class="next_btn" onclick="ok()" >
+        <div style="float: right;">完成</div>
+    </div>
+</header>
+<div id="content" style=" position: relative; min-height: 300px;height: calc(90% - 45px - 70px);border: 3px;background-color: white">
+    <input id="biaoti" type="text" placeholder="请输入标题" style="font-size:18px;color: black;width: 90%;height: 50px;margin-left: 5%">
+    <font style="color:#8e8e8e;font-size:15px;margin-left: 5%;">正文：</font>
+
+    <iframe id='HtmlEdit' dropzone='copy' style="border-color:grey;border-width: 0px;font-size:20px;word-break:break-all;width:100%; height: calc(90% - 50px - 20px - 8px);-webkit-user-select:text;-moz-user-select:text; -ms-user-select:text; user-select:text;" marginWidth='20px' marginHeight='2px' placeholder="22" onclick="start()"></iframe>
+
+    <div style="height:4px;background-color:#f7f7f7;margin-top:24px"></div>
+
+</div>
+
+
+    <div id="moreFun" class="aui-hide" style="position:fixed;bottom:65px;background-color:#e6e6e6;left: calc(12.5% - 12px - 10px );">
+        <span class="iconfont icon-B" style="font-size:23px;padding:0px 10px" onmousedown="stop(event)"  id="addBold" onclick="addBoldFunction()"tapmod></span>
+        <span class="iconfont icon-I" style="font-size:23px;padding:0px 10px" onmousedown="stop(event)"  id="italic" onclick="italicFunction()" tapmode></span>
+        <span class="iconfont icon-H" style="font-size:23px;padding:0px 10px" onmousedown="stop(event)" id="big" onclick="bigFunction()" tapmode></span>
+        <span class="iconfont icon-number1" style="font-size:23px;padding:0px 10px" onmousedown="stop(event)" id="ul" onclick="ulFunction()" tapmode></span>
+        <span class="iconfont icon-youxuliebiao1" style="font-size:23px;padding:0px 10px" onmousedown="stop(event)" id="ol" onclick="olFunction()" tapmode></span>
+    </div>
+    <div id="triangle" class="aui-hide" style="position:fixed;bottom:50px;background-color:#e6e6e6;left: calc(12.5% - 12px );"></div>
+
+
+<footer class="aui-bar aui-bar-tab" id="footer" style="font-size:20px;box-shadow: 0 0 #D7D7D7;">
+
+
+
+    <div class="aui-bar-tab-item" onmousedown="stop(event)" id="Aa" onclick="openMore()" tapmode  >
+        <span class="iconfont icon-Aa" style="font-size: 19px"></span>
+    </div>
+
+
+    <!-- <div class="aui-bar-tab-item" onmousedown="stop(event)" id="big" onclick="bigFunction()" tapmode  >
+        <span class="iconfont icon-H"></span>
+    </div> -->
+    <div class="aui-bar-tab-item" onmousedown="stop(event)" id="newLine" onclick="newLineFunction()"  tapmode>
+        <span class="iconfont icon-line" style="font-size: 20px"></span>
+    </div>
+
+    <div class="aui-bar-tab-item" onmousedown="stop(event)" id="image" onclick="UIAlbumBrowser_imagePicker()" tapmode >
+        <span class="iconfont icon-picture" style="font-size: 20px"></span>
+    </div>
+
+    <div class="aui-bar-tab-item" onmousedown="stop(event)" tapmode>
+        <span class="iconfont icon-set" style="font-size: 25px" onclick="set()"></span>
+    </div>
+
+
+
+</footer>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript">
+    var header = $api.byId('aui-header');
+    var headerPos = $api.offset(header);
+    var cImage =0;
+    var cimgs=[];
+    var body_h = $api.offset($api.dom('body')).h
+    var fh = $api.offset($api.dom('footer')).h;
+
+
+    function Next() {
+        var jsFun = 'postStrategy()';
+        api.execScript({
+            frameName:'circle_strategy_release_frm',
+            script:jsFun
+        })
+    }
+
+    function UIAlbumBrowser_imagePicker() {
+        api.getPicture({targetHeight:600,targetWidth:800,
+            sourceType:'album',
+            encodingType:'jpg',
+            mediaValue:'pic',
+            destinationType:'url',
+            allowEdit:true,
+            quality:100,
+            saveToPhotoAlbum:false
+        },function (ret,err) {
+            if(ret){
+
+
+                saveImg(ret.data);
+
+                // cImage = cImage +1 ;
+                // api.sendEvent({
+                //     name:'photoSelected',
+                //     extra:{
+                //         path:JSON.stringify(ret.data)
+                //     }
+                // });
+            }
+            else {
+                alert(JSON.stringify(err))
+            }
+        })
+
+    }
+
+        //保存剪辑图像
+    function saveImg(path) {
+    api.showProgress({
+        title: '上传中...',
+        text: '先喝杯茶...',
+    });
+    //上传剪辑后的图像到服务器
+    api.ajax({
+        // report : false,
+        url : 'http://47.105.160.217:80/api/upload/',
+        //这里是我们约定好的后台上传图片的位置 ，你可以根据你的需求来改
+        method : 'post',
+        cache : 'false',
+        timeout : 30,
+        dataTpye : 'json',
+        data : {
+            files : {
+                file : path
+            },
+            values: {
+              type: 'public'
+            }
+        }
+    }, function(ret, err) {
+         //alert(JSON.stringify(ret));
+        api.hideProgress();
+        if (ret.message=="SUCCESS") {
+          var urlpath=ret.data.path;
+            imageFunction('http://47.105.160.217/files/'+urlpath);
+
+        }
+        if (ret.status == 1) {
+          api.toast({
+              msg : ret.info
+          });
+        }
+        //上传进度
+        if (ret.status == 0) {
+            api.toast({
+                msg : '上传错误',
+                duration : 3000,
+                location : 'bottom'
+            });
+        } else if (ret.status == 1) {
+            $api.byId(valueId).value = ret.id;
+            $api.byId(imgId).src = ret.path;
+         }
+    });
+    }
+
+    function closeWin(){
+        api.closeWin({
+        });
+    }
+</script>
+
+<script language="javascript">
+
+var big;
+var italic;
+var addBold;
+var image;
+var underline;
+
+var bigFlag=false;
+var italicFlag=false;
+var addBoldFlag=false;
+var imageFlag=false;
+var underlineFlag=false;
+
+
+apiready=function(){
+    big=$api.byId("big");
+    italic=$api.byId("italic");
+    addBold=$api.byId("addBold");
+    image=$api.byId("image");
+    underline=$api.byId("underline");
+    var jq = $.noConflict();
+
+
+}
+	function stop(e){
+        //现代浏览器阻止默认事件
+        if ( e && e.preventDefault )
+            e.preventDefault();
+        //IE阻止默认事件
+        else
+            window.event.returnValue = false;
+        return false;
+	}
+
+    function start(){
+        //alert("1")
+    }
+
+    function openMore(){
+        event.stopPropagation();
+      if($api.hasCls($api.byId("moreFun"),'aui-hide')){
+          $api.removeCls($api.byId("moreFun"), 'aui-hide');
+          $api.removeCls($api.byId("triangle"), 'aui-hide');
+      }else {
+          $api.addCls($api.byId("moreFun"), 'aui-hide');
+          $api.addCls($api.byId("triangle"), 'aui-hide');
+      }
+   }
+
+
+    // var btn3=document.getElementById('big');
+    // 	btn3.onmousedown=function(e){
+    //         if ( e && e.preventDefault )
+    //             e.preventDefault();
+    // 	        else    	       
+    // 	            window.event.returnValue = false;//IE阻止默认事件
+    // 	        return false;
+    // 	}
+
+
+    var editor,butGroup, doc,box;
+    window.onload=function(){
+
+        editor = document.getElementById("HtmlEdit").contentWindow;//获取iframe Window 对象
+        doc = document.getElementById("HtmlEdit").contentDocument; //获取iframe documen 对象
+        document.getElementById("HtmlEdit").focus();
+        box= document.getElementById('box');
+        //设置事件监听
+        //doc.focus();
+
+
+
+        doc.addEventListener('click',function(e){
+            var dom2=editor.document.getElementsByTagName("body");
+            //editor.document.getElementsByTagName("img")[1].innerHTML="<h4>我是第二个tag选择器效果</h4>";
+            for(var i in dom2) {
+                //do something
+                $api.css(dom2[i],'word-break:break-all;');
+                // $api.attr(dom2[i],'szie','16');
+                console.log(i);
+            };
+            //alert("www");
+
+        })
+        //只需键入以下设定，iframe立刻变成编辑器。
+        editor.document.designMode = 'On';  //打开设计模式
+        editor.document.contentEditable = true;// 设置元素为可编辑
+    }
+
+
+    function bigFunction(){
+        if (!bigFlag) {
+            editor.document.execCommand("fontSize", true, 5);
+            bigFlag=true;
+            $api.addCls($api.byId('big'), 'red_Color');
+
+
+        }else {
+            editor.document.execCommand("fontSize", true, 3);
+            bigFlag=false;
+            $api.removeCls($api.byId('big'), 'red_Color');
+        }
+
+        //所有字体特效只是使用 execComman() 就能完成。
+        //editor.document.execCommand("fontSize", true, 10);
+        console.log( doc.body.innerHTML);
+    }
+
+    function ulFunction(){
+        editor.document.execCommand('InsertUnorderedList');
+    }
+
+    function olFunction(){
+        editor.document.execCommand('InsertOrderedList');
+    }
+
+    function imageFunction(url){
+        editor.document.execCommand("insertimage", 0, url);
+        //editor.document.querySelector('img').css("background-color","red");
+        //d.css("background-color","red");
+
+        var doms=editor.document.getElementsByTagName("img");
+        //editor.document.getElementsByTagName("img")[1].innerHTML="<h4>我是第二个tag选择器效果</h4>";
+        for(var i in doms) {
+            //do something
+            $api.css(doms[i],'width:100%;');
+            console.log(i);
+        };
+
+
+
+
+    }
+
+    //加粗方法
+    function addBoldFunction() {
+
+        if (!addBoldFlag) {
+            editor.document.execCommand("Bold", true, null);
+            addBoldFlag=true;
+            $api.addCls($api.byId('addBold'), 'red_Color');
+
+
+        }else {
+            editor.document.execCommand("Bold", true, null);
+            addBoldFlag=false;
+            $api.removeCls($api.byId('addBold'), 'red_Color');
+        }
+
+    }
+    //斜体方法
+     function  italicFunction(){
+         if (!italicFlag) {
+             editor.document.execCommand('italic',true,null);
+             italicFlag=true;
+             $api.addCls($api.byId('italic'), 'red_Color');
+
+
+         }else {
+             editor.document.execCommand('italic',true,null);
+             italicFlag=false;
+             $api.removeCls($api.byId('italic'), 'red_Color');
+         }
+
+     }
+
+     function newLineFunction(){
+         //editor.document.execCommand('underline',true,null)
+
+
+         editor.document.execCommand('insertHorizontalRule', true,"aa");
+         editor.document.execCommand('InsertParagraph', false, null);
+
+         var doms_hr=editor.document.getElementsByTagName("hr");
+         //editor.document.getElementsByTagName("img")[1].innerHTML="<h4>我是第二个tag选择器效果</h4>";
+         for(var i in doms_hr) {
+             //do something
+             $api.css(doms_hr[i],'border-color: #c9c9c9;width:87.2%;border-style: dashed;margin-top:25px;margin-bottom:25px');
+             console.log(i);
+         };
+     }
+    //加背景色
+    //var hiliteColor = ()=>{ editor.document.execCommand('hiliteColor',true,'yellow') }  //ES6 的箭头函数写法
+
+
+    function set() {
+        api.openFrame({
+            name: 'qs_set_frm',
+            url: '../QandA/html/qs_set_frm.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            },
+            bgColor: 'rgba(0,0,0,0.6)'
+        });
+    }
+
+    //上传方法
+    function ok(){
+        // console.log(doc.body.innerHTML);
+        // box.innerHTML=doc.body.innerHTML;
+        var title = $api.val($api.byId('biaoti'));
+        var content=doc.body.innerHTML;
+
+        if (title=="") {
+            alert("请输入标题");
+            return;
+        }
+        if (content=='') {
+            alert("请输入文本");
+            return;
+        }
+        if (img_list=='') {
+            alert("请插入封面");
+            return;
+        }
+
+        json = {
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "cookie":"",
+            "title":title,
+            "tag_id_list":""+api.pageParam.tag_id,
+            "content":content,
+            "is_anonymous":$api.getStorage('strategy_is_anonymous'),
+            "img_list":img_list
+        }
+
+        console.log(JSON.stringify(json));
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/group/postArticle/',
+            type:'POST',
+            data:JSON.stringify(json),
+            // crossDomain: true,
+            dataType: 'json',
+            success:function (ret) {
+                alert(JSON.stringify(ret));
+                //back();
+                api.closeWin();
+            },
+            error:function (error) {
+                alert(JSON.stringify(error))
+            }
+        })
+
+        // api.openWin({
+        // name: 'page1',
+        // url: './circle_strategy_release00.html',
+        // pageParam: {
+        //     name: doc.body.innerHTML
+        // },
+        // allowEdit: true
+        // });
+
+    }
+
+    function otherHistory(otherID){
+
+    }
+</script>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+ </head>
+<body>
+    <div id="content" style="width: 100%; position: relative; padding:16px; min-height: 800px;height:auto;border: 3px; border-radius: 0px;background-color: white">
+        <div id="guo" placeholder="请输入正文" style="min-height:800px;height:auto;width: 100%;margin-left: 0%" contenteditable="true"></div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/aui-tab.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+        api.parseTapmode();
+        var i = 0;
+        api.addEventListener({
+            name:'photoSelected'
+        },function (ret,error) {
+            var s = ret.value.path;
+            s = s.replace(/"/g,"");
+            s = s.replace(/\\/g,"");
+            console.log(s)
+
+            var cloudPath;
+            api.ajax({
+                url:'http://47.105.160.217/api/upload/',
+                method:'post',
+                data:{
+                    files:{
+                        file:s
+                    }
+                },
+                contentType:false,
+                processData:false
+            },function (ret,error) {
+                if(ret){
+                    i = i + 1;
+                    cloudPath = 'http://47.105.160.217/files/'+ret.data.path;
+                    document.getElementById('guo').innerHTML=document.getElementById('guo').innerHTML+ "<img src=\" "+cloudPath+" \" id=\"myweChat=wwf3550288\"style=\"width: 100%;padding:20px; \"/>"
+                        +"<br />";
+                }
+                else {
+                    alert(JSON.stringify(error))
+                }
+            });
+
+        })
+    };
+    function postStrategy() {
+      if (document.getElementById('guo').innerHTML != '') {
+        json = {
+             "app_version":"",
+             "user_id":api.pageParam.user_id,
+             "cookie":api.pageParam.user_cookie,
+             "type": "homework",
+             "content":''+$('#guo').html(),
+             "question_id":api.pageParam.question_id,
+             "is_anonymous":$api.getStorage('as_is_anonymous'),
+             "img_list":""
+         }
+         console.log(JSON.stringify(json))
+         $.ajax({
+             url:'http://47.105.160.217:80/api/questionAnswer/postAnswer/',
+             type:'POST',
+             data:JSON.stringify(json),
+             // crossDomain: true,
+             dataType: 'json',
+             success:function (ret) {
+               console.log('回答问题成功');
+               api.closeWin({
+                   name: 'answer_list'
+               });//刷新作用
+               api.openWin({
+                   name: 'answer_list',
+                   url: './answer_list.html',
+                   pageParam: {
+                       question_id: api.pageParam.question_id,
+                       user_id : api.pageParam.user_id,
+                       user_cookie : api.pageParam.user_cookie,
+                       from_page: 'edit_answer'
+                   }
+               });
+             },
+             error:function (error) {
+                 alert(JSON.stringify(error))
+             }
+         })
+      }
+    }
+    function closeWin(){
+        api.closeWin({
+        });
+    };
+
+    function add_line(){
+      var line = document.createElement('div');
+      line.id = 'add_line';
+      line.innerHTML = '-----------------------' ;
+      var br = document.createElement('div'); br.innerHTML = '<br/>';
+      var text_line = document.getElementById('guo');
+      text_line.appendChild(br);
+      text_line.appendChild(line);
+      text_line.appendChild(br);
+    }
+
+    function drawFile() {
+      var f = document.getElementById('files').files[0];
+      fileList.push(f);
+    }
+
+    function uploadFile() {
+        var t = fileList.pop();
+        var formdata = new FormData();
+        formdata.append('file',t);
+        formdata.append('type','public');
+        $.ajax({
+            url:'http://47.105.160.217/api/upload/',
+            method:'post',
+            data:formdata,
+            contentType:false,
+            processData:false,
+            async:false,
+            success:function (ret) {
+                alert('上传成功');
+            }
+        })
+    }
+
+    function add_url() {
+      var text_line = document.getElementById('guo');
+      text_line.innerHTML += 'http://47.105.160.217/files/' + $api.getStorage('file_url')
+    }
+</script>
+</html>

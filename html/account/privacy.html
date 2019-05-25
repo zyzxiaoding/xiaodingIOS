@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+    <title>隐私</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <script type="text/javascript" src="../../script/aui-tab.js" ></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+
+
+
+</head>
+
+
+<script>
+
+    apiready = function(){
+        getPrivacy();
+    };
+
+    function closeWin(){
+      api.closeWin({
+      });
+    }
+
+    function getPrivacy() {
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+
+        if(cookie==null) return;
+        var json_privacy={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"aim_user_id":user_id};
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getOtherUserPrivacySettings/',
+            type:'POST',
+            data:JSON.stringify(json_privacy),
+            dataType:'json',
+            success:function (ret) {
+                console.log(JSON.stringify(ret));
+                if(ret.status==200){
+                    if (ret.data.is_real_name_auth_info_show==false) {
+                        $api.attr($api.byId("auth_hide"),'checked','');
+
+                    }else {
+                        $api.attr($api.byId("auth_public"),'checked','');
+                    }
+
+                    if (ret.data.is_user_action_history_show==0) {
+                        $api.attr($api.byId("history_hide"),'checked','');
+
+                    }else {
+                        $api.attr($api.byId("history_public"),'checked','');
+                    }
+
+                //alert("修改成功");
+
+                var _data=ret.data;
+
+                console.log(JSON.stringify(_data));
+
+              }
+            },
+            error:function (ret) {
+            //   api.hideProgress();
+                $api.toast( "网络错误", 2000 );
+            },
+        })
+
+    }
+
+    function setPrivacy(item , hideORpublic){
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+
+        if(cookie==null) return;
+        //var json_privacy={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"is_user_info_show":2,"is_user_concern_show":2,"is_user_collect_show":2};
+        var json_privacy;
+
+        if (item==1) {
+            json_privacy={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"is_real_name_auth_info_show":hideORpublic};
+        }else if (item==2) {
+            json_privacy={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"is_user_action_history_show":hideORpublic};
+        }else {
+
+        }
+
+        console.log(JSON.stringify(json_privacy));
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/updateUserPrivacySettings/',
+            type:'POST',
+            data:JSON.stringify(json_privacy),
+            dataType:'json',
+            success:function (ret) {
+                console.log(JSON.stringify(ret));
+                if(ret.status==200){
+
+                    //alert("修改成功");
+                    getPrivacy();
+
+                var _data=ret.data;
+
+                console.log(JSON.stringify(_data));
+
+              }
+            },
+            error:function (ret) {
+            //   api.hideProgress();
+                $api.toast( "网络错误", 2000 );
+            },
+        })
+
+    }
+
+</script>
+
+<body>
+
+    <header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+        <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+            <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+        </a>
+        <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">隐私</div>
+        <!-- <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="saveImageClip()">
+            <h3 style="color:#6d7cd9;padding-right: 10px;">确定</h3>
+        </div> -->
+    </header>
+
+
+
+    <div class="aui-content aui-margin-b-15" style="margin-top:50px">
+        <ul class="aui-list aui-form-list">
+
+
+            <li class="aui-list-item" >
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        认证信息
+                    </div>
+                    <div class="aui-list-item-input">
+                        <label onclick="setPrivacy(1,true)"><input class="aui-radio" type="radio" id="auth_public" name="demo1" checked> 公开</label>
+                        <label onclick="setPrivacy(1,false)"><input class="aui-radio" type="radio" id="auth_hide" name="demo1"> 隐藏</label>
+                    </div>
+                </div>
+            </li>
+
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-label">
+                        操作历史
+                    </div>
+                    <div class="aui-list-item-input">
+                        <label onclick="setPrivacy(2,1)"><input class="aui-radio" type="radio" id="history_public" name="demo2" checked> 公开</label>
+                        <label onclick="setPrivacy(2,0)"><input class="aui-radio" type="radio" id="history_hide" name="demo2"> 隐藏</label>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+
+</body>
+
+</html>

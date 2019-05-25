@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+	<style>
+		#contant{
+		}
+		.ids{
+			text-align: center;
+			margin-bottom: 5px;
+			border-bottom: 1px #DDDDDD solid;
+		}
+	</style>
+</head>
+<body>
+	<!-- <div id="dialog">
+		<img id="erweima" src="../image/myerweima.png" tapmode onclick="api.closeFrame()"/>
+	</div> -->
+  <section tapmode  onclick="closeUIchat()"></section>
+  <footer>
+    <div class="total">
+    <div id = "top_box" class="top-box">
+      <div class="top-fixed">
+      <div id='comment-num' class="left">
+
+      </div>
+      <div class="right" onclick="closeUIchat()">X</div>
+      </div>
+    </div>
+
+    <div id='comment' class="comment">
+      <span id='comment-box-0' class="comment-box" style="display:none">
+
+        <div class="comment-box-left">
+        <div class="comment-user-imag">
+          <img src="../image/09-014416_603.jpg" alt="">
+        </div>
+        </div>
+
+        <div class="comment-box-right">
+        <div id="comment-user-name" class="comment-user-name">
+
+        </div>
+        <div class="comment-user-data">
+
+        </div>
+        <div class="comment-user-comment">
+
+        </div>
+      </div>
+      <div id="ff1" class="comment-approve" onclick="click_approve( this )" >
+
+      </div>
+    </span>
+
+</div>
+    <div class="input-comment">
+
+    </div>
+</div>
+  </footer>
+</body>
+<!--很多人说报api is not defind 的错误是没引入api.js，所以我没引入来告诉你们，api未定义真的是因为你执行api方法之前没有进行apiready处理-->
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+//	首先,我们声明页面逻辑处理所需要的全局变量
+	var skip = 0;		//页码
+	var limit = 8;		//每页条数
+	var datas = new Array(); //页面数据存储的数组
+  var qs_dict;
+  var since_id = 0;
+// 然后，进行apiready处理，在apiready里 我进行了第一次页面数据请求和初始化事件监听
+	/**
+	 * api初始化
+	 */
+    apiready = function(){
+      qs_dict = {
+  		"app_version":"",
+  		"user_id":"56bd1d4d9719fe9d5474d173336645c3",
+  		"user_cookie":"039d5e1613cfcb460a255e2d2d769e3b",
+  		"question_id":14,
+  		"answer_id":7,
+  		"since_id": since_id,
+  		"page_size": 10
+  		};
+		fnInitData();
+		fnInitEvent();
+    };
+// 数据请求我用的是上次认证考试的接口。
+    /**
+     * 获取页面数据
+     */
+    function fnInitData(){
+    	api.showProgress({
+			title:"获取数据中...",
+			text: '请稍等...'
+        });
+		//api.ajax
+    $.ajax({
+        type: 'POST',
+        url: "http://47.105.160.217:80/api/questionAnswer/getComment/",
+        data:JSON.stringify(qs_dict),
+        dataType: 'json',
+        async: false,
+        success:function(result){
+          console.log('获取评论成功')
+          comm_data = result.data;
+          console.log(JSON.stringify(comm_data.length))
+          if(comm_data.length > 0){
+            //调用页面渲染的方法
+            api.hideProgress();
+            fnInitView(datas);
+          }
+          else {
+            api.toast({msg:'没数据了，别拽了'});
+            since_id -= 10;
+          };
+          console.log("第"+parseInt(since_id/10+1).toString()+"页");
+        },
+        error:function(){
+          console.log('加载评论失败');
+        }
+    });
+    };
+
+    /**
+     * 渲染页面布局
+     *
+     * @param {Array} data
+     */
+    function fnInitView(comm){
+    	// 取消下拉刷新效果
+    	api.refreshHeaderLoadDone();
+    	//声明容器 并置空
+      var sourceNode = document.getElementById("comment-box-0");
+      sourceNode.parentNode = ''
+    	//遍历页面数据的数组进行创建标签,插入容器
+      for (var i = 1; i < comm.length; i++) {
+  			var clonedNode = sourceNode.cloneNode(true); // 克隆节点
+  			clonedNode.setAttribute("id", "comment-box-" + i); // 修改一下id 值，避免id 重复
+  			sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+  			clonedNode.style.display = '';
+  		}
+      for (var j = 0; j < comm.length; j++) {
+        var tmpNode = document.getElementById('comment-box-'+ j).childNodes;
+        document.getElementById('comment-box-'+ j).style.display = '';
+        tmpNode[3].childNodes[1].innerHTML = comm[j].author_info['author_name'];
+        tmpNode[3].childNodes[3].innerHTML = comm[j].comment_postdate;
+        tmpNode[3].childNodes[5].innerHTML = comm[j].content;
+        tmpNode[5].innerHTML = comm[j].comment_like_num;
+        if (comm[j].is_on == 0) {  //点过赞了
+          $api.addCls(tmpNode[5],'selected');
+        }
+      }
+    };
+    /**
+     * 初始化页面监听事件
+     */
+    function fnInitEvent(){
+    	/**上拉加载 */
+    	api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:10
+		    }
+		}, function(ret, err){
+			//页码+1，继续请求数据
+			since_id+=10;
+			fnInitData();
+		});
+		/** 下拉刷新 */
+		api.setRefreshHeaderInfo({
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...'
+		}, function(ret, err) {
+			//重置页码、页面数据，请求数据
+		    since_id = 0;
+		    datas = new Array();
+		    fnInitData();
+		});
+    };
+</script>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+    .searchbar-box {
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      border-bottom: 1px solid #d3d2d2;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 85%;
+      height: 100%;
+      float: left;
+    }
+    .inputbar {
+      position: absolute;
+      width: 94%;
+      height: 80%;
+      left: 3%;
+      top: 10%;
+      /*margin-left: -47%;
+      margin-top: -40%;*/
+      background-color: #ebebeb;
+      border-radius: 5px;
+    }
+    .inputbar .input {
+      width: 85%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar .camera {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-image: url(../icon/camera.png);
+      background-size: 17px 14.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .cancel-box {
+      position: relative;
+      display: table;
+      width: 14%;
+      height: 100%;
+      float: left;
+    }
+    .cancel {
+      font-size: 18px; color: #6d7cd9; font-weight: bolder; text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+    .searchby_cata-box {
+      width: 90%;
+      height: 30%;
+      margin-left: 5%;
+    }
+    .title_1-box {
+      position: relative;
+      width: 100%;
+      height: 50%;
+      display: table;
+    }
+    .title_1 {
+      font-size: 20px; color: #000;
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .tag_1-box {
+      width: 100%;
+      height: 50%;
+    }
+    .tag_1 {
+      width: 33%;
+      height: 100%;
+      float: left;
+    }
+    .block_1 {
+      position: relative;
+      width: 70%;
+      height: 50%;
+      left: 15%;
+      top: 25%;
+      background-color: #ebebeb;
+      font-size: 18px; color: #6d7cd9; text-align: center;
+      line-height: 200%;
+      border-radius: 5px;
+    }
+
+    .history-box {
+      width: 90%;
+      height: 60%;
+      margin-left: 5%;
+      padding-top: 10%;
+    }
+    .title_2-box {
+      position: relative;
+      width: 100%;
+      height: 10%;
+    }
+    .title_2 {
+      font-size: 20px; color: #000;
+      float: left;
+    }
+    .clean_history-box {
+      position: relative;
+      width: 25%;
+      height: 50%;
+      float: right;
+    }
+    .clean_history {
+      width: 80%;
+      font-size: 12px; color: #959595; text-align: center;
+      border-radius: 3px;
+    }
+		.tag_2-box {
+      position: relative;
+      width: 100%;
+      height: auto;
+			float: left;
+    }
+    .tag_2 {
+      width: auto;
+      height: auto;
+			float: left;
+			margin-right: 24px;
+			margin-top: 18px;
+    }
+    .block_2 {
+      position: relative;
+			padding: 5px;
+      width: 100%;
+      height: 100%;
+      background-color: #ebebeb;
+      font-size: 16px; color: #959595; text-align: center ;
+      line-height: 100%;
+			border-radius: 6px;
+    }
+    .block_2_mean {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: #ebebeb;
+      font-size: 18px; color: #6d7cd9; text-align:left;
+      padding-left: 6px;
+      line-height: 54px;
+    }
+
+    </style>
+</head>
+<body>
+  <div class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+          <input id="search_content" type="text" class="input" placeholder="搜索题目/圈子/资源/攻略" style="padding-left:10px">
+          <div class="camera"></div>
+        </div>
+      </div>
+      <div class="cancel-box">
+        <div class="cancel">取消</div>
+      </div>
+  </div>
+  </div>
+
+  <div class="content-box">
+    <!-- <div class="searchby_cata-box">
+      <div class="title_1-box">
+        <div class="title_1">分类查找</div>
+      </div>
+      <div class="tag_1-box">
+        <div class="tag_1">
+          <div class="block_1" onclick="open_cata_result(this)">问答</div>
+        </div>
+        <div class="tag_1">
+          <div class="block_1" onclick="open_cata_result(this)">资源</div>
+        </div>
+        <div class="tag_1">
+          <div class="block_1" onclick="open_cata_result(this)">攻略</div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="history-box">
+      <div class="title_2-box">
+        <div class="title_2">历史搜索</div>
+        <div class="clean_history-box">
+          <button class="clean_history" onclick="clean_history()">清除历史</button>
+        </div>
+      </div>
+      <div id="history" class="tag_2-box">
+        <div id="history-tip" class="tag_2" style="display:none">
+          <div  class="block_2">全部</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+	apiready = function(){
+    getHistory();
+    viewHistory();
+		$("#search_content").on("keydown", function (e) {
+		if (e.keyCode == 13) {
+				api.openWin({
+						name: 'search_result_win',
+						url: './search_result_win.html',
+						pageParam: {
+								type: '',
+								content: document.getElementById('search_content').value,
+								flag: 2  //表明是搜索点击进入
+						}
+				});
+
+		}
+});
+	};
+
+  function getHistory() {
+
+  };
+
+  function viewHistory() {
+    var history = new Array('读者','线性代数','泷泽萝拉','叭啦啦啦啦啦啦小魔仙');
+    var sourceNode = document.getElementById('history-tip');
+
+    for (var i = 0; i < history.length; i++) {
+      var clonedNode = sourceNode.cloneNode(true);
+      // clonedNode.setAttribute('id','history-tip-'+i);
+      clonedNode.style.display = '';
+      clonedNode.childNodes[1].innerHTML = history[i];
+			clonedNode.childNodes[1].setAttribute('class','block_2');
+
+
+      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+    }
+  };
+
+  function clean_history() {
+    var history = document.getElementById('history');
+    history.innerHTML = '';
+  }
+
+	function open_cata_result(tag) {
+		var tmp = document.getElementById('search_content').value;
+		if (tag.innerHTML == "问答") {
+			api.openWin({
+			    name: 'search_result',
+			    url: './search_result_win.html',
+			    pageParam: {
+			        type: '问答',
+							content: tmp,
+							flag: 1  //表明是分类点击进入
+			    }
+			});
+		}
+		else if (tag.innerHTML == "资源") {
+			api.openWin({
+			    name: 'search_result',
+			    url: './search_result_win.html',
+			    pageParam: {
+			        type: '资源',
+							content: tmp,
+							flag: 1
+			    }
+			});
+		}
+		else if (tag.innerHTML == "攻略") {
+			api.openWin({
+			    name: 'search_result',
+			    url: './search_result_win.html',
+			    pageParam: {
+			        type: '攻略',
+							content: tmp,
+							flag: 1
+			    }
+			});
+		}
+	}
+
+</script>
+</html>

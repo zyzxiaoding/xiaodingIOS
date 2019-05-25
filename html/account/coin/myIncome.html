@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>我的收入</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+    <script type="text/javascript" src="../../../script/doT.min.js"></script>
+
+    <script type="text/javascript" src="../../../script/doT.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: white;
+        }
+
+        .list{
+            /*display: -webkit-box;
+            display: -webkit-flex;*/
+            display: flex;
+            /*-webkit-box-orient: horizontal;*/
+            flex-direction: row;
+            align-items:center;
+            position: relative;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            flex-wrap:wrap;
+        }
+    </style>
+
+</head>
+
+
+
+
+
+<script>
+
+
+apiready = function(){
+  getData();
+  api.addEventListener({name:'scrolltobottom'}, function(ret, err){getData();});
+};
+
+    var since_id=0;
+    var page_size=10;
+
+    function getData(){
+      var flag = $api.byId('insertItems');
+      // 编译模板函数
+      var tempFn = doT.template($api.byId('template').innerHTML);
+      // 使用模板函数生成HTML文本
+
+      //var data_=[{"username":"banana","des":"描述1"},{"username":"bs","des":"描述1"},{"username":"username","des":"描22"},{"username":"banafsna","des":"ddd"},{"username":"banadfna","des":"描述fd1"}];
+
+
+      var cookie=$api.getStorage('cookie');
+      var user_id=$api.getStorage('user_id');
+      if(cookie==null) return;
+
+
+      var json_getItems={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"since_id":since_id,"page_size":10};
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getGoldEarnLog/',
+            type:'POST',
+            data:JSON.stringify(json_getItems),
+            dataType:'json',
+            success:function (ret) {
+              if(ret.status==200){
+
+                var _data=ret.data;
+                //_data=data_;
+                //if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+                var resultHTML = tempFn(_data.gold_earn_data);
+                $api.val($api.byId('goldNum'),_data.gold_earn_data.gold_history);
+
+                if(since_id==0){
+                    console.log("since_id"+since_id);
+                    //$api.setStorage('followList', _data);
+                    $api.append(flag, resultHTML);
+                    if(_data.gold_earn_data=="") $api.append(flag, '<h1>内容为空</h1>');
+                }else {
+                    console.log("since_id"+since_id);
+
+                    if(_data.gold_earn_data==""){
+                        $api.toast( '到头了', 300 );
+                        return;
+                    }
+                    $api.append(flag, resultHTML);
+                }
+
+                since_id+=10;
+
+                //$api.append(flag, resultHTML);
+              }
+                //alert(JSON.stringify(ret))
+            },
+            error:function (ret) {
+              alert(JSON.stringify(ret))
+            },
+        })
+      //return 0;
+      }
+
+</script>
+
+
+<body>
+
+  <!-- <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt;position:fixed" id="aui-header">
+      <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;">我的收入</div>
+
+  </header> -->
+
+  <header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+      <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">我的收入</div>
+      <!-- <div style="float: right;color: #03a9f4;font-size: 0.8rem;" onclick="saveImageClip()">
+          <h3 style="color:#6d7cd9;padding-right: 10px;">确定</h3>
+      </div> -->
+  </header>
+
+    <div style="padding-left:24px;padding-right:24px" id="insertItems">
+
+        <!-- <div style="background:url(../../../image/mine/money.png);background-repeat:no-repeat;background-size:contain;height:150px;width:100%;padding:20px;color:white; border-radius:30px;margin-top:40px;"> -->
+        <div style="background:linear-gradient(to right ,rgba(109,124,217,1), rgba(145,124,223,1));height:128px;width:100%;padding:20px;color:white; border-radius:10px;margin-top:60px;margin-bottom:40px;">
+            <div style="font-size:20px;">总金币</div>
+            <div ><font style="font-size:40px;" id="goldNum">30</font><span style="font-size:20px;"></span></div>
+        </div>
+
+        <!-- <div class="list"  style="padding:0 0px">
+            <div style="font-size:17px;width: 80%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" > 我是一只大橙子我是一只大橙子我是一只大橙子我是一只大橙子 </div>
+             <font style="position:absolute;right:10px;top:0px;color:red"> +10.00</font>
+        </div>
+
+
+        <div class="list"  style="padding:0 0">
+            <div style="font-size:20px;width: 80%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" > 我是一只大橙子我是一只大橙子我是一只大橙子我是一只大橙子 </div>
+             <font style="position:absolute;right:10px;top:0px;color:red"> +10.00</font>
+        </div> -->
+
+    </div>
+
+
+
+</body>
+
+
+</html>
+
+
+
+<script type="text/template" id="template">
+
+{{~it:value:index}}
+
+
+
+
+<div class="list"  style="padding:0 0px">
+    <div style="font-size:17px;width: 80%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" > {{=value.description}} </div>
+     <font style="position:absolute;right:10px;top:0px;color:red"> {{=value.amount}}</font>
+     <!-- <font style="position:absolute;right:10px;bottom:0px;"> 11-14</font> -->
+</div>
+
+
+
+{{~}}
+
+</script>

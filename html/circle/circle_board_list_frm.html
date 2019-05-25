@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>AUI快速完成布局</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+</head>
+<body>
+<section class="aui-content">
+    <ul id="ranklist" class="aui-list aui-media-list">
+        <li class="aui-list-item" style="display: none">
+                    <div class="aui-media-list-item-inner" style="">
+                            <div class="aui-list-item-media">
+                                    <img src="image/demo4.png">
+                                </div>
+                            <div class="aui-list-item-inner">
+                                    <div class="aui-list-item-text">
+                                            <div class="aui-list-item-title" style="color:#4c5276">"+dl[z].user_nickname+"</div>
+                                        </div>
+                                    <div class="right_number">
+                                            <div style="    line-height: 20px; font-size: 8px;" >2</div>
+                                       </div>
+                                    <div class="aui-list-item-text" style="color:#333;">
+                     互助：&nbsp &nbsp获得积分："+dl[z].user_score+"</div>
+                                </div>
+                        </div>
+                </li>
+    </ul>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js" ></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript">
+    var jsondata,cacheDir;
+    var pageN =0;
+    function enterMainpge(id) {
+        api.openWin({
+            name:'mainPage'+id,
+            url:'../account/otherpage/otherFragment_frm.html',
+            pageParam:{
+                uid:id
+            }
+        })
+    }
+    apiready =function () {
+        api.parseTapmode();
+        fnInitEvent();
+        cacheDir = api.cacheDir;
+        paintView(getData(0),1);
+    };
+    function getData(sid) {
+        var rt ='';
+        var json ={
+            "user_id":$api.getStorage('user_id'),
+            "group_id":api.pageParam.group_id
+        };
+        //alert(JSON.stringify(json));
+        $.ajax({
+            url:'http://47.105.160.217/api/group/getGroupRankList/',
+            data:JSON.stringify(json),
+            dataType:'json',
+            method:'post',
+            async:false,
+            success: function (ret) {
+             rt = ret.data;
+             api.writeFile({
+                 path:cacheDir + '/'+'rank_list'+api.pageParam.group_id + '/' + api.frameName + '.json',
+                 data:JSON.stringify(ret.data)
+             })
+            },
+            error: function (e) {
+                alert(JSON.stringify(e));
+                rt = e
+            }
+        })
+        return rt;
+    }
+    function paintView(data,type) {
+        var dl;
+        if(type == 2){
+            dl = $.parseJSON(data);
+        }else dl = data;
+
+
+        var i = 0;
+        for (var z in dl){
+            i ++;
+            var avatar = 'http://47.105.160.217/files/'+ dl[z].user_profile_url;
+            var x = dl.length+1-i
+            document.getElementById('ranklist').innerHTML = "<li class=\"aui-list-item\" onclick='enterMainpge(\""+dl[z].user_id+"\")' style=\"\">\n" +
+                "            <div class=\"aui-media-list-item-inner\" style=\"\">\n" +
+                "                <div class=\"aui-list-item-media\">\n" +
+                "                    <img src=\""+avatar+"\" onclick=\"openUserD("+dl[z].userid+")\"/>\n" +
+                "                </div>\n" +
+                "                <div class=\"aui-list-item-inner\">\n" +
+                "                    <div class=\"aui-list-item-text\">\n" +
+                "                        <div class=\"aui-list-item-title\" style=\"color:#4c5276\">"+dl[z].user_nickname+"</div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"right_number\">\n" +
+                "                        <div style=\"line-height: 20px; font-size: 8px; \">"+'No.'+x+"</div>\n" +
+                "                    </div>\n" +
+                "                    <div class=\"aui-list-item-text\" style=\"color:#333;\">\n" +
+                " 互助："+dl[z].user_score+"&nbsp &nbsp获得积分："+dl[z].user_score+"</div>\n" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "        </li>"+document.getElementById('ranklist').innerHTML
+        }
+    }
+    function fnInitEvent() {
+        /**上拉加载 */
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 10
+            }
+        }, function(ret, err) {
+            //页码+1，继续请求数据
+            pageN += 1;
+            loadMore(pageN*10);
+        });
+        /** 下拉刷新 */
+        api.setRefreshHeaderInfo({
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...'
+        }, function(ret, err) {
+            //重置页码、页面数据，请求数据
+            if(ret){
+                pageN=0;
+                refresh();
+                api.refreshHeaderLoadDone();
+            }
+        });
+    }
+    function openUserD(id) {
+
+    }
+    function loadMore(t){
+        api.showProgress({
+            title:"获取数据中。。。",
+            text:"please wait my baby!!!"
+        });
+        api.hideProgress();
+    }
+    function refresh() {
+        var fs = api.require('fs');
+        fs.rmdir({
+            path:cacheDir + '/'+'rank_list'+api.pageParam.group_id + '/' + api.frameName + '.json',
+        },function (ret,err) {
+            if (ret){
+                document.getElementById('ranklist').innerHTML="";
+
+                paintView(getData(0),1);
+            }else {
+                alert(JSON.stringify(err))
+            }
+        });
+
+    }
+</script>
+</html>

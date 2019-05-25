@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+		<link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+    <style>
+    html,body {
+      height: 100%;
+      width: 100%;
+    }
+    .searchbar-box {
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      z-index: 10;
+    }
+		.searchbar {
+			position: fixed;
+			width: 100%;
+			height: 50px;
+			background-color: #fff;
+			z-index: 10;
+		}
+		.inputbar-box {
+			position: relative;
+			width: 85%;
+			height: 100%;
+			float: left;
+		}
+		.inputbar {
+      position: absolute;
+      width: 94%;
+      height: 80%;
+      left: 3%;
+      top: 10%;
+      /*margin-left: -47%;
+      margin-top: -40%;*/
+      background-color: #ebebeb;
+      border-radius: 5px;
+    }
+    .inputbar .input {
+      width: 85%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar .camera {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-image: url(../icon/camera.png);
+      background-size: 17px 14.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .cancel-box {
+      position: relative;
+      display: table;
+      width: 14%;
+      height: 100%;
+      float: left;
+    }
+    .cancel {
+      font-size: 16px; color: #6d7cd9; font-weight: bolder; text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .content-box {
+      position: relative;
+      width: 100%;
+      height: 500px;
+    }
+    .searchby_cata-box {
+      width: 90%;
+      height: 30%;
+      margin-left: 5%;
+    }
+    .title_1-box {
+      position: relative;
+      width: 100%;
+      height: 50%;
+      display: table;
+    }
+    .title_1 {
+      font-size: 20px; color: #000;
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .tag_1-box {
+      width: 100%;
+      height: 50%;
+    }
+    .tag_1 {
+      width: 33%;
+      height: 100%;
+      float: left;
+    }
+    .block_1 {
+      position: relative;
+      width: 70%;
+      height: 50%;
+      left: 50%;
+      top: 50%;
+      margin-left: -35%;
+      margin-top: -25%;
+      background-color: #ebebeb;
+      font-size: 18px; color: #6d7cd9; text-align: center;
+      line-height: 150%;
+      border-radius: 5px;
+    }
+
+    .history-box {
+      position: relative;
+      width: 90%;
+      min-height:30%;
+      height: auto;
+      margin-left: 5%;
+      padding-top: 5%;
+    }
+    .title_2-box {
+      position: relative;
+      padding-top: 0%;
+      width: 100%;
+      height: auto;
+    }
+    .title_2 {
+      font-size: 20px; color: #000;font-weight:bolder;
+      float: left;
+    }
+    .clean_history-box {
+      position: relative;
+      width: 25%;
+      height: 50%;
+      float: right;
+    }
+    .clean_history {
+      width: 100%;
+      font-size: 20px; color: #000; text-align: right;
+      background-color: #fff;
+      border-radius: 3px;
+
+    }
+    .tag_2-box {
+    	display: inline-block;
+
+      width: 100%;
+      height: auto;
+    }
+	    .tag_2 {
+    	display: inline-block;
+      width: 100%;
+      height: 40px;
+    }
+		.tag_3 {
+			display: inline-block;
+			width: 90%;
+			height: 30px;
+			margin-right: 6%;
+		}
+    .block_2_odd {
+			display: inline-block;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 16px; color: #000; text-align:left;font-weight: 600;
+      padding-left: 6px;
+      line-height: 40px;
+			vertical-align: middle;
+    }
+    .block_2_mean {
+    	display: inline-block;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 16px; color: #000; text-align:left;font-weight: 600;
+      padding-left: 6px;
+      line-height: 40px;
+			vertical-align: middle;
+    }
+		.block_3_odd {
+			display: inline-block;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 16px; color: #000; text-align:left;font-weight: 600;
+      line-height: 40px;
+			vertical-align: middle;
+    }
+    .block_3_mean {
+    	display: inline-block;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      font-size: 16px; color: #000; text-align:left;font-weight: 600;
+      line-height: 40px;
+			vertical-align: middle;
+    }
+
+		.history-box img {
+			position: relative;
+			width: 50%;
+			height: 20%;
+			left: 20%;
+			margin-top:20%;
+			margin-bottom: 20%;
+		}
+		.order{
+			float:left;
+			margin-top: 4.5%;
+			display: inline-block;
+			text-align: center;
+			height:15px;
+			width:27px;
+			line-height: 15px;
+			background-color: #e5e5e5;
+			color:#8e8e8e;
+			box-shadow: 0px 0px 3px 3px rgba(229, 229, 229, 0.1);
+			font-size: 10px;
+			border-radius: 5px;
+			opacity: 0.7;
+			margin-bottom: 10%;
+		}
+		#group_0{
+			background-color: #f87171;
+			box-shadow: 0px 0px 3px 3px rgba(248, 113, 113, 0.1);
+			color:white;
+		}
+		#group_1{
+			background-color: #71b262;
+			box-shadow: 0px 0px 3px 3px rgba(113 ,178, 98, 0.1);
+			color:white;
+		}
+		#group_2{
+			background-color: #6288b2;
+			box-shadow: 0px 0px 3px 3px rgba(98, 136, 178, 0.1);
+			color:white;
+		}
+		.keyword{
+			display: inline-block;
+			margin-left: 7%;
+		}
+		.popularity{
+			display: inline-block;
+			position: absolute;
+			right:10%;
+			font-size: 12px;
+			color:#6d7cd9;
+		}
+		.network-box{
+			display: inline-block;
+			width: 100%;
+			height: auto;
+		}
+		#network-name{
+			color:#000;
+			margin-left:5%;
+			margin-top: 2%;
+			display: inline-block;
+			font-size: 16px;
+		}
+		#guanwang{
+			display: inline-block;
+			font-size: 12px;
+			color: #fff;
+			background-color: #6d7cd9;
+			text-align: center;
+			height:16px;
+			width:32px;
+			line-height: 16px;
+			border-radius: 3px;
+		}
+		#network-descirption{
+			color:#000;
+			margin-left:5%;
+			margin-top: 1.5%;
+			font-size: 14px;
+			width: 90%;
+		}
+		#network-address{
+			margin-left:5%;
+			margin-top: 1.5%;
+			font-size: 14px;
+			font-weight: bold;
+			color: #8e8e8e;
+		}
+		.maginline {
+			margin-top: 4.5%;
+			width: 100%;
+			height: 4.5px;
+			background-color: #000;
+			opacity: 0.1;
+		}
+		#group_tip{
+			margin-top: 5%;
+			width: 100%;
+			height: 20px;
+			line-height: 20px;
+			font-size: 16px;
+			text-align: center;
+			color: #6d7cd9;
+		}
+    </style>
+</head>
+<body>
+  <div class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+
+					<div class="iconfont icon-research" style="text-indent: 8px;margin-top:3.5%;color:#8e8e8e;"></div>
+          <input id="input"  type="text" class="input" placeholder="问答/攻略/资源/拍照搜题" style="padding-left:30px;outline: none;">
+
+            <!--div class="camera"></div-->
+        </div>
+      </div>
+      <div class="cancel-box">
+        <div class="cancel" onclick="api.closeWin()">取消</div>
+      </div>
+  </div>
+    <div id="hotTp" style="width: 80%;margin-left: 3%;float: left;margin-top: 58px;">
+    </div>
+  </div>
+<div id="reloadBox">
+  <div id="contentBox" class="content-box">
+
+    <div id="nothing-box" class="history-box" style="display:none">
+      <img src="../image/nothing.png" alt="">
+      <div class="title_2-box">
+        <div class="title_2">逛逛其他热门</div>
+      </div>
+      <div class="tag_2-box">
+        <div id="hot-tip-0" class="tag_2" style="display:none">
+          <div class="block_2_mean"></div>
+        </div>
+      </div>
+    </div>
+		<div id="network-box" class="network-box" style="display:none">
+				<div id="network-name"></div>
+				<div id="guanwang">官网</div>
+				<div id="network-descirption"></div>
+				<div id="network-address"></div>
+				<div class="maginline"></div>
+		</div>
+		<div id="group_tip" class="group_tip" style="display:none">
+		</div>
+    <div id="wd-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div id="type" class="title_2">问答</div>
+        <div class="clean_history-box">
+          <div id="view_all" class="clean_history" onclick="openQuestionList()">></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="wd-tip-0" class="tag_3" style="display:none">
+          <div class="block_3_mean"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="dt-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div class="title_2">用户</div>
+        <div class="clean_history-box">
+          <div class="clean_history">></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="dt-tip-0" class="tag_3" style="display:none">
+          <div class="block_3_mean"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="gl-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div class="title_2">攻略</div>
+        <div class="clean_history-box">
+          <div class="clean_history" onclick="openArticleList()">></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="gl-tip-0" class="tag_3" style="display:none">
+          <div class="block_3_mean"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="zy-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div class="title_2">资源</div>
+        <div class="clean_history-box">
+          <div class="clean_history" onclick="openResourceList()">></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="zy-tip-0" class="tag_3" style="display:none">
+          <div class="block_3_mean"></div>
+        </div>
+      </div>
+    </div>
+    <div id="qz-box" class="history-box" style="display:none">
+      <div class="title_2-box">
+        <div class="title_2">圈子</div>
+        <div class="clean_history-box">
+          <div class="clean_history">></div>
+        </div>
+      </div>
+      <div class="tag_2-box">
+        <div id="qz-tip-0" class="tag_3" style="display:none">
+          <div class="block_3_mean"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+var back_tips = new Array();
+var wd_tips = new Array();
+var dt_tips = new Array();
+var gl_tips = new Array();
+var zy_tips = new Array();
+var hot_tips = new Array();
+var qz_tips = new Array();
+var network_tip = [];
+var group_tip = [];
+var type;
+var content;
+var flag;
+function openKeyboard(){
+	var softInput = api.require('softInputMgr');
+	softInput.toggleKeyboard();
+	// 将相应的输入框获取焦点
+	document.getElementById("input").focus()
+}
+	apiready = function(){
+		content = api.pageParam.content; //获取搜索内容
+		setTimeout('openKeyboard()',1000);
+		// flag = 2; //通过改flag的值选择搜索进入方式 1代表分类查看  2代表搜索查看
+		  //测试
+        getHotTopic();
+        $("#input").bind("input propertychange",function(){
+            if($(this).val()==''||$(this).val()==null){
+                getHotTopic();
+                setDefault();
+            }
+        });
+        $(document).keydown(function (event) {
+
+            if (event.keyCode == 13) {
+                search();
+            }
+        });
+	};
+    function search() {
+				network_tip.splice(0,network_tip.length);
+				group_tip.splice(0,group_tip.length);
+        wd_tips.splice(0,wd_tips.length);
+        qz_tips.splice(0,qz_tips.length);
+        gl_tips.splice(0,gl_tips.length);
+        zy_tips.splice(0,zy_tips.length);
+        dt_tips.splice(0,dt_tips.length);
+        setDefault();
+        GetData();
+    }
+    function hotSearch(text) {
+        document.getElementById('input').value=text;
+        search();
+    }
+    function getHotTopic() {
+        var j = {
+            "user_id":$api.getStorage('user_id')
+        }
+        $.ajax({
+            url:'http://47.105.160.217/api/search/GetTopKeywordsDay/',
+            data:JSON.stringify(j),
+            method:'post',
+            success:function (ret) {
+                var data = ret.data;
+								console.log(JSON.stringify(data));
+                var div = document.getElementById('hotTp');
+                div.innerHTML=''
+                    for(var i = 0; i<data.length;i++){
+                        div.innerHTML = div.innerHTML + '' +
+                            '<div class="tag_2-box">\n' +
+                            '        <div class="tag_2">\n' +
+                            '          <div class="block_2_mean" onclick="hotSearch(\''+data[i].keywords+'\')">\n'+
+														'              <div class="order" id="group_'+i+'">No.'+(i+1)+'</div>\n'+
+														' 				     <div class="keyword">'+data[i].keywords+'</div>\n'+
+														' 				     <div class="popularity">'+data[i].popularity+'次</div>\n'+
+														'          </div>\n' +
+                            '        </div>\n' +
+                            '      </div>'
+                    }
+            },
+            error:function (e) {
+
+            }
+        })
+    }
+    function openQuestionList() {
+        api.openWin({
+            name:'search_Qlist',
+            url:'qz_question_list_win.html',
+            pageParam:{
+                keywords:$('#input').val()
+            }
+        })
+    }
+    function openArticleList() {
+    api.openWin({
+        name:'search_Alist',
+        url:'circle_strategy_list.html',
+        pageParam:{
+            keywords:$('#input').val()
+        }
+    })
+}
+    function openResourceList() {
+    api.openWin({
+        name:'search_Rlist',
+        url:'circle_resource_list.html',
+        pageParam:{
+            keywords:$('#input').val()
+        }
+    })
+}
+    function setDefault() {
+        document.getElementById('hotTp').innerHTML = '';
+        document.getElementById('reloadBox').innerHTML ='';
+        document.getElementById('reloadBox').innerHTML =''+
+            "<div id=\"nothing-box\" class=\"history-box\" style=\"display:none\">\n" +
+            "      <img src=\"../image/nothing.png\" alt=\"\">\n" +
+            "      <div class=\"title_2-box\">\n" +
+            "        <div class=\"title_2\">逛逛其他热门</div>\n" +
+            "      </div>\n" +
+            "      <div class=\"tag_2-box\">\n" +
+            "        <div id=\"hot-tip-0\" class=\"tag_2\" style=\"display:none\">\n" +
+            "          <div class=\"block_2_mean\"></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "\n" +
+						"<div id=\"network-box\" class=\"network-box\" style=\"display:none\">\n" +
+						"		<div id=\"network-name\"></div>\n" +
+						"		<div id=\"guanwang\">官网</div>\n" +
+						"		<div id=\"network-descirption\"></div>\n" +
+						"		<div id=\"network-address\"></div>\n" +
+						"   <div class=\"maginline\"></div>\n" +
+						"</div>\n" +
+						"\n" +
+						"<div id=\"group_tip\" class=\"group_tip\" style=\"display:none\">\n" +
+						"</div>\n" +
+						"\n" +
+            "    <div id=\"wd-box\" class=\"history-box\" style=\"display:none\">\n" +
+            "      <div class=\"title_2-box\">\n" +
+            "        <div id=\"type\" class=\"title_2\">问答</div>\n" +
+            "        <div class=\"clean_history-box\">\n" +
+            "          <div id=\"view_all\" class=\"clean_history\" onclick=\"openQuestionList()\">></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "      <div class=\"tag_2-box\">\n" +
+            "        <div id=\"wd-tip-0\" class=\"tag_3\" style=\"display:none\">\n" +
+            "          <div class=\"block_3_mean\"></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "\n" +
+            "    <div id=\"dt-box\" class=\"history-box\" style=\"display:none\">\n" +
+            "      <div class=\"title_2-box\">\n" +
+            "        <div class=\"title_2\">用户</div>\n" +
+            "        <div class=\"clean_history-box\">\n" +
+            "          <div class=\"clean_history\" > ></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "      <div class=\"tag_2-box\">\n" +
+            "        <div id=\"dt-tip-0\" class=\"tag_3\" style=\"display:none\">\n" +
+            "          <div class=\"block_3_mean\"></div>\n" +
+            "        </div>\n" +
+            "\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "\n" +
+            "    <div id=\"gl-box\" class=\"history-box\" style=\"display:none\">\n" +
+            "      <div class=\"title_2-box\">\n" +
+            "        <div class=\"title_2\">攻略</div>\n" +
+            "        <div class=\"clean_history-box\">\n" +
+            "          <div class=\"clean_history\" onclick=\"openArticleList()\"> ></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "      <div class=\"tag_2-box\">\n" +
+            "        <div id=\"gl-tip-0\" class=\"tag_3\" style=\"display:none\">\n" +
+            "          <div class=\"block_3_mean\"></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "\n" +
+            "    <div id=\"zy-box\" class=\"history-box\" style=\"display:none\">\n" +
+            "      <div class=\"title_2-box\">\n" +
+            "        <div class=\"title_2\">资源</div>\n" +
+            "        <div class=\"clean_history-box\">\n" +
+            "          <div class=\"clean_history\" openResourceList()> ></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "      <div class=\"tag_2-box\">\n" +
+            "        <div id=\"zy-tip-0\" class=\"tag_3\" style=\"display:none\">\n" +
+            "          <div class=\"block_3_mean\"></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "    </div>\n" +
+            "    <div id=\"qz-box\" class=\"history-box\" style=\"display:none\">\n" +
+            "      <div class=\"title_2-box\">\n" +
+            "        <div class=\"title_2\">圈子</div>\n" +
+            "        <div class=\"clean_history-box\">\n" +
+            "          <div class=\"clean_history\"> ></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "      <div class=\"tag_2-box\">\n" +
+            "        <div id=\"qz-tip-0\" class=\"tag_3\" style=\"display:none\">\n" +
+            "          <div class=\"block_3_mean\"></div>\n" +
+            "        </div>\n" +
+            "      </div>\n" +
+            "    </div> "
+    }
+	function GetData() {
+        if($('#input').val()!=''){ //判断是哪种搜索方式
+            var datalist = '';
+            var json_dict = {
+                "app_version": '1.0',
+                "user_id":$api.getStorage('user_id'),
+                "user_cookie":"",
+                "keywords" : $('#input').val(),
+                "since_id" : 0,
+                "page_size": 10
+            };
+            $.ajax({
+                url:'http://47.105.160.217/api/search/search/',
+                method:'post',
+                data:JSON.stringify(json_dict),
+                dataType:'json',
+                success:function (ret) {
+                    datalist = ret.data;
+                    console.log(JSON.stringify(ret.data));
+                    for (var i in datalist.questions)
+                        wd_tips.push(datalist.questions[i]);
+                    for(var i in datalist.resources)
+                        zy_tips.push(datalist.resources[i])
+                    for(var i in datalist.articles)
+                        gl_tips.push(datalist.articles[i])
+                    /*for(var i in datalist.groups)
+                        qz_tips.push(datalist.groups[i])*/
+                    for(var i in datalist.users)
+                        dt_tips.push(datalist.users[i])
+										network_tip = datalist.build_in_info;
+										group_tip = datalist.groups;
+										/*network_tip = {
+				                "name": '西安交通大学教务处',
+				                "description":'西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处西安交通大学教务处',
+				                "address":'dean.xjtu.edu.cn'
+				            };
+										group_tip={
+											"name": '圈子',
+											"id":'1',
+										};*/
+                    page_view()
+                },
+                error:function (e) {
+                    //alert('没有数据');
+                    openBlankPage();
+                }
+            })
+            var j = {
+                "user_id":$api.getStorage('user_id'),
+                "keywords":$('#input').val()
+            }
+            $.ajax({
+                url:'http://47.105.160.217/api/search/RecordKeywords/',
+                data:JSON.stringify(j),
+                method:'post'
+            })
+        }
+        else alert("please put some word!")
+    }
+    function openQuestion(id) {
+        api.openWin({
+            name: 'answer_list_circle',
+            url: '../../QandA/html/answer_list.html',
+            pageParam: {
+                question_id: id,
+                user_id: $api.getStorage('user_id'),
+                user_cookie: ""
+            },
+            bgColor: 'rgba(0,0,0,0.8)'
+        });
+
+    }
+    function openResourceD(sourceID) {
+
+    api.openWin({
+        name:'Resource_detail',
+        url:'../../circle/circle_resource_detail.html',
+        pageParam:{
+            sourceID:sourceID
+        }
+    })
+}
+    function openGroupStrategy(id) {
+    api.openWin({
+        name:'strategy_detail'+id,
+        url:'../../circle/circle_strategy_detail.html',
+        pageParam:{
+            article_id:id
+        }
+    })
+}
+    function enterMainpge(id) {
+    api.openWin({
+        name:'mainPage'+id,
+        url:'../../account/otherpage/otherFragment_frm.html',
+        pageParam:{
+            uid:id
+        }
+    })
+}
+    function openCircle(groupid) {
+    api.openWin({
+        name: 'circle_index.html+tag'+groupid,
+        url: '../../circle/circle_index.html',
+        slidBackEnabled: true,
+        pageParam: {
+            name: "",
+            cID: groupid
+        }
+    });
+}
+	function page_view() {
+        document.getElementById('nothing-box').style.display='none';
+			if (wd_tips == '' && gl_tips == '' && zy_tips == '' && dt_tips == ''&&qz_tips==''&&network_tip.length==0&&group_tip.length==0) {
+				//alert('没有数据');
+				openBlankPage();
+			}
+			else {
+				if (network_tip!=''){
+						var networknode = document.getElementById('network-box');
+						networknode.style.display = '';
+						networknode.setAttribute('onclick','openweb("'+network_tip[0].info_destination_url+'")');
+						networknode = document.getElementById('network-name');
+						networknode.innerHTML = network_tip[0].info_name;
+						networknode = document.getElementById('network-descirption');
+						networknode.innerHTML = network_tip[0].info_description;
+						networknode = document.getElementById('network-address');
+						networknode.innerHTML = network_tip[0].info_destination_url;
+				}
+				if(group_tip!=''){
+					var networknode = document.getElementById('group_tip');
+					networknode.style.display = '';
+					networknode.innerHTML = '进入"'+group_tip[0].group_name+'"圈子>';
+					networknode.setAttribute('onclick','openonecircle('+group_tip[0].group_id+',"'+group_tip[0].group_name+'")');
+				}
+				if (wd_tips != '') {
+                   var l=  wd_tips.length + 1;
+                   if(l>4){
+                       l=4
+                   }
+					var sourceNode = document.getElementById('wd-tip-0');
+			    for (var i = 1; i < l; i++) {
+			      var clonedNode = sourceNode.cloneNode(true);
+			      clonedNode.setAttribute('id','wd-tip-'+i);
+			      clonedNode.style.display = '';
+			      if (i%2 == 0) {
+							clonedNode.childNodes[1].setAttribute('class','block_3_odd');
+			      }
+			      else {
+			        clonedNode.childNodes[1].setAttribute('class','block_3_mean');
+			      }
+			      var t = wd_tips[i-1].title;
+			      if (t.length>8) t=t.substring(0,8)+'...';
+						clonedNode.childNodes[1].innerHTML = t;
+			          clonedNode.childNodes[1].setAttribute('onclick','openQuestion('+wd_tips[i-1].question_id+')')
+
+			      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			    }
+					document.getElementById('wd-box').style.display = ''; //显示出来
+				}
+				if (dt_tips != '') {
+				    var l = dt_tips.length + 1;
+				    if(l>4){
+				        l=4
+                    }
+					var sourceNode = document.getElementById('dt-tip-0');
+			    for (var i = 1; i < l; i++) {
+			      var clonedNode = sourceNode.cloneNode(true);
+			      clonedNode.setAttribute('id','dt-tip-'+i);
+			      clonedNode.style.display = '';
+			      if (i%2 == 0) {
+							clonedNode.childNodes[1].setAttribute('class','block_3_odd');
+			      }
+			      else {
+			        clonedNode.childNodes[1].setAttribute('class','block_3_mean');
+			      }
+			       var t = dt_tips[i-1].user_nickname;
+			      if(t.length>8) t = t.substring(0,8)+'...';
+						clonedNode.childNodes[1].innerHTML = t;
+						clonedNode.childNodes[1].setAttribute('onclick','enterMainpge(\''+dt_tips[i-1].user_id+'\')');
+			      sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			    }
+					document.getElementById('dt-box').style.display = ''; //显示出来
+				}
+
+				if (gl_tips != '') {
+					var sourceNode = document.getElementById('gl-tip-0');
+					var l = gl_tips.length + 1;
+					if (l>4){
+					    l = 4
+                    }
+			    for (var i = 1; i < l; i++) {
+			      var clonedNode = sourceNode.cloneNode(true);
+			      clonedNode.setAttribute('id','gl-tip-'+i);
+			      clonedNode.style.display = '';
+			      if (i%2 == 0) {
+							clonedNode.childNodes[1].setAttribute('class','block_3_odd');
+			      }
+			      else {
+			        clonedNode.childNodes[1].setAttribute('class','block_3_mean');
+			      }
+			      var t = gl_tips[i-1].title;
+			      if(t.length>8) t=t.substring(0,8)+'...';
+						clonedNode.childNodes[1].innerHTML = t;
+						clonedNode.childNodes[1].setAttribute('onclick','openGroupStrategy('+gl_tips[i-1].id+')');
+			            sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			    }
+					document.getElementById('gl-box').style.display = ''; //显示出来
+				}
+
+				if (zy_tips != '') {
+                    var l = zy_tips.length + 1;
+                    if (l>4){
+                        l=4;
+                    }
+                    var sourceNode = document.getElementById('zy-tip-0');
+                    for (var i = 1; i < l; i++) {
+                        var clonedNode = sourceNode.cloneNode(true);
+                        clonedNode.setAttribute('id','zy-tip-'+i);
+                        clonedNode.style.display = '';
+                        if (i%2 == 0) {
+                            clonedNode.childNodes[1].setAttribute('class','block_3_odd');
+                        }
+                        else {
+                            clonedNode.childNodes[1].setAttribute('class','block_3_mean');
+                        }
+                        var t = zy_tips[i-1].name;
+                        if(t.length>8) t = t.substring(0,8)+'...';
+                        clonedNode.childNodes[1].innerHTML =t ;
+                        clonedNode.childNodes[1].setAttribute('onclick','openResourceD('+zy_tips[i-1].id+')');
+                        sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+                    }
+                    document.getElementById('zy-box').style.display = ''; //显示出来
+                }
+
+                if (qz_tips != '') {
+                    var l = qz_tips.length + 1;
+                    if (l>4){
+                        l=4;
+                    }
+                    var sourceNode = document.getElementById('qz-tip-0');
+                    for (var i = 1; i < l; i++) {
+                        var clonedNode = sourceNode.cloneNode(true);
+                        clonedNode.setAttribute('id','qz-tip-'+i);
+                        clonedNode.style.display = '';
+                        if (i%2 == 0) {
+                            clonedNode.childNodes[1].setAttribute('class','block_3_odd');
+                        }
+                        else {
+                            clonedNode.childNodes[1].setAttribute('class','block_3_mean');
+                        }
+                        var t = qz_tips[i-1].group_name;
+                        if(t.length>8) t = t.substring(0,8)+'...';
+                        clonedNode.childNodes[1].innerHTML = t ;
+                        clonedNode.childNodes[1].setAttribute('onclick','openCircle('+qz_tips[i-1].group_tag+')');
+                        sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+                    }
+                    document.getElementById('qz-box').style.display = ''; //显示出来
+                }
+			}
+		}
+
+    function openBlankPage() {
+			var sourceNode = document.getElementById('hot-tip-0');
+			for (var i = 1; i < hot_tips.length + 1; i++) {
+				var clonedNode = sourceNode.cloneNode(true);
+				clonedNode.setAttribute('id','hot-tip-'+i);
+				clonedNode.style.display = '';
+				if (i%2 == 0) {
+					clonedNode.childNodes[1].setAttribute('class','block_3_odd');
+				}
+				else {
+					clonedNode.childNodes[1].setAttribute('class','block_3_mean');
+				}
+				clonedNode.childNodes[1].innerHTML = hot_tips[i-1];
+				sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+			}
+			document.getElementById('nothing-box').style.display = ''; //显示出来
+
+
+	}
+
+	function back() {
+        api.historyBack({
+        },function(ret,err){
+            if (!ret.status) {
+                api.closeWin();
+            }
+        });
+	}
+	function generateid(index){
+		console.log("group_" + index);
+		return "group_" + index
+	}
+	function openweb(url){
+			api.openApp({
+				androidPkg : 'android.intent.action.VIEW',
+				mimeType : 'text/html',
+				uri : url
+				},
+				function(ret, err) {
+					var msg = JSON.stringify(ret);
+					api.alert({
+						title : 'openApp',
+						msg : msg,
+						buttons : ['确定']
+					});
+		});
+	}
+	function openonecircle(id, name){
+			api.openWin({
+					name: 'circle_index.html',
+					url: '../../circle/circle_index.html',
+					slidBackEnabled: true,
+					pageParam: {
+							name: name,
+							cID: id
+					}
+			});
+	}
+</script>
+</html>

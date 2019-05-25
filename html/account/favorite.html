@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="../../css/style_login.css" rel="stylesheet" type="text/css"/>
+
+
+
+    <title>收藏夹</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: #f0f0f0;
+        }
+
+        header{
+            height: 40px;
+            width: 100%;
+            background-color: white;
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            -webkit-box-align: center;
+            /*display: flex;*/
+        }
+        .nav{
+            height: 40px;
+            width: 100%;
+            background-color: white;
+            /*display: -webkit-box;
+            -webkit-box-orient: vertical;
+            /*display: flex;*/
+            text-align: center;
+        }
+
+        #nav ul li div.active{
+            color: #6d7cd9;
+            padding-bottom:2px;
+            border-bottom:2px;
+             solid #f00;
+            /*border-bottom: 2px solid #0081EF;*/
+
+            width:fit-content;
+            margin:0 auto;
+
+        }
+        .flex-con{
+        }
+
+
+        /*.flex-con{
+          overflow: auto
+        }*/
+
+    </style>
+
+</head>
+<script type="text/javascript" src="../../script/api.js"></script>
+<!-- <script type="text/javascript" src="../../script/template.js"></script>
+<script type="text/javascript" src="../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../script/doT.js"></script> -->
+
+<script>
+
+    apiready = function(){
+
+
+        funIniGroup();
+    };
+
+
+
+    function funIniGroup(){
+        api.parseTapmode();
+        var header = $api.byId('header');
+        var nav_h=$api.offset($api.byId('nav'));
+        // $api.fixStatusBar(header);
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+
+
+
+        var frames = [];
+
+        frames.push( {
+            name: 'frame0',
+            url: './favorite/favorite_frm0.html',
+            bgColor : 'rgba(0,0,0,.2)',
+            bounces:false      //界面是否可以上拉和下拉
+        } )
+        frames.push( {
+            name: 'frame1',
+            url: './favorite/favorite_frm1.html',
+            bgColor : 'rgba(0,0,0,.2)',
+            bounces:false
+        } )
+        frames.push( {
+            name: 'frame2',
+            url: './favorite/favorite_frm2.html',
+            bgColor : 'rgba(0,0,0,.2)',
+            bounces:true
+        } )
+
+
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: 'auto'
+            },
+            index: 0,
+            frames: frames
+        }, function (ret, err) {
+            var index = ret.index;
+            var tag=index;
+
+            var eHeaderLis = $api.domAll('header li ');
+            var list0=$api.dom('#list0');
+            var list1=$api.dom('#list1');
+            var list2=$api.dom('#list2');
+
+            $api.removeCls(list0, 'active');
+            $api.removeCls(list1, 'active');
+            $api.removeCls(list2, 'active');
+
+            if(tag==0) $api.addCls( list0, 'active');
+            if(tag==1) $api.addCls( list1, 'active');
+            if(tag==2) $api.addCls( list2, 'active');
+            //switchBtn(index);
+
+        });
+    }
+
+    // 随意切换按钮
+    function switchBtn(tag) {
+        // if( tag == $api.dom('#nav li div.active') )return;
+        console.log(tag);
+        var eHeaderLis = $api.domAll('header li ');
+        var list0=$api.dom('#list0');
+        var list1=$api.dom('#list1');
+        var list2=$api.dom('#list2');
+
+        $api.removeCls(list0, 'active');
+        $api.removeCls(list1, 'active');
+        $api.removeCls(list2, 'active');
+
+        if(tag==0) $api.addCls( list0, 'active');
+        if(tag==1) $api.addCls( list1, 'active');
+        if(tag==2) $api.addCls( list2, 'active');
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: tag
+        });
+    }
+
+</script>
+
+<body>
+    <header class="header" id="header" style="text-align: center;">
+
+        <i class="aui-iconfont aui-icon-left" style="font-size: 20px;position: absolute;top: 5px;left: 10px;" onclick="api.closeWin({});"></i>
+
+        <div id="nav" class="nav" style="width:70%; margin: 0 auto">
+            <ul class="aui-row" style="margin-top: 5px; font-size:1rem">
+                <li tapmode="hover" onclick="switchBtn(0);" class="aui-col-xs-4 flex-con"><div class="active" id="list0" >问答</div></li>
+                <li tapmode="hover" onclick="switchBtn(1);" class="aui-col-xs-4 flex-con" ><div  id="list1">经验</div></li>
+                <li tapmode="hover" onclick="switchBtn(2);" class="aui-col-xs-4 flex-con" ><div  id="list2">资源</div></li>
+            </ul>
+        </div>
+    </header>
+</body>
+
+</html>

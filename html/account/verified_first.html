@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+    <title>第一次实名认证</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+
+    <link rel="stylesheet"  href="../../css/iconfont.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+    <script type="text/javascript" src="../../script/doT.min.js"></script>
+
+    <script type="text/javascript" src="../../script/doT.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+
+    <style>
+    html,body {
+    height: 100%;
+    background-color: white;
+    }
+        .redColor{
+            color: red;
+        }
+
+
+        .flex-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        height: 300px;
+        background-color: grey;
+        }
+        .flex-container .flex-item {
+            width: 320px;
+            height: 240px;
+            margin: 10px;
+            flex-grow:1;
+            background-color:lightsteelblue;
+        }
+
+        .visibility-hidden{
+          visibility: hidden;
+        }
+
+    </style>
+</head>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script type="text/javascript">
+    apiready = function(){
+      init();
+      getSchool();
+      getMajor();
+      initData();
+    }
+
+    function initData(){
+        var _data=$api.getStorage('verified');
+        if(_data=="") return;
+
+        $api.val($api.byId('inputRealName'),_data.user_real_name);
+        $api.val($api.byId('inputSchool'),_data.user_school);
+        $api.val($api.byId('inputMajor'),_data.user_major);
+        //var c_type=scholar;
+        selecteScholar(_data.user_certificate_type);
+        $api.attr($api.byId('photo1'),'src','http://47.105.160.217:80/files/'+_data.user_certificate_photo_url);
+
+        if (_data.user_certificate_photo_url_ex)  $api.attr($api.byId('photo2'),'src','http://47.105.160.217:80/files/'+_data.user_certificate_photo_url_ex);
+        $api.text($api.byId('time'),_data.user_enrollment_time);
+
+
+    }
+
+    function init(){
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+        var json_ver={ "app_version": "1.0","user_id":user_id,"user_cookie": cookie}
+        $.ajax({
+            url:'http://47.105.160.217/api/userAuth/getMyRealNameMaterial/',
+            type:'POST',
+            data:JSON.stringify(json_ver),
+            dataType:'json',
+            success:function (ret) {
+              if(ret.status==200){
+                if (ret.message=="SUCCESS") {
+                    $api.val($api.byId('inputRealName'),ret.data.user_real_name);
+                    $api.val($api.byId('inputSchool'),ret.data.user_school);
+                    $api.val($api.byId('inputMajor'),ret.data.user_major);
+                    //var c_type=scholar;
+                    selecteScholar(ret.data.user_certificate_type);
+                    $api.attr($api.byId('photo1'),'src','http://47.105.160.217:80/files/'+ret.data.user_certificate_photo_url);
+                    console.log();
+                    if (ret.data.user_certificate_photo_url_ex) $api.attr($api.byId('photo2'),'src','http://47.105.160.217:80/files/'+ret.data.user_certificate_photo_url_ex);
+                    $api.text($api.byId('time'),ret.data.user_enrollment_time);
+
+                    $api.setStorage('verified', ret.data);
+
+                }
+              }
+
+            },
+            error:function (ret) {
+
+                api.toast({msg: '网络异常'});
+                console.log(JSON.stringify(ret));
+            },
+        });
+
+    }
+    var schoolList=["西安交通大学","西安交通大学2","西安交通大学3","西安交通大学4"];
+    function getSchool(){
+      var json_school={"app_version": "1.0"};
+      $.ajax({
+          url:'http://47.105.160.217:80/api/userAuth/getSchoolCandidate/',
+          type:'POST',
+          data:JSON.stringify(json_school),
+          dataType:'json',
+          success:function (ret) {
+            if(ret.status==200){
+              if (ret.message=="SUCCESS") {
+                  api.toast({
+            　　　　　　msg:'获取学校成功',
+            　　　　　　duration: '1300',
+            　　　　　　localtion: 'middle'
+          　　　　 });
+                  schoolList=ret.data;
+
+              }
+            }
+
+          },
+          error:function (ret) {
+              api.toast({msg: '网络异常'});
+              console.log(JSON.stringify(ret));          },
+      });
+    }
+
+    var majorList=["这是假专业","假2","假3","假4"];
+    function getMajor(){
+      var json_major={"app_version": "1.0"};
+      $.ajax({
+          url:'http://47.105.160.217:80/api/userAuth/getMajorCandidate/',
+          type:'POST',
+          data:JSON.stringify(json_major),
+          dataType:'json',
+          success:function (ret) {
+            if(ret.status==200){
+              if (ret.message=="SUCCESS") {
+                  api.toast({
+            　　　　　　msg:'获取专业成功',
+            　　　　　　duration: '1300',
+            　　　　　　localtion: 'middle'
+          　　　　 });
+                  majorList=ret.data;
+              }
+            }
+
+          },
+          error:function (ret) {
+              api.toast({msg: '网络异常'});
+              console.log(JSON.stringify(ret));          },
+      });
+    }
+
+
+
+    function openPicker(){
+        api.openPicker({
+            type: 'date_time',
+            date: '2014-05-01',
+            title: '选择时间'
+        }, function(ret, err) {
+            if (ret) {
+                $api.text($api.byId("time"), ret.year+'年'+ret.month+'月'+ret.day+"日");
+
+                alert(JSON.stringify(ret));
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    }
+
+    var scholar=0;
+    function selecteScholar(type){
+        var type1=$api.dom('#ben');
+        var type2=$api.dom('#yan');
+
+        $api.removeCls(type1, 'redColor');
+        $api.removeCls(type2, 'redColor');
+        if(type==1){
+          $api.addCls( type1, 'redColor');
+          $api.addCls($api.first(type2),'visibility-hidden');
+          $api.removeCls($api.first(type1),'visibility-hidden');
+          scholar=1;
+        }
+        if(type==2){
+          $api.addCls( type2, 'redColor');
+          $api.addCls($api.first(type1),'visibility-hidden');
+          $api.removeCls($api.first(type2),'visibility-hidden');
+          scholar=2;
+        }
+        return;
+    }
+
+    function openSchool(){
+      var display=$api.byId('displaySchool');
+      $api.removeCls(display,'aui-hide');
+
+      console.log("123");
+
+      var res=fuzzyQuery(schoolList, $("#inputSchool").val());
+      var li="";
+      for(var i=0;i<res.length;i++){
+        li+='<li onclick="setSchool(this)" style="padding:10px 0px 10px 20px">'+res[i]+'<\li>';
+      }
+      console.log(li);
+      $api.html(display,li);
+
+      //var list=["西安交通大学","西安交通大学2","西安交通大学3","西安交通大学4"];
+      $("#inputSchool").bind("input propertychange",function(event){
+        //alert("22");
+        //console.log($("#inputSchool").val());
+        var res=fuzzyQuery(schoolList, $("#inputSchool").val());
+        var li="";
+        for(var i=0;i<res.length;i++){
+          li+='<li onclick="setSchool(this)" style="padding:10px 0px 10px 20px">'+res[i]+'<\li>';
+        }
+        console.log(li);
+        $api.html(display,li);
+      });
+    }
+
+    function openMajor(){
+      var display=$api.byId('displayMajor');
+      $api.removeCls(display,'aui-hide');
+
+      console.log("123");
+      var res=fuzzyQuery(majorList, $("#inputMajor").val());
+      var li="";
+      for(var i=0;i<res.length;i++){
+        li+='<li onclick="setMajor(this)" style="padding:10px 0px 10px 20px">'+res[i]+'<\li>';
+      }
+      console.log(li);
+      $api.html(display,li);
+
+      //var list=["西安交通大学","西安交通大学2","西安交通大学3","西安交通大学4"];
+      $("#inputMajor").bind("input propertychange",function(event){
+        //alert("22");
+        //console.log($("#inputSchool").val());
+        var res=fuzzyQuery(majorList, $("#inputMajor").val());
+        var li="";
+        for(var i=0;i<res.length;i++){
+          li+='<li onclick="setMajor(this)" style="padding:10px 0px 10px 20px">'+res[i]+'<\li>';
+        }
+        console.log(li);
+        $api.html(display,li);
+      });
+    }
+
+    function setSchool(li){
+      var display=$api.byId('displaySchool');
+      var inputSchool=$api.byId('inputSchool');
+      console.log($api.val(li));
+
+      $api.val(inputSchool,$api.text(li));
+      $api.addCls(display,'aui-hide');
+      //$api.attr($("#displaySchool"),"display","none")
+    }
+
+    function setMajor(li){
+      var display=$api.byId('displayMajor');
+      var inputMajor=$api.byId('inputMajor');
+      console.log($api.val(li));
+
+      $api.val(inputMajor,$api.text(li));
+      $api.addCls(display,'aui-hide');
+      //$api.attr($("#displaySchool"),"display","none")
+    }
+
+    function ok(){
+      var cookie=$api.getStorage('cookie');
+      var user_id=$api.getStorage('user_id');
+
+        var realName=$api.val($api.byId('inputRealName'));
+      var school=$api.val($api.byId('inputSchool'));
+      var major=$api.val($api.byId('inputMajor'));
+      var c_type=scholar;
+      var c_photo1=$api.attr($api.byId('photo1'),'src');
+      var c_photo2=$api.attr($api.byId('photo2'),'src');
+      var c_time=$api.text($api.byId('time'));
+      //alert(c_photo1);
+
+      if(c_type==0){
+        alert("请选择学历");
+        return;
+      }
+      if(realName==0){
+        alert("请输入姓名");
+        return;
+      }
+
+      if(school==""){
+        alert("请输入学校");
+        return;
+      }
+      if(major==""){
+        alert("请输入专业");
+        return;
+      }
+      if(c_time==""){
+        alert("请输入学时间");
+        return;
+      }
+      if(c_photo1.indexOf("mine") != -1){
+        alert("请上传正面照片");
+        return;
+      }
+      if(c_photo2.indexOf("mine") != -1){
+        alert("请上传背面照片");
+        return;
+      }
+      api.showProgress({
+          title: '上传中...',
+          text: '你的信息已经被加密',
+      });
+
+        console.log(c_photo1);
+      c_photo1=c_photo1.split("files/")[1];
+      console.log(c_photo1);
+
+      c_photo2=c_photo2.split("files/")[1];
+      var json_ver={
+                	"app_version": "1.0",
+                	"user_id": user_id,
+                	"user_cookie": cookie,
+                	"user_school": school,
+                	"user_major": major,
+                	"user_certification_type": c_type,
+                    "user_certification_photos": c_photo1,
+                    "user_certification_photos_ex": c_photo2,
+                	"user_real_name": realName,
+                	"user_enrollment_time": c_time
+                };
+                console.log("ver"+JSON.stringify(json_ver));
+      $.ajax({
+          url:'http://47.105.160.217:80/api/userAuth/submitRealNameMaterial/',
+          type:'POST',
+          data:JSON.stringify(json_ver),
+          dataType:'json',
+          success:function (ret) {
+              api.hideProgress();
+            if(ret.status==200){
+              if (ret.message=="SUCCESS") {
+                  api.toast({
+                    msg: '认证成功',
+                    duration:2000,
+                    location: 'bottom'
+                    });
+
+                    setTimeout(function() {api.closeWin()},500);
+
+              }
+            }
+
+          },
+          error:function (ret) {
+              api.hideProgress();
+              alert(JSON.stringify(ret))
+          },
+      });
+
+    }
+
+        /**
+     * 使用match方法实现模糊查询
+     * @param  {Array}  list     进行查询的数组
+     * @param  {String} keyWord  查询的关键词
+     * @return {Array}           查询的结果
+     */
+    function fuzzyQuery(list, keyWord) {
+      var arr = [];
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].match(keyWord) != null) {
+          arr.push(list[i]);
+        }
+      }
+      return arr;
+    }
+
+    function closeWin(){
+      api.closeWin({
+      });
+    }
+</script>
+
+
+
+
+
+<body>
+
+
+    <header class="aui-bar aui-bar-nav"style="position: fixed;background-color: #ffffff; height: 20pt;box-shadow: inherit;" id="aui-header">
+        <a class="aui-btn aui-pull-left"  tapmode onclick="closeWin()">
+            <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+        </a>
+        <div class="aui-title" style="background-color: #ffffff;color: #000000;">学生身份认证</div>
+        <div class="next_btn" onclick="ok()">
+            <h3 >确定</h3>
+        </div>
+    </header>
+
+    <div style="padding-left:30px;padding-right:30px;padding-top:35pt">
+
+        <div style="margin:20px 0px"> 我是：
+            <span id="ben" onclick="selecteScholar(1)"><span class="iconfont icon-duigou"></span>本科生</span>
+            <span id="yan" onclick="selecteScholar(2)" style="margin-left:30px;" ><span class="iconfont icon-duigou"> </span>研究生</span>
+        </div>
+        <div style="border-top:1px solid rgba(0,0,0,0.1);height:1px;"></div>
+
+        <div style="margin-top:20px">真实姓名：<input id="inputRealName" maxlength="10"></input></div>
+        <div style="margin:20px 0px 0px 0px">学校：<input id="inputSchool"    onclick="openSchool()"></input></div>
+        <ul style="margin-left: 50px;background-color:#f3f3f3;" class="aui-hide" id="displaySchool" >
+          <li>加载失败</li>
+        </ul>
+
+        <div style="margin-top:20px">专业：<input id="inputMajor"  onclick="openMajor()"></input></div>
+        <ul style="margin-left: 50px;background-color:#f3f3f3;" class="aui-hide" id="displayMajor" >
+            <li>加载失败</li>
+            <li>加载失败</li>
+        </ul>
+
+        <div style="margin-top:20px;margin-bottom:20px"  onclick="openPicker()">入学时间：<span id="time"></span></div>
+        <div style="border-top:1px solid  rgba(0,0,0,0.1);height:1px;"></div>
+
+        <div style="margin:20px 0px">请上传学生证/校园卡/录取通知书照片</div>
+
+        <div class="aui-content">
+          <ul class="aui-list-view aui-thumb-view">
+              <li class="aui-list-view-cell aui-img aui-col-xs-6" style="border-right: 5px solid rgba(0, 0, 0, 0);" onclick="showAction(1);">
+                  <img id="photo1" class="aui-img-object" src="../../image/mine/idcard-front.png">
+              </li>
+
+              <li class="aui-list-view-cell aui-img aui-col-xs-6" style="border-left: 5px solid rgba(0, 0, 0, 0);" onclick="showAction(2);">
+                  <img id="photo2" class="aui-img-object" src="../../image/mine/idcard-back.png">
+              </li>
+          </ul>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>
+
+<script type="text/javascript">
+
+    var photonum=1;
+
+    function showAction(num){
+      photonum=num;
+      api.actionSheet({
+          title: '上传头像',
+          cancelTitle: '取消',
+          buttons: ['拍照','从手机相册选择']
+      }, function(ret, err) {
+          if (ret) {
+              getPicture(ret.buttonIndex);
+          }
+      });
+    }
+
+
+
+
+
+
+function getPicture(sourceType) {
+    if(sourceType==1){ // 拍照
+        //获取一张图片
+        api.getPicture({
+            sourceType: 'camera',
+            encodingType: 'png',
+            mediaValue: 'pic',
+            allowEdit: false,
+            quality: 90,
+            saveToPhotoAlbum: true
+        }, function(ret, err) {
+            // 获取拍照数据并处理
+            if (ret) {
+              console.log(ret);
+                var imgSrc = ret.data;
+                saveImg(ret.data,"valueId","imgId");
+                // if (imgSrc != "") {
+                //     var ele=$api.dom('#avatar');
+                //     $api.attr(ele,'src',imgSrc);
+                // }
+            }
+        });
+      }else if (sourceType == 2) {
+                       //手机相册选图片
+         api.getPicture({
+             sourceType : 'library',
+             encodingType : 'png',
+             mediaValue : 'pic',
+             destinationType : 'url',
+             allowEdit : true,
+             quality : 100,
+             preview:true,
+             saveToPhotoAlbum : false
+         }, function(ret, err) {
+              //  alert(JSON.stringify(ret.data));
+             if (ret) {
+               console.log(ret);
+               saveImg(ret.data,"valueId","imgId");
+                 var imgSrc = ret.data;
+                //  if (imgSrc != "") {
+                //      var ele=$api.dom('#avatar');
+                //      $api.attr(ele,'src',imgSrc);
+                //      //fileLoader();
+                //  }
+            } else {
+                 api.toast({
+                     msg : '图像获取失败',
+                     duration : 3000,
+                     location : 'bottom'
+                 });
+             }
+         });
+
+        }
+
+
+              //保存剪辑图像
+        function saveImg(path,valueId,imgId) {
+          api.showProgress({
+              title: '上传中...',
+              text: '先喝杯茶...',
+          });
+          //上传剪辑后的图像到服务器
+          api.ajax({
+              // report : false,
+              url : 'http://47.105.160.217:80/api/upload/',
+              //这里是我们约定好的后台上传图片的位置 ，你可以根据你的需求来改
+              method : 'post',
+              cache : 'false',
+              timeout : 30,
+              dataTpye : 'json',
+              data : {
+                  files : {
+                      file : path
+                  },
+                  values: {
+                    type: 'public'
+                  }
+              }
+          }, function(ret, err) {
+               alert(JSON.stringify(ret));
+              api.hideProgress();
+              if (ret.message=="SUCCESS") {
+                var urlpath=ret.data.path;
+                console.log(urlpath);
+                if(photonum==1){
+                    $api.attr($api.byId('photo1'),'src','http://47.105.160.217:80/files/'+urlpath);
+                    $api.attr($api.byId('photo1'),'name',urlpath);
+                }else {
+                  $api.attr($api.byId('photo2'),'src','http://47.105.160.217:80/files/'+urlpath);
+                  $api.attr($api.byId('photo2'),'name',urlpath);
+                }
+
+              }
+              if (ret.status == 1) {
+                api.toast({
+                    msg : ret.info
+                });
+              }
+              //上传进度
+              if (ret.status == 0) {
+                  api.toast({
+                      msg : '上传错误',
+                      duration : 3000,
+                      location : 'bottom'
+                  });
+              } else if (ret.status == 1) {
+                  $api.byId(valueId).value = ret.id;
+                  $api.byId(imgId).src = ret.path;
+               }
+          });
+        }
+      }
+</script>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>title</title>
+		<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+    html,
+    body {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        height: 100%;
+        background-color: transparent;
+    }
+
+    section {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        overflow: auto;
+    }
+
+    footer {
+        width: 100%;
+        height: 85%;
+        background-color: #fff;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        border-radius: 14px 14px 0 0;
+    }
+    .total {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .top-box {
+       position: relative;
+       width: 100%;
+       height:50px;
+
+    }
+    .top-fixed {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      z-index: 10;
+    }
+    .left {
+      position: absolute;
+      left:0px;
+      bottom: 0px;
+      width:100px;
+      height: 50px;
+      font-size: 16px; color: #000; text-align: center;
+      line-height: 50px;
+    }
+    .right {
+      position: absolute;
+      right: 0px;
+      width:50px;
+      height: 50px;
+      font-size: 16px; color: #000; text-align: center;
+      line-height: 50px;
+    }
+
+
+
+
+    .input-comment {
+      /*border-top: 1px solid #d3d2d2;*/
+      position: relative;
+      left: 0;
+      width: 100%;
+      height: 10%;
+      background-color: #fff;
+      /*padding-right: 24px;*/
+    }
+
+    nav {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;;
+      -webkit-box-orient: horizontal;
+      -webkit-flex-flow: row;
+      flex-flow: row;
+      position: relative;
+      width: 100%;
+      height: 8%;
+    }
+    nav .tag-cata{
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      flex: 1;
+      width: 100%;
+      height: 37.5px;
+      line-height: 37.5px;
+      font-size: 12px; color: #8e8e8e; text-align: center;
+    }
+    nav .tag-cata.selected {
+      font-size: 12px; color: #6d7cd9; font-weight: bolder;
+    }
+
+
+
+    </style>
+</head>
+<body>
+	<!-- <div id="dialog">
+		<img id="erweima" src="../image/myerweima.png" tapmode onclick="api.closeFrame()"/>
+	</div> -->
+  <section tapmode  onclick="closeUIchat()"></section>
+  <footer>
+    <div id='total' class="total">
+    <div id='top-box' class="top-box">
+      <div class="top-fixed">
+      <div class="left">
+        选择标签
+      </div>
+      <div class="right" onclick="closeUIchat()">X</div>
+      </div>
+    </div>
+
+    <nav id="nav">
+      <div class="tag-cata selected" onclick="fnSetNavMenuIndex(0)" tapmode>全部</div>
+      <div class="tag-cata" onclick="fnSetNavMenuIndex(1)" tapmode>只看关注</div>
+    </nav>
+
+</div>
+  </footer>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+
+<script type="text/javascript">
+
+	apiready = function(){
+		// $("body").css("height",window.innerHeight);
+    var total = $api.byId('total');
+		var top_box = $api.byId('top-box');
+		var nav = $api.byId('nav');
+    var footer = $api.byId('footer');
+
+    var total_H = $api.offset(total).h;
+		var top_box_H = $api.offset(top_box).h;
+		var nav_H = $api.offset(nav).h;
+		var nav_T = $api.offset(nav).t;
+
+
+
+
+
+		tag_catas = $api.domAll(nav, '.tag-cata');
+
+    api.openFrameGroup ({
+        name: 'tag_frame',
+        background: '#fff',
+        scrollEnabled: true,
+        rect: {
+             x: 0,
+             y: nav_H+nav_T,
+             w: 'auto',
+             h: 'auto'
+        },
+        index: 0,
+        frames: [{
+            name: 'all_resource',
+            url: 'all_resource.html',
+            bgColor: '#fff'
+        },{
+            name: 'interest_resource',
+            url: 'interest_resource.html',
+            bgColor: '#fff'
+        }]
+    }, function(ret, err){
+			fnSetNavMenuSelected(ret.index);
+    });
+
+
+};
+
+  function closeUIchat() {
+		api.closeFrameGroup({
+				name: 'tag_frame'
+		});
+		api.closeFrame({
+		    name: 'tag'
+		});
+  }
+
+
+  function fnSetNavMenuIndex(index_) {
+    fnSetNavMenuSelected(index_);
+    // 若切换到全部回答,隐藏推荐回答中的intro_answer
+    api.setFrameGroupIndex({
+        name: 'tag_frame',
+        index: index_,
+        scroll: true
+    });
+  }
+
+var tag_catas;
+  function fnSetNavMenuSelected(index_) {
+    for (var i = 0; i < 2; i++) {
+      if (index_ == i) {
+        $api.addCls(tag_catas[i], 'selected');
+      } else {
+        $api.removeCls(tag_catas[i], 'selected');
+      }
+    }
+  }
+
+</script>
+</html>

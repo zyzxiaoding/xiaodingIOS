@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css" />
+</head>
+<body>
+<div id="content" style="margin-top:2%; position: relative; height: 150px;border: 3px; background-color: white">
+    <input type="text" oninput="check(this.value)" id="tagTitle" placeholder="请输入名称，最多四个字" style="color: grey;width: 90%;font-size:16px;height: 50px;margin-left: 5%">
+    <textarea type="text" id="tagDescription" placeholder="请输入圈子简介" style="color: grey;width: 90%; height: 100px;word-wrap:break-word;word-break:break-all;margin-left: 5%;font-size:14px;"></textarea>
+</div>
+    <div id="hinter" style="margin-left: 5%;margin-top: 3%; display: none">
+        <p>已有“摄影”圈子，不可重复创建</p>
+    </div>
+    <div style="height:70px;float: left;margin-top:2%;width:100%;background-color: white">
+        <div id="imgDiv" style="margin-top: 20px">
+        <h3 style="float: left;margin-top: 5px;margin-left:5%;">选择圈子头像</h3>
+        <span class="aui-iconfont aui-icon-right" style="color: #000000;margin-top:5px;font-weight: bolder;float: right;margin-right:5%;"1></span>
+        <img  src="./image/demo1.png"  id="circle_avatar" tapmode onclick="selectAvatar()"style="height:40px;width:40px;float: right;border-radius: 50%;margin-top:-6px;margin-right:2%;">
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/aui-tab.js"></script>
+<script type="text/javascript">
+
+    apiready = function(){
+        api.parseTapmode();
+    };
+    var avatar="";
+    var tag_id;
+    function check(text) {
+        var jdict = {
+            "user_id":$api.getStorage('user_id'),
+            "tag_name":text
+        }
+        $.ajax({
+            url:"http://47.105.160.217:80/api/tag/getTagByName/",
+            data:JSON.stringify(jdict),
+            dataType:'json',
+            method:'post',
+            success:function (ret) {
+                console.log(JSON.stringify(ret));
+                console.log(ret.message);
+                if (ret.status==203) {
+                    document.getElementById('hinter').style.display='none';
+                }
+                else {
+                    document.getElementById('hinter').style.display = '';
+                    document.getElementById('hinter').childNodes[1].innerHTML = "已有" + text + "圈子，不可重复创建"
+                }
+            },
+            error:function () {
+                document.getElementById('hinter').style.display='none';
+            }
+        })
+    }
+    function circleApplyCreate(){
+        if ($('#tagTitle').val().length>4){
+        alert("圈子只能4个字以内哦~~~");
+        return
+    }
+    else if($('#tagDescription').val()==''){
+        alert('need description')
+            return
+    }
+    else if(avatar==''){
+        alert('need Picture')
+            return
+    }
+        else {
+            var json="";
+            var j={
+                "user_id" : $api.getStorage('user_id'),
+                'name':''+$('#tagTitle').val(),
+                'description':''+$('#tagDescription').val()
+            }
+            $.ajax({
+                url:'http://47.105.160.217:80/api/tag/addTag/',
+                data:JSON.stringify(j),
+                method:'post',
+                // crossDomain: true,
+                dataType: 'json',
+                async: true,
+                success:function (ret) {
+                    //alert(JSON.stringify(ret.data))
+                    tag_id = ret.data.id;
+                    //alert(tag_id)
+                    json = {
+                        "user_id" : $api.getStorage('user_id'),
+                        'tag_id'  :tag_id,
+                        'group_name':''+$('#tagTitle').val(),
+                        'group_description':''+$('#tagDescription').val(),
+                        'group_profile':avatar
+                    };
+                    $.ajax({
+                        url: 'http://47.105.160.217:80/api/group/applyForCreateGroup/',
+                        data: JSON.stringify(json),
+                        method: 'post',
+                        // crossDomain: true,
+                        dataType: 'json',
+                        async: true,
+                        success: function (ret) {
+                            //alert(JSON.stringify(ret))
+                            alert("申请已经提交，圈子在审核中，请翘着二郎腿等着~~~~！");
+                            closeWin();
+                        },
+                        error: function (error) {
+                            alert(JSON.stringify(error))
+                        }
+                    });
+                },
+                error:function (error) {
+                    alert(JSON.stringify(error))
+                }
+            });
+        }
+    }
+    function selectAvatar() {
+        api.getPicture({targetHeight:600,targetWidth:800,
+            sourceType:'album',
+            encodingType:'jpg',
+            mediaValue:'pic',
+            destinationType:'url',
+            allowEdit:true,
+            quality:100,
+            saveToPhotoAlbum:false
+        },function (ret,err) {
+            if(ret){
+               document.getElementById('imgDiv').removeChild(document.getElementById('circle_avatar'));
+               document.getElementById('imgDiv').innerHTML = document.getElementById('imgDiv').innerHTML+
+                       "<img src="+ JSON.stringify(ret.data) + "id = \"circle_avatar\" tapmode " +
+                   "onclick=\"selectAvatar()\" style=\"height:40px;width:40px;float: right;border-radius: 50%;\" />"
+                 ;
+                var s = ret.data;
+                s = s.replace(/"/g,"");
+                s = s.replace(/\\/g,"");
+               api.ajax({
+                   url:'http://47.105.160.217/api/upload/',
+                   method:'post',
+                   data:{
+                       files:{
+                           file:s
+                       }
+                   },
+                   contentType:false,
+                   processData:false
+               },function (ret,error) {
+                    if(ret){
+                        avatar = ret.data.path;
+                    }else {
+                        alert(JSON.stringify(error))
+                    }
+                })
+
+    }
+            else {
+                alert(JSON.stringify(err))
+            }
+        })
+    }
+    function closeWin(){
+        api.closeWin({
+        });
+    }
+</script>
+</html>

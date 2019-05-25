@@ -1,0 +1,735 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的页面</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+    <script type="text/javascript" src="../../script/api.js" ></script>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" href="../../css/iconfont.css">
+
+    <script type="text/javascript" src="../../script/aui-dialog.js" ></script>
+
+
+    <style type="text/css">
+
+    body{
+        background-color: white;
+    }
+    header {
+        position: relative;
+        width: 100%;
+        /*height: 600px;*/
+        /*background-color: #6d7cd9;*/
+        /*
+        background-repeat:no-repeat;
+        background-size:cover;*/
+
+        color: #ffffff;
+    }
+
+
+
+
+    .userinf1{
+        display: flex;
+        -webkit-box-orient: horizontal;
+        flex-direction: row;
+        align-items:center;
+        height: 140px;
+        width: auto;
+    }
+
+    .userinf2{
+        display: flex;
+        -webkit-box-orient: horizontal;
+        flex-direction: row;
+        width: auto;
+        padding-top: 8px;
+    }
+
+    .portrait{
+        position: relative;
+        margin: 24px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+    }
+
+
+    /*.aui-grid [class*=aui-col-] {
+        padding: 0.75rem 0;
+    }*/
+
+    .back_black{
+      position: absolute;
+        height: 100%;
+        width: 100%;
+        background: rgba(0,0,0,.4);
+    }
+
+    </style>
+</head>
+<body onclick="closePop()">
+    <!-- 顶部 -->
+    <header id="header" style="background:url('https://i0.hdslb.com/bfs/archive/e28778aade6a4b49868c2f6cb5fa80d2e3681f6a.jpg@880w_440h.jpg');background-repeat: no-repeat;background-size: cover;">
+        <div class="back_black"></div>
+
+        <font id="back" style="right:20px;position:absolute;top:10px;" onclick="open2list()"> <span class="iconfont icon-edit" ></span></font>
+
+
+
+        <div class="aui-hide" style="width:110px;position: absolute;right: 24px; top:35px;z-index:20;border-radius:6px" id="list2">
+            <ul class="aui-list aui-list-in" style="color:black;border-radius: 6px">
+                <li class="aui-list-item" onclick="change_background()" style="border-radius:10px;padding-left:22px;height:55px ">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">更改背景</div>
+                    </div>
+                </li>
+
+                <li class="aui-list-item" onclick="change_info()" style="border-radius:6px;padding-left:22px;height:55px ">
+                    <div class="aui-list-item-inner">
+                        <div class="aui-list-item-title">更改资料</div>
+                    </div>
+                </li>
+              <!-- <li class="aui-list-item" onclick="change_info()">
+                  <div class="aui-list-item-inner" style="padding-right: 0px">
+                      <div class="aui-list-item-title" style="font-size:13px">更改个人信息</div>
+                  </div>
+              </li>-->
+            </ul>
+        </div>
+
+
+        <div class="userinf1" onclick="openHistory()">
+            <img src="../../image/demo1.png" class="portrait" id ="portrait" >
+            <div style="z-index:10"> <font style="font-size:20px" id="user_nickname">我是一只大橙子</font></br>
+            <font class="descible" id="descible">Ui问题优秀回答者</font></div>
+        </div>
+
+        <div class="userinf2" style="margin-bottom: 10px;">
+            <div style="z-index:10;text-align: center;margin-left:24px;margin-bottom:44px;"  onclick="openFollow();"> <font id="follow">6</font></br> 关注</div>
+            <div style="z-index:10;text-align: center;margin-left:24px;"  onclick="openFan();"><font id="fan">12</font></br>  粉丝</div>
+            <div style="z-index:10;text-align: center;margin-left:24px;"  onclick="openMyCoin()"><font id="gold">120</font></br> 金币</div>
+        </div>
+    </header>
+
+    <section  style="padding-left:18px;padding-right:18px;background-color:white">
+        <ul class="aui-list aui-list-in aui-margin-b-15" style="border:0px;background:none">
+            <li class="aui-list-item" onclick="favorite();" style="border: 0px !important;background:none" >
+                <div class="aui-list-item-label-icon">
+                    <span class="iconfont icon-collect2"></span>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">收藏夹</div>
+                </div>
+            </li>
+            <li class="aui-list-item" onclick="market()" style=" border-bottom:0px;background:none">
+                <div class="aui-list-item-label-icon">
+                    <span class="iconfont icon-store"></span>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">金币商城</div>
+                </div>
+            </li>
+            <li class="aui-list-item" style="border-width: 0px;;background:none">
+                <div class="aui-list-item-label-icon">
+                    <span class="iconfont icon-connect"></span>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">联系我们</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item" style="border-width: 0px;;background:none" onclick="openSet()">
+                <div class="aui-list-item-label-icon">
+                    <span class="iconfont icon-set"></span>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">设置</div>
+                </div>
+            </li>
+
+            <!-- <li class="aui-list-item" onclick="login()" style="border-width: 0px;;background:none">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-image aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">登录</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item" onclick="register()" style="border-width: 0px;;background:none">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-image aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">注册</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item" onclick="verified()" style="border-width: 0px;;background:none">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-image aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">认证</div>
+                </div>
+            </li>
+
+
+            <li class="aui-list-item" onclick="editInf()" style="border-width: 0px;;background:none">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-image aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">查看编辑个人信息</div>
+                </div>
+            </li>
+
+            <li class="aui-list-item" onclick="otherHistory()" style="border-width: 0px;;background:none">
+                <div class="aui-list-item-label-icon">
+                    <i class="aui-iconfont aui-icon-image aui-text-info"></i>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">查看他人主页</div>
+                </div>
+            </li> -->
+
+        </ul>
+    </section>
+
+</body>
+
+<script type="text/javascript">
+apiready = function () {
+    userListener();
+    //setUserInf();
+    initData();
+    getDetailInfo();
+    //openHistory();
+
+    api.addEventListener({
+        name: 'loginout'
+    }, function(ret, err) {
+        //location.href = './userLogin.html';
+    });
+
+    api.addEventListener({
+        name: 'UserHasLogin'
+    }, function(ret, err) {
+        getDetailInfo();
+        //location.href = './userLogin.html';
+    });
+}
+
+
+
+    function favorite(){
+        api.openWin({
+            name: 'favorite',
+            url: './favorite.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+    function login(){
+        $api.rmStorage('user_id');
+        $api.rmStorage('cookie');
+
+
+        api.openWin({
+            name: 'login',
+            url: './login.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+    function editInf(){
+        api.openWin({
+            name: 'editInf',
+            url: './myinf/myiformation.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+    function register(){
+        api.openWin({
+            name: 'register',
+            url: './register.html',
+            bounces: false,
+            animation:{
+                type: "movein",
+                duration:100
+            }
+        });
+    }
+
+    function verified(){
+        api.openWin({
+            name: 'verified',
+            url: './verified.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+
+    function userListener(){
+        api.addEventListener({
+            name: 'login'
+        }, function(ret, err) {
+            //alert('已连接网络');
+            getDetailInfo();
+        });
+    }
+
+
+    function initData() {
+        var _data=$api.getStorage('userInfo');
+        if(_data!=null) {
+            $api.text($api.byId('user_nickname'), _data.user_nickname);
+            $api.text($api.byId('descible'), _data.user_self_description);
+
+            $api.text($api.byId('follow'), _data.user_likenum);
+            $api.text($api.byId('fan'), _data.user_fansnum);
+            $api.text($api.byId('gold'), _data.gold_num);
+
+            if (_data.user_nickname) $api.setStorage('user_nickname', _data.user_nickname);
+
+            // if (ret.data.cookie) $api.setStorage('cookie', ret.data.cookie);
+            // if (ret.data.user_id) $api.setStorage('user_id', ret.data.user_id);
+            console.log(_data.user_profile_url);
+            if (_data.user_profile_url) $api.attr($api.byId('portrait'), "src", "http://47.105.160.217/files/"+_data.user_profile_url);
+            //if (ret.data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background-repeat: no-repeat;background-size: cover;background:url(http://47.105.160.217/files/"+ret.data.user_zone_background_url);
+            if (_data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background:url(http://47.105.160.217/files/"+_data.user_zone_background_url+");background-repeat: no-repeat;background-size: cover;");
+
+        }
+
+
+    }
+
+    function getDetailInfo(){
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+
+        if(cookie==null) return;
+
+        var json_userInfo={"app_version":"1.0","user_id":user_id, "user_cookie":cookie};
+        console.log(JSON.stringify(json_userInfo));
+        $.ajax({
+          url:'http://47.105.160.217:80/api/userInfo/getDetailInfo/',
+          type:'POST',
+          data:JSON.stringify(json_userInfo),
+          dataType:'json',
+          success:function (ret) {
+            if(ret.status==200){
+                $api.text($api.byId('user_nickname'), ret.data.user_nickname);
+                $api.text($api.byId('descible'), ret.data.user_self_description);
+
+              $api.text($api.byId('follow'), ret.data.user_likenum);
+              $api.text($api.byId('fan'), ret.data.user_fansnum);
+              $api.text($api.byId('gold'), ret.data.gold_num);
+
+              if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+
+              if (ret.data.cookie) $api.setStorage('cookie', ret.data.cookie);
+              if (ret.data.user_id) $api.setStorage('user_id', ret.data.user_id);
+                console.log(ret.data.user_profile_url);
+                if (ret.data.user_profile_url) $api.attr($api.byId('portrait'), "src", "http://47.105.160.217/files/"+ret.data.user_profile_url);
+                //if (ret.data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background-repeat: no-repeat;background-size: cover;background:url(http://47.105.160.217/files/"+ret.data.user_zone_background_url);
+                if (ret.data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background:url(http://47.105.160.217/files/"+ret.data.user_zone_background_url+");background-repeat: no-repeat;background-size: cover;");
+
+                $api.setStorage('userInfo', ret.data);
+
+
+
+              // var phoURL=ret.data.phoURL;
+              // if (phoURL){
+              //     api.imageCache({
+              //         url: 'http://a.hiphotos.baidu.com/image/w%3D400/sign=2abe1c77d4ca7bcb7d7bc62f8e086b3f/64380cd7912397ddf9f4bdb05a82b2b7d1a287f0.jpg'
+              //     }, function(ret, err) {
+              //         phoURL = ret.url;
+              //     });
+              //     $api.setStorage('phoURL', phoURL);
+              // }
+                }
+            },
+            error:function (ret) {
+                $api.toast( "网络错误", 2000 );
+          },
+      })
+
+
+    }
+
+
+
+
+    function openFan(){
+        api.openWin({
+            name: 'myFan',
+            url: './myFan.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+    　　　　}
+        });
+    }
+
+    function openFollow(){
+        api.openWin({
+            name: 'myFollow',
+            url: './myFollow.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+    　　　　}
+        });
+    }
+
+    function openMyCoin(){
+        api.openWin({
+            name: 'verified',
+            url: './coin/myCoin_frm.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+        });
+    }
+
+    function otherHistory(otherID){
+
+        api.openWin({
+        name: 'page1',
+        url: '../circle/circle_strategy_release_frm000.html',
+        pageParam: {
+            name: 'test'
+        },
+        allowEdit: true
+        });
+
+
+    }
+
+    function market(){
+        api.openWin({
+            name: '商店',
+            url: './coin/market.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+　　　　});
+    }
+
+    function openSet(){
+        api.openWin({
+            name: '设置',
+            url: './set.html',
+            bounces: false,
+            animation:{
+                type: "push",
+                duration:300
+            }
+　　　　});
+    }
+
+
+
+
+    var open0Rclose=false;
+    function openHistory(){
+        if(open0Rclose){
+            //api.closeFrame({name: 'myHistory'});
+            api.closeFrameGroup({name: 'history'});
+            open0Rclose=false;
+          return ;
+        }
+        open0Rclose=true;
+
+        var body_h = $api.offset($api.dom('body')).h;
+        var header_h = $api.offset($api.dom('#header')).h-20;
+
+        console.log("header_h:"+header_h);
+funIniGroup();
+        // api.openFrame({
+        //     name: 'myHistory',
+        //     url: 'mypage/myHistory.html',
+        //     bounces: false,
+        //     bgColor : 'rgba(0,0,0,0.0)',
+        //     rect: {
+        //         x: 0,
+        //         y: header_h,
+        //         w: 'auto',
+        //         h: 'auto',
+        //         //marginBottom:50    //相对父 window 下外边距的距离
+        //     },
+        //     pageParam: {
+        //         header_h: header_h
+        //     },
+        //     animation:{
+        //         type:"movein",                //动画类型（详见动画类型常量）
+        //         subType:"from_bottom",       //动画子类型（详见动画子类型常量）
+        //         duration:300                //动画过渡时间，默认300毫秒
+        //     }
+        //
+        // })
+    }
+
+    function funIniGroup(){
+        api.parseTapmode();
+
+        var header_h = $api.offset($api.dom('#header')).h-20;
+
+        var frameHeight = api.frameHeight;  // 比如： 504
+        var screenHeight = api.screenHeight;
+        var frameName = api.frameName;  //比如： trans-con
+        console.log(frameName);
+
+
+        console.log(frameHeight);
+        console.log(screenHeight);
+
+        //var startHeight=api.pageParam.header_h;
+
+
+        var frames_history = [];
+
+        frames_history.push( {
+            name: 'quesyion',
+            url: './mypage/myHistory_frm0.html',
+            bgColor : 'rgba(0,0,0,0)',
+            animation:{
+                type:"movein",                //动画类型（详见动画类型常量）
+                subType:"from_bottom",       //动画子类型（详见动画子类型常量）
+                duration:3000                //动画过渡时间，默认300毫秒
+            },
+            bounces:false      //界面是否可以上拉和下拉
+        } )
+        frames_history.push( {
+            name: 'strategy',
+            url: './mypage/myHistory_frm1.html',
+            bgColor : 'rgba(0,0,0,0)',
+            bounces:false
+        } )
+        frames_history.push( {
+            name: 'resource',
+            url: './mypage/myHistory_frm2.html',
+            bgColor : 'rgba(0,0,0,0)',
+            pageParam:{
+                height:screenHeight-header_h
+            },
+            bounces:false
+        } )
+
+
+        api.openFrameGroup({
+            name: 'history',
+            scrollEnabled: true,
+            rect: {
+                x: 0,
+                y: header_h,
+                w: 'auto',
+                h: 'auto'
+            },
+            background:'rgba(0,0,0,0)',
+            index: 0,
+            frames: frames_history
+        }, function (ret, err) {
+            // var index = ret.index;
+            // var tag=index;
+            //
+            // var eHeaderLis = $api.domAll('header li ');
+            // var list0=$api.dom('#list0');
+            // var list1=$api.dom('#list1');
+            // var list2=$api.dom('#list2');
+            //
+            // $api.removeCls(list0, 'active');
+            // $api.removeCls(list1, 'active');
+            // $api.removeCls(list2, 'active');
+            //
+            // if(tag==0) $api.addCls( list0, 'active');
+            // if(tag==1) $api.addCls( list1, 'active');
+            // if(tag==2) $api.addCls( list2, 'active');
+            //switchBtn(index);
+
+        });
+    }
+
+
+    function open2list(){
+        event.stopPropagation();
+      if($api.hasCls($api.byId("list2"),'aui-hide')){
+        $api.removeCls($api.byId("list2"), 'aui-hide');
+      }else {
+        $api.addCls($api.byId("list2"), 'aui-hide');
+      }
+   }
+
+   function closePop(){
+       if(!$api.hasCls($api.byId("list2"),'aui-hide')){
+          $api.addCls($api.byId("list2"), 'aui-hide');
+       }
+
+   }
+
+   function change_info(){
+       api.openWin({
+   　　　　name: 'info',
+   　　　　url: './myinf/myifor-edit.html',
+   　　　　bounces: false,
+   　　　　animation:{
+       　　　　type: "push",
+       　　　　duration:300
+           },
+
+ 　　　　});
+   }
+
+   function change_background(){
+       $api.addCls($api.byId("list2"), 'aui-hide');
+       //photonum=num;
+       api.actionSheet({
+           title: '上传背景图片',
+           cancelTitle: '取消',
+           buttons: ['拍照','从手机相册选择']
+       }, function(ret, err) {
+           if (ret) {
+               getPicture(ret.buttonIndex);
+           }
+       });
+   }
+
+   function getPicture(sourceType) {
+       if(sourceType==1){ // 拍照
+           api.getPicture({
+               sourceType: 'camera',
+               encodingType: 'png',
+               mediaValue: 'pic',
+               allowEdit: false,
+               quality: 90,
+               saveToPhotoAlbum: true
+           }, function(ret, err) {
+               // 获取拍照数据并处理
+               if (ret) {
+                   console.log(ret);
+                   var imgSrc = ret.data;
+                   var img_url = ret.data;
+                   if (img_url != "") {
+                       openImageClipFrame(img_url);
+                   }
+
+                   //saveImg(ret.data,"valueId","imgId");
+                   // if (imgSrc != "") {
+                   //     var ele=$api.dom('#avatar');
+                   //     $api.attr(ele,'src',imgSrc);
+                   // }
+               }
+           });
+       }else if (sourceType == 2) {
+       //手机相册选图片
+           api.getPicture({
+               sourceType : 'library',
+               encodingType : 'png',
+               mediaValue : 'pic',
+               destinationType : 'url',
+               allowEdit : true,
+               quality : 100,
+               preview:true,
+               saveToPhotoAlbum : false
+           }, function(ret, err) {
+           //  alert(JSON.stringify(ret.data));
+               if (ret) {
+                   console.log(ret);
+                   //saveImg(ret.data,"valueId","imgId");
+                   var imgSrc = ret.data;
+                   //  if (imgSrc != "") {
+                   //      var ele=$api.dom('#avatar');
+                   if (imgSrc != "") {
+                       openImageClipFrame(imgSrc);
+                   }
+                   //  }
+               } else {
+                   api.toast({
+                   msg : '图像获取失败',
+                   duration : 3000,
+                   location : 'bottom'
+                   });
+               }
+           });
+
+       }
+   }
+
+   function openImageClipFrame(img_src){
+       api.openFrame({
+           name : 'editPhoto_back',
+           scrollToTop : true,
+           allowEdit : true,
+           url : './myinf/editPhoto_back.html',
+           rect : {
+               x : 0,
+               y : 0,
+               w : api.winWidth,
+               h : api.winHeight,
+           },
+           animation : {
+               type : "reveal", //动画类型（详见动画类型常量）
+               subType : "from_right", //动画子类型（详见动画子类型常量）
+               duration : 300
+           },
+           pageParam : {
+               img_src : img_src,
+               type : 2
+           },
+           vScrollBarEnabled : false,
+           hScrollBarEnabled : false,
+           //页面是否弹动 为了下拉刷新使用
+           bounces : false
+       });
+   }
+
+
+
+
+    function setPrivacy(){
+        new auiDialog({}).alert({
+            title:"是否修改",
+            // msg:'这里是内容',
+            buttons:['取消','确定']
+        },function(ret){
+            if(ret){
+                if(ret.buttonIndex==2){
+                    alert("修改成功");
+                 }
+            }
+        })
+   }
+
+</script>
+</html>

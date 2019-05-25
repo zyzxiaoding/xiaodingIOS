@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link href="../../../css/style_login.css" rel="stylesheet" type="text/css"/>
+
+
+
+    <title>个人主页里的资源</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+
+    <script type="text/javascript" src="../../../script/doT.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/aui-dialog.js" ></script>
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: rgba(0, 0, 0,0);
+        overflow:hidden;
+        }
+
+        header{
+            height: 40px;
+            width: auto;
+            background-color: white;
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            -webkit-box-align: center;
+            display: flex;
+        }
+
+        div.active{
+            color: #6e7bdb;
+            padding-bottom:1px;
+             solid #f00;
+             border-bottom: 3px solid #6d7cd9;
+
+            width:fit-content;
+            margin:0 auto;
+
+        }
+
+
+        .table1{    //  不滚动部分
+            overflow: hidden;
+            height: 50px;
+        }
+        .table2{    //  滚动部分
+            border:1px solid #000000;
+            width:100%;
+            height:calc(100% - 50px);
+            overflow:scroll;
+        }
+    </style>
+
+</head>
+
+
+<script>
+
+    apiready = function(){
+        initData();
+
+        getItems();
+        var height=api.pageParam.height;
+        //$api.cssVal($api.byId('k'),height+'px');
+        //api. addEventListener({name:'scrolltobottom'}, function(ret, err){getItems(); });
+
+        // $('#k').scroll(function(){
+        // 　　var scrollTop = $(this).scrollTop();
+        // console.log(scrollTop);
+        // 　　var scrollHeight = $(document).height();
+        // 　　var windowHeight = $(this).height();
+        //
+        // console.log(scrollTop + windowHeight - scrollHeight);
+        // 　　if(scrollTop + windowHeight == scrollHeight){
+        // 　　　　alert("已经到最底部了！");
+        // 　　}
+        // });
+        var  t=0;
+
+        $("#scroll").scroll(function(){
+            var $this =$(this),
+            viewH =$(this).height(),//可见高度
+            contentH =$(this).get(0).scrollHeight-38,//内容高度
+            scrollTop =$(this).scrollTop();//滚动高度
+            // console.log(viewH);
+            // console.log(contentH);
+            // console.log(scrollTop);
+            //console.log(scrollTop/(contentH -viewH));
+            console.log(contentH -viewH-scrollTop);
+
+           if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+           // 这里加载数据..
+            //getData();
+            if(t<scrollTop){
+            //下滚
+                getItems();
+                console.log("下滚");
+
+            }else{
+            //上滚
+            }
+            setTimeout(function(){ t = scrollTop ; },0)
+           }
+        });
+
+
+    };
+
+    function initData(){
+        var flag = $api.byId('insertList');
+        var tempFn = doT.template($api.byId('template').innerHTML);
+        var my_frm2=$api.getStorage('my_frm2');
+        $api.html(flag, tempFn(my_frm2));
+    }
+
+    var since_id=0;
+    var page_size=10;
+
+    function getItems(){
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+        if(cookie==null) return;
+
+
+
+
+      var flag = $api.byId('insertList');
+      // 编译模板函数
+      var tempFn = doT.template($api.byId('template').innerHTML);
+      // 使用模板函数生成HTML文本
+
+      var json_getItems={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"since_id":since_id,"page_size":10};
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getSourceHistory/',
+            type:'POST',
+            data:JSON.stringify(json_getItems),
+            dataType:'json',
+            success:function (ret) {
+              if(ret.status==200){
+
+                  var _data=ret.data;
+                  //_data=data_;
+                //   var resultHTML = tempFn(_data);
+                //   $api.append(flag, resultHTML);
+
+                    console.log(JSON.stringify(_data));
+
+                    for(var p in _data){//遍历json数组时，这么写p为索引，0,1
+                        var arr = _data[p].url.split(".");
+                        _data[p].url=arr[arr.length - 1];
+
+                      console.log(_data[p].url + " ");
+
+                    }
+
+
+                  if(since_id==0){
+                      console.log("since_id"+since_id);
+                      $api.setStorage('my_frm2', _data);
+                      $api.html(flag, tempFn(_data));
+                      if(_data==""){
+                          $api.html(flag, '<h1>上传资源为空</h1>');
+                          return;
+                      }
+                  }else {
+                      console.log("since_id"+since_id);
+
+                      if(_data==""){
+                          $api.toast( '到头了', 300 );
+                          return;
+                      }
+                      $api.append(flag, tempFn(_data));
+                  }
+
+                  since_id+=10;
+                //if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+
+              }
+                //alert(JSON.stringify(ret))
+            },
+            error:function (ret) {
+                // var _data=ret.data;
+                // //_data=data_;
+                // var resultHTML = tempFn(data_);
+                // $api.append(flag, resultHTML);
+              alert(JSON.stringify(ret));
+            },
+        })
+      return 0;
+      }
+
+      function switchBtn(tag) {
+          // if( tag == $api.dom('#nav li div.active') )return;
+          console.log(tag);
+          var eHeaderLis = $api.domAll('header li ');
+          var list0=$api.dom('#list0');
+          var list1=$api.dom('#list1');
+          var list2=$api.dom('#list2');
+
+        //   $api.removeCls(list0, 'active');
+        //   $api.removeCls(list1, 'active');
+        //   $api.removeCls(list2, 'active');
+          //
+        //   if(tag==0) $api.addCls( list0, 'active');
+        //   if(tag==1) $api.addCls( list1, 'active');
+        //   if(tag==2) $api.addCls( list2, 'active');
+          api.setFrameGroupIndex({
+              name: 'history',
+              index: tag
+          });
+      }
+
+      function openRes(target_id){
+
+              api.openWin({
+                  name: 'question',
+                  url: '../../circle/circle_resource_detail.html',
+                  bounces: false,
+                  pageParam:{
+                      source_id : target_id,
+                      user_id:$api.getStorage('user_id'),
+                      user_cookie:''
+                  }
+      　　　　});
+      }
+</script>
+
+
+<style>
+/*body{
+    background-color:#f0f0f0;
+}*/
+</style>
+
+<body>
+
+    <header class="aui-row table1" style="padding-top:20px;height:50px;align-items: center;text-align: center;background-color:white !important;border-radius:20px 20px 0 0;background-color:red"  >
+
+        <div onclick="switchBtn(0);" class="aui-col-xs-4"  id="list0">问答</div>
+        <div onclick="switchBtn(1);" class="aui-col-xs-4" id="list1">经验</div>
+        <div onclick="switchBtn(2);" class="aui-col-xs-4 active"  id="list2">资源</div>
+    </header>
+    <!-- <div>2222222</div>
+    <div>2222222</div>
+    <div>2222222</div>
+    <div>2222222</div> -->
+
+    <div class="aui-content aui-margin-b-15 table2" id="scroll">
+    <ul class="aui-list aui-media-list" id="insertList" style="border-top-width: 0px;padding-top: 24px;margin-top:-10px">
+
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 3rem;">
+                    <div style="background-color:red;height:45px;width:45px;border-radius:20%;text-align: center;"><font style="line-height:45px">JPG</font></div>
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-14">高数习题详解</div>
+                        <!-- <div class="aui-list-item-right">08:00</div> -->
+                    </div>
+                    <div class="aui-list-item-text">
+                        128捧，0踩
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 3rem;">
+                    <img src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-14">高数习题详解</div>
+                        <!-- <div class="aui-list-item-right">08:00</div> -->
+                    </div>
+                    <div class="aui-list-item-text">
+                        128捧，0踩
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 3rem;">
+                    <img src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-14">高数习题详解</div>
+                        <!-- <div class="aui-list-item-right">08:00</div> -->
+                    </div>
+                    <div class="aui-list-item-text">
+                        128捧，0踩
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 3rem;">
+                    <img src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-14">高数习题详解</div>
+                        <!-- <div class="aui-list-item-right">08:00</div> -->
+                    </div>
+                    <div class="aui-list-item-text">
+                        128捧，0踩
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 3rem;">
+                    <img src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-14">高数习题详解</div>
+                        <!-- <div class="aui-list-item-right">08:00</div> -->
+                    </div>
+                    <div class="aui-list-item-text">
+                        128捧，0踩
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 3rem;">
+                    <img src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-14">高数习题详解</div>
+                        <!-- <div class="aui-list-item-right">08:00</div> -->
+                    </div>
+                    <div class="aui-list-item-text">
+                        128捧，0踩
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li class="aui-list-item aui-list-item-middle">
+            <div class="aui-media-list-item-inner">
+                <div class="aui-list-item-media" style="width: 3rem;">
+                    <img src="../../../image/demo5.png" class="aui-img-round aui-list-img-sm">
+                </div>
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-text">
+                        <div class="aui-list-item-title aui-font-size-14">高数习题详解</div>
+                        <!-- <div class="aui-list-item-right">08:00</div> -->
+                    </div>
+                    <div class="aui-list-item-text">
+                        128捧，0踩
+                    </div>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+</div>
+
+
+</body>
+</html>
+
+<script type="text/template" id="template">
+
+{{~it:value:index}}
+
+
+
+<li class="aui-list-item aui-list-item-middle" onclick="openRes('{{=value.id}}')" style="padding-left: 24px;">
+    <div class="aui-media-list-item-inner">
+        <div class="aui-list-item-media" style="width: 3rem;padding-top: 15px;padding-bottom: 15px;">
+
+            {{? value.url ==='jpg' }}
+            <div style="background-color:#e6655e;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">jpg</font></div>
+
+            {{?? value.url ==='m4a'}}
+            <div style="background-color:#917dcf;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">m4a</font></div>
+            {{??}}
+            <div style="background-color:green;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">{{=value.url}}</font></div>
+            {{?}}
+
+        </div>
+        <div class="aui-list-item-inner" style="font-size:16px">
+            <div class="aui-list-item-text">
+                <div class="aui-list-item-title aui-font-size-16" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{=value.name}}</div>
+                <!-- <div class="aui-list-item-right">08:00</div> -->
+            </div>
+            <div class="aui-list-item-text">
+                {{=value.dislike_number}}捧
+            </div>
+        </div>
+    </div>
+</li>
+
+
+
+
+
+{{~}}
+
+</script>
+<!-- <img src="http://47.105.160.217:80/files/{{=value.img_list}}" class="aui-img-round aui-list-img-sm">，{{=value.like_number}}踩 -->

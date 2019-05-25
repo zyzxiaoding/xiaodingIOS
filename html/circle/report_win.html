@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../QandA/css/api1.css" />
+    <link rel="stylesheet" type="text/css" href="../QandA/css/style1.css" />
+    <style>
+        .flex-con {
+            overflow: hidden;
+        }
+        .header-box {
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 100%;
+          height: 43px;
+          background-color: #ffffff
+        }
+        header {
+          position: fixed;
+          width: 100%;
+          height: 43px;
+          background-color: #ffffff;
+          z-index: 11;
+          /*box-shadow: 0 6px 20px #D7D7D7;*/
+        }
+        header .left {
+          position: relative;
+          width: 10%;
+          height: 43px;
+          left: 4%;
+          background-image: url(../QandA/icon/back.png);
+          background-size: 21.5px 15.5px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          float: left;
+        }
+        header .center {
+          position: relative;
+          left: 0%;
+          width: 70%;
+          margin-left: 5%;
+          height: 43px;
+          float: left;
+          font-size: 18px;
+          line-height: 43px;
+          font-weight: bolder;
+          text-align: center;
+        }
+        header .right {
+          /*border: 1px solid red;*/
+          width: 10%;
+          height: 43px;
+          float: right;
+          margin-right: 4%;
+          display: table;
+        }
+        .report_box {
+          width: 90%;
+          margin-left:5%;
+          margin-top: 2%;
+          height: auto;
+        }
+        .report_tips {
+          width: 100%;
+          height: 43px;
+          font-size: 16px; color: #000; text-align: left;
+          line-height: 43px;
+          float: left;
+          margin-bottom: 5%;
+        }
+        .right_angle {
+          position: relative;
+          width: 20px;
+          height: 43px;
+          background-image: url(../QandA/icon/right.png);
+          background-size: 20px 20px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          float: right;
+        }
+    </style>
+</head>
+
+<body style="height:100%;">
+      <div class="header-box">
+      <header id="header" class="" style="">
+        <div class="left"tapmode onclick="back()"></div>
+        <div class="center">举报</div>
+      </header>
+      </div>
+
+      <div class="report_box">
+        <span class="report_tips" onclick="report_open(this)">
+          垃圾广告信息
+          <div class="right_angle"></div>
+        </span>
+        <span class="report_tips" onclick="report_open(this)">
+          不友善行为
+          <div class="right_angle"></div>
+        </span>
+        <span class="report_tips" onclick="report_open(this)">
+          有害信息
+          <div class="right_angle"></div>
+        </span>
+        <span class="report_tips" onclick="report_open(this)">
+          涉嫌侵权
+          <div class="right_angle"></div>
+        </span>
+        <span class="report_tips" onclick="report_open(this)">
+          诱导赞同、关注等行为
+          <div class="right_angle"></div>
+        </span>
+        <span class="report_tips" onclick="report_open(this)">
+          其他
+          <div class="right_angle"></div>
+        </span>
+      </div>
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../QandA/script/api.js"></script>
+<script type="text/javascript" src="../QandA/script/jquery.js"></script>
+<script type="text/javascript">
+      apiready = function() {
+        api.closeWin({
+            name: 'report_edit'
+        });
+      }
+
+      function report_open(tag) {
+        api.closeWin({
+            name: 'report_edit'
+        });
+        var reoport_type = tag.innerText;
+        api.openWin({
+            name: 'report_edit',
+            url: './report_edit.html',
+            animation: {
+              type: 'none'
+            },
+            pageParam: {
+                type: reoport_type,
+                article_id: api.pageParam.article_id,
+                user_id:$api.getStorage('user_id'),
+                user_cookie:api.pageParam.user_cookie,
+                report_type: api.pageParam.report_type
+            }
+        });
+      }
+
+      function back() {
+        api.closeWin({
+            name: 'report_edit'
+        });
+        api.closeWin({
+            name: 'report_win'
+        });
+      }
+
+</script>

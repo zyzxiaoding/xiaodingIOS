@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+    <title>他人的关注</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+    <script type="text/javascript" src="../../../script/jquery.js"></script>
+
+
+</head>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/doT.min.js"></script>
+<script type="text/javascript" src="../../../script/doT.js"></script>
+
+<style >
+.box {
+    position: relative;
+    width: 50%;
+}
+.box:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+</style>
+
+<script>
+        var uid;
+
+    apiready = function() {
+        uid=api.pageParam.uid;
+        //alert(api.pageParam.otherID);
+        setFollowList();
+        console.log("ss");
+        api.addEventListener({name:'scrolltobottom'}, function(ret, err){setFollowList()});
+        // api.addEventListener({
+        //     name:'offline'
+        //     }, function(ret, err){
+        //     $api.toast( '断网了', 2000 );
+        //     net=0;
+        // });
+        // api.addEventListener({
+        //     name:'online'
+        // }, function(ret, err){
+        //     net=1;
+        //     $api.toast( '网已经连接', 2000 );
+        //
+        // });
+        //initData();
+
+    }
+
+    var since_id=0;
+    var page_size=10;
+
+
+
+    // function initData(){
+    //     var flag = $api.byId('insertList');
+    //     var tempFn = doT.template($api.byId('template').innerHTML);
+    //     var followList=$api.getStorage('followList');
+    //     $api.html(flag, tempFn(followList));
+    // }
+    function setFollowList(){
+
+        var tempFn = doT.template($api.byId('template').innerHTML);
+        var flag = $api.byId('insertList');
+
+        var cookie=$api.getStorage('cookie');
+        var user_id=$api.getStorage('user_id');
+
+        if(cookie==null) return;
+
+        var json_follow={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"since_id":since_id,"page_size":10,"aim_user_id": uid,"info_type": "ConcernedUser"};
+        console.log(JSON.stringify(json_follow));
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getOtherUserInfo/',
+            type:'POST',
+            data:JSON.stringify(json_follow),
+            dataType:'json',
+            success:function (ret) {
+                console.log(JSON.stringify(ret));
+                if(ret.status==200){
+
+                var _data=ret.data;
+
+                console.log(JSON.stringify(_data));
+                console.log("since_id"+since_id);
+
+
+
+                if(since_id==0){
+                    console.log("since_id"+since_id);
+                    $api.html(flag, tempFn(_data));
+                    if(_data==null) $api.html(flag, '<h1>关注列表为空</h1>');
+                }else {
+                    console.log("since_id"+since_id);
+
+                    if(_data==""){
+                        $api.toast( '到头了', 300 );
+                        return;
+                    }
+                    $api.append(flag, tempFn(_data));
+                }
+
+                since_id+=10;
+              }
+            },
+            error:function (ret) {
+            //   api.hideProgress();
+                $api.toast( "网络错误", 2000 );
+
+            },
+        })
+
+        //var htmlcontent=" <li class=\"aui-list-item\" style=\"padding-top:20px; padding-bottom:20px;\"><div class=\"aui-list-item-label-icon\"><i class=\"aui-iconfont aui-icon-home\"></i></div><div class=\"aui-list-item-inner\"><div>{{username}}#username#<br>UI问题优秀回答者</div></div><div class=\"aui-list-item-right\" ><div class=\"aui-btn\" style=\" margin-top: 10px; margin-right:24px;\">已关注</div></div></li>"
+
+        // 1. 编译模板函数
+        // var tempFn = doT.template("<h1>Here is a sample template {{=it.foo}}</h1>");
+        // // 2. 多次使用模板函数
+        // var resultText = tempFn({foo: 'with doT'});
+        // $api.html(flag1, resultText);
+        //var r=template(htmlcontent, values)
+        //var list = $api.byId('list');
+        // 编译模板函数
+        // var tempFn = doT.template($api.byId('template').innerHTML);
+        //$api.html(flag1, "resultHTM L");
+        // 使用模板函数生成HTML文本
+        // var data_=[{"username":"banana","des":"描述1"},{"username":"bs","des":"描述1"},{"username":"username","des":"描22"},{"username":"banafsna","des":"ddd"},{"username":"banadfna","des":"描述fd1"}];
+        // var resultHTML = tempFn(data_);
+        // $api.html(flag, resultHTML);
+        //$api.html(flag1,r);
+    }
+
+
+    // function insertData(type,_data){
+    //     var resultHTML = ;
+    //     $api.append(flag, tempFn(_data));
+    //
+    // }
+    function openOther(uid){
+
+        api.openWin({
+            name: 'otherFragment_frm',
+            url: './otherFragment_frm.html',
+            pageParam: {
+                uid: uid
+            }
+        });
+    }
+
+
+</script>
+
+<body id="bod">
+    <div class="aui-content aui-margin-b-15">
+        <ul class="aui-list aui-media-list" id="insertList">
+
+
+
+        </ul>
+
+
+    </div>
+
+    <!-- <ul class="aui-list aui-list-in aui-media-list aui-content" id="insertList" style="left: 0px;">
+
+        <li class="aui-list-item" style="padding:20px;padding-bottom:20px;">
+            <div class="aui-list-item-label-icon" style="width: 4.5rem;">
+                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554491154576&di=12cbb3d0b0eb02663081da66017043d3&imgtype=0&src=http%3A%2F%2Fpic.9ht.com%2Fup%2F2014-8%2F201482691356.jpg" class="aui-img-round aui-list-img-sm" >
+            </div>
+
+            <div class="aui-list-item-inner">
+                <div class="aui-list-item-text">
+                    <div class="aui-list-item-title aui-font-size-14">AUI</div>
+                    <div class="aui-list-item-right">08:00</div>
+                </div>
+                <div class="aui-list-item-text">
+                    www.auicss.com
+                </div>
+
+
+            <div class="aui-list-item-right" >
+
+
+                <div class="aui-btn" style=" margin-top: 10px; margin-right:10px; background-color:white; color:grey;">已关注</div>
+            </div>
+        </li>
+
+    </ul> -->
+
+
+
+
+</body>
+
+<script type="text/template" id="template">
+
+    {{~it:value:index}}
+
+
+    <li class="aui-list-item aui-list-item-middle" onclick="openOther('{{=value.user_id}}')" style="padding-left:24px">
+        <div class="aui-media-list-item-inner">
+            <div class="aui-list-item-media" style="width: 3.5rem;padding-top:15px;padding-bottom:15px">
+                <img src="http://47.105.160.217:80/files/{{=value.user_profile_url}}" class="aui-img-round aui-list-img-sm">
+            </div>
+            <div class="aui-list-item-inner " style="padding-top: 5px;padding-bottom:5px">
+                <div class="aui-list-item-text">
+                    <div class="aui-list-item-title aui-font-size-17" style="width: 60%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{=value.user_nickname}}</div>
+                    <div class="aui-list-item-right" style="font-size:15px;padding-right:8px">
+                        {{? value.is_bidirectional_concerned }} <p >我关注了</p></div>{{?}}
+                </div>
+                <div class="aui-list-item-text" style="width: 60%;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+                    {{=value.user_self_description}}
+                </div>
+            </div>
+
+        </div>
+    </li>
+
+    {{~}}
+</script>
+<!-- <div class="" style="position:absolute;right:0">已经关注</div> -->

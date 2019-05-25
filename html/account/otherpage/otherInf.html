@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+
+
+    <title>他人信息</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/api.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="../../css/style.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../../css/aui.css" />
+    <script type="text/javascript" src="../../../script/aui-dialog.js" ></script>
+    <!-- <script type="text/javascript" src="../../../script/aui-popup.js" ></script> -->
+    <link rel="stylesheet" href="../../../css/iconfont.css">
+
+    <style>
+
+        html,body {
+        height: 100%;
+        background-color: #f0f0f0;
+        }
+
+        header{
+          position: relative;
+          width: 100%;
+          /*height: 600px;*/
+          /*background-color: #6d7cd9;*/
+          background:url(../../../image/mine/header-bg.png);
+          background-repeat:no-repeat;
+          background-size:cover;
+          color: #ffffff;
+        }
+        #back::after{content: "";padding-top: 8%;display: block;}
+        #header::after{content: "";padding-top: 21%;display: block;}
+
+        .back_black{
+          position: absolute;
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,.5);
+        }
+
+    </style>
+    <!-- <script type="text/javascript" src=" doT.min.js"></script> -->
+
+</head>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/jquery.js"></script>
+
+<!-- <script type="text/javascript" src="../../../script/aui-popup.js" ></script>
+<script type="text/javascript" src="../../../script/aui-popup-new.js" ></script> -->
+
+
+<script type="text/javascript">
+
+    var uid;
+    apiready = function(){
+      getOtherInf();
+      //initData();
+     uid=api.pageParam.uid;
+        // api.addEventListener({
+        //     name:'tap'
+        // }, function(ret, err){
+        //     if($api.hasCls($api.byId("list2"),'aui-hide')){
+        //       $api.removeCls($api.byId("list2"), 'aui-hide');
+        //     }else {
+        //       $api.addCls($api.byId("list2"), 'aui-hide');
+        //     }
+        //     $api.addCls($api.byId("list2"), 'aui-hide');
+        // });
+    };
+
+
+
+
+
+
+    function getOtherInf(){
+
+      var cookie=$api.getStorage('cookie');
+      var user_id=$api.getStorage('user_id');
+
+      if(cookie==null) return;
+
+
+      var json_userInfo={"app_version":"1.0","user_id":user_id, "user_cookie":cookie,"aim_user_id": api.pageParam.uid,"info_type": "UserInfo"};
+      console.log(JSON.stringify(json_userInfo));
+
+        $.ajax({
+            url:'http://47.105.160.217:80/api/userInfo/getOtherUserInfo/',
+            type:'POST',
+            data:JSON.stringify(json_userInfo),
+            dataType:'json',
+            success:function (ret) {
+              if(ret.status==200){
+                  console.log(JSON.stringify(ret.data));
+
+                if (ret.data.gender==1) {
+                    $api.text($api.byId('sex'),  '男');
+                }else if (ret.data.gender==1) {
+                    $api.text($api.byId('sex'),  '女');
+                }else{
+                    $api.text($api.byId('sex'),  '未知');
+
+                }
+
+                $api.text($api.byId('des'),  ret.data.user_self_description);
+                $api.text($api.byId('nick_name'),  ret.data.user_nickname);
+
+                //if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+                if (ret.data.user_profile_url) $api.attr($api.byId('portrait'), "src", "http://47.105.160.217/files/"+ret.data.user_profile_url);
+                //if (ret.data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background-repeat: no-repeat;background-size: cover;background:url(http://47.105.160.217/files/"+ret.data.user_zone_background_url);
+                if (ret.data.user_zone_background_url) $api.attr($api.byId('header'), "style", "background:url(http://47.105.160.217/files/"+ret.data.user_zone_background_url+");background-repeat: no-repeat;background-size: cover;");
+
+                if (ret.data.is_real_name_info_show) {
+                    $api.text($api.byId('realName'),  ret.data.user_real_name);
+                    $api.text($api.byId('major'),  ret.data.user_major);
+                    $api.text($api.byId('cer_type'),  ret.data.user_certificate_type);
+                    $api.text($api.byId('time'),  ret.data.user_enrollment_time);
+                }else {
+                    $api.remove($api.closest($api.byId('realName'), '.parent'));
+                    $api.remove($api.closest($api.byId('major'), '.parent'));
+                    $api.remove($api.closest($api.byId('cer_type'), '.parent'));
+                    $api.remove($api.closest($api.byId('time'), '.parent'));
+
+                }
+
+              }
+                //alert(JSON.stringify(ret))
+            },
+            error:function (ret) {
+              alert(JSON.stringify(ret))
+            },
+        });
+
+
+        // var json_getItems2={"app_version":"1.0","user_id":user_id, "user_cookie":cookie};
+        //   $.ajax({
+        //       url:'http://47.105.160.217:80/api/userAuth/getMyRealNameMaterial/',
+        //       type:'POST',
+        //       data:JSON.stringify(json_getItems2),
+        //       dataType:'json',
+        //       success:function (ret) {
+        //         if(ret.status==200){
+        //             $api.text($api.byId('school'),  ret.data.user_school);
+        //
+        //           $api.text($api.byId('major'),  ret.data.user_major); majorToNext=ret.data.user_major;
+        //           $api.text($api.byId('realName'),  ret.data.user_real_name); realNameToNext=ret.data.user_real_name;
+        //           $api.text($api.byId('cer_type'),  ret.data.user_certificate_type);
+        //           $api.text($api.byId('time'),  ret.data.user_enrollment_time);
+        //           //if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
+        //         }
+        //           alert(JSON.stringify(ret))
+        //       },
+        //       error:function (ret) {
+        //         alert(JSON.stringify(ret))
+        //       },
+        //   })
+
+
+        }
+
+
+
+        function change_background(){
+            $api.addCls($api.byId("list2"), 'aui-hide');
+            //photonum=num;
+            api.actionSheet({
+                title: '上传背景图片',
+                cancelTitle: '取消',
+                buttons: ['拍照','从手机相册选择']
+            }, function(ret, err) {
+                if (ret) {
+                    getPicture(ret.buttonIndex);
+                }
+            });
+        }
+
+        function getPicture(sourceType) {
+            if(sourceType==1){ // 拍照
+                api.getPicture({
+                    sourceType: 'camera',
+                    encodingType: 'png',
+                    mediaValue: 'pic',
+                    allowEdit: false,
+                    quality: 90,
+                    saveToPhotoAlbum: true
+                }, function(ret, err) {
+                    // 获取拍照数据并处理
+                    if (ret) {
+                        console.log(ret);
+                        var imgSrc = ret.data;
+                        var img_url = ret.data;
+                        if (img_url != "") {
+                            openImageClipFrame(img_url);
+                        }
+
+                        //saveImg(ret.data,"valueId","imgId");
+                        // if (imgSrc != "") {
+                        //     var ele=$api.dom('#avatar');
+                        //     $api.attr(ele,'src',imgSrc);
+                        // }
+                    }
+                });
+            }else if (sourceType == 2) {
+            //手机相册选图片
+                api.getPicture({
+                    sourceType : 'library',
+                    encodingType : 'png',
+                    mediaValue : 'pic',
+                    destinationType : 'url',
+                    allowEdit : true,
+                    quality : 100,
+                    preview:true,
+                    saveToPhotoAlbum : false
+                }, function(ret, err) {
+                //  alert(JSON.stringify(ret.data));
+                    if (ret) {
+                        console.log(ret);
+                        //saveImg(ret.data,"valueId","imgId");
+                        var imgSrc = ret.data;
+                        //  if (imgSrc != "") {
+                        //      var ele=$api.dom('#avatar');
+                        if (imgSrc != "") {
+                            openImageClipFrame(imgSrc);
+                        }
+                        //  }
+                    } else {
+                        api.toast({
+                        msg : '图像获取失败',
+                        duration : 3000,
+                        location : 'bottom'
+                        });
+                    }
+                });
+
+            }
+        }
+
+        function change_info(){
+            api.openWin({
+        　　　　name: 'verified',
+        　　　　url: './myifor-edit.html',
+        　　　　bounces: false,
+        　　　　animation:{
+            　　　　type: "push",
+            　　　　duration:300
+                },
+              pageParam: {
+                  school: schoolToNext,
+                  sex :sexToNext,
+                  nick:nickToNext,
+                  des : desToNext,
+                  realName : realNameToNext,
+                  major : majorToNext,
+                  exp : expToNext
+              }
+
+      　　　　});
+        }
+
+        function openImageClipFrame(img_src){
+            api.openFrame({
+                name : 'editPhoto_back',
+                scrollToTop : true,
+                allowEdit : true,
+                url : 'editPhoto_back.html',
+                rect : {
+                    x : 0,
+                    y : 0,
+                    w : api.winWidth,
+                    h : api.winHeight,
+                },
+                animation : {
+                    type : "reveal", //动画类型（详见动画类型常量）
+                    subType : "from_right", //动画子类型（详见动画子类型常量）
+                    duration : 300
+                },
+                pageParam : {
+                    img_src : img_src,
+                    type : 2
+                },
+                vScrollBarEnabled : false,
+                hScrollBarEnabled : false,
+                //页面是否弹动 为了下拉刷新使用
+                bounces : false
+            });
+        }
+
+
+
+    function open2list(){
+      // $api.removeCls($api.byId("list2"), 'aui.hide');
+      // return;
+      if($api.hasCls($api.byId("list2"),'aui-hide')){
+        $api.removeCls($api.byId("list2"), 'aui-hide');
+      }else {
+        $api.addCls($api.byId("list2"), 'aui-hide');
+      }
+
+   }
+
+
+  //  var dialog = new auiDialog({});
+    function editInf(){
+    //  popup.show(document.getElementById("bottom-right"));
+
+    api.openWin({
+　　　　name: 'verified',
+　　　　 url: './myifor-edit.html',
+　　　　bounces: false,
+　　　　 animation:{
+　　　　type: "push",
+　　　　duration:300
+　　　　}
+　　　　});
+
+return;
+
+        new auiDialog({}).alert({
+          title:"是否修改个人信息",
+          // msg:'这里是内容',
+          buttons:['取消','确定']
+      },function(ret){
+          if(ret){
+            if(ret.buttonIndex==2){
+              api.openWin({
+          　　　　name: 'verified',
+          　　　　 url: './myifor-edit.html',
+          　　　　bounces: false,
+          　　　　 animation:{
+          　　　　type: "push",
+          　　　　duration:300
+        　　　　},
+                pageParam: {
+                    school: schoolToNext,
+                    sex :sexToNext,
+                    nick:nickToNext,
+                    des : desToNext,
+                    realName : realNameToNext,
+                    major : majorToNext,
+                    exp : expToNext
+                }
+
+        　　　　});
+            }
+          }
+      })
+    }
+
+
+</script>
+
+    <body>
+
+        <!-- 顶部 -->
+        <header id="header" style="position:relative;box-shadow: inherit;" >
+          <div class="back_black"></div>
+
+
+
+
+            </ul>
+            </div> -->
+
+
+            <div class="aui-hide" style="width:110px;position: absolute;right: 24px; top:35px;z-index:20;border-radius:10px" id="list2">
+                <ul class="aui-list aui-list-in" style="color:black;border-radius: 10px 10px 10px 10px">
+                    <li class="aui-list-item" onclick="change_background()" style="border-radius:10px;padding-left:22px;height:55px ">
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-title">更改背景</div>
+                        </div>
+                    </li>
+
+                    <li class="aui-list-item" onclick="editInf()" style="border-radius:10px;padding-left:22px;height:55px ">
+                        <div class="aui-list-item-inner">
+                            <div class="aui-list-item-title">更改信息</div>
+                        </div>
+                    </li>
+                  <!-- <li class="aui-list-item" onclick="change_info()">
+                      <div class="aui-list-item-inner" style="padding-right: 0px">
+                          <div class="aui-list-item-title" style="font-size:13px">更改个人信息</div>
+                      </div>
+                  </li>-->
+                </ul>
+            </div>
+
+            <font position="absolute" id="back" > <span class="aui-iconfont aui-icon-left" style="color: white;top: 10px;" onclick="api.closeWin();" ></span></font>
+            <!-- <font id="back" style="right: 20px;position: absolute;top: 10px;"  onclick="open2list()"> <span class="iconfont icon-bianji1" ></span></font> -->
+
+
+            <img src="../../../image/demo1.png" onclick="" class="portrait" id ="portrait" style="border: 3px solid #fff;position: relative;height:120px;left: 50%;transform: translate(-50%,0);border-radius:50%;height:88px;width:88px;">
+
+
+        </header>
+
+
+
+
+
+        <div style="margin: 20px 30px " >
+            <div > 学校：<font id="school">西安交通大学</font>  </div>
+            <div style="margin-top: 24px"> 性别：<font id="sex">男</font>  </div>
+            <div style="margin-top: 24px"> 昵称：<font id="nick_name">昵称</font>  </div>
+            <div style="margin-top: 24px"> 简介：<font id="des">西安交通大学</font>  </div>
+
+            <div style="border-top:1px solid  #c7c7c7;height:1px;margin-top:24px"></div>
+            <div style="padding-top: 24px;"> <font style="color: #989898">认证信息</font> </div>
+
+            <div style="margin-top: 15px" class="parent"> 真实姓名：<font id="realName">西安交通大学</font>  </div>
+            <div style="margin-top: 24px" class="parent"> 所修专业：<font id="major">西安交通大学</font>  </div>
+            <div style="margin-top: 24px" class="parent"> 学历：<font id="cer_type">本科生</font>  </div>
+            <div style="margin-top: 24px" class="parent"> 入学时间：<font id="time">2018年1月1日</font>  </div>
+
+            <!-- <div style="margin-top: 10px"> 重要经历  </div>
+            <p id="experience">
+                这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历
+                这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历
+                这里是他的经历这里是他的经历这里是他的经历这里是他的经历这里是他的经历
+            </p> -->
+        </div>
+
+
+
+    </body>
+
+</html>
+
+<script type="text/javascript">
+
+    //var photonum=1;
+
+
+
+    function showAction(){
+
+    }
+
+
+
+
+
+
+
+
+
+              //保存剪辑图像
+        function saveImg(path,valueId,imgId) {
+          api.showProgress({
+              title: '上传中...',
+              text: '先喝杯茶...',
+          });
+          //上传剪辑后的图像到服务器
+          api.ajax({
+              // report : false,
+              url : 'http://47.105.160.217:80/api/upload/',
+              //这里是我们约定好的后台上传图片的位置 ，你可以根据你的需求来改
+              method : 'post',
+              cache : 'false',
+              timeout : 30,
+              dataTpye : 'json',
+              data : {
+                  files : {
+                      file : path
+                  },
+                  values: {
+                    type: 'public'
+                  }
+              }
+          }, function(ret, err) {
+               //alert(JSON.stringify(ret));
+              api.hideProgress();
+              if (ret.message=="SUCCESS") {
+                var urlpath='http://47.105.160.217:80/files/'+ret.data.path;
+                console.log(urlpath);
+
+
+              }
+              if (ret.status == 1) {
+                api.toast({
+                    msg : ret.info
+                });
+              }
+              //上传进度
+              if (ret.status == 0) {
+                  api.toast({
+                      msg : '上传错误',
+                      duration : 3000,
+                      location : 'bottom'
+                  });
+              } else if (ret.status == 1) {
+                  $api.byId(valueId).value = ret.id;
+                  $api.byId(imgId).src = ret.path;
+               }
+          });
+        }
+</script>

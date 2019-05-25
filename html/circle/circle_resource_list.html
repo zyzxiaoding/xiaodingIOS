@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css"/>
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+</head>
+<body>
+<header class="aui-bar aui-bar-nav" style="position: fixed;background-color: #ffffff; height: 45px;box-shadow:inherit" id="aui-header">
+    <a class="aui-btn aui-pull-left"  tapmode onclick="api.closeWin();">
+        <span class="aui-iconfont aui-icon-left" style="color: #000000;font-weight: bolder;"></span>
+    </a>
+    <div class="aui-title" style="background-color: #ffffff;color: #000000;font-size:1rem;">资源</div>
+    <div style="width:100%;background-color:#f7f7f7;height:4px;float:left;"></div>
+</header>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript" src="../../script/dropload.min.js"></script>
+<script type="text/javascript">
+    apiready = function () {
+        var header = $api.byId('aui-header');
+        var headerPos = $api.offset(header);
+        api.openFrame ({
+            name: 'circle_resource_list_frm',
+            url: 'circle_resource_list_frm.html',
+            scrollEnabled: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: 'auto',
+                h: 'auto'
+            },
+            pageParam:{
+                td:api.pageParam.tag_id
+            }
+        });
+    }
+</script>

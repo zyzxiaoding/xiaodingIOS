@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+    <title>通过手机号码找回</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+
+    <style>
+    .aui-code-box {
+        padding: 10px 0;
+        text-align: center;
+    }
+    body{
+        background-color: white;
+    }
+
+
+
+    .aui-code-box p {
+        color: #cccccc;
+        font-size: 0.85rem;
+        position: relative;
+        width: 100%;
+        background: #fff;
+        padding: 0 20px;
+        margin-top: 20px;
+    }
+    .aui-code-line {
+        position: relative;
+    }
+    .aui-code-line:after {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        left: 20px;
+        width: 90%;
+        height: 1px;
+        border-bottom: 1px solid #D9D9D9;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    }
+    .aui-code-line-input {
+        padding: 10px 0;
+        height: 50px;
+        width: 100%;
+        font-size: 14px;
+        background: none;
+        border: none;
+        color: #333;
+    }
+
+
+    </style>
+</head>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script type="text/javascript">
+function getVerifyCode(){
+    var phone = $api.val($api.byId('phone'));
+
+
+
+    var phoneReg=/^[1][3,4,5,7,8][0-9]{9}$/;
+
+      if (!phoneReg.test(phone)) {
+
+          api.toast({
+    　　　　　　msg:'请输入正确的手机号码',
+    　　　　　　duration: '1300',
+    　　　　　　localtion: 'middle'
+  　　　　 });
+
+          return ;
+
+      }
+
+
+//
+//         api.toast({
+//   　　　　　　msg:'验证码获取成功',
+//   　　　　　　duration: '1300',
+//   　　　　　　localtion: 'middle'
+// 　　　　 });
+
+      var json_phone={"phone_number": phone};
+      $.ajax({
+          url:'http://47.105.160.217:80/api/login/sendIDCode/',
+          type:'POST',
+          data:JSON.stringify(json_phone),
+          dataType:'json',
+          success:function (ret) {
+            if(ret.status==200){
+              if (ret.data.message=="sendIDCode success") {
+                  api.toast({
+            　　　　　　msg:'获取验证码成功',
+            　　　　　　duration: '1300',
+            　　　　　　localtion: 'middle'
+          　　　　 });
+              }
+            }
+              alert(JSON.stringify(ret))
+          },
+          error:function (ret) {
+              alert(JSON.stringify(ret))
+          },
+      })
+
+      return;
+}
+
+
+
+
+
+
+
+
+
+  function ok(){
+    var phone_number = $api.val($api.byId('phone'));
+    var verifyCode = $api.val($api.byId('code'));
+
+    var phoneReg=/^[1][3,4,5,7,8][0-9]{9}$/;
+      if (!phoneReg.test(phone_number)) {
+          api.toast({
+    　　　　　　msg:'请输入正确的手机号码',
+    　　　　　　duration: '1300',
+    　　　　　　localtion: 'middle'
+  　　　　 });
+          return ;
+      }
+
+    var json_verified={"phone_number":phone_number,"IDCode":"6575","password":""};
+    $.ajax({
+        url:'http://47.105.160.217:80/api/login/forgetPassword/',
+        type:'POST',
+        data:JSON.stringify(json_verified),
+        dataType:'json',
+        success:function (ret) {
+          if(ret.status==200){
+            if (ret.message=="SUCCESS") {
+                api.toast({
+          　　　　　　msg:'获取验证码校验成功',
+          　　　　　　duration: '1300',
+          　　　　　　localtion: 'middle'
+        　　　　 });
+            }
+          }
+            alert(JSON.stringify(ret));
+            //api.closeWin();
+            api.addEventListener({
+                name:'viewdisappear'
+            },function(){
+                api.closeWin({
+                     name:api.winName
+                });
+            });
+
+            api.openWin({
+              name: 'reset',
+              url: './forgetPswSet.html',
+              pageParam: {
+                  phone: phone_number,
+                  IDCode:verifyCode
+              }
+            });
+        },
+        error:function (ret) {
+            alert(JSON.stringify(ret))
+        },
+    })
+
+
+  }
+
+</script>
+
+<body>
+  <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt" id="aui-header">
+      <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;">找回密码</div>
+
+  </header>
+
+
+  <div class="aui-code-box">
+
+      <!-- <p class="aui-code-line">
+          <input type="text" class="aui-code-line-input" name="userName" value="" id="username" autocomplete="off" placeholder="请输入账户名"/>
+      </p> -->
+
+
+      <p class="aui-code-line ">
+          <input type="number"  name="phone"  id="phone" class="aui-code-line-input " placeholder="请输入手机号" value="">
+          <span style="position: absolute; top:20%; right:30px; color:blue;" onclick="getVerifyCode()" > 获取验证码 </span>
+      </p>
+
+      <p class="aui-code-line ">
+          <input type="number"  name="verifyCode"  id="code" class="" placeholder="请输入验证码" value=""  >
+      </p>
+
+
+      <div class="aui-btn-sm aui-btn-info " onclick="ok()" style="margin: 20px; padding: 10px; border-radius: 20px;">   确定  </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html?

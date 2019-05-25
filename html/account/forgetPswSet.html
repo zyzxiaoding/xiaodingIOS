@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <!-- <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/> -->
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+
+
+    <title>设置新密码</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <script type="text/javascript" src="../../script/api.js"></script>
+
+    <script type="text/javascript" src="../../script/jquery.js"></script>
+
+    <style>
+    .aui-code-box {
+        padding: 10px 0;
+        text-align: center;
+    }
+    body{
+        background-color: white;
+    }
+
+
+
+    .aui-code-box p {
+        color: #cccccc;
+        font-size: 0.85rem;
+        position: relative;
+        width: 100%;
+        background: #fff;
+        padding: 0 20px;
+        margin-top: 20px;
+    }
+    .aui-code-line {
+        position: relative;
+    }
+    .aui-code-line:after {
+        content: '';
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        left: 20px;
+        width: 90%;
+        height: 1px;
+        border-bottom: 1px solid #D9D9D9;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+        -webkit-transform-origin: 0 100%;
+        transform-origin: 0 100%;
+    }
+    .aui-code-line-input {
+        padding: 10px 0;
+        height: 50px;
+        width: 100%;
+        font-size: 14px;
+        background: none;
+        border: none;
+        color: #333;
+    }
+
+
+    </style>
+</head>
+
+<body>
+  <header class="aui-bar aui-bar-nav"style="background-color: #ffffff; height: 20pt" id="aui-header">
+      <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
+          <span class="aui-iconfont aui-icon-left" style="color: #000000"></span>
+      </a>
+      <div class="aui-title" style="background-color: #ffffff;color: #000000;">设置新密码</div>
+
+  </header>
+
+
+  <div class="aui-code-box">
+
+
+
+
+    <p class="aui-code-line aui-code-line-clear">
+        <i class="aui-show  operate-eye-open"></i>
+        <input type="password"  name="userPassword"  id="new_pass1" class="aui-code-line-input password" placeholder="请输入新密码" value="">
+    </p>
+
+      <p class="aui-code-line aui-code-line-clear">
+          <i class="aui-show  operate-eye-open"></i>
+          <input type="password"  name="userPassword"  id="new_pass2" class="aui-code-line-input password" placeholder="请再次输入新密码" value="">
+      </p>
+
+
+      <div class="aui-btn-sm aui-btn-info " onclick="ok()" style="margin: 20px; padding: 10px; border-radius: 20px;">   确定  </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+<script type="text/javascript">
+
+apiready=function(){
+  console.log("ssssssssssssssssssssss");
+
+  setTimeout(function() { // 这里不知道 为什么必须放在setTimeout里面
+                          // 意思就是你 打开一个win的时候不能立马打开另外一个win
+      api.closeWin({
+          name: 'phonePsw'
+      });
+      api.toast({
+        msg : '加载失败，请检查网络',
+        duration : 500,
+        location : 'bottom'
+      });
+    }, 1000)
+
+
+  api.closeWin({
+      name: 'phonePsw'
+  });
+  console.log("aaaaaaaaaaaaaaaaaaaa");
+
+}
+
+
+
+
+  function ok(){
+    var appId = api.appId; //比如： A6980386445546
+
+
+    var phone= api.pageParam.phone;
+    var IDCode= api.pageParam.IDCode;
+
+    var new_pass1 = $api.val($api.byId('new_pass1'));
+    var new_pass2 = $api.val($api.byId('new_pass2'));
+
+    var json_verified={"phone_number":phone,"IDCode":"6575","password":new_pass1};
+    $.ajax({
+        url:'http://47.105.160.217:80/api/login/forgetPassword/',
+        type:'POST',
+        data:JSON.stringify(json_verified),
+        dataType:'json',
+        success:function (ret) {
+          if(ret.status==200){
+            if (ret.message=="SUCCESS") {
+                api.toast({
+          　　　　　　msg:'密码修改成功',
+          　　　　　　duration: '1300',
+          　　　　　　localtion: 'middle'
+        　　　　 });
+            }
+          }
+            alert(JSON.stringify(ret));
+            api.closeWin();
+
+        },
+        error:function (ret) {
+            alert(JSON.stringify(ret))
+        },
+    })
+  }
+
+</script>

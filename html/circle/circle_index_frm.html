@@ -1,0 +1,981 @@
+<!DOCTYPE HTML>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>XD首页</title>
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="circle_style.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/iconfont.css"/>
+    <style>
+        .tag_strategy {
+            position: absolute;
+            bottom: 0;
+            padding-left: 6.4%;
+            width: 60%;
+            height: auto;
+            /*bottom: auto*/
+            box-sizing: border-box;
+            font-size: 14px; color: #6d7cd9; text-align: left;
+            float: left;
+        }
+        .searchbar-box {
+            position: relative;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            z-index: 10;
+        }
+        .searchbar {
+            position: fixed;
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            z-index: 10;
+        }
+        .inputbar-box {
+            position: relative;
+            width: 85%;
+            height: 100%;
+            float: left;
+        }
+        .inputbar {
+            position: absolute;
+            width: 94%;
+            height: 80%;
+            left: 3%;
+            top: 10%;
+            background-color: #ebebeb;
+            border-radius: 5px;
+        }
+        .inputbar .input {
+            width: 85%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .inputbar .camera {
+            width: 15%;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-image: url(../icon/camera.png);
+            background-size: 17px 14.5px;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        .cancel-box {
+            position: relative;
+            display: table;
+            width: 14%;
+            height: 100%;
+            float: left;
+        }
+        .start_question {
+            font-size: 18px; color: #6d7cd9; font-weight: bolder; text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .inputbar .search-logo {
+            width: 15%;
+            height: 100%;
+            position: absolute;
+            left: 10px;
+            top: 0;
+            background-image: url(../icon/search.png);
+            background-size: 17px 14.5px;
+            background-position: center left;
+            background-repeat: no-repeat;
+        }
+        .fixed_bottom {
+            position:fixed;
+            left:0px;
+            bottom:0px;
+            width:100%;
+            height:7%;
+            z-index:10;
+        }
+        .flex-con{
+            overflow: scroll;
+        }
+
+        nav {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;;
+            -webkit-box-orient: horizontal;
+            -webkit-flex-flow: row;
+            flex-flow: row;
+            position: relative;
+            width: 100%;
+            height: 64px;
+        }
+        .test {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            width: 100%;
+            height: 35px;
+            overflow-x:scroll;
+            border-bottom: 1px solid #d3d2d2;
+            padding-left:12.5%;
+        }
+        .menu-cata{
+            width: 25%;
+            position: relative;
+            height: 37.5px;
+            line-height: 37.5px;
+            font-size: 18px; color: #000; text-align: center;
+
+            white-space:nowrap;
+        }
+        .menu-cata.selected {
+            font-size: 19px; color: #6d7cd9; font-weight: bolder;
+        }
+
+        .title_strategy {
+            /*border: 1px solid red;*/
+            padding-top: 18px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 60%;
+            height: auto;
+            bottom: auto;
+            box-sizing: border-box;
+            font-size: 18px; color: #000000; text-align: left;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            float: left;
+        }
+        .title_question {
+            /*border: 1px solid green;*/
+            padding-top: 18px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 95%;
+            height: auto;
+            bottom: auto;
+            box-sizing: border-box;
+            font-size: 18px; color: #000000; text-align: left;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .tag {
+            /*border: 1px solid blue;*/
+            position: relative;
+            margin-top:7px;
+            padding-left: 6.4%;
+            width: 60%;
+            height: auto;
+            /*bottom: auto*/
+            box-sizing: border-box;
+            font-size: 14px; color: #6d7cd9; text-align: left;
+            float: left;
+        }
+        span{
+            font-size: 14px; color: #6d7cd9; text-align: left;
+        }
+        .left-box {
+            /*border: 1px solid red;*/
+            width: 60%;
+            position: relative;
+            float: left;
+            height:100px;
+        }
+        .right-box {
+            /*border: 1px solid green;*/
+            width: 39%;
+            float: left;
+        }
+        .image{
+            /*border: 1px solid red;*/
+            position: relative;
+            width: 28.266%;
+            height:70px ;
+            float: right;
+            margin-right: 6.4%;
+            right: 12px;
+            top: 23px;
+            /*top:12%;*/
+            /*left:65%;*/
+        }
+        .description {
+            /*border: 1px solid red;*/
+            position: relative;
+            margin-top: 11px;
+            padding-left: 6.4%;
+            width: 95%;
+            height: auto;
+            font-size: 16px; color: black; text-align: left;font-weight: lighter;
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            font-family:Verdana,"华文细黑";
+        }
+        .interactive-box {
+            /*border:  1px solid blue;*/
+            display: flex;
+            align-items:Center;
+            margin-top:11px;
+            margin-bottom: 10px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 95%;
+            height:auto;
+        }
+        .interactive-box-st {
+            /*border:  1px solid blue;*/
+            display: flex;
+            align-items:Center;
+            margin-top:10px;
+            margin-bottom: 10px;
+            padding-left: 6.4%;
+            position: relative;
+            width: 95%;
+            height:auto;
+        }
+        .avatar{
+            position: relative;
+            display: inline-block;
+            height : 17px;
+            width : 17px;
+            border-radius: 50%;
+        }
+        .username{
+            position: relative;
+            left:6px;
+            width: auto;
+            display: inline-block;
+            font-size: 14px;
+            line-height: 20px;
+            color:#8e8e8e;
+        }
+        .ask_num {
+            display: inline-block;
+            position: absolute;
+            top:2.7%;
+            left:37%;
+            margin-left: 30px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 21.5px;
+            color: #8e8e8e;
+        }
+        .approve-logo {
+            /*border: 1px solid red;*/
+            margin-left: 28px;
+            position: relative;
+            top:0%;
+            font-size: 15px;
+            border-left: 1px solid #d3d2d2;
+            padding-left: 21px;
+            margin-bottom: 2px;
+            color: #8e8e8e;
+        }
+        .comment-logo {
+            margin-bottom: 2px;
+            /*border: 1px solid red;*/
+            margin-left: 20px;
+            position: relative;
+            top:0%;
+            font-size: 15px;
+            color: #8e8e8e;
+        }
+        .more-logo {
+            position: absolute;
+            width: auto;
+            height: auto;
+            float: right;
+            right: 12px;
+            color: #000;
+        }
+        .content-box {
+            /*border: 1px solid red;*/
+            position: relative;
+            width: 100%;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .maginline {
+            width: 100%;
+            height: 4px;
+            background-color: #000;
+            opacity: 0.03;
+        }
+        .is_solved {
+            display: inline-block;
+            position: relative;
+            top:0%;
+            left:0%;
+            width: 10px;
+            height: 10px;
+        }
+        .is_rewarded {
+            display: inline-block;
+            position: relative;
+            top:0%;
+            left:0%;
+            width: 10px;
+            height: auto;
+        }
+
+        .more-cata{
+  				width: 52%;
+  				height: 26px;
+  				position: absolute;
+  				/*background-color: #e5e5e5;*/
+  				display: inline-block;
+
+  				right: 20px;
+  			}
+  			.more-cata-cancel {
+  				width: 52%;
+  				height: 26px;
+  				position: absolute;
+  				/*background-color: #e5e5e5;*/
+  				display: inline-block;
+
+  				right: 20px;
+  			}
+  			.more-cata1 {
+  				width: 32%;
+  				height: 100%;
+  				font-size:12px;color: #000; text-align: center;
+  				float: left;
+  				background-color: #e5e5e5;
+  				border-right:2.5px solid #fff;
+  				/*padding-top: 2px;
+  				padding-bottom: 2px;*/
+  				line-height: 26px;
+  			}
+
+
+        .uppon-box {
+            /*border: 1px solid red;*/
+            width: 100%;
+            height: auto;
+        }
+
+    </style>
+</head>
+<body id="body" >
+<div style="background-color:#6d7cd9;opacity: 0.7" >
+    <div style="height: auto;float: left;;width: 100%">
+        <img id="circle_avatar" src="./image/demo1.png" style="border-radius: 50% ;height: 60px;width: 60px;float: left; margin-left: 5%;margin-top: 3%;border: solid 1px white">
+        <div id="circle_name" style="font-size:20px;float: left;margin-top: 4%; margin-left: 5%;height: 15px;color: white">圈子名称</div>
+        <div style="font-size:10px;height: 30px;width:70px;background-color: white;float: right; margin-top:7%;margin-right:5%;border-radius: 5px;">
+        <span id="circle_concernBtn" class="aui-iconfont aui-icon-plus" style="float:left;margin-top: 10%;margin-left:25%;color: #6d7cd9;background-color: white;width: auto; height: auto;
+border-radius:5px;display: block; font-size:10px;" onclick="followTheCircle()">关注</span>
+       </div>
+
+        <div id="circle_concern_number" style="width:30%;margin-left:11%;margin-top: 12%;color: white;text-align:center;font-size: small">192关注</div>
+
+    </div>
+    <div style="height:140px;">
+        <div style="margin-top:5%;margin-left: 5%;font-size:small;color: white; float: left">圈子简介:</div>
+        <div id="circle_description" style="height:15px;width:70%;overflow:hidden;margin-top:5%;font-size:small;float: left;color: white;opacity: 0.5;margin-left: 3%;">圈子的简介简介简介简介简介简介简介</div>
+    </div>
+</div>
+
+<div style="height:90px;width: 100%;border: 1px black;background-color: white;margin-top: 2%;" >
+    <div class="ccdiv" onclick="openCChoice(1)">
+        <div class="circleItem" style="margin-left: 26%" >
+            <span class="iconfont icon-Q_A-copy item"></span>
+        </div>
+        <div style="float: left; margin-left: 33%; margin-top: 2%;">问答</div>
+    </div>
+
+    <div class="ccdiv"   onclick="openCChoice(2)" >
+        <div class="circleItem">
+            <span class="iconfont icon-experience item"></span>
+        </div>
+        <div style="float: left; margin-left: 33%;margin-top: 2%">经验</div>
+    </div>
+
+    <div class="ccdiv" onclick="openCChoice(3)">
+        <div class="circleItem">
+            <span class="iconfont icon-link item"></span>
+        </div>
+        <div style="float: left; margin-left: 33%; margin-top: 2%">资源</div>
+    </div>
+
+    <div class="ccdiv"   onclick="openCChoice(4)">
+        <div class="circleItem">
+            <span class="iconfont icon-rak_list-copy item" ></span>
+        </div>
+        <div style="float: left; margin-left: 33%;margin-top: 2%">榜单</div>
+    </div>
+</div>
+<div id="resource_div"  style="text-align:center;float:left;border-top:3px solid #f7f7f7; border-bottom:3px solid #f7f7f7;width: 100%;height: 64px;line-height: 56px;">xxx上传xxx到本圈</div>
+
+<section style="border: 1px black;margin-top: 64px;">
+<div class="list" v-cloak >
+    <div id="qs_list" style="display: none" class="item border-1px-bottom" v-for="(lists,index) in list">
+
+
+        <div class="content-box" v-if="lists.type=='question'" v-bind:id="lists.question_id">
+            <div class="title_question" v-if="lists.type=='question'"  onclick="openQ(this.parentNode.id)">
+                <img v-if="lists.is_bounty=='true'" class="is_rewarded" src="../icon/award.png" alt="">
+                {{lists.title}}
+            </div>
+            <div class="tag" style="width:100%;">
+                <span @click="openCircle(index,0);">{{lists.tag_name[0]}}</span><span v-if="lists.tag_name.length>1">&nbsp;·&nbsp;</span><span v-if="lists.tag_name.length>1" @click="openCircle(index,1);">{{lists.tag_name[1]}}</span><span v-if="lists.tag_name.length>2">&nbsp;·&nbsp;</span><span v-if="lists.tag_name.length>2" @click="openCircle(index,2);">{{lists.tag_name[2]}}</span>
+        </div>
+            <div class="description" v-if="lists.type=='question'" onclick="openQ(this.parentNode.id)">
+                {{lists.content}}
+            </div>
+            <div v-if="lists.type =='question'" class="interactive-box" onclick="">
+                <img class="avatar" v-if="lists.is_anonymous==false" v-bind:src="lists.profile"/>
+                <img class="avatar" v-if="lists.is_anonymous==true" src="../../icon/anonymous.jpg"/>
+                <div class="username" v-if="lists.is_anonymous==false" onclick="bubble_hide()">{{lists.nick_name}}·{{lists.concern_num}}关注该问题</div>
+                <div class="username" v-if="lists.is_anonymous==true">匿名用户·{{lists.concern_num}}关注该问题</div>
+                <div v-bind:id="lists.question_id" class="more-cata" v-if="lists.is_concerned==false" style="display:none">
+                    <div class="more-cata1" onclick="invite(this)">@大佬</div>
+                    <div class="more-cata1" onclick="approve(this)">+关注</div>
+                    <div class="more-cata1" onclick="edit_answer(this)">写回答</div>
+                </div>
+                <div v-bind:id="lists.question_id" class="more-cata-cancel" v-if="lists.is_concerned==true" style="display:none">
+                    <div class="more-cata1" onclick="invite(this)">@大佬</div>
+                    <div class="more-cata1" onclick="approve(this)">取消关注</div>
+                    <div class="more-cata1" onclick="edit_answer(this)">写回答</div>
+                </div>
+                <span  class="iconfont icon-more more-logo" v-if="lists.type=='question'" onclick="bubble_open( this )"></span>
+            </div>
+            <div class="maginline">
+            </div>
+        </div>
+
+
+        <div class="content-box" v-if="lists.type=='strategy'">
+            <div class="uppon-box">
+                <div class="left-box">
+                    <div class="title_strategy" style="width:100%;padding-left:10.666%;" v-bind:id="lists.article_id"  onclick="openGroupStrategy(this.id)">
+                        {{lists.title}}
+                    </div>
+                    <div class="tag_strategy" style="width:100%; padding-left:10.666%">
+                        <span @click="openCircle(index,0);">{{lists.tag_name[0]}}</span><span v-if="lists.tag_name.length>1">&nbsp;·&nbsp;</span><span v-if="lists.tag_name.length>1" @click="openCircle(index,1);">{{lists.tag_name[1]}}</span><span v-if="lists.tag_name.length>2">&nbsp;·&nbsp;</span><span v-if="lists.tag_name.length>2" @click="openCircle(index,2);">{{lists.tag_name[2]}}</span>
+                </div>
+                </div>
+                <div class="right-box">
+                    <img class="image" style="width:71.66%" v-if="lists.type=='strategy'" v-bind:src="lists.image"/>
+                </div>
+            </div>
+
+            <div class="interactive-box-st" style="padding-top:10px;" onclick="">
+                <img class="avatar" v-if="lists.is_anonymous==false" v-bind:src="lists.profile"/>
+                <img class="avatar" v-if="lists.is_anonymous==true" src="../../icon/anonymous.jpg"/>
+                <div class="username" v-if="lists.is_anonymous==false" onclick="bubble_hide()">{{lists.nick_name}}·{{lists.like_num}}感谢</div>
+                <div class="username" v-if="lists.is_anonymous==true">匿名用户·{{lists.like_num}}感谢</div>
+                <!-- <div class="approve-logo" v-if="lists.type=='strategy'">{{lists.approve_num}}</div> -->
+            </div>
+            <div class="maginline">
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+</body>
+<script type="text/javascript" src="../../script/api.js" ></script>
+<script type="text/javascript" src="../../script/aui-tab.js" ></script>
+<script type="text/javascript" src="../../script/jquery.js"></script>
+<script type="text/javascript" src="../../script/vue.min.js"></script>
+<script type="text/javascript" src="../../script/echo.min.js"></script>
+<script type="text/javascript">
+    var circleName ;
+    var bubbleMenu,more_cates,more_cata_cancel ;
+    var content_data;
+    var tagid;
+    var pageN=0;
+    var cacheDir;
+    var connectType;
+    var current_id ;
+
+    function bubble_open(tag) {
+        // tag.parent().children(".comment-logo").
+        console.log(tag.previousElementSibling.style.display)
+        // bubble_hide();
+        if (tag.previousElementSibling.style.display == 'none')  {  //没有打开
+            bubble_hide();
+            $(tag.previousElementSibling).animate({"width": "toggle"},350);
+        }
+        else {
+            $(tag.previousElementSibling).animate({"width": "toggle"},350);
+        }
+    }
+
+    function bubble_hide() {
+        more_cates = $api.domAll('.more-cata');
+        more_cata_cancel = $api.domAll('.more-cata-cancel');
+        // console.log(more_cata_cancel.length)
+        for (var j = 0; j < more_cates.length; j++) {
+            $(more_cates[j]).hide();
+        }
+        for (var j = 0; j < more_cata_cancel.length; j++) {
+            $(more_cata_cancel[j]).hide();
+        }
+
+    }
+    function netCheck() {
+        connectType = api.addEventListener({
+            name:'online'
+        },function (ret,err) {
+            connectType = ret.connectionType;
+        });
+        api.addEventListener({
+            name:'offline'
+        })
+    }
+    connectType  = '';
+    apiready = function() {
+        bubbleMenu= api.require('bubbleMenu');
+        current_id = 0;
+        $('.strategy-box').click(function () {
+           openGroupStrategy(1)
+        });
+        $('.question-box').click(function () {
+            api.openWin({
+                name:'index_question',
+                url:'../QandA/html/answer_list.html',
+                pageParam: {
+                    question_id: 1,
+                    answer_id: 1,
+                    type:"question",
+                    user_id:$api.getStorage('user_id')
+                }
+            })
+        });
+        cacheDir= api.cacheDir;
+        netCheck();
+        if (connectType==''){
+            api.readFile({
+            path: cacheDir + '/'+circleName + '/' + api.frameName + '.json'
+        },function (ret,err) {
+            if(ret.status){
+                paintView(ret,2)
+            }else {
+                paintView(getContentStream(0),1);
+            }
+        })}
+        else {
+            paintView(getContentStream(0),1);
+        }
+        api.addEventListener({
+            name:'circle_reload'
+        },function (ret,e) {
+            if(ret)
+            location.reload();
+        });
+        fnInitEvent();
+    };
+    function openCChoice(name) {
+        //alert(name)
+        switch(name){
+            case 1:
+                api.openWin({
+                    name:'circle_qanda_list',
+                    url:'../QandA/html/qz_question_list_win.html',
+                    pageParam:{
+                        user_id:$api.getStorage('user_id'),
+                        cookie:'',
+                        tag_id:tagid
+                    }
+                });break;
+            case 2:
+                api.openWin({
+                    name:'circle_strategy_list',
+                    url:'circle_strategy_list.html',
+                    pageParam:{
+                        circle_name:circleName,
+                        tag_id:tagid
+                    }
+                });break;
+            case 3:
+                api.openWin({
+                    name:'circle_resource_list',
+                    url:'circle_resource_list.html',
+                    pageParam:{tag_id:tagid}
+                });break;
+            case 4:
+                api.openWin({
+                    name:'circle_board_list',
+                    url:'circle_board_list.html',
+                    pageParam:{
+                        group_id:api.pageParam.circleID}
+                });break;
+        }
+    }
+    function openQ(id) {
+        api.openWin({
+            name: 'answer_list_circle',
+            url: '../QandA/html/answer_list.html',
+            pageParam: {
+                question_id: id,
+                user_id: $api.getStorage('user_id'),
+                user_cookie: "bf6bb9e9865862093550942e3ef534e9"
+            },
+            bgColor: 'rgba(0,0,0,0.8)'
+        });
+    }
+    function followTheCircle(){
+        var follow_dict = {
+            "user_id":$api.getStorage('user_id'),
+            "group_id":api.pageParam.circleID
+        };
+        $.ajax({
+            url:'http://47.105.160.217/api/group/concernGroup/',
+            method:'post',
+            data:JSON.stringify(follow_dict),
+            success:function (ret) {
+                if( document.getElementById('circle_concernBtn').innerText =='+关注'){
+                    document.getElementById('circle_concernBtn').innerText='取消关注';
+                    $('#circle_concernBtn').removeClass('aui-iconfont aui-icon-plus')
+                }else {
+                    document.getElementById('circle_concernBtn').innerText='+关注'
+                }
+            },
+            error:function (err) {
+                alert(JSON.stringify(err))
+            }
+        })
+    }
+    function refresh() {
+        current_id = 0;
+        api.showProgress({
+            title:"获取数据中。。。",
+            text:"please wait my baby!!!"
+        });
+        var fs = api.require('fs');
+        fs.rmdir({
+            path:cacheDir + '/'+circleName + '/' + api.frameName + '.json'
+        },function (ret,err) {
+            if (ret){
+                location.reload();
+                api.hideProgress();
+            }else {
+                alert(JSON.stringify(err))
+            }
+        });
+
+    }
+    function loadMore(t){
+        api.showProgress({
+            title:"获取数据中。。。",
+            text:"please wait my baby!!!"
+        });
+        var z = getContentStream(t);
+        //alert("zzz"+JSON.stringify(z));
+        if (z.data.data_list!=undefined)
+            paintFrm(z.data.data_list);
+        api.hideProgress();
+    }
+    function approve(tag) {
+        var qs_id = tag.parentNode.id;
+        qs_dict = {
+            "app_version":"",
+            "user_id":$api.getStorage('user_id'),
+            "user_cookie":"123b9e6049af305f6ec89f2f3f39e002",
+            "type":"homework",
+            "question_id": qs_id
+        }
+        if (tag.innerHTML == '+关注') {
+            tag.innerHTML = '取消关注'
+            api.toast({
+                msg: '关注成功',
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+        else {
+            tag.innerHTML = '+关注'
+            api.toast({
+                msg: '取消关注成功',
+                duration: 2000,
+                location: 'bottom'
+            });
+        }
+        $.ajax({
+            type: 'POST',
+            url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+            data:JSON.stringify(qs_dict),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+                console.log('同问成功')
+            },
+            error:function(){
+                console.log('同问失败');
+            }
+        });
+    }
+
+    function invite(tag) {
+        var qs_id = tag.parentNode.parentNode.parentNode.id;
+        api.openWin({
+            name: 'invite_win',
+            url: '../QandA/html/invite_win.html',
+            pageParam: {
+                question_id: qs_id,
+                user_id: $api.getStorage('user_id'),
+                user_cookie: "bf6bb9e9865862093550942e3ef534e9",
+            }
+        });
+    }
+
+    function edit_answer(tag) {
+        var qs_id = tag.parentNode.parentNode.parentNode.id;
+        console.log($api.getStorage('user_id'))
+        api.openWin({
+            name: 'edit_answer',
+            url: '../QandA/html/edit_answer_win_new.html',
+            pageParam: {
+                question_id: qs_id,
+                user_id: $api.getStorage('user_id'),
+                user_cookie: "bf6bb9e9865862093550942e3ef534e9",
+                footer_H:api.pageParam.footer_H
+            }
+        });
+    }
+    function getContentStream(sid) {
+        var r ="";
+        var content_post={
+            'user_id':$api.getStorage('user_id'),
+            'since_id':sid,
+            'page_size':10,
+            'group_id':api.pageParam.circleID
+        };
+        $.ajax({
+            url:'http://47.105.160.217/api/firstpage/singlegroupstream/',
+            method:'post',
+            data:JSON.stringify(content_post),
+            contentType:false,
+            processData:false,
+            async:false,
+            error:function (error) {
+                alert(JSON.stringify(error))
+                r= error
+            },
+            success:function (ret) {
+                api.writeFile({
+                    path: cacheDir + '/'+circleName + '/' + api.frameName + '.json',
+                    data:JSON.stringify(ret.data)
+                });
+                r= ret
+            }
+        });
+        return r
+    }
+    function paintView(ret,id) {
+        if (id==2){
+            content_data = $.parseJSON(ret.data)
+        }else {  content_data = ret.data;}
+
+        if(content_data.source!=undefined && content_data.source!=null)
+        {
+            var t =content_data.source.title;
+            if(t.length>6)
+             t = content_data.source.title.substring(0,6)+"...";
+            document.getElementById('resource_div').innerText = content_data.source.user_nickname+"上传了"+t+"到了本圈";
+            document.getElementById('resource_div').onclick = function () {
+                openResourceD(content_data.source.source_id)
+            };
+        }else {
+            document.getElementById('resource_div').innerText='暂时无资源'
+        }
+        document.getElementById('circle_name').innerText = content_data.group_info.group_name;
+        $api.setStorage('q_circle_name', content_data.group_info.group_name);
+        document.getElementById('circle_description').innerText = content_data.group_info.group_description;
+        document.getElementById('circle_concern_number').innerText = content_data.group_info.group_concern_nums+'关注';
+        var isC = '+关注';
+        if (content_data.is_concerned=true){
+            isC = '取消关注'
+            $('#circle_concernBtn').removeClass('aui-iconfont aui-icon-plus')
+        }
+        document.getElementById('circle_concernBtn').innerText = isC;
+        circleName = content_data.group_info.group_name;
+        tagid = content_data.group_info.tag_id;
+        $api.setStorage('tagid',tagid);
+        if(content_data.group_info.group_profile!='') {
+            document.getElementById('circle_avatar').src = "http://47.105.160.217/files/" + content_data.group_info.group_profile;
+        }
+        paintFrm(content_data.data_list)
+
+    }
+    function paintFrm(liss){
+        echo.init({
+            offset: 0, // 指定距离视窗上下左右位置图片预加载 Number|String Default: 0
+            throttle: 500, // 延迟加载  Number|String	Default: 250
+            unload: true
+        });
+        var lis = liss;
+        {
+            //alert(JSON.stringify(lis))
+            if (lis.length != 0) {
+                var total = document.getElementById('qs_list')
+                total.style.display = ''
+                if (current_id == 0) {
+                    window.ListVue = new Vue({
+                        el: '.list',
+                        data: {
+                            list: [],
+                            timeout: false
+                        },
+                        mounted: function() {
+                            this.$nextTick(function() {
+                                this.fnInit();
+                            });
+                        },
+                        beforeDestroy: function() {
+                            this.timeout = true;
+                        },
+                        methods: {
+                            fnInit: function(){
+                                var tag_name;
+
+                                for (var j = 0; j < lis.length; j++) {
+                                        lis[j].tag_name =  lis[j].tag_name.split('·');
+
+                                        lis[j].profile = 'http://47.105.160.217:80/files/' + lis[j].profile;
+                                        lis[j].image = 'http://47.105.160.217:80/files/' + lis[j].image;
+
+                                }
+                                for (var j = 0; j < lis.length; j++) {
+                                    window.ListVue.list.push(lis[j]);
+                                }
+                            }	,
+                            openCircle: function(listindex,tagindex){
+                                var tagname = this.list[listindex].tag_name[tagindex];
+                                var tag_dict = {
+                                    "user_id":$api.getStorage('user_id'),
+                                    "tag_name": tagname.trim()
+                                }
+                                //alert(tagname);
+                                $.ajax({
+                                    type: 'POST',
+                                    // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+                                    url: "http://47.105.160.217:80/api/tag/getTagByName/",
+                                    data:JSON.stringify(tag_dict),
+                                    dataType: 'json',
+                                    async: false,
+                                    success:function(result){
+                                        console.log('圈子id获取成功')
+                                        var groupid =  result.data.group_id;
+                                        //alert(JSON.stringify(result));
+                                        api.openWin({
+                                            name: 'circle_index.html+tag'+groupid,
+                                            url: 'circle_index.html',
+                                            slidBackEnabled: true,
+                                            pageParam: {
+                                                name: tagname,
+                                                cID: groupid
+                                            }
+                                        });
+
+                                    },
+                                    error:function(e){
+                                        alert(JSON.stringify(e))
+                                    }
+                                });
+                            }
+                        },
+                        filters: {
+                            // 时间转换
+                            formatTime: function(v) {
+                                return new Date(v).popular();
+                            }
+
+                        }
+                    });
+                    current_id += 9;
+                }
+                else {
+                    for (var j = 0; j < lis.length; j++) {;
+                        lis[j].tag_name = lis[j].tag_name.split('·');
+                        lis[j].profile = 'http://47.105.160.217:80/files/' + lis[j].profile;
+                        lis[j].image = 'http://47.105.160.217:80/files/' + lis[j].image;
+                    }
+                    for (var j = 0; j < lis.length; j++) {
+                        window.ListVue.list.push(lis[j])
+                    }
+                }
+            }
+        }
+    }
+
+
+    function openResourceD(sourceID) {
+
+        api.openWin({
+            name:'Resource_detail',
+            url:'./circle_resource_detail.html',
+            pageParam:{
+                sourceID:sourceID
+            }
+        })
+    }
+    function openGroupStrategy(id) {
+        api.openWin({
+            name:'strategy_detail'+id,
+            url:'circle_strategy_detail.html',
+            pageParam:{
+                article_id:id
+            }
+        })
+    }
+    function fnInitEvent() {
+        /**上拉加载 */
+        api.addEventListener({
+            name: 'scrolltobottom',
+            extra: {
+                threshold: 10
+            }
+        }, function(ret, err) {
+            //页码+1，继续请求数据
+            pageN += 10;
+            loadMore(pageN);
+        });
+        /** 下拉刷新 */
+        api.setRefreshHeaderInfo({
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...'
+        }, function(ret, err) {
+            //重置页码、页面数据，请求数据
+            if(ret){
+                pageN=0;
+                refresh();
+                api.refreshHeaderLoadDone();
+            }
+        });
+    }
+    function imgCache(urlimg,id) {
+        var lurl ='';
+        api.imageCache({
+            url:urlimg
+        },function (ret) {
+            lurl =ret.url;
+            document.getElementById(id).setAttribute('data-echo',lurl);
+        });
+    }
+
+</script>

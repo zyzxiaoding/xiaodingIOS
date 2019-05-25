@@ -1,0 +1,368 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+    <style>
+				header{ background-color: #f2f2f2; }
+				header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+				header ul li.active{ display: block; }
+				#footer{  background-color: #f2f2f2; }
+				#footer ul li{  padding-top: 30px; padding-bottom: 8px; background: url() no-repeat center 2px; background-size: 25px 25px; text-align: center; }
+				#footer ul li.active{ color: #6ab494; }
+				#footer ul li:nth-child(1){ background-image: url(../icon/message.png); }
+				#footer ul li:nth-child(2){ background-image: url(../icon/approve.png); }
+				#footer ul li:nth-child(3){ background-image: url(../icon/oppose.png); }
+				#footer ul li:nth-child(4){ background-image: url(../icon/collect.png); }
+				#footer ul li:nth-child(1).active{ background-image: url(../icon/message.png); }
+				#footer ul li:nth-child(2).active{ background-image: url(../icon/agreechousen.png); }
+				#footer ul li:nth-child(3).active{ background-image: url(../icon/oppose.png); }
+				#footer ul li:nth-child(4).active{ background-image: url(../icon/collect.png); }
+				.flex-con{
+          overflow: scroll;
+        }
+        .fixed_bottom {
+           position:fixed;
+           left:0px;
+           bottom:0px;
+           width:100%;
+           height:7%;
+           z-index:10;
+        }
+        .header-box {
+          /*border: 1px solid blue;*/
+
+          position: relative;
+          width: 100%;
+          height: 43px;
+          background-color: #ffffff
+        }
+        header {
+          position: fixed;
+          width: 100%;
+          height: 43px;
+          background-color: #ffffff;
+          z-index: 10;
+
+        }
+        header .left {
+        	position: relative;
+          top: 0px;
+          width: 21.5px;
+          height: 43px;
+          left: 15px;
+          background-image: url(../icon/back.png);
+          background-size: 21.5px 15.5px;
+          background-position: center center;
+          background-repeat: no-repeat;
+          float: left;
+        }
+				header .center {
+					position: relative;
+          margin-left: 30%;
+          width: 25%;
+          height: 43px;
+          line-height: 43px;
+					font-size: 20px; color: #000000; text-align: center;
+					float: left;
+				}
+        header .right {
+        	position: relative;
+          width: 30%;
+          height: 40px;
+          line-height: 43px;
+					margin-left: 7.5%;
+					font-size: 18px; color: #6d7cd9; text-align: right;
+					float: left;
+        }
+
+        .guide {
+          position: fixed;
+          width: 100%;
+          height: 32px;
+          border-bottom: 1px solid #d3d2d2;
+          background-color: #fff;
+          z-index:10;
+
+        }
+        .guide-box {
+          position: relative;
+          width: 100%;
+          height: 32px;
+          background-color: #ffffff;
+        }
+        .content-box {
+          position: relative;
+          width: 90%;
+          height: auto;
+          margin:0 auto;
+          border-bottom: 1px solid #d3d2d2;
+        }
+        .guide-left {
+          float: left;
+          width: 85%;
+          height: 32px;
+        }
+        .guide-right {
+          border-left: 2px solid #d3d2d2;
+          float: left;
+          width: 14%;
+          height: 32px;
+        }
+
+				.search-logo {
+					position: absolute;
+					width: 10%;
+					height: 80%;
+					right: 3%;
+					top: 10%;
+					background-image: url(../icon/search.png);
+					background-size: 15.5px 15.5px;
+					background-position: center center;
+					background-repeat: no-repeat;
+				}
+				.upload-logo {
+					position: absolute;
+					width: 10%;
+					height: 80%;
+					right: 10%;
+					top: 10%;
+					background-image: url(../icon/upload.png);
+					background-size: 15.5px 15.5px;
+					background-position: center center;
+					background-repeat: no-repeat;
+				}
+
+        .title {
+          /*border: 1px solid red;*/
+          position: relative;
+          width: 100%;
+          height: auto;
+          bottom: auto;
+          padding-left: 24px;
+          padding-top: 24px;
+          padding-right: 24px;
+          box-sizing: border-box;
+          font-size: 18px; color: #000000; text-align: left;
+        }
+        .tag {
+          /*border-bottom: 1px solid #d3d2d2;*/
+          /*border: 1px solid blue;*/
+          position: relative;
+          width: 100%;
+          height: 82px;
+          bottom: auto;
+          padding-left: 24px;
+          padding-top: 10px;
+          box-sizing: border-box;
+          font-size: 12px; color: #917dcf; text-align: left;
+        }
+				.answer {
+          /*border: 1px solid red;*/
+          position: relative;
+					margin-top: 10%;
+          width: 100%;
+          height: auto;
+          font-size: 15px; color: #000000; text-align:justify;
+        }
+
+				.resource {
+					position: relative;
+					width: 100%;
+					height: 70px;
+					background-color: #FFF;
+					margin-top: 35px;
+				}
+        .resource-left {
+          width: 15%;
+          height: auto;
+          float: left;
+          padding-left: 24px;
+        }
+        .resource-imag {
+          width: 50px;
+          height: 50px;
+					border-radius: 8px;
+					background-color: #6d7cd9;
+					font-size: 18px; color: #fff; text-align: center; font-weight: bold;
+					line-height: 50px;
+        }
+        .resource-right {
+          /*border: 1px solid blue;*/
+          width: 75%;
+          height: auto;
+          float: left;
+					padding-bottom: 7%;
+					border-bottom: 1px solid #d3d2d2;
+        }
+        .resource-name {
+          width: auto;
+          height: 18px;
+          font-size: 20px; color: #000000; text-align: left; font-weight: bold;
+        }
+        .resource-note {
+          width: auto;
+          height: 14px;
+          font-size: 12px; color: #8e8e8e; text-align: left;
+          padding-top: 18px;
+					float: left;
+        }
+        nav {
+          /*border: 1px solid red;*/
+					position: relative;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-orient: horizontal;
+          width: 100%;
+          height: 64px;
+          overflow-x:scroll;
+        }
+        nav .menu-cata{
+        	position: relative;
+					width: 25%;
+					/*margin-right: 25%;*/
+					/*padding-right: 25%;*/
+          height: 37.5px;
+          line-height: 37.5px;
+          font-size: 14px; color: #000; text-align: center;
+         }
+        .menu-cata.selected {
+          font-size: 14px; color: #6d7cd9; font-weight: bolder;
+        }
+        .menu {
+          position: relative;
+          top: 25%;
+          width: 100%;
+          height: 16px;
+          background-image: url(../icon/menu.png);
+          background-size: 18px 16px;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+
+        #little-window ul li {
+          height:50px;
+          font-size: 16px; color: #000; text-align: center;
+          line-height: 50px;
+        }
+        .little-window {
+          /*border: 1px solid red;*/
+          position: fixed;
+          right: 24px;
+          top: 50px;
+          height: 150px;
+          width: 113.5px;
+          background-color: #fff;
+          font-size: 16px;color: #000; text-align: center;
+          z-index: 10;
+          box-shadow:  darkgrey  1px 1px 1px 1px;
+        }
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div id="wrap" class="flex-wrap flex-vertical">
+
+
+
+    <div class="answer" onclick="">
+			<div id="resouce-box" class="resource" style="display:none">
+        <div class="resource-left">
+          <div id="resource-type" class="resource-imag">
+						PDF
+          </div>
+        </div>
+        <div class="resource-right">
+          <div id="resource-name" class="resource-name"></div>
+          <div class="resource-note"></div>
+					<div class="resource-note"></div>
+        </div>
+      </div>
+
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/dropload.min.js"></script>
+<script type="text/javascript">
+var json_dict = {
+"app_version":"",
+"user_id":"",
+"user_cookie":"",
+"question_id":123,
+"answer_id":123,
+"since_id": 0,
+"page_size": 10
+};
+var json_data= {};
+
+		    apiready = function () {
+
+
+
+		      Getdata(json_dict);
+					json_data.resouce_length = 3; //1-pdf 2-zip 3-rar
+					// document.getElementById("resouce-box-0").childNodes[1].childNodes[1].innerHTML //这个是pdf字段
+					// document.getElementById("resouce-box-0").childNodes[3].childNodes[1].innerHTML //这个是题目
+					// document.getElementById("resouce-box-0").childNodes[3].childNodes[3].innerHTML //点赞数
+					resouce_view();
+		    }
+
+		    function Getdata(json) {
+		      $.ajax({
+		        type: "post",
+		        url: "../questionAnswer/getComment/",
+		          dataType : "json",
+		          data: JSON.stringify(json),
+		          success: function (d) {
+		          json_data = d; //是否需要将json转化为{}才能赋给json_data?
+		        }
+		      });
+		    }
+
+				function resouce_view() {
+					var sourceNode = document.getElementById("resouce-box"); // 获得被克隆的节点对象
+					for (var i = 0; i < json_data.resouce_length; i++) {
+						var clonedNode = sourceNode.cloneNode(true); // 克隆节点
+						clonedNode.setAttribute("id", "resouce-box-" + i); // 修改一下id 值，避免id 重复
+						sourceNode.parentNode.appendChild(clonedNode); // 在父节点插入克隆的节点
+						clonedNode.style.display = '';
+				}
+					for (var i = 0; i < json_data.resouce_length; i++) {
+						tmp = document.getElementById("resouce-box-" + i);
+						tmp.childNodes[1].childNodes[1].innerHTML = 'RAR';
+						tmp.childNodes[3].childNodes[1].innerHTML = '大物第一章习题';
+						tmp.childNodes[3].childNodes[3].innerHTML = 1+'赞,';
+						tmp.childNodes[3].childNodes[5].innerHTML = 0+'踩';
+					}
+				}
+
+
+
+
+
+
+    function back() {
+      api.openWin({
+          name: 'home',
+          url: '../index.html',
+          pageParam: {
+              name: 'test'
+          }
+      });
+    }
+
+</script>
