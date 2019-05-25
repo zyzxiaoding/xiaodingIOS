@@ -175,7 +175,7 @@ function initData(){
                   url: '../../circle/circle_resource_detail.html',
                   bounces: false,
                   pageParam:{
-                      source_id : target_id,
+                      sourceID : target_id,
                       user_id:$api.getStorage('user_id'),
                       user_cookie:''
                   }
@@ -230,7 +230,7 @@ function initData(){
             {{?? value.article_image ==='m4a'}}
             <div style="background-color:#917dcf;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">m4a</font></div>
             {{??}}
-            <div style="background-color:green;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">res</font></div>
+            <div style="background-color:green;height:44px;width:44px;border-radius:20%;text-align: center;"><font style="line-height:44px;color:white">{{=value.article_image}}</font></div>
             {{?}}
 
         </div>

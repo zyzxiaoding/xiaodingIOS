@@ -352,22 +352,7 @@ function login(){
             if(ret.status==200){
                 $api.setStorage('cookie', ret.data.cookie);
                 $api.setStorage('user_id', ret.data.user_id);
-            // if (ret.data.user_nickname) $api.setStorage('user_nickname', ret.data.user_nickname);
-            //
-            // if (ret.data.cookie)
-            // if (ret.data.user_id)
 
-
-            // var phoURL=ret.data.phoURL;
-            // if (phoURL){
-            //     api.imageCache({
-            //         url: 'http://a.hiphotos.baidu.com/image/w%3D400/sign=2abe1c77d4ca7bcb7d7bc62f8e086b3f/64380cd7912397ddf9f4bdb05a82b2b7d1a287f0.jpg'
-            //     }, function(ret, err) {
-            //         phoURL = ret.url;
-            //     });
-            //     $api.setStorage('phoURL', phoURL);
-            // }
-            // $api.setStorage('isLogin', true);
             api.sendEvent({
                 name: 'UserHasLogin'
             });

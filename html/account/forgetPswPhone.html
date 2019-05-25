@@ -145,7 +145,7 @@ function getVerifyCode(){
           return ;
       }
 
-    var json_verified={"phone_number":phone_number,"IDCode":"6575","password":""};
+    var json_verified={"phone_number":phone_number,"IDCode":verifyCode,"password":""};
     $.ajax({
         url:'http://47.105.160.217:80/api/login/forgetPassword/',
         type:'POST',

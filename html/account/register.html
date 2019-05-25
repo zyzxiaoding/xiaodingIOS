@@ -77,23 +77,16 @@
     function getVerifyCode(){
         var phone = $api.val($api.byId('phone'));
 
-
-
         var phoneReg=/^[1][3,4,5,7,8][0-9]{9}$/;
 
           if (!phoneReg.test(phone)) {
-
               api.toast({
         　　　　　　msg:'请输入正确的手机号码',
         　　　　　　duration: '1300',
         　　　　　　localtion: 'middle'
       　　　　 });
-
               return ;
-
           }
-
-
 
           var json_phone={"phone_number": phone};
           $.ajax({
@@ -118,11 +111,7 @@
               },
           })
 
-
           return;
-
-
-
     }
 
     function register(){
@@ -156,7 +145,6 @@
             //     return;
             // }
         }
-
 
         if (!password) {
             api.toast({
@@ -247,17 +235,6 @@
                 }
 
               if(ret.status==200){
-            //      setTimeout(function() {
-            //         api.openWin({
-            //     　　　　name: 'index',
-            //    　　　　 url: '../../../index.html',
-            //     　　　　bounces: false,
-            //    　　　　 animation:{
-            //         　　　　type: "push",
-            //         　　　　duration:300
-            //     　　　　}
-            // 　　　　});
-            //       }, 1000);
 
                 if (ret.data.user_id) $api.setStorage('user_id', ret.data.user_id);
                 if (ret.data.user_cookie) $api.setStorage('user_cookie', ret.data.user_cookie);
@@ -285,16 +262,17 @@
 
     }
 
+    //打开用户条款页面，应该是一个HTML网页
     function tiaokuan(){
-        api.openWin({
-        　　　　name: 'index',
-        　　　　 url: 'https://passport.baidu.com/static/passpc-account/html/protocal.html',
-        　　　　bounces: false,
-        　　　　 animation:{
-        　　　　type: "push",
-        　　　　duration:300
-        　　　　}
-        　　　　});
+    api.openWin({
+    　　　　name: 'index',
+    　　　　 url: 'https://passport.baidu.com/static/passpc-account/html/protocal.html',
+    　　　　bounces: false,
+    　　　　 animation:{
+    　　　　type: "push",
+    　　　　duration:300
+    　　　　}
+    　　　　});
     }
 
     function closeWin(){
