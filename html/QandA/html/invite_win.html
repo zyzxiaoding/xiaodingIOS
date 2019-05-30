@@ -425,6 +425,12 @@ var invite_dict;
 					async: false,
 					success:function(result){
 						console.log('邀请回答成功')
+						api.toast({
+						    msg: '邀请成功!',
+						    duration: 1000,
+						    location: 'bottom'
+						});
+
 					},
 					error:function(){
 						console.log('邀请回答失败');
