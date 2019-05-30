@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>底部导航</title>
+	<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+	<style>
+			header{ background-color: #f2f2f2; }
+			header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+			header ul li.active{ display: block; }
+			#footer{  background-color: #f2f2f2;}
+			#footer ul li{  padding-top: 30px; padding-bottom: 8px; background: url() no-repeat center 2px; background-size: 25px 25px; text-align: center; }
+			#footer ul li.active{ color: #000; }
+			#footer ul li:nth-child(1){ background-image: url(../icon/message.png); }
+			#footer ul li:nth-child(2){ background-image: url(../icon/approve.png); }
+			#footer ul li:nth-child(3){ background-image: url(../icon/oppose.png); }
+			#footer ul li:nth-child(4){ background-image: url(../icon/collect.png); }
+			#footer ul li:nth-child(1).active{ background-image: url(../icon/message.png); }
+			#footer ul li:nth-child(2).active{ background-image: url(../icon/agreechousen.png); }
+			#footer ul li:nth-child(3).active{ background-image: url(../icon/oppose.png); }
+			#footer ul li:nth-child(4).active{ background-image: url(../icon/collect.png); }
+    .searchbar-box {
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      /*border-bottom: 1px solid #d3d2d2;*/
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 85%;
+      height: 100%;
+      float: left;
+    }
+    .inputbar {
+      position: absolute;
+      width: 94%;
+      height: 80%;
+      left: 3%;
+      top: 10%;
+      /*margin-left: -47%;
+      margin-top: -40%;*/
+      background-color: #ebebeb;
+      border-radius: 5px;
+    }
+    .inputbar .input {
+      width: 85%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar .camera {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-image: url(../icon/camera.png);
+      background-size: 17px 14.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .cancel-box {
+      position: relative;
+      display: table;
+      width: 14%;
+      height: 100%;
+      float: left;
+    }
+    .start_question {
+      font-size: 18px; color: #6d7cd9; font-weight: bolder; text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+		.inputbar .search-logo {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      left: 10px;
+      top: 0;
+      background-image: url(../icon/search.png);
+      background-size: 17px 14.5px;
+      background-position: center left;
+      background-repeat: no-repeat;
+    }
+		.fixed_bottom {
+			 position:fixed;
+			 left:0px;
+			 bottom:0px;
+			 width:100%;
+			 height:7%;
+			 z-index:10;
+		}
+		.flex-con{
+			overflow: scroll;
+		}
+
+		nav {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;;
+			-webkit-box-orient: horizontal;
+			-webkit-flex-flow: row;
+			flex-flow: row;
+			position: relative;
+			width: 100%;
+			height: 64px;
+		}
+		.test {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: horizontal;
+			width: 100%;
+			height: 35px;
+			overflow-x:scroll;
+			border-bottom: 1px solid #d3d2d2;
+			padding-left:12.5%;
+		}
+		 .menu-cata{
+			width: 25%;
+			position: relative;
+			/*margin-right: 25%;*/
+			/*padding-right: 25%;*/
+			height: 37.5px;
+			line-height: 37.5px;
+			font-size: 18px; color: #000; text-align: center;
+
+			white-space:nowrap;
+		 }
+		.menu-cata.selected {
+			font-size: 19px; color: #6d7cd9; font-weight: bolder;
+		}
+
+		.title {
+			/*border: 1px solid red;*/
+			padding-top: 2.2%;
+			padding-left: 3.5%;
+			position: relative;
+			width: 60%;
+			height: auto;
+			bottom: auto;
+			box-sizing: border-box;
+			font-size: 16px; color: #000000; text-align: left;font-weight: 700;
+			text-overflow: -o-ellipsis-lastline;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+		.tag {
+			/*border-bottom: 1px solid #d3d2d2;*/
+			/*border: 1px solid blue;*/
+			position: relative;
+			margin-top:2%;
+			padding-left: 3.5%;
+			width: 60%;
+			height: 12px;
+			bottom: auto;
+			box-sizing: border-box;
+			font-size: 12.5px; color: #6d7cd9; text-align: left;
+		}
+		.image{
+			position: absolute;
+			width:30%;
+			height:65%;
+			top:12%;
+			left:65%;
+		}
+		.description {
+			/*border: 1px solid blue;*/
+			position: relative;
+			margin-top:-2.5%;
+			padding-left: 3.5%;
+			width: 95%;
+			height: auto;
+			font-size: 14.5px; color: black; text-align: left;font-weight: lighter;
+			padding-top: 20px;
+			text-overflow: -o-ellipsis-lastline;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+		}
+		.interactive-box {
+			margin-top:4%;
+			padding-left: 3.5%;
+			padding-bottom: 7%;
+			position: relative;
+			width: 95%;
+			height:10%;
+		}
+		.avatar{
+				position: absolute;
+				top:5%;
+				left:4%;
+				display: inline-block;
+				height : 15px;
+				width : 15px;
+				border-radius: 50%;
+		}
+		.username{
+				position: absolute;
+				top:8.7%;
+				left:10.5%;
+				display: inline-block;
+				font-size: 12.5px;
+				color:grey;
+		}
+		.ask_num {
+			display: inline-block;
+			position: absolute;
+			top:2.7%;
+			left:37%;
+			text-align: center;
+			font-size: 12px;
+			line-height: 21.5px;
+		}
+		.approve-logo {
+			/*position: relative;*/
+			display: inline-block;
+			position: absolute;
+			top:2.8%;
+			left:41%;
+			width: 48px;
+			height: 21.5px;
+			background-image: url(../icon/approve.png);
+			background-size: 11.5px 11.5px;
+			background-position: left center;
+			background-repeat: no-repeat;
+			text-align: center;
+			font-size: 11px;
+			line-height: 21.5px;
+		}
+		.comment-logo {
+			display: inline-block;
+			position: absolute;
+			top:2.8%;
+			left:53%;
+			width: 48px;
+			height: 21.5px;
+			background-image: url(../icon/message.png);
+			background-size: 11.5px 11.5px;
+			background-position: left center;
+			background-repeat: no-repeat;
+			text-align: center;
+			font-size: 11px;
+			line-height: 21.5px;
+		}
+		.more-logo {
+			display: inline-block;
+			position: absolute;
+			top:2.6%;
+			left:92%;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		.content-box {
+			position: relative;
+			padding: 5px;
+			width: 97%;
+			height: auto;
+			margin-left: auto;
+			margin-right: auto;
+			margin-bottom: 15px;
+			box-shadow: 0 4px 6px #D7D7D7;
+		}
+    </style>
+</head>
+<body>
+	<div class="list" v-cloak>
+			<div class="item border-1px-bottom" v-for="(lists,index) in list">
+				<div class="content-box">
+					<div class="title" tapmode="">
+						{{lists.title}}
+					</div>
+					<div class="tag">	{{lists.tag}}</div>
+					<img class="image" v-if="lists.type=='strategy'" v-bind:src="lists.image"/>
+					<div class="description" v-if="lists.type=='question'">
+						{{lists.description}}
+					</div>
+					<div class="interactive-box">
+						<img class="avatar" v-bind:src="lists.avatar"/>
+						<div class="username">{{lists.username}}</div>
+						<div class="ask_num" v-if="lists.type=='question'&&lists.ask_num!=''">{{lists.ask_num}}同问</div>
+						<div class="approve-logo" v-if="lists.type=='strategy'">{{lists.approve_num}}</div>
+						<div class="comment-logo" v-if="lists.type=='strategy'">{{lists.comm_num}}</div>
+						<div class="more-logo" v-if="lists.type=='question'" onclick="">...</div>
+					</div>
+				</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript" src="../script/vue.min.js"></script>
+
+<script type="text/javascript">
+apiready = function() {
+		window.ListVue = new Vue({
+				el: '.list',
+				data: {
+						list: [],
+						timeout: false
+				},
+				mounted: function() {
+						this.$nextTick(function() {
+								this.fnInit();
+						});
+				},
+				beforeDestroy: function() {
+						this.timeout = true;
+				},
+				methods: {
+						fnInit: function(){
+									var z={
+												"type":"question",
+												"title":"现在的年轻人吃不了苦吗?",
+												"tag":"摄影 · 旅游 · 体验",
+												"description":"时间当时法国i山豆根副，食店功夫发放食店功夫",
+												"avatar":"../image/test_mr.png",
+												"username":"大傻喵的春天",
+												"ask_num":"",
+											};
+									window.ListVue.list.push(z);
+									z={
+												"type":"strategy",
+												"title":"我想知道图书馆哪里可以去自习啊?",
+												"tag":"摄影摄影 · 旅游旅游 · 体验体验",
+												"description":"",
+												"approve_num":"120",
+												"comm_num":"120",
+												"avatar":"../image/test_mr.png",
+												"username":"大傻喵的春天...   |",
+												"image": "../image/image1.png"
+											};
+									window.ListVue.list.push(z);
+									z={
+												"type":"question",
+												"title":"现在的年轻人吃不了苦吗?",
+												"tag":"摄影摄影 · 旅游旅游 · 体验体验",
+												"description":"时间当时法国i山豆根副，食店功夫发放食店功夫发放,时间当时法国i山豆根副，食店功夫发放食店",
+												"avatar":"../image/test_mr.png",
+												"username":"大傻喵的春天 · ",
+												"ask_num":"180"
+											};
+											window.ListVue.list.push(z);
+											z={
+														"type":"strategy",
+														"title":"我想知道图书馆哪里可以去自习啊?",
+														"tag":"摄影 · 旅游 · 体验",
+														"description":"这里是这个问题的描述",
+														"approve_num":"120",
+														"comm_num":"120",
+														"avatar":"../image/test_mr.png",
+														"username":"大傻喵的春天",
+														"image": "../image/image1.png"
+													};
+											window.ListVue.list.push(z);
+
+						},
+						changeData: function(index){
+							data=["关注","推荐","热门"];
+									for(var i=0;i<window.ListVue.list.length;i++){
+											window.ListVue.list[i].tag="摄影 · 旅游 · "+data[index];
+									}
+						},
+				},
+				filters: {
+						// 时间转换
+						formatTime: function(v) {
+								return new Date(v).popular();
+						}
+
+				}
+		});
+};
+
+
+
+</script>
+</html>

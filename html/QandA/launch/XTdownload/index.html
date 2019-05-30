@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <style type="text/css">
+    html,body{
+        height: 100%;
+    }
+    #wrap{
+        height: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+               flex-flow: column;
+    }
+    #div1{
+        margin-top: 30px;
+        text-align: center;
+        width: 100%;
+    }
+    #div1 h1{
+        font-size: 30px;
+        height: 44px;
+        line-height: 44px;
+        margin: 0em;
+        font-weight:900;
+    }
+    #line{
+        width: 28px;
+        border-bottom: 4px solid #E6655E;
+        margin: 0 auto;
+    }
+    #div2{
+        text-align: center;
+        width: 100%;
+    }
+    #div2 h1{
+        font-size: 15px;
+        height: 44px;
+        line-height: 44px;
+        margin: 0em;
+        font-weight:900;
+    }
+    #div3{
+      margin-top: 20px;
+        text-align: center;
+        width: 100%;
+
+    }
+    #div4{
+        text-align: center;
+        margin: 40px auto;
+        width:100px;
+        height:30px;
+        background-color:#E6655E;
+        border-radius:15px;
+        box-shadow: 0 6px 10px #E6655E;
+    }
+    #div4 button{
+        font-size: 12px;
+        line-height:30px;
+        color:#fff;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="div1">
+            <h1>校町社区</h1>
+        </div>
+        <div id="line"></div>
+        <div id="div2">
+            <h1>互助，成就更好的自己</h1>
+        </div>
+        <div id="div3"><img src="./image/picture.png"/ width="38%" height="45%"></div>
+        <div id="div4">
+            <button onclick="download()" value="Download">立即下载</button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript">
+
+    apiready = function(){
+		    var header = $api.byId('div1');
+        //适配iOS 7+，Android 4.4+状态栏
+        $api.fixStatusBar(header);
+
+        /*var headerPos = $api.offset(header);
+        var main = $api.byId('main');
+        var mainPos = $api.offset(main);
+
+        var year = $api.byId('year');
+        year.innerHTML = new Date().getFullYear();*/
+
+    };
+    function download(){
+        window.location.href = 'http://imtt.dd.qq.com/16891/26747DD8B125A8479AD0C9D22CA47BC9.apk?fsname=com.snda.wifilocating_4.2.91_3211.apk&csr=1bbd';
+    }
+</script>
+</html>

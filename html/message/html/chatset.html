@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>聊天窗口-win</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/iconfont1.css" />
+    <script type="text/javascript" src="../script/lib-flexible.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            height: 100%;
+            width: 100%;
+        }
+
+        header {
+            position: relative;
+            width: 100%;
+            height: 1.33rem;
+            line-height: 1.33rem;
+            background-color: #fff;
+        }
+
+        .header .backward {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 1.33rem;
+            height: 1.33rem;
+            background: url(../image/back.png);
+            background-position: center center;
+            background-size: .6rem .45rem;
+            background-repeat: no-repeat;
+        }
+
+        .header .title {
+            text-align: center;
+            line-height: 1.33rem;
+            font-size: .55rem;
+            font-weight: bold;
+            color: #000;
+            padding-left: 1.33rem;
+            padding-right: 1.33rem;
+        }
+        .box {
+            position: relative;
+            width: 100%;
+            height: 1.72rem;
+            line-height: 2.33rem;
+            background-color: #fff;
+        }
+        #img1{
+            position: absolute;
+            left: 0.9rem;
+            bottom: 0.1rem;
+            width: 1.33rem;
+            height: 1.33rem;
+            line-height: 1.33rem;
+            font-size: 20.8px;
+            /*background: url(../image/settop.png);
+            background-position: center center;
+            background-size: .8rem .8rem;
+            background-repeat: no-repeat;*/
+        }
+        #img2{
+            position: absolute;
+            left: 0.9rem;
+            bottom: 0.1rem;
+            width: 1.33rem;
+            height: 1.33rem;
+            line-height: 1.33rem;
+            font-size: 20px;
+        }
+        #img3{
+            position: absolute;
+            left: 0.9rem;
+            bottom: 0.1rem;
+            width: 1.33rem;
+            height: 1.33rem;
+            line-height: 1.33rem;
+            font-size: 18px;
+        }
+        .box .img2{
+            position: absolute;
+            left: 0.5rem;
+            bottom: 0.2rem;
+            width: 1.33rem;
+            height: 1.33rem;
+            background: url(../image/shutup.png);
+            background-position: center center;
+            background-size: .8rem .8rem;
+            background-repeat: no-repeat;
+        }
+        .box .img3{
+            position: absolute;
+            left: 0.5rem;
+            bottom: 0.2rem;
+            width: 1.33rem;
+            height: 1.33rem;
+            background: url(../image/clearup.png);
+            background-position: center center;
+            background-size: .8rem .8rem;
+            background-repeat: no-repeat;
+        }
+        .box .title1 {
+            position: absolute;
+            margin-top: 1%;
+            font-size: .42rem;
+            color: #000;
+            line-height: 1.72rem;
+            margin-left: 20%;
+        }
+        .box .right1{
+            height:1.72rem;
+            line-height: 1.82rem;
+            position: absolute;
+            right: 0.5rem;
+            bottom: 0;
+        }
+        .box .right2{
+            height:1.72rem;
+            line-height: 1.82rem;
+            position: absolute;
+            right: 0.5rem;
+            bottom: 0;
+        }
+        .chooseBtn {
+            display: none;
+        }
+        .choose-label {
+            box-shadow: #bdbdbd 0px 0px 0px 1px;
+            width: 40px;
+            height: 20px;
+            display: inline-block;
+            border-radius: 20px;
+            position: relative;
+            background-color: #bdbdbd;
+            overflow: hidden;
+        }
+
+        .choose-label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            border-radius: 20px;
+            background-color: #fff;
+            z-index: 20;
+            -webkit-transition: all 0.5s;
+            transition: all 0.5s;
+        }
+
+        .chooseBtn:checked + label.choose-label:before {
+            left: 20px;
+        }
+
+        .chooseBtn:checked + label.choose-label {
+            background-color: #6d7cd9;
+            box-shadow: #6d7cd9 0px 0px 0px 1px;
+        }
+        .maginline {
+    			width: 100%;
+    			height: 4px;
+    			background-color: #000;
+    			opacity: 0.03;
+    		}
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="header">
+            <div class="backward" tapmode onclick="api.closeWin();"></div>
+            <div class="title" id="nickname">聊天信息</div>
+        </div>
+        <div class="maginline"></div>
+        <div class="box">
+            <!--div class="img1" class="iconfont icon-more"  tapmode><i class="aui-iconfont aui-icon-more"></i></div-->
+            <!--span id="img1"></span-->
+            <span  class="iconfont icon-zhiding" id="img1"></span>
+            <div class="title1">置顶消息</div>
+            <div class="right1">
+              <input type="checkbox" name="sex" id="male" class="chooseBtn" onclick="settop()"/>
+              <label for="male" class="choose-label"></label>
+            </div>
+        </div>
+        <div class="box">
+            <span  class="iconfont icon-xiaoximiandarao" id="img2"></span>
+            <div class="title1">消息免打扰</div>
+            <div class="right2">
+              <input type="checkbox" name="sex" id="male1" class="chooseBtn" onclick="shutup()"/>
+              <label for="male1" class="choose-label"></label>
+            </div>
+        </div>
+        <div class="box" onclick="deleteConfirm()">
+            <span  class="iconfont icon-delete" id="img3"></span>
+            <div class="title1">清空聊天记录</div>
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.min.js"></script>
+<script type="text/javascript" src="../script/easeChat.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    var flag1;
+    var flag2;
+    var message_url="http://47.105.160.217:80/api/message/";
+    apiready = function() {
+        console.log(JSON.stringify(api.pageParam));
+        flag1=api.pageParam.special_concern;
+        flag2=api.pageParam.ignore;
+        if(flag1){document.getElementById("male").checked = true;}
+        if(flag2){document.getElementById("male1").checked = true;}
+    };
+
+    function settop(){
+        flag1=!flag1;
+        var jsfun = 'api.pageParam.special_concern=!api.pageParam.special_concern;';
+        api.execScript({
+            name: 'chat_win',
+            script: jsfun
+        });
+        var data={
+        	"user_id": $api.getStorage('user_id'),
+        	"partner_id": api.pageParam.partner_id,
+        	"ignore": flag2,
+        	"special_concern": flag1
+        };
+        console.log(JSON.stringify(data));
+        $.ajax({
+            type: 'POST',
+            url: message_url+"editPrivateMessageConfig/",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+              console.log('更新消息设置成功');
+            },
+            error:function(){
+              console.log('更新消息设置失败！');
+            },
+        });
+    }
+
+    function shutup(){
+        var data={};
+        flag2=!flag2;
+        var jsfun = 'api.pageParam.ignore=!api.pageParam.ignore;';
+        api.execScript({
+            name: 'chat_win',
+            script: jsfun
+        });
+        var data={
+        	"user_id": $api.getStorage('user_id'),
+        	"partner_id": api.pageParam.partner_id,
+        	"ignore": flag2,
+        	"special_concern": flag1
+        };
+        console.log(JSON.stringify(data));
+        $.ajax({
+            type: 'POST',
+            url: message_url+"editPrivateMessageConfig/",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+              console.log('更新消息设置成功');
+            },
+            error:function(){
+              console.log('更新消息设置失败！');
+            },
+        });
+    }
+
+    function deleteConfirm(){
+      api.confirm({
+        msg: '确认要删除所有聊天记录吗？',
+        buttons: ['取消', '确定']
+      }, function(ret, err) {
+        var index = ret.buttonIndex;
+        if(index==2){
+          alert("聊天记录删除成功！")
+        }
+      });
+    }
+</script>
+
+</html>

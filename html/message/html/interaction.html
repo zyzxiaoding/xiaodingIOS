@@ -1,0 +1,453 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <!-- px转rem js -->
+    <script type="text/javascript" src="../script/lib-flexible.js"></script>
+    <style>
+        html,
+        body {
+            
+        }
+
+        .middle {
+            position: relative;
+            margin-bottom: .11rem;
+            height: 1.07rem;
+            border-radius: .07rem;
+            background-color: #fff;
+        }
+
+        .middle img {
+            height: .53rem;
+            padding: .27rem;
+        }
+
+        .left_img {
+            position: absolute;
+            left: 0;
+            z-index: 999;
+        }
+
+        .right_img {
+            position: absolute;
+            right: 0;
+            z-index: 999;
+            display: none;
+        }
+
+        .middle>input {
+            height: 1.07rem;
+            line-height: 1.07rem;
+            color: #333;
+            font-size: .32rem;
+            outline: none;
+            width: 100%;
+            margin: 0 1.07rem;
+        }
+
+        .list {
+            overflow: hidden;
+        }
+
+        .list .item {
+            vertical-align: middle;
+            height: 1.8rem;
+            background-color: #fff;
+            position: relative;
+            -webkit-transform: translateX(0px);
+            transition: transform 0.2s;
+            -webkit-transition: transform 0.2s;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .list .item .swiper-li {
+            display: block;
+            height: 1.76rem;
+            line-height: 1.76rem;
+            -webkit-transition: all 0.1s linear;
+            transition: all 0.1s linear;
+            color: inherit;
+            padding: 0 .42rem;
+        }
+
+        .left-img {
+            position: absolute;
+            height: 1.9rem;
+            width: 1.33rem;
+            line-height: 1.76rem;
+            left:5%;
+            top:20%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-img img {
+            height: 1.33rem;
+            width: 1.33rem;
+            border-radius: 50%;
+        }
+
+        .left-img .badge {
+            position: absolute;
+            z-index: 99;
+            top: .01rem;
+            right: 0.01rem;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            min-width: .45rem;
+            height: .45rem;
+            line-height: .45rem;
+            font-size: .25rem;
+            color: #fff;
+            border-radius: 50%;
+            background-color: #ff2600;
+            text-decoration: none;
+        }
+        .center-name {
+            font-size: .35rem;
+            line-height: .45rem;
+            top: 25%;
+            left:23%;
+            position: absolute;
+        }
+
+        .center-body {
+            font-size: .42rem;
+            font-weight: 400;
+            color: #000;
+            line-height: .54rem;
+            top: 51%;
+            left:23%;
+            position: absolute;
+        }
+
+        .center-body>span {
+            color: #FD2626;
+            margin-right: .14rem;
+        }
+
+        .center-body img {
+            height: .45rem;
+            width: .45rem;
+            vertical-align: middle;
+        }
+
+        .right-time {
+            text-align: right;
+            position: absolute;
+            top:26%;
+            right:5%;
+            font-size: .35rem;
+            font-weight: 400;
+            color: #c9c9c9;
+            line-height: .54rem;
+        }
+        .settop {
+            position: absolute;
+            right: -1.78rem;
+            bottom: 0;
+            width: 1.78rem;
+            line-height: 1.78rem;
+            height: 1.78rem;
+            text-align: center;
+            background: #adadad;
+            color: #fff;
+            font-size: .42rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            font-style: normal
+        }
+        .dell {
+            position: absolute;
+            right: -3.56rem;
+            bottom: 0;
+            width: 1.78rem;
+            line-height: 1.78rem;
+            height: 1.78rem;
+            text-align: center;
+            background: #F63746;
+            color: #fff;
+            font-size: .42rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            font-style: normal
+        }
+
+        .border-1px-bottom:last-child::after {
+            border: 0px;
+        }
+        .bottomline{
+          margin-top:3%;
+          border-bottom: 1px solid #f7f7f7;
+          margin-left: 23%;
+          width:72%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="list" v-cloak>
+        <div class="item" v-for="(lists,index) in list" style="padding-top:3%;padding-bottom:3%;" @click="fnOpenChat(lists.link);">
+            <div class="swiper-li">
+                <div class="flex-wrap">
+                    <div class="left-img">
+                        <img v-bind:src="imghead+lists.avatar"/>
+                    </div>
+                    <div class="flex-con">
+                        <div class="center-name">
+                            <label style="color:#8e8e8e">{{lists.somebody}}</label><label style="color:#8e8e8e">{{lists.something}}</label>
+                        </div>
+                        <div class="center-body" v-html="fnType(lists.last_message.type,index)"></div>
+                        <!---->
+                    </div>
+                    <div class="right-time">
+                        {{lists.last_message.time|formatTime}}
+                    </div>
+                </div>
+            </div>
+            <div class="bottomline"></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.min.js"></script>
+<!-- 消除移动端点击延迟300ms -->
+<script type="text/javascript" src="../script/fastclick.js"></script>
+<!-- 公共js -->
+<script type="text/javascript" src="../script/common.js"></script>
+<!-- 环信接口 -->
+<script type="text/javascript" src="../script/easeChat.js"></script>
+<!-- sha1加密 -->
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<!-- 滑动 -->
+<script type="text/javascript" src="../script/swiper.js"></script>
+<!-- 表情转换js -->
+<script type="text/javascript" src="../script/emotion.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    var lists = [];
+    var imghead = "http://47.105.160.217:80/files/";
+    var message_url="http://47.105.160.217:80/api/message/";
+    var interaction_data={user_id:$api.getStorage('user_id'),page_size:20,since_id:0};
+    apiready = function() {
+        //上拉加载
+        api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold: 0
+            }
+        }, function(ret, err){
+          //页码+1，继续请求数据
+          interaction_data.since_id += 10;
+          get_interaction_data(interaction_data);
+        });
+        window.ListVue = new Vue({
+            el: '.list',
+            data: {
+                list: [],
+                timeout: false
+            },
+            mounted: function() {
+                this.$nextTick(function() {
+                    this.fnInit();
+                    fnsetRefreshHeaderInfo();
+                });
+            },
+            beforeDestroy: function() {
+                this.timeout = true;
+            },
+            methods: {
+                fnInit: function(){
+                  get_interaction_data(interaction_data);
+                  /*if (!this.timeout) {
+                    setTimeout(this.fnInit, 10000);
+                  }*/
+                },
+                fnType: function(types, index) {
+                    if (types == "text") {
+                      if (window.ListVue.list[index].last_message.text == '' || window.ListVue.list[index].last_message.text == undefined) {
+                            return;
+                        }
+                        msg = window.ListVue.list[index].last_message.text;
+                        var emotionObj = emotion;
+                        var regx = /\[(.*?)\]/gm;
+                        var translateMSg = window.ListVue.list[index].last_message.text.replace(regx, function(math) {
+                            var imgSrc = emotionObj[math];
+                            if (!imgSrc) {
+                                return math;
+                            }
+                            var img = '<img src="../res/img/emotion/' + imgSrc + '.png" class="emotion">'
+                            return img;
+                        })
+                        return translateMSg;
+                    }
+                    if (types == "voice") {
+                        return "[语音]";
+                    }
+                    if (types == "image") {
+                        return "[图片]";
+                    }
+                    if (types == "video") {
+                        return "[视频]";
+                    }
+                    if (types == "location") {
+                        return "[位置]";
+                    }
+                },
+                //页面转发
+                fnOpenChat: function(index) {
+                    var module1 = index.split("/")[0];
+                    var module2 = index.split("/")[1];
+                    var mid = index.split("/")[2];
+                    if(module1=="qa"&&module2=="question"){
+                        api.openWin({
+                            name: 'answer_list',
+                            url: '../../QandA/html/answer_list.html',
+                            pageParam: {
+                                question_id: mid,
+                                user_id: $api.getStorage('user_id'),
+                                user_cookie: "bf6bb9e9865862093550942e3ef534e9",
+                                footer_H:$api.getStorage('footerH1'),
+                                from_page:"interaction"
+                            },
+                            bgColor: 'rgba(0,0,0,0.8)'
+                        });
+                    }
+                    else if(module1=="qa"&&module2=="answer"){
+                        api.openWin({
+                            name: 'hobby_question_detail',
+                            url: '../../QandA/html/hobby_question_detail.html',
+                            pageParam: {
+                              question_id: index.split("/")[3],
+                              answer_id: mid,
+                              is_anonymous:index.split("/")[4],
+                              user_id:$api.getStorage('user_id'),
+                              user_cookie: "bf6bb9e9865862093550942e3ef534e9",
+                              from_page:"interaction"
+                            }
+                        });
+                    }
+                    else if(module1=="article"&&module2=="article"){
+                        api.openWin({
+                  	        name: 'circle_strategy_detail',
+                  	        url: '../../circle/circle_strategy_detail.html',
+                  	        pageParam: {
+                  	            article_id: mid,
+                  							user_id: $api.getStorage('user_id'),
+                  					    user_cookie: "bf6bb9e9865862093550942e3ef534e9",
+                                from_page:"interaction"
+                  	        },
+                  					bgColor: 'rgba(0,0,0,0.8)'
+                  	    });
+                    }
+                    else if(module1=="source"&&module2=="source"){
+
+                    }
+                }
+            },
+            filters: {
+                // 时间转换
+                formatTime: function(v) {
+                    return new Date(v).popular();
+                }
+
+            }
+        });
+        function fnsetRefreshHeaderInfo() {
+            api.setRefreshHeaderInfo({
+                loadingImg: 'widget://image/refresh.png',
+                bgColor: '#fff',
+                textColor: '#ccc',
+                textDown: '下拉获取更多数据...',
+                textUp: '松开获取更多数据...'
+            }, function(ret, err) {
+                //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+                api.refreshHeaderLoadDone();
+                if (ret) {
+                    interaction_data={user_id:$api.getStorage('user_id'),page_size:20,since_id:0};
+                    window.ListVue.list=[];
+                    window.ListVue.fnInit();
+                    toast("已刷新");
+                }
+                else {
+                    toast("无更多聊天记录" + err.msg);
+                }
+            });
+        }
+        function get_interaction_data(data){
+            if(api.pageParam.index==0){
+                $.ajax({
+                    type: 'POST',
+                    url: message_url+"getAssistantMessageList/",
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    async: false,
+                    success:function(result){
+                      console.log('获取校町助手消息成功！');
+                      console.log(JSON.stringify(result.data));
+                      if(result.data.length > 0){
+                        //调用页面渲染的方法
+                        api.hideProgress();
+                        window.ListVue.list = window.ListVue.list.concat(result.data);
+                        console.log(window.ListVue.list);
+                      }
+                      else {
+                        api.hideProgress();
+                        api.toast({
+                            msg: '没有更多数据了!',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                      }
+                    },
+                    error:function(){
+                      console.log('获取校町助手消息失败！');
+                    },
+                });
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    url: message_url+"getInteractionMessageList/",
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    async: false,
+                    success:function(result){
+                      console.log('获取互动消息成功！');
+                      console.log(JSON.stringify(result.data));
+                      if(result.data.length > 0){
+                        //调用页面渲染的方法
+                        api.hideProgress();
+                        window.ListVue.list = window.ListVue.list.concat(result.data);
+                        console.log(window.ListVue.list);
+                      }
+                      else {
+                        api.hideProgress();
+                        api.toast({
+                            msg: '没有更多数据了!',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                      }
+                    },
+                    error:function(){
+                      console.log('获取互动消息失败！');
+                    },
+                });
+            }
+        }
+    };
+</script>
+
+</html>

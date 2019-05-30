@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>底部导航</title>
+	<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+	<style>
+			header{ background-color: #f2f2f2; }
+			header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+			header ul li.active{ display: block; }
+			#footer{  background-color: #f2f2f2;}
+			#footer ul li{  padding-top: 30px; padding-bottom: 8px; background: url() no-repeat center 2px; background-size: 25px 25px; text-align: center; }
+			#footer ul li.active{ color: #000; }
+			#footer ul li:nth-child(1){ background-image: url(../icon/message.png); }
+			#footer ul li:nth-child(2){ background-image: url(../icon/approve.png); }
+			#footer ul li:nth-child(3){ background-image: url(../icon/oppose.png); }
+			#footer ul li:nth-child(4){ background-image: url(../icon/collect.png); }
+			#footer ul li:nth-child(1).active{ background-image: url(../icon/message.png); }
+			#footer ul li:nth-child(2).active{ background-image: url(../icon/agreechousen.png); }
+			#footer ul li:nth-child(3).active{ background-image: url(../icon/oppose.png); }
+			#footer ul li:nth-child(4).active{ background-image: url(../icon/collect.png); }
+    .searchbar-box {
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .searchbar {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      /*border-bottom: 1px solid #d3d2d2;*/
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 85%;
+      height: 100%;
+      float: left;
+    }
+    .inputbar {
+      position: absolute;
+      width: 97%;
+      height: 55%;
+      left: 3%;
+      top: 20%;
+      /*margin-left: -47%;
+      margin-top: -40%;*/
+      background-color: #ebebeb;
+      border-radius: 5px;
+    }
+    .inputbar .input {
+      width: 85%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .inputbar .camera {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      background-image: url(../icon/camera.png);
+      background-size: 17px 14.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .cancel-box {
+      position: relative;
+      display: table;
+      width: 14%;
+      height: 100%;
+      float: left;
+    }
+    .start_question {
+      font-size: 14px; color: #6d7cd9; font-weight: bolder; text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+		.inputbar .search-logo {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      left: 10px;
+      top: 0;
+      background-image: url(../icon/search.png);
+      background-size: 17px 14.5px;
+      background-position: center left;
+      background-repeat: no-repeat;
+    }
+		.fixed_bottom {
+			 position:fixed;
+			 left:0px;
+			 bottom:0px;
+			 width:100%;
+			 height:7%;
+			 z-index:10;
+		}
+		.flex-con{
+			overflow: scroll;
+		}
+
+
+		.test {
+			/*border: 1px solid red;*/
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: horizontal;
+			width: 87%;
+			height: 6.5%;
+			overflow-x:scroll;
+			border-bottom: 1px solid #d3d2d2;
+			margin-top: -3%;
+			padding-left:13%;
+			box-shadow: 0 4px 6px #D7D7D7;
+		}
+		 .menu-cata{
+			width: 28%;
+			position: relative;
+			/*margin-right: 25%;*/
+			/*padding-right: 25%;*/
+			height: 37.5px;
+			line-height: 37.5px;
+			font-size: 15px; color: #000; text-align: center;
+			white-space:nowrap;
+		 }
+		 .menu-cata div{
+ 				margin-top: -9%;
+ 				margin-left: 32%;
+ 				width: 38%;
+ 				border: 1px solid #6d7cd9;
+				visibility: hidden;
+ 		}
+		.menu-cata.selected label{
+			font-size: 18px; color: #6d7cd9; font-weight: bolder;
+		}
+		.menu-cata.selected div{
+				visibility: visible;
+		}
+    </style>
+</head>
+<body>
+  <div class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar">
+					<div class="search-logo"></div>
+          <input id="search_content" type="text" class="input" placeholder="问答/攻略/资源/拍照搜题" style="padding-left:30px">
+          <div class="camera"></div>
+        </div>
+      </div>
+      <div class="cancel-box">
+        <div class="start_question">提问</div>
+      </div>
+  </div>
+  </div>
+
+	<div class="test" id="nav">
+		<div id="guide-tag-0" class="menu-cata selected"tapmode onclick="fnSetNavMenuIndex(this)" tapmode><label>关注</label><div></div></div>
+		<div id="guide-tag-1" class="menu-cata"tapmode onclick="fnSetNavMenuIndex(this)" tapmode><label>推荐</label><div></div></div>
+		<div id="guide-tag-2" class="menu-cata"tapmode onclick="fnSetNavMenuIndex(this)" tapmode><label>热门</label><div></div></div>
+	</div>
+
+
+
+	<div id="footer" class="fixed_bottom">
+			<ul class="flex-wrap" >
+					<li tapmode="hover" onclick="" class="flex-con active" ></li>
+					<li tapmode="hover" onclick="" class="flex-con" ></li>
+					<li tapmode="hover" onclick="" class="flex-con" ></li>
+					<li tapmode="hover" onclick="" class="flex-con" ></li>
+			</ul>
+	</div>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+var menu_catas = $api.domAll('.menu-cata');
+
+	apiready = function(){
+		$api.setStorage("flag","0");
+		var nav = $api.dom('#nav');
+		var nav_H = $api.offset(nav).h;
+		var nav_T = $api.offset(nav).t;
+
+		var footer = $api.dom('#footer');
+		var footer_H = $api.offset(footer).h;
+		var footer_T = $api.offset(footer).t;
+
+		api.openFrame({
+		    name: 'question_homepage_frm',
+		    url: './question_homepage_frm.html',
+		    rect: {
+		        x: 0,
+		        y: nav_H + nav_T + 3,
+		        w: api.winWidth,
+		        h: api.winHeight - footer_H - nav_H - nav_T - 3
+		    },
+		    pageParam: {
+		        name: 'test'
+		    },
+		    bounces: false,
+		    bgColor: 'rgba(0,0,0,0)',
+		    vScrollBarEnabled: true,
+		});
+
+
+	};
+
+	function fnSetNavMenuIndex(tag) {
+		var index_;
+		for (var i=0; i<menu_catas.length; i++) {
+			if (tag.id == 'guide-tag-'+i) {
+				if($api.getStorage("flag")!=String(i)){
+					$api.setStorage("flag",String(i));
+					index_ = parseInt(i);
+					fnSetNavMenuSelected(index_);
+				}
+			}
+		}
+
+		// // var tmp = parseInt($api.getStorage('cur_tag_id')) + 2
+		// api.setFrameGroupIndex({
+		// 		name: 'view_by_hobby_frm',
+		// 		index: index_,
+		// 		scroll: true
+		// });
+	}
+
+	function fnSetNavMenuSelected(index_) {
+		for (var i = 0; i < 3; i++) {
+			if (index_ == i) {
+				$api.addCls(menu_catas[i], 'selected');
+			} else {
+				$api.removeCls(menu_catas[i], 'selected');
+			}
+		}
+		var jsfun = 'window.ListVue.changeData($api.getStorage("flag"));';
+		api.execScript({
+			    frameName: 'question_homepage_frm',
+			    script: jsfun
+		});
+
+	}
+
+
+
+</script>
+</html>

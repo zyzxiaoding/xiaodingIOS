@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        body{
+            height: 100%;
+        }
+        #back1{
+            position: absolute;
+            top:5%;
+            left:4%;
+            display: inline-block;
+            height: 17px;
+            width: 27px;
+        }
+        #back2{
+          width: 100%;
+          height: 100%;
+        }
+        header {
+            vertical-align: middle;
+            height: 250%;
+            width: 100%;
+            text-align: center;
+            line-height: 250%;
+            font-size: 20px;
+        }
+        #interaction{
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+    <div id="back1" onclick="backback();"><img id="back2" src="../../QandA/icon/backs.png" alt=""></div>
+    <div id="interaction">通知</div>
+    </header>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    var header;
+    var headerH;
+    var footerH;
+    apiready = function() {
+      if(api.pageParam.index==1){
+        document.getElementById('interaction').innerHTML="互动";
+      }
+      api.addEventListener({
+        name: 'keyback'
+      }, function(ret, err){
+        backback();
+      });
+      header = $api.dom('header');
+      headerH = $api.fixTabBar(header);
+      footerH = $api.getStorage('footerH1');
+      api.openFrame({
+          name: 'interaction',
+          url: '../html/interaction.html',
+          bgColor:'#000',
+          bounces: false,
+          rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+              marginTop: headerH+4, // main页面距离win顶部的高度
+              marginBottom: 0, // main页面距离win底部的高度
+              w: api.winWidth // main页面的宽度 自适应屏幕宽度
+          },
+          pageParam:api.pageParam
+      });
+    };
+    function backback(){
+        /*api.closeFrame({
+            name: 'interaction'
+        });*/
+        api.closeWin({
+            name: 'interaction_head'
+        });
+
+    }
+</script>
+
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <!-- px转rem js -->
+    <script type="text/javascript" src="../script/lib-flexible.js"></script>
+    <script type="text/javascript" src="../script/jquery.js"></script>
+    <style>
+        html,
+        body {
+            background-color: #ededed;
+        }
+
+
+        .left_img {
+            position: absolute;
+            left: 0;
+            z-index: 999;
+        }
+
+        .right_img {
+            position: absolute;
+            right: 0;
+            z-index: 999;
+            display: none;
+        }
+
+        .middle>input {
+            height: 1.07rem;
+            line-height: 1.07rem;
+            color: #333;
+            font-size: .32rem;
+            outline: none;
+            width: 100%;
+            margin: 0 1.07rem;
+        }
+
+        .list {
+            overflow: hidden;
+        }
+
+        .list .item {
+            vertical-align: middle;
+            height: 3rem;
+            background-color: #fff;
+            position: relative;
+            -webkit-transform: translateX(0px);
+            transition: transform 0.2s;
+            -webkit-transition: transform 0.2s;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .list .item .swiper-li {
+            display: block;
+            height: 1.76rem;
+            line-height: 1.76rem;
+            -webkit-transition: all 0.1s linear;
+            transition: all 0.1s linear;
+            color: inherit;
+            padding: 0.2rem 0.6rem;
+        }
+
+        .left-img {
+            position: absolute;
+            height: 1.76rem;
+            width: 1.33rem;
+            line-height: 1.76rem;
+            left:5%;
+            top:21%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-img img {
+            height: 1.13rem;
+            width: 1.13rem;
+            border-radius: 50%;
+        }
+
+        .order{
+          padding-top: 0.3%;
+          position: absolute;
+          text-align: center;
+          left:5.45%;
+          top:61%;
+          height:0.55rem;
+          width:1rem;
+          line-height: 0.55rem;
+          background-color: LightGray;
+          font-size: 0.3rem;
+          border-radius: 5px;
+          opacity: 0.7;
+        }
+
+        .center-name {
+            font-size: .45rem;
+            font-weight: 1000;
+            color: black;
+            line-height: .45rem;
+            top: 25%;
+            left:20%;
+            position: absolute;
+        }
+        .description {
+            font-size: .37rem;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: .54rem;
+            top: 43%;
+            left:20%;
+            position: absolute;
+        }
+        .center-body {
+            font-size: .37rem;
+            font-weight: 200;
+            color: CornflowerBlue;
+            line-height: .54rem;
+            top: 62%;
+            left:20%;
+            position: absolute;
+        }
+
+        .center-body>span {
+            color: #FD2626;
+            margin-right: .14rem;
+        }
+
+        .center-body img {
+            height: .45rem;
+            width: .45rem;
+            vertical-align: middle;
+        }
+
+        .right-time {
+            color: CornflowerBlue;
+            position: absolute;
+            top:20%;
+            left:85%;
+            font-size: .33rem;
+            font-weight: 400;
+            line-height: .54rem;
+        }
+
+        .settop {
+            position: absolute;
+            right: -1.78rem;
+            bottom: 0;
+            width: 1.78rem;
+            line-height: 1.78rem;
+            height: 1.78rem;
+            text-align: center;
+            background: #adadad;
+            color: #fff;
+            font-size: .42rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            font-style: normal
+        }
+
+        .dell {
+            position: absolute;
+            right: -3.56rem;
+            bottom: 0;
+            width: 1.78rem;
+            line-height: 1.78rem;
+            height: 1.78rem;
+            text-align: center;
+            background: #F63746;
+            color: #fff;
+            font-size: .42rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            font-style: normal
+        }
+
+        .border-1px-bottom:last-child::after {
+            border: 0px;
+        }
+
+        #group_0{
+          background-color: #f87171;
+          color:white;
+        }
+        #group_1{
+          background-color: #6288b2;
+          color:white;
+        }
+        #group_2{
+          background-color: #71b262;
+          color:white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="list" v-cloak>
+        <div class="item border-1px-bottom" v-for="(lists,index) in list" style="padding-top:2%;" @click="fnOpenChat(lists.name,lists.user_id);">
+            <div class="swiper-li">
+                <div class="flex-wrap">
+                    <div class="left-img">
+                          <img v-bind:src="lists.avatar"/>
+                    </div>
+                    <div class="order" :id="generateid(index)">No.{{index+1}}</div>
+                    <div class="flex-con">
+                        <div class="center-name">{{lists.name}} </div>
+                        <div class="description">{{lists.description}}</div>
+                        <div class="center-body"><img src="../image/image1.jpg"/ style="margin-top:-4%">当前浏览人数：{{lists.number}}</div>
+                        <!---->
+                    </div>
+                    <div class="right-time">+关注</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.min.js"></script>
+<!-- 消除移动端点击延迟300ms -->
+<script type="text/javascript" src="../script/fastclick.js"></script>
+<!-- 公共js -->
+<script type="text/javascript" src="../script/common.js"></script>
+<!-- 环信接口 -->
+<script type="text/javascript" src="../script/easeChat.js"></script>
+<!-- sha1加密 -->
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<!-- 滑动 -->
+<script type="text/javascript" src="../script/swiper.js"></script>
+<!-- 表情转换js -->
+<script type="text/javascript" src="../script/emotion.js"></script>
+<script type="text/javascript">
+    var imghead = "http://47.105.160.217:80/files/";
+    var message_url="http://47.105.160.217:80/api/message/";//47.105.160.217:80
+    apiready = function() {
+        window.ListVue = new Vue({
+            el: '.list',
+            data: {
+                list: [],
+                timeout: false
+            },
+            mounted: function() {
+                this.$nextTick(function() {
+                    this.fnInit();
+                });
+            },
+            beforeDestroy: function() {
+                this.timeout = true;
+            },
+            methods: {
+                fnInit: function(){
+                  var z={
+                        "avatar": "../image/test_mr.png",
+                        "order":"",
+                        "name":"热门",
+                        "description":"这里是这个圈子的描述",
+                        "number":"1100"
+                      };
+                      for(var i=0;i<6;i++){
+                          window.ListVue.list.push(z);
+                      }
+                  /*$.ajax({
+                      type: 'POST',
+                      url: message_url+"getPrivateMessageList/",
+                      data: JSON.stringify({user_id:$api.getStorage('user_id')}),
+                      dataType: 'json',
+                      async: false,
+                      success:function(result){
+                        console.log('获取消息列表成功');
+                        window.ListVue.list = result.data;
+                      },
+                      error:function(){
+                        console.log('获取消息列表失败！');
+                      },
+                  });
+                  if (!this.timeout) {
+                    setTimeout(this.fnInit, 5000);
+                  }*/
+                },
+                generateid: function(index){
+                  return "group_" + index
+                },
+                changeData: function(index){
+                  data=["热门","关注"];
+                  window.ListVue.list=[];
+                  var z={
+                        "avatar": "../image/test_lyf.png",
+                        "order":"",
+                        "name":data[index],
+                        "description":"这里是这个圈子的描述",
+                        "number":"1100"
+                      };
+                      for(var i=0;i<6;i++){
+                          window.ListVue.list.push(z);
+                      }
+                },
+                //打开聊天窗口
+                fnOpenChat: function(name,id) {
+                    api.openWin({
+                        name: 'chat_win',
+                        url: '../html/circle/circle_index.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            name: name,
+                            id: id
+                        }
+                    });
+                }
+            },
+            filters: {
+                // 时间转换
+                formatTime: function(v) {
+                    return new Date(v).popular();
+                }
+
+            }
+        });
+    };
+</script>
+
+</html>

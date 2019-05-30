@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>底部导航</title>
+	<link rel="stylesheet" type="text/css" href="../css/api1.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/style1.css"/>
+	<link rel="stylesheet" type="text/css" href="../../../css/iconfont.css"/>
+	<style>
+				/*.iconfont {
+			  font-family: "iconfont" !important;
+			  font-size: 16px;
+			  font-style: normal;
+			  -webkit-font-smoothing: antialiased;
+			  -moz-osx-font-smoothing: grayscale;
+			}*/
+			header{ background-color: #f2f2f2; }
+			header ul li { height: 50px; line-height: 50px; text-align: center; display: none; color: #323237; position: relative;font-size: 18px;  }
+			header ul li.active{ display: block; }
+			#footer{  background-color: #f2f2f2;}
+			#footer ul li{  padding-top: 30px; padding-bottom: 8px; background: url() no-repeat center 2px; background-size: 25px 25px; text-align: center; }
+			#footer ul li.active{ color: #000; }
+			#footer ul li:nth-child(1){ background-image: url(../icon/message.png); }
+			#footer ul li:nth-child(2){ background-image: url(../icon/approve.png); }
+			#footer ul li:nth-child(3){ background-image: url(../icon/oppose.png); }
+			#footer ul li:nth-child(4){ background-image: url(../icon/collect.png); }
+			#footer ul li:nth-child(1).active{ background-image: url(../icon/message.png); }
+			#footer ul li:nth-child(2).active{ background-image: url(../icon/agreechousen.png); }
+			#footer ul li:nth-child(3).active{ background-image: url(../icon/oppose.png); }
+			#footer ul li:nth-child(4).active{ background-image: url(../icon/collect.png); }
+
+		.body {
+			width: 100%;
+			height: 100%;
+
+		}
+    .searchbar-box {
+    	/*border: 1px solid red;*/
+      position: relative;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      background-color: #fff;
+      z-index: 10;
+    }
+    .searchbar {
+    	/*border: 1px solid green;*/
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      /*border-bottom: 1px solid #d3d2d2;*/
+      background-color: #fff;
+      z-index: 10;
+    }
+    .inputbar-box {
+      position: relative;
+      width: 79.73%;
+      height: 100%;
+      float: left;
+    }
+    .inputbar {
+			display: flex;
+	    /*justify-content:center;*/
+	    align-items:Center;
+    	/*border: 1px solid red;*/
+      position: relative;
+      width: 100%;
+      height: 65.64%;
+      left: 4%;
+      top: 18.18%;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+			/*opacity:0.05;*/
+    }
+    .inputbar .input {
+      width: 85%;
+      height: 100%;
+      position: absolute;
+			color: #000;
+      left: 0;
+      top: 0;
+			opacity: 0.5;
+			vertical-align: middle;
+			/*line-height: 26.17px;*/
+    }
+    .inputbar .camera {
+			/*z-index: 12;*/
+      width: 15%;
+      height: 100%;
+      position: relative;
+      right: 0;
+      top: 0;
+      background-image: url(../icon/camera.png);
+      background-size: 17px 14.5px;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .cancel-box {
+    	/*border: 1px solid blue;*/
+    	margin-top:0%;
+      position: relative;
+      /*display: table;*/
+      width: 55px;
+      height: 100%;
+      float: left;
+			padding-left: 4%;
+    }
+    .start_question {
+    	/*border:1px solid red;*/
+      font-size: 1.2rem; color: #6d7cd9; font-weight: bolder; text-align: left;
+			position: relative;
+			height: 20px;
+			top: 15px;
+			margin-left: 20%;
+			line-height: 20px;
+			/*display: flex;
+			align-items:Center;*/
+
+    }
+
+		.inputbar .search-logo {
+      width: 15%;
+      height: 100%;
+      position: absolute;
+      left: 10px;
+      top: 0;
+      background-image: url(../icon/search.png);
+      background-size: 17px 14.5px;
+      background-position: center left;
+      background-repeat: no-repeat;
+    }
+		.fixed_bottom {
+			 position:fixed;
+			 left:0px;
+			 bottom:0px;
+			 width:100%;
+			 height:7%;
+			 z-index:10;
+		}
+		.flex-con{
+			overflow: scroll;
+		}
+
+
+		.test {
+			/*border: 1px solid red;*/
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: horizontal;
+			width: 88%;
+			height: 5.5%;
+			overflow-x:scroll;
+			/*border-bottom: 1px solid #d3d2d2;*/
+			margin-top: 1%;
+			padding-left:12%;
+			box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
+		}
+		 .menu-cata{
+			width: 28%;
+			position: relative;
+			/*margin-right: 25%;*/
+			/*padding-right: 25%;*/
+			height: 35px;
+			line-height: 35px;
+			font-size: 1.35rem; color: #000; text-align: center;
+			font-weight: normal;
+			white-space:nowrap;
+		 }
+		 .menu-cata div{
+			  margin-top: -5%;
+			  margin-left: 33%;
+			  width: 32%;
+			  border: 1px solid #6d7cd9;
+				visibility: hidden;
+ 		}
+		.menu-cata.selected label{
+			  font-size: 20px; color: #6d7cd9; font-weight: 700;
+		}
+		.menu-cata.selected div{
+				visibility: visible;
+		}
+		.maginline {
+			width: 100%;
+			height: 0px;
+			background-color: #000;
+			opacity: 0.03;
+		}
+		#line1{
+			margin-top: 2%;
+			margin-left: 10%;
+			width: 75%;
+			border: 2px solid #6d7cd9;
+		}
+		#line2{
+			margin-top: 2%;
+			margin-left: 10%;
+			width: 75%;
+			border: 2px solid #6d7cd9;
+			visibility: hidden;
+		}
+		#line3{
+			margin-top: 2%;
+			margin-left: 10%;
+			width: 75%;
+			border: 2px solid #6d7cd9;
+			visibility: hidden;
+		}
+		input::-webkit-input-placeholder {
+		  line-height: 1.5em;
+		}
+    </style>
+</head>
+<body>
+  <div class="searchbar-box">
+    <div class="searchbar">
+      <div class="inputbar-box">
+        <div class="inputbar" onclick="openSearch()">
+					<div class="iconfont icon-research" style="text-indent: 8px;color:#8e8e8e;"></div>
+          <input id="search_content" type="text" class="input" placeholder="问答/攻略/资源/拍照搜题" style="padding-left:30px;pointer-events: none; ">
+          <!-- <div class="camera"></div> -->
+					<!-- <span class="iconfont icon-camera" style="position:absolute;float:right;right:4%;color:#8e8e8e;"></span> -->
+        </div>
+      </div>
+      <div class="cancel-box">
+        <div class="start_question" onclick="start_question()">提问</div>
+      </div>
+  </div>
+  </div>
+
+	<div class="test" id="nav">
+		<div id="guide-tag-0" class="menu-cata selected"tapmode onclick="fnSetNavMenuIndex(this)" tapmode>
+			<label>热门</label>
+			<!--div id="#line1"></div-->
+		</div>
+		<div id="guide-tag-1" class="menu-cata"tapmode onclick="fnSetNavMenuIndex(this)" tapmode>
+			<label>推荐</label>
+			<!--div id="#line2"></div-->
+		</div>
+		<div id="guide-tag-2" class="menu-cata"tapmode onclick="fnSetNavMenuIndex(this)" tapmode>
+			<label>关注</label>
+			<!--div id="#line3"></div-->
+		</div>
+	</div>
+
+	<div class="maginline">
+	</div>
+
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+var menu_catas = $api.domAll('.menu-cata');
+
+	apiready = function(){
+		// exitApp();
+		$api.setStorage("flag","0");
+		var nav = $api.dom('.maginline');
+		var nav_H = $api.offset(nav).h;
+		var nav_T = $api.offset(nav).t;
+
+		var footer = $api.dom('#footer');
+		var footer_H = api.pageParam.footer_H;
+		var title_pos = nav_H + nav_T + 3;
+
+		api.openFrameGroup ({
+		    name: 'question_homepage_frmgro',
+		    background: '#fff',
+		    scrollEnabled: true,
+				rect: {
+		        x: 0,
+		        y: nav_H + nav_T + 2,
+		        w: api.winWidth,
+		        h: api.winHeight - footer_H - nav_H - nav_T - 2
+		    },
+		    index: 0,
+		    frames: [{
+					name: 'hot',
+					url: './question_homepage_frm.html',
+					bgColor: '#fff',
+					pageParam: {
+						type: 'hot',
+						title_pos: title_pos
+					},
+					bounces: false,
+					vScrollBarEnabled: true,
+					hScrollBarEnabled: false
+				},
+				{
+		        name: 'intro',
+						url: './question_homepage_frm.html',
+		        bgColor: '#fff',
+						pageParam: {
+							type: 'intro',
+							title_pos: title_pos
+						},
+						bounces: false,
+						vScrollBarEnabled: true
+		    },{
+		        name: 'follow',
+		        url: './question_homepage_frm.html',
+		        bgColor: '#fff',
+						pageParam: {
+							type: 'follow',
+							title_pos: title_pos
+						},
+						bounces: false,
+						vScrollBarEnabled: true,
+						hScrollBarEnabled: false
+		    }]
+		}, function(ret, err){
+			fnSetNavMenuSelected(ret.index);
+		});
+
+		// api.setFrameGroupIndex({
+		// 		name: 'question_homepage_frmgro',
+		// 		index: 0
+		// });
+	};
+
+	function fnSetNavMenuIndex(tag) {
+		var index_;
+		for (var i=0; i<menu_catas.length; i++) {
+			if (tag.id == 'guide-tag-'+i) {
+				if($api.getStorage("flag")!=String(i)){
+					$api.setStorage("flag",String(i));
+					index_ = parseInt(i);
+					fnSetNavMenuSelected(index_);
+				}
+			}
+		}
+		api.setFrameGroupIndex({
+				name: 'question_homepage_frmgro',
+				index: index_,
+				scroll: true
+		});
+	}
+
+	function fnSetNavMenuSelected(index_) {
+		for (var i = 0; i < 3; i++) {
+			if (index_ == i) {
+				$api.addCls(menu_catas[i], 'selected');
+			} else {
+				$api.removeCls(menu_catas[i], 'selected');
+			}
+		}
+		var jsfun = 'window.ListVue.changeData($api.getStorage("flag"));';
+		api.execScript({
+			    frameName: 'question_homepage_frm',
+			    script: jsfun
+		});
+	}
+
+	function start_question() {
+		$api.setStorage('choose_tags', []);
+		$api.setStorage('tags_num', 0);
+		api.openWin({
+				name: 'question_main',
+				url: '../../QandA/html/question_main.html',
+				pageParam:{
+						footer_H:api.pageParam.footer_H
+				}
+		});
+	}
+	function openSearch() {
+   api.openWin({
+      name:'question_homepage_search',
+      url:'../../search/html/search_result_win.html'
+   })
+   }
+
+
+
+
+
+
+
+</script>
+</html>

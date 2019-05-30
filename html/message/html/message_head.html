@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        body{
+          height: 100%;
+        }
+        header {
+            padding-top: 3%;
+            width: 100%;
+            text-align: center;
+            line-height: 170%;
+            font-size: 1.2rem;
+        }
+        #chat{
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: #6d7cd9;
+            display:inline-block;
+            margin-right: 12%;
+        }
+        #notice{
+           text-align: center;
+           display:inline-block;
+           margin-left: 12%;
+        }
+        #line1{
+          margin-top: 1.5%;
+          margin-left: 8%;
+          width: 85%;
+          border-bottom : 1.2px solid #6d7cd9;
+        }
+        #line2{
+          margin-top: 1.5%;
+          margin-left: 8%;
+          width: 85%;
+          border-bottom:  1.2px solid #6d7cd9;
+          visibility: hidden;
+        }
+        i{
+            display:block;
+            background:#f00;
+            border-radius:50%;
+            width:5px;
+            height:5px;
+            top:5px;
+            right:-5px;
+            position:absolute;
+        }
+        #reminder2{
+          visibility: hidden;
+        }
+        .maginline {
+    			width: 100%;
+    			height: 4px;
+    			background-color: #000;
+    			opacity: 0.03;
+    		}
+    </style>
+</head>
+
+<body>
+    <header>
+      <div id="chat" onclick="changechat();">
+        <div style="position:relative;">聊天<!--i id="reminder1"></i--></div>
+        <!--div id="line1"></div!-->
+      </div>
+      <div id="notice" onclick="changenotice();">
+        <div style="position:relative;">通知<!--i id="reminder2"></i--></div>
+        <!--div id="line2"></div!-->
+      </div>
+    </header>
+
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    var header;
+    var headerH;
+    var footerH;
+    apiready = function() {
+      console.log($api.getStorage('user_id'));
+      //$api.setStorage('user_id', '4148bc2fd453622087270069ced93013');
+      header = $api.dom('header');
+      headerH = $api.fixTabBar(header);
+      footerH = api.pageParam.footer_H;
+      /*var nav = $api.dom('.maginline');
+  		var nav_H = $api.offset(nav).h;
+  		var nav_T = $api.offset(nav).t;*/
+      /*api.openFrame({
+          name: 'chat',
+          url: '../html/chat.html',
+          bounces: true,
+          rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+              marginTop: headerH+6, // main页面距离win顶部的高度
+              marginBottom: footerH, // main页面距离win底部的高度
+              w: api.winWidth // main页面的宽度 自适应屏幕宽度
+          }
+      });*/
+      api.openFrameGroup({
+          name: 'chatgroup',
+          rect: {
+              marginTop: headerH+4, // main页面距离win顶部的高度
+              marginBottom: footerH, // main页面距离win底部的高度
+              w: 'auto' // main页面的宽度 自适应屏幕宽度
+          },
+
+          frames: [{
+              name: 'chat',
+              url: '../html/chat.html',
+              bounces:true,
+              bgColor: '#fff',
+          }, {
+              name: 'notice',
+              url: '../html/notice.html',
+              bounces:true,
+              bgColor: '#fff',
+          }]
+      }, function(ret, err) {
+          if(ret.index==0){
+            document.getElementById("notice").style.color="black";
+            document.getElementById("notice").style.fontSize="1.2rem";
+            document.getElementById("notice").style.fontWeight="normal";
+            //document.getElementById("reminder2").style.visibility="hidden";
+            document.getElementById("chat").style.color="#6d7cd9";
+            document.getElementById("chat").style.fontSize="1.2rem";
+            document.getElementById("chat").style.fontWeight="700";
+            //document.getElementById("reminder1").style.visibility="visible";
+            /*document.getElementById("line1").style.visibility="visible";
+            document.getElementById("line2").style.visibility="hidden";*/
+          }
+          else{
+            document.getElementById("chat").style.color="black";
+            document.getElementById("chat").style.fontSize="1.2rem";
+            document.getElementById("chat").style.fontWeight="normal";
+            //document.getElementById("reminder1").style.visibility="hidden";
+            document.getElementById("notice").style.color="#6d7cd9";
+            document.getElementById("notice").style.fontSize="1.2rem";
+            document.getElementById("notice").style.fontWeight="700";
+            //document.getElementById("reminder2").style.visibility="visible";
+            /*document.getElementById("line2").style.visibility="visible";
+            document.getElementById("line1").style.visibility="hidden";*/
+          }
+      });
+      api.setFrameGroupIndex({
+          name: 'chatgroup',
+          index: 0
+      });
+    };
+
+    function changechat(){
+        /*api.closeFrame({
+            name: 'notice'
+        });
+        api.openFrame({
+            name: 'chat',
+            url: '../html/chat.html',
+            bounces: true,
+            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+                marginTop: headerH+6, // main页面距离win顶部的高度
+                marginBottom: footerH, // main页面距离win底部的高度
+                w: api.winWidth // main页面的宽度 自适应屏幕宽度
+            }
+        });*/
+        api.setFrameGroupIndex({
+            name: 'chatgroup',
+            index: 0
+        });
+        $api.setStorage('current_footer1','chat');
+        document.getElementById("notice").style.color="black";
+        document.getElementById("notice").style.fontSize="1.2rem";
+        document.getElementById("notice").style.fontWeight="normal";
+        //document.getElementById("reminder2").style.visibility="hidden";
+        document.getElementById("chat").style.color="#6d7cd9";
+        document.getElementById("chat").style.fontSize="1.2rem";
+        document.getElementById("chat").style.fontWeight="700";
+        //document.getElementById("reminder1").style.visibility="visible";
+        /*document.getElementById("line1").style.visibility="visible";
+        document.getElementById("line2").style.visibility="hidden";*/
+    }
+    function changenotice(){
+      /*api.closeFrame({
+          name: 'chat'
+      });
+      api.openFrame({
+          name: 'notice',
+          url: '../html/notice.html',
+          bounces: true,
+          rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+              marginTop: headerH+6, // main页面距离win顶部的高度
+              marginBottom: footerH, // main页面距离win底部的高度
+              w: api.winWidth // main页面的宽度 自适应屏幕宽度
+          }
+      });*/
+      api.setFrameGroupIndex({
+          name: 'chatgroup',
+          index: 1
+      });
+      $api.setStorage('current_footer1','notice');
+      document.getElementById("chat").style.color="black";
+      document.getElementById("chat").style.fontSize="1.2rem";
+      document.getElementById("chat").style.fontWeight="normal";
+      //document.getElementById("reminder1").style.visibility="hidden";
+      document.getElementById("notice").style.color="#6d7cd9";
+      document.getElementById("notice").style.fontSize="1.2rem";
+      document.getElementById("notice").style.fontWeight="700";
+      //document.getElementById("reminder2").style.visibility="visible";
+      /*document.getElementById("line2").style.visibility="visible";
+      document.getElementById("line1").style.visibility="hidden";*/
+    }
+</script>
+
+</html>

@@ -1,0 +1,926 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>聊天窗口-frm</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <script type="text/javascript" src="../script/lib-flexible.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            position: relative;
+            background-color: #ededed;
+            padding-bottom: .3rem
+        }
+        /*语音发送状态*/
+        .record {
+            box-sizing: border-box;
+            position: fixed;
+            z-index: 9999;
+            top: 30%;
+            left: 0px;
+            right: 0px;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 16px;
+            width: 50%;
+            text-align: center;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .record img {
+            height: 100px;
+        }
+
+        .record .upper .title {
+            color: #fff;
+            font-size: 15px;
+            line-height: 160%;
+            padding: 5px;
+        }
+        /*.record .release {
+            display: none;
+        }*/
+
+        .record .release .title {
+            color: #fff;
+            font-size: 16px;
+            line-height: 150%;
+            padding: 5px;
+            background-color: rgb(132, 52, 20, .5);
+        }
+
+        .chat {
+            padding: .42rem;
+            margin-bottom: 2rem;
+        }
+
+        .chat .chat-item {
+            position: relative;
+            width: 100%;
+            margin-bottom: .42rem;
+            overflow: hidden;
+            display: block;
+        }
+
+        .chat .chat-header {
+            text-align: center;
+            margin-bottom: .42rem;
+        }
+
+        .chat .chat-header>span {
+            font-size: .33rem;
+            font-weight: 400;
+            color: rgba(204, 204, 204, 1);
+            height:.35rem;
+            line-height: .35rem;
+            background-color: #F7F7F7;
+            padding: .18rem .28rem .16rem .28rem;
+            border-radius: .06rem;
+        }
+
+        .chat .chat-left {
+            float: left;
+        }
+
+        .chat .chat-right {
+            float: right;
+        }
+
+        .chat .chat-media {
+            display: inline-block;
+            max-width: 2rem;
+        }
+
+        .chat .chat-media img {
+            width: 100%;
+            border-radius: 50%;
+        }
+
+        .chat .chat-inner {
+            position: relative;
+        }
+
+        .chat .chat-arrow {
+            content: '';
+            position: absolute;
+            top: .35rem;
+        }
+
+        .chat .chat-left .chat-arrow {
+            width: 0;
+            height: 0;
+            border-width: .15rem .31rem .15rem 0;
+            border-style: solid;
+            border-color: transparent white transparent transparent;
+            left: -0.28rem;
+        }
+
+        .chat .chat-right .chat-arrow {
+            width: 0;
+            height: 0;
+            border-width: .15rem 0 .15rem .31rem;
+            border-style: solid;
+            border-color: transparent transparent transparent white;/*#1AA1F6*/
+            right: -0.28rem;
+        }
+
+        .chat .chat-left .chat-content {
+            font-size: .38rem;
+            font-weight: 400;
+            color: black;
+            border-radius: .14rem;
+            min-height: 0.8rem;
+            position: relative;
+            max-width: 90%;
+            word-break: break-all;
+            word-wrap: break-word;
+            margin-top: .3rem;
+        }
+
+        .chat .chat-left .chat-content .body {
+            line-height: .6rem;
+            padding: .24rem .2rem .2rem .21rem;
+            border-radius: .14rem;
+        }
+
+        .body-by {
+            font-size: .3rem;
+        }
+
+        .chat .chat-left .icon {
+            position: relative;
+            min-width: 1.8rem;
+            height: 1.11rem;
+        }
+
+        .chat .chat-left .icon .iconhron {
+            position: absolute;
+            width: 1.11rem;
+            height: 1.11rem;
+            left: 0px;
+            bottom: 0px;
+            background: url(../image/icon/icon_chat_lefthorn.png);
+            background-position: center center;
+            background-size: .61rem .61rem;
+            background-repeat: no-repeat;
+        }
+
+        .chat .chat-left .icon .iconhrons {
+            position: absolute;
+            width: 1.11rem;
+            height: 1.11rem;
+            left: 0px;
+            bottom: 0px;
+            background: url(../image/icon/icon_chat_lefthorn.gif);
+            background-position: center center;
+            background-size: .61rem .61rem;
+            background-repeat: no-repeat;
+        }
+
+        .chat .chat-right .chat-content {
+            font-size: .38rem;
+            font-weight: 400;
+            color: black;
+            border-radius: .14rem;
+            min-height: 0.8rem;
+            position: relative;
+            max-width: 90%;
+            word-break: break-all;
+            word-wrap: break-word;
+            margin-top: .3rem;
+        }
+
+        .chat .chat-right .chat-content .body {
+            line-height: .6rem;
+            padding: .24rem .2rem .2rem .21rem;
+            border-radius: .14rem;
+        }
+
+        .chat .chat-right .icon {
+            position: relative;
+            min-width: 1.8rem;
+            height: 1.11rem;
+        }
+
+        .chat .chat-right .icon .iconhron {
+            position: absolute;
+            width: 1.11rem;
+            height: 1.11rem;
+            right: 0px;
+            bottom: 0px;
+            background: url(../image/icon/icon_chata_righthorn.png);
+            background-position: center center;
+            background-size: .61rem .61rem;
+            background-repeat: no-repeat;
+        }
+
+        .chat .chat-right .icon .iconhrons {
+            position: absolute;
+            width: 1.11rem;
+            height: 1.11rem;
+            right: 0px;
+            bottom: 0px;
+            background: url(../image/icon/icon_chata_righthorn.gif);
+            background-position: center center;
+            background-size: .61rem .61rem;
+            background-repeat: no-repeat;
+        }
+
+        .chat .chat-content .body img {
+            max-width: 80%;
+            display: -webkit-inline-box;
+        }
+
+        .picbody img {
+            height: .53rem;
+            width: .53rem;
+            display: list-item;
+            vertical-align: middle;
+        }
+
+        .chat .chat-status {
+            position: relative;
+            width: 1.11rem;
+            height: 1.11rem;
+            line-height: 1.11rem;
+            text-align: center;
+        }
+
+        .chat .chat-status .iconfont {
+            position: absolute;
+            width: 1.11rem;
+            height: 1.11rem;
+            left: 0px;
+            bottom: 0px;
+            background: url(../image/icon/icon_fail.png);
+            background-position: center center;
+            background-size: .61rem .61rem;
+            background-repeat: no-repeat;
+        }
+
+        .chat .chat-left .chat-status {
+            top: .3rem;
+            left: 0.5rem;
+            float: left;
+        }
+
+        .chat .chat-status .badge {
+            width: .13rem;
+            height: .13rem;
+            border-radius: 50%;
+            background-color: #ff2600;
+            text-decoration: none;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .chat .chat-status .times {
+            font-size: .32rem;
+            font-weight: 400;
+            color: rgba(153, 150, 150, 1);
+            line-height: .5rem;
+        }
+
+        .chat .chat-left .chat-media {
+            width: 1.11rem;
+            float: left;
+        }
+
+        .chat .chat-left .chat-inner {
+            max-width: 80%;
+        }
+
+        .chat .chat-left .chat-content {
+            background: white;
+            float: left;
+            left: 0.5rem;
+        }
+
+        .chat .chat-left .chat-contentimg {
+            background: white;
+            float: left;
+            left: 0.5rem;
+            margin-left: .2rem;
+        }
+
+        .chat .chat-left .chat-status .badge {
+            position: absolute;
+            z-index: 99;
+            top: 0;
+            left: .29rem;
+        }
+
+        .chat .chat-left .chat-status .times {
+            position: absolute;
+            z-index: 99;
+            bottom: 0;
+            left: .29rem;
+        }
+
+        .chat .chat-right .chat-media {
+            width: 1.11rem;
+            float: right;
+        }
+
+        .chat .chat-right .chat-inner {
+            float: right;
+            max-width: 80%;
+        }
+
+        .chat .chat-right .chat-content {
+            background: white;
+            right: 0.5rem;
+            float: right;
+        }
+
+        .chat .chat-right .chat-contentimg {
+            background: white;
+            float: right;
+            right: 0.5rem;
+            margin-right: .2rem;
+        }
+
+        .chat .chat-right .chat-status {
+            float: right;
+            top: .3rem;
+            right: 0.5rem;
+        }
+
+        .chat .chat-right .chat-status .badge {
+            position: absolute;
+            z-index: 99;
+            top: 0;
+            right: .29rem;
+        }
+
+        .chat .chat-right .chat-status .times {
+            position: absolute;
+            z-index: 99;
+            bottom: 0;
+            right: .29rem;
+        }
+
+        .list-enter-active,
+        .list-leave-active {
+            transition: all 1s;
+        }
+
+        .list-enter,
+        .list-leave-to {
+            opacity: 0;
+        }
+    </style>
+</head>
+<!--body onmousedown="gobottom()"-->
+<body>
+    <section class="chat" v-cloak>
+        <div class="record" v-if="record==1">
+            <div class="upper" v-if="release==0">
+                <img src="../image/icon/iconupper.gif" alt="上滑取消发送" />
+                <div class="title">上滑取消发送</div>
+            </div>
+            <div class="release" v-if="release==1">
+                <img src="../image/icon/iconrelease.png" alt="松开手指取消发送" />
+                <div class="title">松开手指取消发送</div>
+            </div>
+        </div>
+        <div class="chat-item" v-for="(chats,index) in chat" :class="chats.direction=='send'?'chat-right':'chat-left'">
+            <div class="chat-header" v-if="chats.time!=null"><span>{{chats.time|formatTime}}</span></div>
+            <!--div class="chat-media" @click="fnOpenInfo(chats.conversationId,chats.messageId,'');"-->
+            <div class="chat-media">
+                <img v-bind:src="imghead+chats.img"/>
+            </div>
+            <div class="chat-inner flex-wrap">
+                <!-- 消息发送状态 -->
+                <div class="chat-status" v-if="chats.direction=='send'">
+                    <i class="iconfont icon-correct"></i>
+                </div>
+                <div class="chat-status" v-if="chats.direction=='send'&&chats.body.type=='voice'">
+                    <!-- 语音是否已读 -->
+                    <!-- <div class="badge" v-if="chats.isReadAcked==false"></div> -->
+                    <div class="times">{{chats.body.duration}}``</div>
+                </div>
+                <!-- 文本消息 -->
+                <div class="chat-content" v-if="chats.body.type=='text'">
+                    <div class="chat-arrow"></div>
+                    <div class="body picbody" v-html="translateText(chats.body.text)"></div>
+                </div>
+                <!-- 语音消息 -->
+                <div class="chat-content" v-if="chats.body.type=='voice'" @click="fnPlayVoice(index,chats.body.localPath,chats.body.remotePath,chats.conversationId,chats.chatType,chats.messageId);">
+                    <div class="chat-arrow"></div>
+                    <div class="icon">
+                        <div class="iconhron" :class="{iconhrons:chats.ext.isShow==true}"></div>
+                    </div>
+                </div>
+                <div class="chat-status" v-if="chats.direction!='send'&&chats.body.type=='voice'">
+                    <!-- 语音是否已读 -->
+                    <div class="badge" v-if="chats.isReadAcked==false"></div>
+                    <div class="times">{{chats.body.duration}}``</div>
+                </div>
+                <!-- 消息发送状态 -->
+                <div class="chat-status" v-if="chats.direction!='send'">
+                    <i class="iconfont icon-correct"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="height:5%;font-size:15.5px;color:#ededed;">反正你也看不见</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.min.js"></script>
+<!-- 消除移动端点击延迟300ms -->
+<script type="text/javascript" src="../script/fastclick.js"></script>
+<!-- 公共js -->
+<script type="text/javascript" src="../script/common.js"></script>
+<!-- 环信接口 -->
+<script type="text/javascript" src="../script/easeChat.js"></script>
+<!-- 表情转换js -->
+<script type="text/javascript" src="../script/emotion.js"></script>
+<script type="text/javascript" src="../script/jquery.js"></script>
+<script type="text/javascript">
+    var UIChatBox, frameHeight, eRecord, eUpper, eRelease, inputBarHeightsum = 50,
+        isSwice = false,
+        isShow = false;
+    var isfirst = false;
+    var emotionstate=false;
+    var inputBarHeightsum_0=0;
+    var iscausebyemotion=false;
+    var imghead = "http://47.105.160.217:80/files/";
+    var message_url="http://47.105.160.217:80/api/message/";
+    var now_oldest_message_id = "";
+    // 定义一个全局的聊天数组
+    var message_data = [];
+    apiready = function() {
+        fnInitVue();
+        //document.addEventListener('touchstart',gobottom, false);
+    };
+    function fnInitVue() {
+        window.ListVue = new Vue({
+            el: '.chat',
+            data: {
+                chat: [],
+                record: 0, //点击录音状态
+                release: 0, //取消显示状态
+                timeout: false
+            },
+            mounted: function() {
+                this.$nextTick(function() {
+                    //初始化数据
+                    fnInit();
+                    //设置页面到最顶部
+                    resizeFrame(inputBarHeightsum);
+                    //获取环信聊天消息
+                    this.getLastestSixMessages(api.pageParam.myname,api.pageParam.partner_id);
+                    //不停获取新消息
+                    setTimeout(this.getLastestMessages, 5000);
+                    //初始化下拉加载
+                    fnsetRefreshHeaderInfo();
+
+                    pageDown(200);
+                });
+            },
+            beforeDestroy: function() {
+                this.timeout = true;
+            },
+            methods: {
+                //不停获取新消息
+                getLastestMessages: function(){
+                    $.ajax({
+                        type: 'POST',
+                        url: message_url+"getLatestPrivateMessages/",
+                        //注意不到6条的时候的判断"be3c7029189c7b0b5eec3bcd543c15a9"
+                        data: JSON.stringify({user_id:$api.getStorage('user_id'),partner_id:api.pageParam.partner_id}),
+                        dataType: 'json',
+                        async: false,
+                        success:function(result){
+                            //console.log('最新消息获取成功！');
+                            var eMessageFromDB = result.data;
+                            //新旧数组拼接
+                            message_data = message_data.concat(eMessageFromDB);
+                            // 定义俩条消息超过俩分钟间隔显示发送时间
+                            for (var i = 0; i < eMessageFromDB.length; i++) {
+                                if (i == 0) {
+                                    eMessageFromDB[i].time = eMessageFromDB[i].localTime;
+                                } else {
+                                    var timevalue = eMessageFromDB[i].localTime - eMessageFromDB[i - 1].localTime;
+                                    if (timevalue > 120000) {
+                                        eMessageFromDB[i].time = eMessageFromDB[i].localTime;
+                                    }
+                                }
+                            }
+                            window.ListVue.chat = window.ListVue.chat.concat(eMessageFromDB);
+                        },
+                        error:function(){
+                          console.log('最新消息获取失败！');
+                        },
+                    });
+                    if (!this.timeout) {
+                      setTimeout(this.getLastestMessages, 5000);
+                    }
+                },
+                //获取最新6条
+                getLastestSixMessages: function(name,id) {
+                    $.ajax({
+                        type: 'POST',
+                        url: message_url+"getInitialPrivateMessages/",
+                        //注意不到6条的时候的判断,显示所有未读消息，不足6条时补足6条，要给我每条消息的ID"be3c7029189c7b0b5eec3bcd543c15a9"
+                        data: JSON.stringify({user_id:$api.getStorage('user_id'),partner_id:id,page_size:"6"}),
+                        dataType: 'json',
+                        async: false,
+                        success:function(result){
+                            //console.log('最新六条消息获取成功！');
+                            var eMessageFromDB = result.data;
+                            now_oldest_message_id = eMessageFromDB[0].message_id;
+                            //新旧数组拼接
+                            message_data = eMessageFromDB.concat(message_data);
+                            // 定义俩条消息超过俩分钟间隔显示发送时间
+                            for (var i = 0; i < eMessageFromDB.length; i++) {
+                                if (i == 0) {
+                                    eMessageFromDB[i].time = eMessageFromDB[i].localTime;
+                                } else {
+                                    var timevalue = eMessageFromDB[i].localTime - eMessageFromDB[i - 1].localTime;
+                                    if (timevalue > 120000) {
+                                        eMessageFromDB[i].time = eMessageFromDB[i].localTime;
+                                    }
+                                }
+                            }
+                            window.ListVue.chat = eMessageFromDB.concat(window.ListVue.chat);
+                        },
+                        error:function(){
+                          console.log('最新六条消息获取失败！');
+                        },
+                    });
+                },
+                fnOpenInfo: function(name, id, img) {
+                    api.openWin({
+                        name: 'my_info',
+                        url: 'widget://html/my/my_info_win.html',
+                        slidBackEnabled: true,
+                        pageParam: {
+                            nickname: '王宝宝',
+                            id: 1,
+                            img: img
+                        }
+                    })
+                },
+                //文本表情转化
+                translateText: function(text) {
+                    if (text == '' || text == undefined) {
+                        return;
+                    }
+                    msg = text;
+                    var emotionObj = emotion;
+                    var regx = /\[(.*?)\]/gm;
+                    var translateMSg = text.replace(regx, function(math) {
+                        var imgSrc = emotionObj[math];
+                        if (!imgSrc) {
+                            return math;
+                        }
+                        var img = '<img src="../res/img/emotion/' + imgSrc + '.png" class="emotion">'
+                        return img;
+                    })
+                    //console.log(translateMSg)
+                    return translateMSg;
+                }
+            },
+            filters: {
+                formatTime: function(v) {
+                    return new Date(v).popular();
+                }
+            }
+        })
+    }
+
+    function gobottom(event){
+        emotionstate = false;
+        inputBarHeightsum = inputBarHeightsum_0;
+        resizeFrame(inputBarHeightsum_0);
+    }
+
+    function fnInit() {
+        UIChatBox = api.require('UIChatBox'); //引用UIChatBox模块
+        frameHeight = api.frameHeight; //获取frame高度
+        eRecord = $api.byId('record'); //语音弹出dom id
+        eUpper = $api.byId('upper');
+        eRelease = $api.byId('release');
+        fnUIChatBox();
+    }
+
+    //调用UIChatBox模块
+    function fnUIChatBox() {
+        UIChatBox.open({
+            placeholder: '',
+            autoFocus: false,
+            maxRows: 4,
+            emotionPath: 'widget://res/img/emotion',
+            texts: {
+                /*recordBtn: {
+                    normalTitle: '按住 说话',
+                    activeTitle: '松开 发送'
+                },*/
+                sendBtn: {
+                    title: '发送'
+                }
+            },
+            styles: {
+                topDivider: {
+                    width: 0,
+                    color: '#fff'
+                },
+                inputBar: {
+                    borderColor: '#fff',
+                    bgColor: '#fff'
+                },
+                inputBox: {
+                    borderColor: '#ededed',
+                    bgColor: '#ededed',
+                    boardBgColor: '#ededed',
+                    topMargin: 8,
+                },
+                emotionBtn: {
+                    normalImg: 'widget://html/message/image/icon/icon_chat_expression1.png'
+                },
+                /*extrasBtn: {
+                    normalImg: 'widget://image/icon/icon_chat_plus.png'
+                },*/
+                keyboardBtn: {
+                    normalImg: 'widget://html/message/image/icon/icon_chata_keyboard.png'
+                },
+                /*speechBtn: {
+                    normalImg: 'widget://image/blank.png',
+                    activeImg: 'widget://image/blank.png'
+                },*/
+                /*recordBtn: {
+                    normalBg: '#eee',
+                    activeBg: '#aaa',
+                    color: '#666',
+                    size: 16
+                },*/
+                indicator: {
+                    target: 'both',
+                    color: '#c4c4c4',
+                    activeColor: '#9e9e9e'
+                },
+                sendBtn: {
+                    titleColor: '#fff',
+                    bg: '#6d7cd9',
+                    activeBg: '#6d7cd9',
+                    titleSize: 13
+                }
+            },
+            extras: {
+                titleSize: 12,
+                titleColor: '#999',
+                btns: [{
+                    title: '图片',
+                    normalImg: 'widget://image/icon/icon_chat_img.png',
+                    activeImg: 'widget://image/icon/icon_chat_img.png'
+                }, {
+                    title: '拍照',
+                    normalImg: 'widget://image/icon/icon_chat_picture.png',
+                    activeImg: 'widget://image/icon/icon_chat_picture.png'
+                }, {
+                    title: '位置',
+                    normalImg: 'widget://image/icon/icon_chat_bmap.png',
+                    activeImg: 'widget://image/icon/icon_chat_bmap.png'
+                }, {
+                    title: '视频',
+                    normalImg: 'widget://image/icon/icon_chat_video.png',
+                    activeImg: 'widget://image/icon/icon_chat_video.png'
+                }]
+            }
+        }, function(ret, err) {
+            if (ret) {
+                if (ret.eventType === "send") {
+                    // 发送文本
+                    fnSendText(ret.msg);
+                }
+                if (ret.eventType === "clickExtras" && ret.index === 0) {
+                    // 发送图片
+                    fnSendImage();
+                }
+                if (ret.eventType === "clickExtras" && ret.index === 1) {
+                    // 拍照
+                    fnCamera();
+                }
+                if (ret.eventType === "clickExtras" && ret.index === 2) {
+                    // 发送位置
+                    fnSendBmap()
+                }
+                if (ret.eventType === "clickExtras" && ret.index === 3) {
+                    // 发送视频
+                    fnSendViode()
+                }
+            } else {
+                toast('APICloud环信DEMO：！' + JSON.stringify(err));
+            }
+        });
+
+        //监听输入框弹动事件
+        UIChatBox.addEventListener({
+            target: 'inputBar',
+            name: 'move'
+        }, function(ret, err) {
+            if (ret) {
+                console.log("move");
+                emotionstate = true;
+                console.log(ret.inputBarHeight);
+                console.log(ret.panelHeight);
+                inputBarHeightsum = ret.inputBarHeight + ret.panelHeight;
+                resizeFrame(inputBarHeightsum);
+            } else {
+                toast("move");
+            }
+        });
+        UIChatBox.addEventListener({
+            target: 'inputBar',
+            name: 'change'
+        }, function(ret, err) {
+            console.log("change");
+            if (ret) {
+              if(!isfirst){
+               isfirst = true;
+               inputBarHeightsum_0 = ret.inputBarHeight + ret.panelHeight;
+               console.log(inputBarHeightsum_0);
+            }
+            } else {
+                toast("change");
+            }
+        });
+        UIChatBox.addEventListener({
+            target: 'inputBar',
+            name: 'showEmotion'
+        }, function(ret, err) {
+              console.log(emotionstate);
+              console.log("showEmotion");
+              if(emotionstate){
+                console.log("hh");
+                emotionstate = false;
+                inputBarHeightsum = inputBarHeightsum_0;
+                resizeFrame(inputBarHeightsum_0);
+            } else {
+                toast("showEmotion");
+            }
+        });
+    }
+
+    function fnsetRefreshHeaderInfo() {
+        api.setRefreshHeaderInfo({
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#fff',
+            textColor: '#ccc',
+            textDown: '下拉获取更多数据...',
+            textUp: '松开获取更多数据...'
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            api.refreshHeaderLoadDone();
+            if (ret) {
+                  //获取前面6条历史消息
+                  $.ajax({
+                      type: 'POST',
+                      url: message_url+"getHistoryPrivateMessages/",
+                      //注意不到6条的时候的判断
+                      data: JSON.stringify({user_id:$api.getStorage('user_id'),partner_id:api.pageParam.partner_id,message_id:now_oldest_message_id,page_size:"6"}),
+                      dataType: 'json',
+                      async: false,
+                      success:function(result){
+                          console.log('历史聊天记录获取成功！');
+                          if(JSON.stringify(result.data).length>0){
+                          var eMessageFromDB = result.data;
+                          // 定义俩条消息超过俩分钟间隔显示发送时间
+                          for (var i = 0; i < eMessageFromDB.length; i++) {
+                              if (i == 0) {
+                                  eMessageFromDB[i].time = eMessageFromDB[i].localTime;
+                                  now_oldest_message_id = eMessageFromDB[i].message_id;
+                              } else {
+                                  var timevalue = eMessageFromDB[i].localTime - eMessageFromDB[i - 1].localTime;
+                                  if (timevalue > 120000) {
+                                      eMessageFromDB[i].time = eMessageFromDB[i].localTime;
+                                  }
+                              }
+                          }
+                          window.ListVue.chat = eMessageFromDB.concat(window.ListVue.chat);
+                          }
+                      },
+                      error:function(){
+                        console.log('历史聊天记录获取失败！');
+                      },
+                  });
+                }
+            else {
+                toast("无更多聊天记录" + err.msg);
+            }
+        });
+    }
+
+    function fnAddanew(data_, addanew_) {
+      if(data_!=""){
+        $.ajax({
+            type: 'POST',
+            url: message_url+"sendPrivateMessage/",
+            //注意不到6条的时候的判断
+            data: JSON.stringify({user_id:$api.getStorage('user_id'),partner_id:api.pageParam.partner_id,text:data_}),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+                //要返回时间
+                console.log('发送消息成功！');
+                var eMessageFromDB = result.data;
+                message_data = message_data.concat(eMessageFromDB);
+                // 定义俩条消息超过俩分钟间隔显示发送时间
+                if (message_data.length != 0) {
+                    var timevalue = parseFloat(eMessageFromDB[0].localTime) - parseFloat(message_data[message_data.length-2].localTime);
+                    if (timevalue > 120000) {
+                        eMessageFromDB[0].time = eMessageFromDB[0].localTime;
+                    }
+                } else {
+                    eMessageFromDB[0].time = eMessageFromDB[0].localTime;
+                }
+                if (addanew_) {
+                    // 追加最新一条
+                    window.ListVue.chat = window.ListVue.chat.concat(eMessageFromDB);
+                    console.log(inputBarHeightsum)
+                        //设置页面到最顶部
+                    resizeFrame(inputBarHeightsum);
+                }
+            },
+            error:function(){
+              console.log('发送消息失败！');
+            },
+        });
+      }
+    }
+
+    //清空消息
+    function fnCloseNew() {
+        message_data = [];
+        window.ListVue.chat = message_data;
+    }
+
+    function resizeFrame(height) {
+        if(height!=0){
+            console.log(height)
+            api.setFrameAttr({
+                name: api.frameName,
+                rect: {
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginTop: api.pageParam.headerH,
+                    h: frameHeight - height
+                }
+            });
+            pageDown(200);
+        }
+    }
+
+    //滑动到底部
+    function pageDown(time) {
+        setTimeout(function() {
+            api.pageDown({
+                bottom: true,
+                animate: true
+            })
+        }, time || 0)
+    }
+
+    // 打开录音语音
+    function fnOpenAudio() {
+        api.startRecord({
+            path: 'fs://easeChat_chat.amr'
+        });
+    }
+
+    // 停止并且发送录音消息
+    function fnStopsendAudio() {
+        api.stopRecord(function(ret, err) {
+            if (ret) {
+                if (ret.duration > 0) {
+                    //调取环信发送语音接口
+                    fnEaseChatSendVoice(api.pageParam.conversationid, api.pageParam.type, ret.path, $api.getStorage('user'), api.pageParam.conversationid, ret.duration);
+                } else {
+                    toast('APICloud环信DEMO:录音时间太短了，请从新录音');
+                }
+            } else {
+                toast('APICloud环信DEMO:', JSON.stringify(err));
+            }
+        });
+    }
+
+    // 发送文本消息
+    function fnSendText(msg) {
+        // 调取环信发送文本接口
+        //fnEaseChatSendText(api.pageParam.conversationid, api.pageParam.type, msg, $api.getStorage('user'), api.pageParam.conversationid)
+        fnAddanew(JSON.stringify(msg).replace(/\"/g, ""),true);
+        console.log(JSON.stringify(msg).replace(/\"/g, ""));
+    }
+</script>
+
+</html>

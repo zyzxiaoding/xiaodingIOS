@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>聊天窗口-win</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <script type="text/javascript" src="../script/lib-flexible.js"></script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            height: 100%;
+            width: 100%;
+        }
+
+        header {
+            position: relative;
+            width: 100%;
+            height: 1.33rem;
+            line-height: 1.33rem;
+            background-color: #fff;
+        }
+
+        .header .backward {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 1.33rem;
+            height: 1.33rem;
+            background: url(../../QandA/icon/backs.png);
+            background-position: center center;
+            background-size: .6rem .45rem;
+            background-repeat: no-repeat;
+        }
+
+        .header .title {
+            text-align: center;
+            line-height: 1.33rem;
+            font-size: .5rem;
+            color: #000;
+            padding-left: 1.33rem;
+            padding-right: 1.33rem;
+        }
+
+        .right {
+            position: absolute;
+            right: -1.5%;
+            bottom: 0px;
+            width: 1.33rem;
+            height: 1.33rem;
+            background: url(../image/set.png);
+            background-position: center center;
+            background-size: .45rem .45rem;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <div class="header">
+            <div class="backward" tapmode onclick="api.closeWin();"></div>
+            <div class="title" id="nickname"></div>
+            <div class="right" tapmode onclick="fnSet();"></div-->
+        </div>
+    </header>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.min.js"></script>
+<script type="text/javascript" src="../script/easeChat.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        fnInit()
+    };
+
+    var eHeader, headerH;
+
+    function fnInit() {
+        eHeader = $api.dom('header');
+        //$api.fixStatusBar(eHeader);
+        headerH = $api.offset(eHeader).h;
+        $api.text($api.byId('nickname'), api.pageParam.myname)
+        api.openFrame({
+            name: 'chat_frm',
+            url: './chat_frm.html',
+            rect: {
+                marginLeft: 0,
+                marginTop: headerH,
+                marginBottom: 0,
+                marginRight: 0
+            },
+            pageParam: api.pageParam,
+            reload: true,
+            bounces: true,
+            bgColor: 'grey',
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false
+        })
+    }
+
+    // 清空消息
+    function fnSet() {
+      api.openWin({
+        name: 'chatset',
+        url: './chatset.html',
+        pageParam: api.pageParam
+      });
+    }
+</script>
+
+</html>

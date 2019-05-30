@@ -1,0 +1,496 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <!-- px转rem js -->
+    <script type="text/javascript" src="../script/lib-flexible.js"></script>
+    <script type="text/javascript" src="../script/jquery.js"></script>
+    <style>
+        html,
+        body {
+            background-color: #fff;
+        }
+
+
+        .left_img {
+            position: absolute;
+            left: 0;
+            z-index: 999;
+        }
+
+        .right_img {
+            position: absolute;
+            right: 0;
+            z-index: 999;
+            display: none;
+        }
+
+        .middle>input {
+            height: 1.07rem;
+            line-height: 1.07rem;
+            color: #333;
+            font-size: .32rem;
+            outline: none;
+            width: 100%;
+            margin: 0 1.07rem;
+        }
+
+        .list {
+            overflow: hidden;
+        }
+
+        .list .item {
+            vertical-align: middle;
+            height: 2.3rem;
+            background-color: #fff;
+            position: relative;
+            -webkit-transform: translateX(0px);
+            transition: transform 0.2s;
+            -webkit-transition: transform 0.2s;
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .list .item .swiper-li {
+            display: block;
+            height: 1.76rem;
+            line-height: 1.76rem;
+            -webkit-transition: all 0.1s linear;
+            transition: all 0.1s linear;
+            color: inherit;
+            padding-top:0.3rem;
+        }
+
+        .left-img {
+            position: absolute;
+            height: 1.76rem;
+            width: 1.33rem;
+            line-height: 1.76rem;
+            left:5%;
+            top:21%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-img img {
+            height: 1.33rem;
+            width: 1.33rem;
+            border-radius: 50%;
+        }
+
+        .order{
+          padding-top: 0.3%;
+          position: absolute;
+          text-align: center;
+          left:83%;
+          top:50%;
+          height:0.55rem;
+          width:0.9rem;
+          line-height: 0.55rem;
+          background-color: #F7F7F7;
+          font-size: 0.35rem;
+          border-radius: 5px;
+          color:#6d7cd9;
+        }
+
+        .center-name {
+            font-size: .43rem;
+            color: black;
+            line-height: .45rem;
+            top: 25%;
+            left:22%;
+            position: absolute;
+        }
+        .left-img .badge {
+            position: absolute;
+            z-index: 99;
+            top: .01rem;
+            right: -0.1rem;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            min-width: .45rem;
+            height: .45rem;
+            line-height: .45rem;
+            font-size: .25rem;
+            color: #fff;
+            border-radius: 50%;
+            background-color: #ff5c5c;
+            text-decoration: none;
+        }
+        .left-img .badge1 {
+            position: absolute;
+            z-index: 99;
+            top: .01rem;
+            right: -0.1rem;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            min-width: .45rem;
+            height: .45rem;
+            line-height: .45rem;
+            font-size: .22rem;
+            color: #fff;
+            border-radius: 50%;
+            background-color: #ff5c5c;
+            text-decoration: none;
+        }
+        .description {
+            font-size: .37rem;
+            color: rgba(153, 153, 153, 1);
+            line-height: .54rem;
+            top: 45%;
+            left:22%;
+            position: absolute;
+        }
+        .center-body {
+            font-size: .35rem;
+            color: #8e8e8e;
+            line-height: .54rem;
+            top: 50%;
+            left:22%;
+            position: absolute;
+        }
+
+        .center-body>span {
+            color: #FD2626;
+            margin-right: .14rem;
+        }
+
+        .center-body img {
+            height: .45rem;
+            width: .45rem;
+            vertical-align: middle;
+        }
+
+        .right-time {
+            position: absolute;
+            top:20%;
+            left:82.5%;
+            color: #C9C9C9;
+            font-size: .33rem;
+            font-weight: 400;
+            line-height: .54rem;
+        }
+
+        .settop {
+            position: absolute;
+            right: -1.78rem;
+            bottom: 0;
+            width: 1.78rem;
+            line-height: 1.78rem;
+            height: 1.78rem;
+            text-align: center;
+            background: #adadad;
+            color: #fff;
+            font-size: .42rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            font-style: normal
+        }
+
+        .dell {
+            position: absolute;
+            right: -3.56rem;
+            bottom: 0;
+            width: 1.78rem;
+            line-height: 1.78rem;
+            height: 1.78rem;
+            text-align: center;
+            background: #F63746;
+            color: #fff;
+            font-size: .42rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            font-style: normal
+        }
+
+        .border-1px-bottom:last-child::after {
+            border: 0px;
+        }
+        .bottomline{
+          margin-top: 2%;
+          border-bottom: 1px solid #f7f7f7;
+          margin-left: 22%;
+          width:74%;
+        }
+        .maginline {
+    			width: 100%;
+    			height: 4px;
+    			background-color: #000;
+    			opacity: 0.03;
+    		}
+    </style>
+</head>
+
+<body>
+    <div class="list" v-cloak>
+      <div class="maginline"></div>
+        <div id="circle_list" class="item" v-for="(lists,index) in list" style="padding-top:2%;display:none;" @click="fnOpenChat(lists.name,lists.group_id);">
+            <div class="swiper-li">
+                <div class="flex-wrap">
+                    <div class="left-img">
+                          <img v-bind:src="'http://47.105.160.217/files/'+lists.profile"/>
+                          <div class="badge" v-if="lists.unread_count>0&&lists.unread_count<=99">{{lists.unread_count}}</div>
+                          <div class="badge1" v-if="lists.unread_count>99">99+</div>
+                    </div>
+                    <div class="flex-con">
+                        <div class="center-name">{{lists.name}} </div>
+                        <!--div class="description">{{lists.concern_number}}关注</div-->
+                        <div class="center-body">{{lists.content}}</div>
+                    </div>
+                    <div class="right-time">{{lists.last_updated_at|formatTime}}</div>
+                </div>
+            </div>
+            <div class="bottomline"></div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/vue.min.js"></script>
+<!-- 消除移动端点击延迟300ms -->
+<script type="text/javascript" src="../script/fastclick.js"></script>
+<!-- 公共js -->
+<script type="text/javascript" src="../script/common.js"></script>
+<!-- 环信接口 -->
+<script type="text/javascript" src="../script/easeChat.js"></script>
+<!-- sha1加密 -->
+<script type="text/javascript" src="../script/SHA1.js"></script>
+<!-- 滑动 -->
+<script type="text/javascript" src="../script/swiper.js"></script>
+<!-- 表情转换js -->
+<script type="text/javascript" src="../script/emotion.js"></script>
+<script type="text/javascript">
+    var imghead = "http://47.105.160.217:80/files/";
+    var message_url="http://47.105.160.217:80/api/message/";//47.105.160.217:80
+    var count = 0;
+    var circle_data;
+    var user_info_dict;
+    var current_id = 0;
+
+    apiready = function() {
+      user_info_dict = {
+  			"user_id":$api.getStorage('user_id'),
+  			"since_id":0,
+  			"page_size":10
+  		}
+      /** 下拉刷新 */
+  		api.setRefreshHeaderInfo({
+  		    bgColor: '#ccc',
+  		    textColor: '#fff',
+  		    textDown: '下拉刷新...',
+  		    textUp: '松开刷新...'
+  		}, function(ret, err) {
+          location.reload();
+  				api.refreshHeaderLoadDone();
+  		});
+
+      //上拉加载
+  		api.addEventListener({
+  				name:'scrolltobottom',
+  				extra:{
+  						threshold: 0
+  				}
+  		}, function(ret, err){
+  			//页码+1，继续请求数据
+  			user_info_dict.since_id += 9;
+        get_circle_data(user_info_dict,type);
+  		});
+
+      var type = api.pageParam.type;
+
+
+      get_circle_data(user_info_dict,type);
+     };
+
+    function get_circle_data(json,cont_type) {
+        api.showProgress({
+        title:"获取数据中...",
+        text: '请稍等...'
+          });
+        $.ajax({
+            type: 'POST',
+            // url: "http://47.105.160.217:80/api/questionAnswer/concernQuestion/",
+            url: "http://47.105.160.217:80/api/firstpage/getConcernedGroups/",
+            data:JSON.stringify(json),
+            dataType: 'json',
+            async: false,
+            success:function(result){
+              console.log('圈子批量加载成功！')
+              circle_data =  result.data;
+              console.log(JSON.stringify(result.data));
+              if(circle_data.length > 0){
+                //调用页面渲染的方法
+                api.hideProgress();
+                circle_view();
+              }
+              else {
+                api.hideProgress();
+                api.toast({
+                    msg: '没有更多数据了!',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+
+              }
+            },
+            error:function(){
+              console.log('问题批量加载失败！');
+              api.hideProgress();
+    					api.toast({
+    					    msg: '网络错误',
+    					    duration: 2000,
+    					    location: 'bottom'
+    					});
+            }
+            });
+            //setTimeout('api.hideProgress();api.toast({msg: "网络错误",duration: 2000,	location: "bottom"});',5000);
+    }
+
+    function circle_view() {
+      if (current_id == 0) {
+        if ( circle_data.length != 0) {
+          var total = document.getElementById('circle_list')
+          total.style.display = ''
+
+          window.ListVue = new Vue({
+              el: '.list',
+              data: {
+                  list: [],
+                  timeout: false
+              },
+              mounted: function() {
+                  this.$nextTick(function() {
+                      this.fnInit();
+                  });
+              },
+              beforeDestroy: function() {
+                  this.timeout = true;
+              },
+              methods: {
+                  fnInit: function(){
+                    // var z={
+                    //       "avatar": "../image/test_mr.png",
+                    //       "order":"",
+                    //       "name":"热门",
+                    //       "description":"这里是这个圈子的描述",
+                    //       "number":"1100",
+                    //       "count":count
+                    //     };
+                        for(var i=0;i<circle_data.length;i++){
+                            if(circle_data[i].content.length>14){
+                              circle_data[i].content=circle_data[i].content.substring(0, 14)+"...";
+                            }
+                            window.ListVue.list.push(circle_data[i]);
+                        }
+                  },
+                  generateid: function(index){
+                    return "group_" + index
+                  },
+                  //打开聊天窗口
+                  fnOpenChat: function(name,id) {
+                      //setTimeout("reloadquanzi()",3000);
+                      api.openWin({
+                          name: 'circle_index.html',
+                          url: '../../circle/circle_index.html',
+                          slidBackEnabled: true,
+                          pageParam: {
+                              name: name,
+                              cID: id
+                          }
+                      });
+                  },
+                  isconcern: function(){
+                      return "+关注";
+                  }
+              },
+              filters: {
+                  // 时间转换
+                  formatTime: function(v) {
+                      return new Date(v).popular();
+                  }
+
+              }
+          });
+        }
+        current_id += 10;
+      }
+      else {
+        for(var i=0;i<circle_data.length;i++){
+            if(circle_data[i].content.length>14){
+              circle_data[i].content=circle_data[i].content.substring(0, 14)+"...";
+            }
+            window.ListVue.list.push(circle_data[i]);
+        }
+      }
+
+    }
+    function change_follow(id) {
+      if (id && id.stopPropagation) {//非IE浏览器
+  　　    id.stopPropagation();
+      }
+      else {//IE浏览器
+          window.event.cancelBubble = true;
+      }
+      var data={
+          "user_id":$api.getStorage('user_id'),
+          'group_id': id,
+      };
+      console.log(JSON.stringify(data));
+		if (document.getElementById(id).innerHTML == '+关注') {
+
+      $.ajax({
+          type: 'POST',
+          url: "http://47.105.160.217:80/api/group/concernGroup/",
+          data:JSON.stringify(data),
+          dataType: 'json',
+          async: false,
+          success:function(result){
+            console.log('关注用户成功')
+            api.toast({
+                msg: '关注成功',
+                duration: 2000,
+                location: 'middle'
+            });
+          },
+          error:function(){
+            console.log('关注用户失败');
+          }
+      });
+			document.getElementById(id).innerHTML = '取消关注';
+  }
+		else {
+      $.ajax({
+          type: 'POST',
+          url: "http://47.105.160.217:80/api/group/concernGroup/",
+          data:JSON.stringify(data),
+          dataType: 'json',
+          async: false,
+          success:function(result){
+            console.log('取消关注成功')
+            alert(JSON.stringify(result))
+            api.toast({
+                msg: '取消关注成功',
+                duration: 2000,
+                location: 'middle'
+            });
+          },
+          error:function(){
+            console.log('取消关注用户失败');
+          }
+      });
+			document.getElementById(id).innerHTML = '+关注';
+		}
+	}
+
+</script>
+
+</html>
